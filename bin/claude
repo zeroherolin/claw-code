@@ -1,0 +1,7 @@
+#!/bin/sh
+# 开发模式启动器：用项目固定版本的 Bun 直接运行 src/，无需构建。
+# 与 dist/claude 的行为差异见 docs/runtime.md#开发模式与构建产物的差异。
+ROOT=$(cd "$(dirname "$0")/.." && pwd)
+BUN="$ROOT/node_modules/.bin/bun"
+[ -x "$BUN" ] || BUN=$(command -v bun) || { echo "claw-code: 找不到 bun，请先在项目根目录执行 npm install" >&2; exit 1; }
+exec "$BUN" "$ROOT/src/main.js" "$@"

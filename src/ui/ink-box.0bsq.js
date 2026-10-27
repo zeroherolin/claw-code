@@ -1,0 +1,121 @@
+// ui/ink-box.0bsq.js — Claude Code 2.1.310 模块 chunk-0bsqdpx1.js
+import { CXr } from "../context/not-admin-owned.ersa.js";
+import { s0, rYt, Aro, Nfe } from "../terminal/ink-renderer.pma0.js";
+import { w } from "./chunk-zqxc4qtb.js";
+import { Yc } from "../terminal/aria-preserve-whitespace.s6ps.js";
+import { e } from "../vendor/react/chunk-f790ajz4.js";
+import { GCe, A, y, j } from "../vendor/react/chunk-s8vmszp2.js";
+import { b } from "../vendor/react/chunk-meds60nn.js";
+j();
+function xe(De) {
+  return De + 1;
+}
+function K(O) {
+  let o = w(28), v, x, L, c, f;
+  if (o[0] !== O) ({ children: v, ref: L, stickyScroll: c, followGrowth: x, ...f } = O), o[0] = O, o[1] = v, o[2] = x, o[3] = L, o[4] = c, o[5] = f;
+  else v = o[1], x = o[2], L = o[3], c = o[4], f = o[5];
+  let r = A(null), [, Se] = y(0), U;
+  if (o[6] === b) U = /* @__PURE__ */ new Set(), o[6] = U;
+  else U = o[6];
+  let P = A(U), Q = A(false), Z;
+  if (o[7] === b) Z = () => {
+    for (const be of P.current) be();
+  }, o[7] = Z;
+  else Z = o[7];
+  let _ = Z, ee;
+  if (o[8] === b) ee = function S2(W) {
+    if (CXr(), s0(W), Aro(W), _(), Q.current) {
+      return;
+    }
+    Q.current = true, queueMicrotask(() => {
+      Q.current = false, rYt(W);
+    });
+  }, o[8] = ee;
+  else ee = o[8];
+  let S = ee, le, re;
+  if (o[9] !== c) le = () => ({ scrollTo(we, Re) {
+    let u = r.current;
+    if (!u) {
+      return;
+    }
+    if (u.stickyScroll = false, !Re?.preserveHwm) u.scrollHeightHwm = void 0;
+    u.pendingScrollDelta = void 0, u.scrollAnchor = void 0, u.scrollTop = Math.max(0, Math.floor(we)), S(u);
+  }, scrollToElement(ke, p2, He) {
+    let ve = p2 === void 0 ? 0 : p2;
+    let h = r.current;
+    if (!h) {
+      return;
+    }
+    h.stickyScroll = false, h.scrollHeightHwm = void 0, h.pendingScrollDelta = void 0, h.scrollAnchor = { el: ke, offset: ve, block: He?.block ?? "start" }, S(h);
+  }, scrollBy(Me) {
+    let i = r.current;
+    if (!i) {
+      return;
+    }
+    i.stickyScroll = false, i.scrollHeightHwm = void 0, i.scrollTop = Nfe(i), i.scrollAnchor = void 0, i.pendingScrollDelta = (i.pendingScrollDelta ?? 0) + Math.floor(Me), S(i);
+  }, scrollToBottom() {
+    let s = r.current;
+    if (!s) {
+      return;
+    }
+    if (s.pendingScrollDelta = void 0, c === false) {
+      s.scrollAnchor = void 0, s.scrollTop = Math.max(0, (s.scrollHeight ?? 0) - (s.scrollViewportHeight ?? 0)), S(s);
+      return;
+    }
+    s.stickyScroll = true, s0(s), _(), Se(xe);
+  }, getScrollTop() {
+    return r.current?.scrollTop ?? 0;
+  }, getPendingDelta() {
+    return r.current?.pendingScrollDelta ?? 0;
+  }, getScrollHeight() {
+    return r.current?.scrollHeight ?? 0;
+  }, getFreshScrollHeight() {
+    return r.current?.childNodes[0]?.yogaNode?.getComputedHeight() ?? r.current?.scrollHeight ?? 0;
+  }, getViewportHeight() {
+    return r.current?.scrollViewportHeight ?? 0;
+  }, getViewportTop() {
+    return r.current?.scrollViewportTop ?? 0;
+  }, isSticky() {
+    let F = r.current;
+    if (!F) {
+      return false;
+    }
+    return F.stickyScroll ?? Boolean(F.attributes.stickyScroll);
+  }, subscribe(oe) {
+    return P.current.add(oe), () => P.current.delete(oe);
+  }, setClampBounds(te, ne) {
+    let g = r.current;
+    if (!g) {
+      return;
+    }
+    if (g.scrollClampMin === te && g.scrollClampMax === ne) {
+      return;
+    }
+    g.scrollClampMin = te, g.scrollClampMax = ne, s0(g);
+  }, getDomElement() {
+    return r.current;
+  } }), re = [c], o[9] = c, o[10] = le, o[11] = re;
+  else le = o[10], re = o[11];
+  GCe(L, le, re);
+  const p = f.flexDirection ?? "row", N = f.flexGrow ?? 0, X = f.flexShrink ?? 1;
+  let M;
+  if (o[12] !== f || o[13] !== p || o[14] !== N || o[15] !== X) M = { flexWrap: "nowrap", flexDirection: p, flexGrow: N, flexShrink: X, selectionScope: true, ...f, overflowX: "scroll", overflowY: "scroll" }, o[12] = f, o[13] = p, o[14] = N, o[15] = X, o[16] = M;
+  else M = o[16];
+  let D;
+  if (o[17] !== c) D = c !== void 0 && { stickyScroll: c }, o[17] = c, o[18] = D;
+  else D = o[18];
+  let T;
+  if (o[19] !== x) T = x !== void 0 && { followGrowth: x }, o[19] = x, o[20] = T;
+  else T = o[20];
+  let B;
+  if (o[21] !== v) B = e(Yc, { flexDirection: "column", flexGrow: 1, flexShrink: 0, width: "100%", children: v }), o[21] = v, o[22] = B;
+  else B = o[22];
+  let ce;
+  if (o[23] !== D || o[24] !== T || o[25] !== B || o[26] !== M) ce = e("ink-box", { ref: r, style: M, ...D, ...T, children: B }), o[23] = D, o[24] = T, o[25] = B, o[26] = M, o[27] = ce;
+  else ce = o[27];
+  return ce;
+}
+var yP = K;
+export {
+  yP
+};

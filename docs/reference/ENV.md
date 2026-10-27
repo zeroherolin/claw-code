@@ -1,0 +1,448 @@
+# 环境变量
+
+代码中以 `process.env.X` 读取的环境变量共 419 个，下表列出读取位置。
+
+## CLAUDE_CODE_*（93）
+
+| 变量 | 读取位置 |
+|---|---|
+| `CLAUDE_CODE_ACCOUNT_UUID` | [context/create-chrome-context.c2wr.js](../../src/context/create-chrome-context.c2wr.js) |
+| `CLAUDE_CODE_ACTION` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `CLAUDE_CODE_AGENT` | [cli/session-setup.jbe4.js](../../src/cli/session-setup.jbe4.js) |
+| `CLAUDE_CODE_ALT_SCREEN_FULL_REPAINT` | [shared/chunk-yzmdsjnh.js](../../src/shared/chunk-yzmdsjnh.js) |
+| `CLAUDE_CODE_API_BASE_URL` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js) |
+| `CLAUDE_CODE_API_KEY_FILE_DESCRIPTOR` | [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js) |
+| `CLAUDE_CODE_ATTRIBUTION_HEADER` | [auth/claude-desktop-3p.8h4z.js](../../src/auth/claude-desktop-3p.8h4z.js) |
+| `CLAUDE_CODE_BLOCKING_LIMIT_OVERRIDE` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_CODE_BRIDGE_MCP_CARRIER` | [remote/self-hosted.qq4m.js](../../src/remote/self-hosted.qq4m.js) |
+| `CLAUDE_CODE_BRIDGE_SESSION_ID` | [remote/chunk-c1rfegja.js](../../src/remote/chunk-c1rfegja.js) |
+| `CLAUDE_CODE_BYOC_ENABLE_DATADOG` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `CLAUDE_CODE_CLASSIFIER_SUMMARY` | [context/classifier-disabled-surfaces.x4d0.js](../../src/context/classifier-disabled-surfaces.x4d0.js) |
+| `CLAUDE_CODE_CONTAINER_ID` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `CLAUDE_CODE_COORDINATOR_EXTRA_TOOLS` | [shared/chunk-3fdmwcat.js](../../src/shared/chunk-3fdmwcat.js) |
+| `CLAUDE_CODE_COORDINATOR_MODE` | [agents/chunk-a331t11a.js](../../src/agents/chunk-a331t11a.js), [git/coordinator-mode-switched.c8v4.js](../../src/git/coordinator-mode-switched.c8v4.js) |
+| `CLAUDE_CODE_CUSTOM_OAUTH_URL` | [auth/oauth-2025-04-20.ke15.js](../../src/auth/oauth-2025-04-20.ke15.js) |
+| `CLAUDE_CODE_DAEMON_COLD_START` | [telemetry/fleet-past-sessions.vsk9.js](../../src/telemetry/fleet-past-sessions.vsk9.js) |
+| `CLAUDE_CODE_DISABLE_AUTO_MEMORY` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `CLAUDE_CODE_DISABLE_CLAUDE_MDS` | [cli/session-setup.jbe4.js](../../src/cli/session-setup.jbe4.js) |
+| `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `CLAUDE_CODE_DISABLE_PRECOMPACT_SKIP` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_CODE_DONT_INHERIT_ENV` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_CODE_ENABLE_APPEND_SUBAGENT_PROMPT` | [agents/agent-summary-skipped.fggh.js](../../src/agents/agent-summary-skipped.fggh.js) |
+| `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` | [context/ccr-recap-generate.bwce.js](../../src/context/ccr-recap-generate.bwce.js) |
+| `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | [core/query-loop.ae10.js](../../src/core/query-loop.ae10.js) |
+| `CLAUDE_CODE_ENABLE_PROXY_AUTH_HELPER` | [git/agent-proxy-standalone.tm99.js](../../src/git/agent-proxy-standalone.tm99.js) |
+| `CLAUDE_CODE_ENABLE_TELEMETRY` | [telemetry/agent-proxy-init.2ybv.js](../../src/telemetry/agent-proxy-init.2ybv.js), [telemetry/big-query-export-interval-ms.ekt2.js](../../src/telemetry/big-query-export-interval-ms.ekt2.js), [cli/root-command.fnas.js](../../src/cli/root-command.fnas.js) 等 4 处 |
+| `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA` | [agents/api-system.j9gt.js](../../src/agents/api-system.j9gt.js) |
+| `CLAUDE_CODE_ENTRYPOINT` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js), [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) 等 7 处 |
+| `CLAUDE_CODE_ENVIRONMENT_KIND` | [auth/guard-runner-review-tokens.1vxe.js](../../src/auth/guard-runner-review-tokens.1vxe.js), [settings/non-string-value.58dq.js](../../src/settings/non-string-value.58dq.js), [remote/turn-handoff-flag-wait.bej0.js](../../src/remote/turn-handoff-flag-wait.bej0.js) 等 5 处 |
+| `CLAUDE_CODE_ENVIRONMENT_RUNNER_VERSION` | [remote/turn-handoff-flag-wait.bej0.js](../../src/remote/turn-handoff-flag-wait.bej0.js) |
+| `CLAUDE_CODE_EXTRA_BODY` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_CODE_EXTRA_METADATA` | [core/system-prompt-blocks.dpjp.js](../../src/core/system-prompt-blocks.dpjp.js) |
+| `CLAUDE_CODE_FORCE_WINDOWS_CREDMAN` | [auth/secure-storage-credentials-write.vafw.js](../../src/auth/secure-storage-credentials-write.vafw.js) |
+| `CLAUDE_CODE_GATEWAY_TOKEN_FILE_DESCRIPTOR` | [auth/descriptor-direct.zd2z.js](../../src/auth/descriptor-direct.zd2z.js) |
+| `CLAUDE_CODE_GLOB_HIDDEN` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_CODE_GLOB_NO_IGNORE` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_CODE_HOST_AUTH_ENV_VAR` | [settings/non-string-value.58dq.js](../../src/settings/non-string-value.58dq.js) |
+| `CLAUDE_CODE_HOST_AUTH_REFRESH_TIMEOUT_MS` | [cli/headless-print-mode.tt02.js](../../src/cli/headless-print-mode.tt02.js) |
+| `CLAUDE_CODE_HOST_PLATFORM` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CLAUDE_CODE_HOVER_REST` | [cli.js](../../src/cli.js) |
+| `CLAUDE_CODE_IDLE_THRESHOLD_MINUTES` | [ui/repl-screen.zq77.js](../../src/ui/repl-screen.zq77.js) |
+| `CLAUDE_CODE_IDLE_TOKEN_THRESHOLD` | [ui/repl-screen.zq77.js](../../src/ui/repl-screen.zq77.js) |
+| `CLAUDE_CODE_JIT_POLICY_AFTER_STARTUP` | [cli.js](../../src/cli.js) |
+| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `CLAUDE_CODE_MAX_TURNS` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js) |
+| `CLAUDE_CODE_MCP_ALLOWLIST_ENV` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js) |
+| `CLAUDE_CODE_MESSAGING_SOCKET` | [artifacts/foreign-owner.14wx.js](../../src/artifacts/foreign-owner.14wx.js) |
+| `CLAUDE_CODE_OAUTH_CLIENT_ID` | [auth/oauth-2025-04-20.ke15.js](../../src/auth/oauth-2025-04-20.ke15.js), [auth/auth-login.msxz.js](../../src/auth/auth-login.msxz.js) |
+| `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` | [auth/auth-login.msxz.js](../../src/auth/auth-login.msxz.js) |
+| `CLAUDE_CODE_OAUTH_SCOPES` | [auth/auth-login.msxz.js](../../src/auth/auth-login.msxz.js) |
+| `CLAUDE_CODE_OAUTH_TOKEN` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js), [cli/bg-claim-env-dropped.j00y.js](../../src/cli/bg-claim-env-dropped.j00y.js) 等 5 处 |
+| `CLAUDE_CODE_ORGANIZATION_UUID` | [shared/sk-ant-sid.0hme.js](../../src/shared/sk-ant-sid.0hme.js) |
+| `CLAUDE_CODE_OTEL_HEADERS_HELPER_DEBOUNCE_MS` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE` | [computer-use/native-auto-updater-skipped-unverified-release.435s.js](../../src/computer-use/native-auto-updater-skipped-unverified-release.435s.js) |
+| `CLAUDE_CODE_PLUGIN_DIRS` | [cli.js](../../src/cli.js) |
+| `CLAUDE_CODE_PROJECT_DIR_NAME` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js) |
+| `CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST` | [settings/non-string-value.58dq.js](../../src/settings/non-string-value.58dq.js) |
+| `CLAUDE_CODE_RATE_LIMIT_TIER` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js), [auth/descriptor-direct.zd2z.js](../../src/auth/descriptor-direct.zd2z.js) |
+| `CLAUDE_CODE_REFUSAL_FALLBACK_CATCH_ALL` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `CLAUDE_CODE_REMOTE` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [telemetry/agent-proxy-init.2ybv.js](../../src/telemetry/agent-proxy-init.2ybv.js), [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js) 等 6 处 |
+| `CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE` | [auth/guard-runner-review-tokens.1vxe.js](../../src/auth/guard-runner-review-tokens.1vxe.js), [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [remote/self-hosted.qq4m.js](../../src/remote/self-hosted.qq4m.js) |
+| `CLAUDE_CODE_REMOTE_MEMORY_DIR` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [context/org-memory-writes-setting-changed.w8x9.js](../../src/context/org-memory-writes-setting-changed.w8x9.js) |
+| `CLAUDE_CODE_REMOTE_SESSION_ID` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js), [git/agent-proxy-download-queue.ctkh.js](../../src/git/agent-proxy-download-queue.ctkh.js) 等 6 处 |
+| `CLAUDE_CODE_REMOTE_SESSION_ORIGIN` | [auth/guard-runner-review-tokens.1vxe.js](../../src/auth/guard-runner-review-tokens.1vxe.js), [cli.js](../../src/cli.js) |
+| `CLAUDE_CODE_RESTRICTED` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js), [cli.js](../../src/cli.js) |
+| `CLAUDE_CODE_SAFE_MODE` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js), [cli/session-setup.jbe4.js](../../src/cli/session-setup.jbe4.js) |
+| `CLAUDE_CODE_SCRIPT_CAPS` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js) |
+| `CLAUDE_CODE_SESSION_ACCESS_TOKEN` | [shared/sk-ant-sid.0hme.js](../../src/shared/sk-ant-sid.0hme.js), [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [cli/main.q3ah.js](../../src/cli/main.q3ah.js) |
+| `CLAUDE_CODE_SESSION_ID` | [hooks/conversation-reset.kqj9.js](../../src/hooks/conversation-reset.kqj9.js), [remote/self-hosted.qq4m.js](../../src/remote/self-hosted.qq4m.js) |
+| `CLAUDE_CODE_SESSION_KIND` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js), [fs/chunk-kqpf5fh3.js](../../src/fs/chunk-kqpf5fh3.js), [cli.js](../../src/cli.js) |
+| `CLAUDE_CODE_SHELL` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_CODE_SIMPLE` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js), [cli/session-setup.jbe4.js](../../src/cli/session-setup.jbe4.js), [cli.js](../../src/cli.js) |
+| `CLAUDE_CODE_SKIP_PROMPT_HISTORY` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js) |
+| `CLAUDE_CODE_SLOW_OPERATION_THRESHOLD_MS` | [fs/gitlab-runner-authentication-token.d7b0.js](../../src/fs/gitlab-runner-authentication-token.d7b0.js) |
+| `CLAUDE_CODE_SPAWNED_BY_SERVER` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CLAUDE_CODE_SPAWN_TIMESTAMP_MS` | [mcp/init-function-end.wpfb.js](../../src/mcp/init-function-end.wpfb.js) |
+| `CLAUDE_CODE_STARTUP_FAILURE_RESULTS` | [cli/stream-json.eyx7.js](../../src/cli/stream-json.eyx7.js) |
+| `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js), [settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js](../../src/settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js) |
+| `CLAUDE_CODE_SUBSCRIPTION_TYPE` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js), [auth/descriptor-direct.zd2z.js](../../src/auth/descriptor-direct.zd2z.js) |
+| `CLAUDE_CODE_SUPERVISED` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js) |
+| `CLAUDE_CODE_TAGS` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `CLAUDE_CODE_TEE_SDK_STDOUT` | [remote/turn-handoff-flag-wait.bej0.js](../../src/remote/turn-handoff-flag-wait.bej0.js) |
+| `CLAUDE_CODE_TEST_ALLOW_REAL_NETWORK` | [mcp/allowed-warning.j2d4.js](../../src/mcp/allowed-warning.j2d4.js) |
+| `CLAUDE_CODE_TMPDIR` | [fs/chunk-grdrre0t.js](../../src/fs/chunk-grdrre0t.js) |
+| `CLAUDE_CODE_USE_ANTHROPIC_AWS` | [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `CLAUDE_CODE_USE_ANTHROPIC_GOOGLE_CLOUD` | [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `CLAUDE_CODE_USE_BEDROCK` | [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `CLAUDE_CODE_USE_FOUNDRY` | [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `CLAUDE_CODE_USE_MANTLE` | [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `CLAUDE_CODE_USE_POWERSHELL_TOOL` | [plugins/advertised-command-is-offered.7amc.js](../../src/plugins/advertised-command-is-offered.7amc.js) |
+| `CLAUDE_CODE_USE_VERTEX` | [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `CLAUDE_CODE_WORKER_EPOCH` | [cli/headless-print-mode.tt02.js](../../src/cli/headless-print-mode.tt02.js) |
+
+## CLAUDE_*（51）
+
+| 变量 | 读取位置 |
+|---|---|
+| `CLAUDE_AFTER_LAST_COMPACT` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_AGENTS_SELECT` | [ui/bg-agent-action.78g8.js](../../src/ui/bg-agent-action.78g8.js), [cli/main.q3ah.js](../../src/cli/main.q3ah.js), [ui/repl-screen.zq77.js](../../src/ui/repl-screen.zq77.js) |
+| `CLAUDE_AGENT_SDK_CLIENT_APP` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `CLAUDE_AGENT_SDK_VERSION` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [mcp/request-user-dialog-response-ignored.bnzw.js](../../src/mcp/request-user-dialog-response-ignored.bnzw.js), [telemetry/session-title-generated.q7p9.js](../../src/telemetry/session-title-generated.q7p9.js) |
+| `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js) |
+| `CLAUDE_BG_AUTH_SNAPSHOT_PATH` | [auth/descriptor-direct.zd2z.js](../../src/auth/descriptor-direct.zd2z.js) |
+| `CLAUDE_BG_BACKEND` | [auth/is-desktop-entrypoint-exempted.n5kh.js](../../src/auth/is-desktop-entrypoint-exempted.n5kh.js) |
+| `CLAUDE_BG_CLAIM_AUTH` | [telemetry/bg-adopt-token-lost-respawn.dcyd.js](../../src/telemetry/bg-adopt-token-lost-respawn.dcyd.js) |
+| `CLAUDE_BG_PTY_AUTH` | [shell/run-pty-host.404z.js](../../src/shell/run-pty-host.404z.js) |
+| `CLAUDE_BG_RENDEZVOUS_SOCK` | [agents/attacher-caps.afft.js](../../src/agents/attacher-caps.afft.js) |
+| `CLAUDE_BG_RV_AUTH` | [agents/attacher-caps.afft.js](../../src/agents/attacher-caps.afft.js) |
+| `CLAUDE_BG_SOCKET_TOKENS_PATH` | [shell/run-pty-host.404z.js](../../src/shell/run-pty-host.404z.js), [agents/attacher-caps.afft.js](../../src/agents/attacher-caps.afft.js), [telemetry/bg-adopt-token-lost-respawn.dcyd.js](../../src/telemetry/bg-adopt-token-lost-respawn.dcyd.js) |
+| `CLAUDE_BG_SOURCE` | [ui/repl-screen.zq77.js](../../src/ui/repl-screen.zq77.js) |
+| `CLAUDE_BG_TCC_DISCLAIMED` | [computer-use/chunk-p4yndg32.js](../../src/computer-use/chunk-p4yndg32.js) |
+| `CLAUDE_BRIDGE_REATTACH_GROUPING` | [remote/init-repl-bridge.ws9c.js](../../src/remote/init-repl-bridge.ws9c.js) |
+| `CLAUDE_BRIDGE_REATTACH_NO_BACKFILL` | [remote/init-repl-bridge.ws9c.js](../../src/remote/init-repl-bridge.ws9c.js) |
+| `CLAUDE_BRIDGE_REATTACH_OUTBOUND_ONLY` | [remote/init-repl-bridge.ws9c.js](../../src/remote/init-repl-bridge.ws9c.js) |
+| `CLAUDE_BRIDGE_REATTACH_OWNER_ACCT` | [remote/init-repl-bridge.ws9c.js](../../src/remote/init-repl-bridge.ws9c.js) |
+| `CLAUDE_BRIDGE_REATTACH_OWNER_ORG` | [remote/init-repl-bridge.ws9c.js](../../src/remote/init-repl-bridge.ws9c.js) |
+| `CLAUDE_BRIDGE_REATTACH_SEQ` | [remote/init-repl-bridge.ws9c.js](../../src/remote/init-repl-bridge.ws9c.js) |
+| `CLAUDE_BRIDGE_REATTACH_SESSION` | [remote/init-repl-bridge.ws9c.js](../../src/remote/init-repl-bridge.ws9c.js) |
+| `CLAUDE_BYTE_STREAM_IDLE_TIMEOUT_MS` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `CLAUDE_CHROME_PERMISSION_MODE` | [context/create-chrome-context.c2wr.js](../../src/context/create-chrome-context.c2wr.js) |
+| `CLAUDE_CONFIG_DIR` | [skills/disable-model-invocation.043y.js](../../src/skills/disable-model-invocation.043y.js), [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js), [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js) 等 11 处 |
+| `CLAUDE_COWORK_MEMORY_EXTRA_GUIDELINES` | [context/org-memory-writes-setting-changed.w8x9.js](../../src/context/org-memory-writes-setting-changed.w8x9.js) |
+| `CLAUDE_COWORK_MEMORY_INDEX_CONTENT` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_FORCE_DISPLAY_SURVEY` | [ui/repl-screen.zq77.js](../../src/ui/repl-screen.zq77.js) |
+| `CLAUDE_INTERNAL_ASSISTANT_TEAM_NAME` | [agents/initialize-session-team.d34y.js](../../src/agents/initialize-session-team.d34y.js) |
+| `CLAUDE_INTERNAL_FC_OVERRIDES` | [cli.js](../../src/cli.js) |
+| `CLAUDE_JOB_DIR` | [fs/backed-up.p1qn.js](../../src/fs/backed-up.p1qn.js), [context/org-memory-writes-setting-changed.w8x9.js](../../src/context/org-memory-writes-setting-changed.w8x9.js), [ui/repl-screen.zq77.js](../../src/ui/repl-screen.zq77.js) |
+| `CLAUDE_LOCAL_OAUTH_API_BASE` | [auth/oauth-2025-04-20.ke15.js](../../src/auth/oauth-2025-04-20.ke15.js) |
+| `CLAUDE_LOCAL_OAUTH_APPS_BASE` | [auth/oauth-2025-04-20.ke15.js](../../src/auth/oauth-2025-04-20.ke15.js) |
+| `CLAUDE_LOCAL_OAUTH_CONSOLE_BASE` | [auth/oauth-2025-04-20.ke15.js](../../src/auth/oauth-2025-04-20.ke15.js) |
+| `CLAUDE_MEMORY_STORES` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [context/org-memory-writes-setting-changed.w8x9.js](../../src/context/org-memory-writes-setting-changed.w8x9.js) |
+| `CLAUDE_PTY_HEARTBEAT_MS` | [shell/run-pty-host.404z.js](../../src/shell/run-pty-host.404z.js) |
+| `CLAUDE_PTY_HOST_EXEC` | [shell/run-pty-host.404z.js](../../src/shell/run-pty-host.404z.js) |
+| `CLAUDE_PTY_ORPHAN_CHECK_MS` | [shell/run-pty-host.404z.js](../../src/shell/run-pty-host.404z.js) |
+| `CLAUDE_PTY_RECORD` | [shell/run-pty-host.404z.js](../../src/shell/run-pty-host.404z.js) |
+| `CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX` | [shared/remote-control.063d.js](../../src/shared/remote-control.063d.js), [cli/session-setup.jbe4.js](../../src/cli/session-setup.jbe4.js), [remote/bridge-main.smv5.js](../../src/remote/bridge-main.smv5.js) |
+| `CLAUDE_RUNNER_ACTIVITY_FD` | [remote/turn-handoff-flag-wait.bej0.js](../../src/remote/turn-handoff-flag-wait.bej0.js) |
+| `CLAUDE_RUNNER_SKIP_GIT_VERIFY` | [git/anthropic-version.9f2y.js](../../src/git/anthropic-version.9f2y.js) |
+| `CLAUDE_RUNNER_USE_GIT_PROXY` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `CLAUDE_SECURESTORAGE_CONFIG_DIR` | [agents/spawn-teammate.t0ds.js](../../src/agents/spawn-teammate.t0ds.js), [auth/claude-code-user.tvhr.js](../../src/auth/claude-code-user.tvhr.js) |
+| `CLAUDE_SESSION_INGRESS_TOKEN_FILE` | [shared/sk-ant-sid.0hme.js](../../src/shared/sk-ant-sid.0hme.js) |
+| `CLAUDE_SLOW_FIRST_BYTE_MS` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CLAUDE_SSH_DAEMON_CHILD` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CLAUDE_SSH_RUN_DIR` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CLAUDE_STREAM_IDLE_TIMEOUT_MS` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `CLAUDE_TMPDIR` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js), [fs/chunk-grdrre0t.js](../../src/fs/chunk-grdrre0t.js) |
+| `CLAUDE_TRUSTED_DEVICE_TOKEN` | [remote/sessions-elevated-auth-disable-proactive-enrollment.q95y.js](../../src/remote/sessions-elevated-auth-disable-proactive-enrollment.q95y.js) |
+
+## ANTHROPIC_*（22）
+
+| 变量 | 读取位置 |
+|---|---|
+| `ANTHROPIC_API_KEY` | [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js), [cli/bg-claim-env-dropped.j00y.js](../../src/cli/bg-claim-env-dropped.j00y.js), [auth/auth-login.msxz.js](../../src/auth/auth-login.msxz.js) |
+| `ANTHROPIC_AUTH_TOKEN` | [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js), [cli/bg-claim-env-dropped.j00y.js](../../src/cli/bg-claim-env-dropped.j00y.js) |
+| `ANTHROPIC_AWS_API_KEY` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js), [vendor/zod/start-gateway.ycyj.js](../../src/vendor/zod/start-gateway.ycyj.js) |
+| `ANTHROPIC_AWS_BASE_URL` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `ANTHROPIC_BASE_URL` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js), [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) 等 8 处 |
+| `ANTHROPIC_BEDROCK_BASE_URL` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `ANTHROPIC_BEDROCK_MANTLE_BASE_URL` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `ANTHROPIC_BEDROCK_SERVICE_TIER` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `ANTHROPIC_CONFIG_DIR` | [plugins/plugin-eval-handler.jvea.js](../../src/plugins/plugin-eval-handler.jvea.js) |
+| `ANTHROPIC_CUSTOM_HEADERS` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `ANTHROPIC_DEFAULT_HAIKU_MODEL` | [telemetry/mantle-default-fallback.6m0a.js](../../src/telemetry/mantle-default-fallback.6m0a.js) |
+| `ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION` | [telemetry/mantle-default-fallback.6m0a.js](../../src/telemetry/mantle-default-fallback.6m0a.js) |
+| `ANTHROPIC_DEFAULT_OPUS_MODEL_NAME` | [telemetry/mantle-default-fallback.6m0a.js](../../src/telemetry/mantle-default-fallback.6m0a.js) |
+| `ANTHROPIC_FEDERATION_RULE_ID` | [auth/profile-explicit.b7t3.js](../../src/auth/profile-explicit.b7t3.js) |
+| `ANTHROPIC_FOUNDRY_API_KEY` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `ANTHROPIC_MODEL` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js), [cli/main.q3ah.js](../../src/cli/main.q3ah.js) 等 4 处 |
+| `ANTHROPIC_ORGANIZATION_ID` | [auth/profile-explicit.b7t3.js](../../src/auth/profile-explicit.b7t3.js) |
+| `ANTHROPIC_PROFILE` | [auth/profile-explicit.b7t3.js](../../src/auth/profile-explicit.b7t3.js), [plugins/plugin-eval-handler.jvea.js](../../src/plugins/plugin-eval-handler.jvea.js) |
+| `ANTHROPIC_SMALL_FAST_MODEL` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `ANTHROPIC_UNIX_SOCKET` | [settings/non-string-value.58dq.js](../../src/settings/non-string-value.58dq.js), [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js) |
+| `ANTHROPIC_VERTEX_BASE_URL` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `ANTHROPIC_WORKSPACE_ID` | [auth/profile-explicit.b7t3.js](../../src/auth/profile-explicit.b7t3.js) |
+
+## 云厂商 / OTEL（43）
+
+| 变量 | 读取位置 |
+|---|---|
+| `AWS_ACCESS_KEY_ID` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `AWS_BEARER_TOKEN_BEDROCK` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
+| `AWS_DEFAULT_REGION` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `AWS_EXECUTION_ENV` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `AWS_LAMBDA_BENCHMARK_MODE` | [vendor/aws-sdk/smithy-protocol.z380.js](../../src/vendor/aws-sdk/smithy-protocol.z380.js) |
+| `AWS_LAMBDA_FUNCTION_NAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `AWS_LAMBDA_NODEJS_NO_GLOBAL_AWSLAMBDA` | [vendor/aws-sdk/smithy-protocol.z380.js](../../src/vendor/aws-sdk/smithy-protocol.z380.js) |
+| `AWS_LOGIN_CACHE_DIRECTORY` | [vendor/aws-sdk/refresh-token.e53s.js](../../src/vendor/aws-sdk/refresh-token.e53s.js) |
+| `AWS_PROFILE` | [ide/create-credential-chain.vghf.js](../../src/ide/create-credential-chain.vghf.js) |
+| `AWS_REGION` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js), [vendor/aws-sdk/refresh-token.e53s.js](../../src/vendor/aws-sdk/refresh-token.e53s.js) |
+| `AWS_SECRET_ACCESS_KEY` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `AWS_SESSION_TOKEN` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `AZURE_ADDITIONALLY_ALLOWED_TENANTS` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_AUTHORITY_HOST` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_CLIENT_CERTIFICATE_PASSWORD` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_CLIENT_CERTIFICATE_PATH` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_CLIENT_ID` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_CLIENT_SECRET` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_FEDERATED_TOKEN_FILE` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_FUNCTIONS_ENVIRONMENT` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `AZURE_IDENTITY_DISABLE_MULTITENANTAUTH` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_PASSWORD` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_POD_IDENTITY_AUTHORITY_HOST` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_REGIONAL_AUTHORITY_NAME` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_TENANT_ID` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_TOKEN_CREDENTIALS` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `AZURE_USERNAME` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `CLOUD_ML_REGION` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js) |
+| `GCLOUD_PROJECT` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GOOGLE_APPLICATION_CREDENTIALS` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GOOGLE_CLOUD_PROJECT` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GOOGLE_CLOUD_QUOTA_PROJECT` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GOOGLE_CLOUD_WORKSTATIONS` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `OTEL_EXPORTER_OTLP_HEADERS` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `OTEL_EXPORTER_OTLP_INSECURE` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE` | [telemetry/big-query-export-interval-ms.ekt2.js](../../src/telemetry/big-query-export-interval-ms.ekt2.js) |
+| `OTEL_EXPORTER_PROMETHEUS_HOST` | [vendor/opentelemetry/target-info.rnpy.js](../../src/vendor/opentelemetry/target-info.rnpy.js) |
+| `OTEL_EXPORTER_PROMETHEUS_PORT` | [vendor/opentelemetry/target-info.rnpy.js](../../src/vendor/opentelemetry/target-info.rnpy.js) |
+| `OTEL_LOGS_EXPORT_INTERVAL` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `OTEL_LOG_RAW_API_BODIES` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `OTEL_LOG_TOOL_CONTENT` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+
+## 其他（210）
+
+| 变量 | 读取位置 |
+|---|---|
+| `AI_AGENT` | [remote/claude-code-remote.yeyj.js](../../src/remote/claude-code-remote.yeyj.js) |
+| `ALACRITTY_LOG` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `ALL_PROXY` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [git/rev-parse.m8nf.js](../../src/git/rev-parse.m8nf.js) |
+| `API_FORCE_IDLE_TIMEOUT` | [vendor/aws-sdk/ca-certs-load.ft7b.js](../../src/vendor/aws-sdk/ca-certs-load.ft7b.js) |
+| `APPDATA` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js), [plugins/plugin-eval-handler.jvea.js](../../src/plugins/plugin-eval-handler.jvea.js) |
+| `APP_URL` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `AUTOMODE_DECISION_LOG` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `BASH_MAX_OUTPUT_LENGTH` | [telemetry/binary-content-persisted.1yt1.js](../../src/telemetry/binary-content-persisted.1yt1.js) |
+| `BETA_TRACING_ENDPOINT` | [agents/api-system.j9gt.js](../../src/agents/api-system.j9gt.js) |
+| `BROWSER` | [agents/attacher-caps.afft.js](../../src/agents/attacher-caps.afft.js) |
+| `BUF_BIGINT_DISABLE` | [shell/sandbox.aet2.js](../../src/shell/sandbox.aet2.js) |
+| `BUGHUNTER_DEV_BUNDLE_B64` | [git/review-remote-precondition-failed.8dsf.js](../../src/git/review-remote-precondition-failed.8dsf.js) |
+| `BUGHUNTER_FLEET_SIZE` | [context/classifier-disabled-surfaces.x4d0.js](../../src/context/classifier-disabled-surfaces.x4d0.js) |
+| `BUILDKITE` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `C9_PID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `C9_USER` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CCR_AGENT_PROXY_TOKEN_FILE_DESCRIPTOR` | [auth/guard-relay-token-descriptor.950w.js](../../src/auth/guard-relay-token-descriptor.950w.js), [cli.js](../../src/cli.js) |
+| `CCR_ON_BRANCH_DEFAULT_GUARD` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `CCR_SHR_SSE_HINTS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `CCR_SPAWN_TIMESTAMP_MS` | [mcp/spawn-to-exec-ms.vdbg.js](../../src/mcp/spawn-to-exec-ms.vdbg.js), [mcp/init-function-end.wpfb.js](../../src/mcp/init-function-end.wpfb.js) |
+| `CF_PAGES` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CHOKIDAR_INTERVAL` | [fs/files-directories.md42.js](../../src/fs/files-directories.md42.js) |
+| `CHOKIDAR_USEPOLLING` | [fs/files-directories.md42.js](../../src/fs/files-directories.md42.js) |
+| `CIRCLECI` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CLIPBOARD_NAPI_NODE_PATH` | [terminal/wl-copy.gdbt.js](../../src/terminal/wl-copy.gdbt.js) |
+| `CLOUDSDK_CONFIG` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `CLOUD_RUN_JOB` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `CODER` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CODER_WORKSPACE_NAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `CODESPACES` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `COMSPEC` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `COREPACK_ENABLE_AUTO_PIN` | [cli.js](../../src/cli.js) |
+| `CURSOR_TRACE_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [terminal/aria-preserve-whitespace.s6ps.js](../../src/terminal/aria-preserve-whitespace.s6ps.js), [ui/scroll-speed-set.ywv8.js](../../src/ui/scroll-speed-set.ywv8.js) |
+| `ConEmuANSI` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `ConEmuPID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `ConEmuTask` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `DAYTONA_WS_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `DEBUG` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js), [fs/content-encoding.v6wj.js](../../src/fs/content-encoding.v6wj.js) |
+| `DEBUG_AUTH` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `DENO_DEPLOYMENT_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `DETECT_GCP_RETRIES` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `DEVPOD` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `DEVPOD_WORKSPACE_UID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `DISABLE_AUTOUPDATER` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `DISABLE_COMPACT` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js), [context/hard-limit.52rs.js](../../src/context/hard-limit.52rs.js) 等 7 处 |
+| `DISABLE_ERROR_REPORTING` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js), [auth/allowed-taints-clean.v8z4.js](../../src/auth/allowed-taints-clean.v8z4.js) |
+| `DISABLE_GROWTHBOOK` | [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js), [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `DISABLE_INSTALLATION_CHECKS` | [computer-use/native-auto-updater-skipped-unverified-release.435s.js](../../src/computer-use/native-auto-updater-skipped-unverified-release.435s.js), [telemetry/version-lock-acquired.cpwy.js](../../src/telemetry/version-lock-acquired.cpwy.js), [fs/npm-global.xrw6.js](../../src/fs/npm-global.xrw6.js) 等 4 处 |
+| `DISABLE_TELEMETRY` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `DISPLAY` | [terminal/wl-copy.gdbt.js](../../src/terminal/wl-copy.gdbt.js) |
+| `DO_NOT_TRACK` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [artifacts/cowritten-artifact-html.thm2.js](../../src/artifacts/cowritten-artifact-html.thm2.js) |
+| `DYNO` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `ENABLE_CLAUDEAI_MCP_SERVERS` | [mcp/claudeai-mcp-eligibility.x1b6.js](../../src/mcp/claudeai-mcp-eligibility.x1b6.js) |
+| `ENABLE_ENHANCED_TELEMETRY_BETA` | [agents/api-system.j9gt.js](../../src/agents/api-system.j9gt.js) |
+| `ENABLE_TOOL_SEARCH` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js), [mcp/tool-search-unsupported-models.9b5s.js](../../src/mcp/tool-search-unsupported-models.9b5s.js) |
+| `FLY_APP_NAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `FLY_MACHINE_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `FORCE_CODE_TERMINAL` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `FORCE_COLOR` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `FUNCTION_NAME` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `FUNCTION_TARGET` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GAE_MODULE_NAME` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GAE_SERVICE` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GCE_METADATA_HOST` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GCE_METADATA_IP` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `GH_ENTERPRISE_TOKEN` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js) |
+| `GH_HOST` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js) |
+| `GH_TOKEN` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js) |
+| `GITHUB_ACTIONS` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js](../../src/settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js), [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `GITHUB_ACTION_PATH` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js), [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `GITHUB_ENTERPRISE_TOKEN` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js) |
+| `GITHUB_ENV` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js) |
+| `GITHUB_EVENT_NAME` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `GITHUB_EVENT_PATH` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js) |
+| `GITHUB_TOKEN` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js) |
+| `GITHUB_WORKSPACE` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js) |
+| `GITLAB_CI` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `GITPOD_WORKSPACE_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `GIT_CONFIG_COUNT` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [fs/chunk-grdrre0t.js](../../src/fs/chunk-grdrre0t.js) |
+| `GIT_CONFIG_GLOBAL` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [git/agent-proxy-download-queue.ctkh.js](../../src/git/agent-proxy-download-queue.ctkh.js) |
+| `GIT_SSH_COMMAND` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [git/rev-parse.m8nf.js](../../src/git/rev-parse.m8nf.js) |
+| `GNOME_TERMINAL_SERVICE` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `GRACEFUL_FS_PLATFORM` | [fs/chunk-w461d8x8.js](../../src/fs/chunk-w461d8x8.js) |
+| `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `GRPC_EXPERIMENTAL_ENABLE_OUTLIER_DETECTION` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `GRPC_NODE_TRACE` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `GRPC_NODE_USE_ALTERNATIVE_RESOLVER` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `GRPC_NODE_VERBOSITY` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `GRPC_SSL_CIPHER_SUITES` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `GRPC_TRACE` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `GRPC_VERBOSITY` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `HOME` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `HTTPS_PROXY` | [shared/proxy-authorization.9yrv.js](../../src/shared/proxy-authorization.9yrv.js), [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [git/agent-proxy-download-queue.ctkh.js](../../src/git/agent-proxy-download-queue.ctkh.js) 等 5 处 |
+| `HTTP_PROXY` | [shared/proxy-authorization.9yrv.js](../../src/shared/proxy-authorization.9yrv.js), [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `INK_SCREEN_READER` | [terminal/ink-renderer.pma0.js](../../src/terminal/ink-renderer.pma0.js) |
+| `INTELLIJ_TERMINAL_COMMAND_BLOCKS` | [terminal/aria-preserve-whitespace.s6ps.js](../../src/terminal/aria-preserve-whitespace.s6ps.js) |
+| `INTELLIJ_TERMINAL_COMMAND_BLOCKS_REWORKED` | [terminal/aria-preserve-whitespace.s6ps.js](../../src/terminal/aria-preserve-whitespace.s6ps.js) |
+| `IS_SANDBOX` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [auth/is-desktop-entrypoint-exempted.n5kh.js](../../src/auth/is-desktop-entrypoint-exempted.n5kh.js) |
+| `JAVA_TOOL_OPTIONS` | [shell/sandbox.aet2.js](../../src/shell/sandbox.aet2.js) |
+| `KITTY_WINDOW_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `KONSOLE_VERSION` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `KUBERNETES_SERVICE_HOST` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `K_CONFIGURATION` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `K_SERVICE` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `LOCALAPPDATA` | [computer-use/native-auto-updater-skipped-unverified-release.435s.js](../../src/computer-use/native-auto-updater-skipped-unverified-release.435s.js), [fs/node-modules.gp4v.js](../../src/fs/node-modules.gp4v.js) |
+| `MAX_THINKING_TOKENS` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [cli/session-setup.jbe4.js](../../src/cli/session-setup.jbe4.js) |
+| `MCP_CLIENT_SECRET` | [auth/mcp-oauth-flow-success.6nzk.js](../../src/auth/mcp-oauth-flow-success.6nzk.js), [auth/mcp-oauth-flow-success.d02e.js](../../src/auth/mcp-oauth-flow-success.d02e.js) |
+| `METADATA_SERVER_DETECTION` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `MSYSTEM` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [git/utf-8.vh7e.js](../../src/git/utf-8.vh7e.js) |
+| `NETLIFY` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `NODE_DEBUG` | [mcp/allowed-warning.j2d4.js](../../src/mcp/allowed-warning.j2d4.js), [fs/chunk-w461d8x8.js](../../src/fs/chunk-w461d8x8.js) |
+| `NODE_EXTRA_CA_CERTS` | [shell/sandbox.aet2.js](../../src/shell/sandbox.aet2.js), [settings/config-read-failed.p199.js](../../src/settings/config-read-failed.p199.js) |
+| `NODE_OPTIONS` | [models/claude-3-5-sonnet.21mz.js](../../src/models/claude-3-5-sonnet.21mz.js), [cli.js](../../src/cli.js) |
+| `NO_PROXY` | [shared/proxy-authorization.9yrv.js](../../src/shared/proxy-authorization.9yrv.js), [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js), [fs/content-encoding.v6wj.js](../../src/fs/content-encoding.v6wj.js) 等 4 处 |
+| `NoDefaultCurrentDirectoryInExePath` | [mcp/request-user-dialog-response-ignored.bnzw.js](../../src/mcp/request-user-dialog-response-ignored.bnzw.js), [cli/main.q3ah.js](../../src/cli/main.q3ah.js), [cli.js](../../src/cli.js) |
+| `OSTYPE` | [context/tool-cgroup-exclude-classes.t1za.js](../../src/context/tool-cgroup-exclude-classes.t1za.js) |
+| `P4PORT` | [fs/chunk-dz0rx1wn.js](../../src/fs/chunk-dz0rx1wn.js) |
+| `PATH` | [git/ssh-placeholder.1144.js](../../src/git/ssh-placeholder.1144.js), [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [shell/sandbox.aet2.js](../../src/shell/sandbox.aet2.js) 等 6 处 |
+| `PATHEXT` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [shell/sandbox.aet2.js](../../src/shell/sandbox.aet2.js), [context/tool-cgroup-exclude-classes.t1za.js](../../src/context/tool-cgroup-exclude-classes.t1za.js) |
+| `PROJECT_DOMAIN` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `ProgramData` | [shell/sandbox.aet2.js](../../src/shell/sandbox.aet2.js), [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `ProgramFiles` | [auth/get-bearer-token-provider.hrvv.js](../../src/auth/get-bearer-token-provider.hrvv.js) |
+| `RAILWAY_ENVIRONMENT_NAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `RAILWAY_SERVICE_NAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `RENDER` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `REPL_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `REPL_SLUG` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `RUNNER_ENVIRONMENT` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `RUNNER_OS` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `SDK_NATIVE_BIN` | [mcp/request-user-dialog-response-ignored.bnzw.js](../../src/mcp/request-user-dialog-response-ignored.bnzw.js) |
+| `SELF_HOSTED_RUNNER_BASE_DIR` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_CHECKOUT_HOOK_TIMEOUT_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_CLIENT_LABEL` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_CONFIGURE_GIT` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_CONFINE_REPO_SETTINGS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_DEBUG_DIR` | [remote/self-hosted-runner-orchestrator-main.7e2a.js](../../src/remote/self-hosted-runner-orchestrator-main.7e2a.js) |
+| `SELF_HOSTED_RUNNER_DEBUG_TOKEN_DIR` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_DEFER_SHUTDOWN_MAX_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_DIFF_FINDS_NESTED_REPOSITORY` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_DRAIN_GRACE_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_DRAIN_MARKER_FILE` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_DRAIN_WAIT_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_ENVIRONMENT_SECRET` | [remote/self-hosted-runner-orchestrator-main.7e2a.js](../../src/remote/self-hosted-runner-orchestrator-main.7e2a.js), [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_EXEC_PATH` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_HEALTH_PORT` | [remote/self-hosted-runner-orchestrator-main.7e2a.js](../../src/remote/self-hosted-runner-orchestrator-main.7e2a.js), [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_HOOKS_DIR` | [remote/self-hosted-runner-orchestrator-main.7e2a.js](../../src/remote/self-hosted-runner-orchestrator-main.7e2a.js), [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_HOST_CONFIG_DIR` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_HOST_CONFIG_SNAPSHOT` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_IDLE_SHUTDOWN_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_LOCK_TO_ACCOUNT` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_LOG_FILE` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_MAX_LIFETIME_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_POOL_SECRET` | [remote/self-hosted-runner-orchestrator-main.7e2a.js](../../src/remote/self-hosted-runner-orchestrator-main.7e2a.js), [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_POST_SESSION_HOOK_TIMEOUT_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_PUSH_OUTCOME_ON_RELEASE` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_REMOVE_SESSION_STATE` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_RETIRE_AT` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_SERVER_AUTO_MODE_LISTS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_SESSION_IDLE_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_SESSION_STOP_GRACE_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_SIGKILL_TIMEOUT_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_STARTUP_TIMEOUT_MS` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SELF_HOSTED_RUNNER_TRUST_WORKSPACE` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) |
+| `SESSIONNAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `SESSION_INGRESS_URL` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js), [remote/self-hosted.qq4m.js](../../src/remote/self-hosted.qq4m.js) |
+| `SHELL` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [shell/chunk-tjkwy3jp.js](../../src/shell/chunk-tjkwy3jp.js) |
+| `SLASH_COMMAND_TOOL_CHAR_BUDGET` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
+| `SPACE_CREATOR_USER_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `SRT_DEBUG` | [fs/chunk-grdrre0t.js](../../src/fs/chunk-grdrre0t.js) |
+| `SSH_CLIENT` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `SSH_CONNECTION` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `SSH_TTY` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `SSL_CERT_FILE` | [git/agent-proxy-download-queue.ctkh.js](../../src/git/agent-proxy-download-queue.ctkh.js) |
+| `STY` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `SWE_BENCH_INSTANCE_ID` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `SWE_BENCH_RUN_ID` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `SWE_BENCH_TASK_ID` | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js) |
+| `SystemRoot` | [shell/sandbox.aet2.js](../../src/shell/sandbox.aet2.js) |
+| `TERM` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `TERMINAL_EMULATOR` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `TERMINATOR_UUID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `TERM_PROGRAM` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `TEST_GRACEFUL_FS_GLOBAL_PATCH` | [fs/chunk-w461d8x8.js](../../src/fs/chunk-w461d8x8.js) |
+| `TILIX_ID` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `TMUX` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `USER` | [auth/claude-code-user.tvhr.js](../../src/auth/claude-code-user.tvhr.js) |
+| `VERCEL` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `VSCODE_GIT_ASKPASS_MAIN` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `VTE_VERSION` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `VisualStudioVersion` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `WAYLAND_DISPLAY` | [terminal/wl-copy.gdbt.js](../../src/terminal/wl-copy.gdbt.js) |
+| `WEBSITE_SITE_NAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `WEBSITE_SKU` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `WINDIR` | [computer-use/bad-args.dcp0.js](../../src/computer-use/bad-args.dcp0.js) |
+| `WSL_DISTRO_NAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `WT_SESSION` | [vendor/yoga/render-glyph-cardinality.7car.js](../../src/vendor/yoga/render-glyph-cardinality.7car.js), [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [terminal/ink-renderer.pma0.js](../../src/terminal/ink-renderer.pma0.js) |
+| `XDG_CONFIG_HOME` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [plugins/plugin-eval-handler.jvea.js](../../src/plugins/plugin-eval-handler.jvea.js) |
+| `XDG_RUNTIME_DIR` | [ide/create-lsp-client.6fqf.js](../../src/ide/create-lsp-client.6fqf.js), [plugins/plugin-eval-handler.jvea.js](../../src/plugins/plugin-eval-handler.jvea.js) |
+| `XTERM_VERSION` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
+| `ZELLIJ` | [terminal/ink-renderer.pma0.js](../../src/terminal/ink-renderer.pma0.js), [terminal/aria-preserve-whitespace.s6ps.js](../../src/terminal/aria-preserve-whitespace.s6ps.js), [telemetry/bg-attach-outcome.zk9f.js](../../src/telemetry/bg-attach-outcome.zk9f.js) 等 4 处 |
+| `__CFBundleIdentifier` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [cli/main.q3ah.js](../../src/cli/main.q3ah.js) |
+| `all_proxy` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [git/rev-parse.m8nf.js](../../src/git/rev-parse.m8nf.js) |
+| `gcloud_project` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `google_application_credentials` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `google_cloud_project` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `grpc_proxy` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `http_proxy` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js), [shared/proxy-authorization.9yrv.js](../../src/shared/proxy-authorization.9yrv.js), [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) |
+| `https_proxy` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js), [shared/proxy-authorization.9yrv.js](../../src/shared/proxy-authorization.9yrv.js), [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js) 等 5 处 |
+| `no_grpc_proxy` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js) |
+| `no_proxy` | [vendor/grpc/proto3-optional.3vy3.js](../../src/vendor/grpc/proto3-optional.3vy3.js), [shared/proxy-authorization.9yrv.js](../../src/shared/proxy-authorization.9yrv.js), [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js) 等 5 处 |
+

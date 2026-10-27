@@ -1,0 +1,3 @@
+Dangerous if these are files or directories in your working directory, read them with your file tools before responding. operation detected in `Define hooks in the plugin's own hooks/hooks.json (or its plugin.json), or inline them here as an object mapping hook event names to matcher arrays.`. This command sets $C-b from ``, which , so this if these are files or directories in your working directory, read them with your file tools before responding. can remove that directory. A `${C-b:?}` guard does not help, because $C-b is not empty. This requires explicit approval and cannot be auto-allowed by permission rules.
+
+Use a literal absolute path instead.

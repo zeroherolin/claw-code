@@ -1,0 +1,565 @@
+// chrome/official-plugin-prompt-overrides.53yq.js — Claude Code 2.1.310 模块 chunk-53yqrjzz.js
+import { F, U, J } from "../context/not-admin-owned.ersa.js";
+import { S } from "../agents/third-party.ydpb.js";
+import { R, N, v } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { Pe } from "../shared/chunk-3kevgx4j.js";
+import { W } from "../shared/chunk-3y73jbfr.js";
+import { a } from "../telemetry/chunk-wq923bwc.js";
+import { _t, Vg, _, ee, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { Y } from "../shared/async-hooks.923e.js";
+import { se } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { O } from "../fs/chunk-dz0rx1wn.js";
+import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
+import { Dw, np, XKr, gn, Nw, $F, k, Wn } from "../settings/global-config-and-gates.27xj.js";
+import { Ost } from "../shared/chunk-z6efcye4.js";
+import { f } from "../shared/chunk-nyvhtfb3.js";
+import { b_ } from "../remote/local-agent.we9a.js";
+import { Fbn } from "../mcp/toolbox-mcp-server-id.fewh.js";
+import { yd } from "../remote/self-hosted.qq4m.js";
+import { tu, On, md, wot } from "../shell/invalid-type.qnva.js";
+import { nbe } from "../mcp/always-allow.9m89.js";
+import { jh } from "../plugins/skills-dir.cemw.js";
+import { qi } from "../shared/async-hooks.t1gs.js";
+import { gii } from "../permissions/turn-abort.yvwf.js";
+import { ms } from "../mcp/user-agent.05by.js";
+import { ozt, rnt, jer, ont } from "../agents/tool-use-id.maye.js";
+import { ae } from "../permissions/max-thinking-tokens.hx3h.js";
+import { Wte, IBe } from "../computer-use/ref-1.3wmt.js";
+import { V0, W2 } from "./chrome-open-url.r2dv.js";
+import { $pt, _B, kYe, Upt, kBn, TBn } from "../permissions/chunk-z95679ve.js";
+import { PKs, wHe } from "../mcp/mcp-drive-file-reference-upload.nfj5.js";
+import { pve } from "../shared/chunk-5h40hc47.js";
+import { $r } from "../mcp/mcp-discovery-cache.zf96.js";
+import { CYe } from "../computer-use/browser-batch.4b8j.js";
+import { RBn } from "./chrome-tool-call-disconnected.zaae.js";
+import { cne, f2n, bje } from "../core/conversation-engine.31gx.js";
+import { MQe } from "../telemetry/chunk-27ds9t2x.js";
+import { Z8 } from "../mcp/mcp-answer-stream-ended.rcad.js";
+import { Va, LRe, iai, Zor } from "./browser-batch.ny0f.js";
+import { D } from "../shared/chunk-6rnejvk7.js";
+import { o, oe, u, me } from "../vendor/zod/string-format.k395.js";
+function _e(e, n, r) {
+  var s = -1, i = e.length, d = n.length, l = {};
+  while (++s < i) {
+    var c = s < d ? n[s] : void 0;
+    r(l, e[s], c);
+  }
+  return l;
+}
+var ie = _e;
+function Ce(e, n) {
+  return ie(e || [], n || [], Ost);
+}
+var WUn = Ce;
+var Se = /^create[_-]?(pull[_-]?request|merge[_-]?request)$|^(pull[_-]?request|merge[_-]?request)[_-]?create$/i;
+function GUn(e) {
+  if (!Se.test(e)) return;
+  a("tengu_git_operation", { operation: S("pr_create") }), MQe()?.add(1);
+}
+var we = 0, B = 1;
+class mpt {
+  ws;
+  parseMessage;
+  started = false;
+  opened;
+  constructor(e, n) {
+    this.ws = e;
+    this.parseMessage = n;
+    this.opened = new Promise((s, i) => {
+      if (this.ws.readyState === B) s();
+      else {
+        let d = this.ws, l = () => {
+          d.removeEventListener("open", l), d.removeEventListener("error", c), s();
+        }, c = (h) => {
+          d.removeEventListener("open", l), d.removeEventListener("error", c), Y("error", "mcp_websocket_connect_fail"), i(N(h.error ?? h));
+        };
+        d.addEventListener("open", l), d.addEventListener("error", c);
+      }
+    }), this.opened.catch(() => {
+    });
+    let r = this.ws;
+    r.addEventListener("message", this.onBunMessage), r.addEventListener("error", this.onBunError), r.addEventListener("close", this.onBunClose);
+  }
+  onclose;
+  onerror;
+  onmessage;
+  onBunMessage = (e) => {
+    try {
+      let n = typeof e.data === "string" ? e.data : String(e.data);
+      if (Buffer.byteLength(n) > Z8) {
+        this.handleError(new R(`MCP server sent a WebSocket message over ${Z8 / 1024 / 1024} MiB. Claude Code did not read it and closed the connection.`, "mcp websocket message over the cap")), this.close().catch(() => {
+        });
+        return;
+      }
+      let r = ee(n), s = this.parseMessage(r);
+      this.onmessage?.(s);
+    } catch (n) {
+      this.handleError(n);
+    }
+  };
+  onBunError = () => {
+    this.handleError(Error("WebSocket error"));
+  };
+  onBunClose = () => {
+    this.handleCloseCleanup();
+  };
+  handleError(e) {
+    Y("error", "mcp_websocket_message_fail"), this.onerror?.(N(e));
+  }
+  handleCloseCleanup() {
+    this.onclose?.();
+    let e = this.ws;
+    e.removeEventListener("message", this.onBunMessage), e.removeEventListener("error", this.onBunError), e.removeEventListener("close", this.onBunClose);
+  }
+  async start() {
+    if (this.started) throw Error("Start can only be called once per transport.");
+    if (await this.opened, this.ws.readyState !== B) throw Y("error", "mcp_websocket_start_not_opened"), Error("WebSocket is not open. Cannot start transport.");
+    this.started = true;
+  }
+  async close() {
+    if (this.ws.readyState === B || this.ws.readyState === we) this.ws.close();
+    this.handleCloseCleanup();
+  }
+  async send(e) {
+    if (this.ws.readyState !== B) throw Y("error", "mcp_websocket_send_not_opened"), Error("WebSocket is not open. Cannot send message.");
+    let n = _(e);
+    try {
+      this.ws.send(n);
+    } catch (r) {
+      throw this.handleError(r), r;
+    }
+  }
+}
+var Kae = "CONNECT_SUSPENDED", V = 10;
+function z0t(e) {
+  return { clock: e, awakeStart: e.monotonicNow(), wallStart: e.now() };
+}
+function V0t({ clock: e, awakeStart: n, wallStart: r }) {
+  return `${Math.round(e.now() - r)}ms, ${Math.round(e.monotonicNow() - n)}ms of it awake`;
+}
+function zUn(e, { clock: n, awakeStart: r, wallStart: s }) {
+  if (!(n.now() - s - (n.monotonicNow() - r) > gii) || !k("tengu_mcp_connect_suspend_redial", true)) return;
+  return `MCP server "${e}" connection timed out. Your computer went to sleep or its clock changed while connecting.`;
+}
+async function VUn(e, n, r) {
+  let s = $r(), i = await e(), d = 0;
+  while (d < V && i.type === "failed" && i.errorCode === Kae && n() && $r() === s) d++, se(i.name, `Connecting again after a sleep or a clock change (${d} of at most ${V})`), i = await e();
+  if (d === 0) return i;
+  if (i.type !== "failed") g("mcp_connect_suspend_redial");
+  else if (i.errorCode !== Kae) p("mcp_connect_suspend_redial", "failed");
+  else if (p("mcp_connect_suspend_redial", "slept_again"), d === V && n()) r();
+  return i;
+}
+var ye = 100, Ee = 400, ve = 100, le = 300, be = 600;
+function KUn() {
+  if (Vg()) throw Error("Claude Code is shutting down; not starting this MCP server process");
+}
+function K0t(e) {
+  let n = _t(() => Te(e));
+  return e.once("exit", () => n()), n;
+}
+function K(e) {
+  return e.exitCode !== null || e.signalCode !== null;
+}
+async function Te(e) {
+  let n = e.pid;
+  if (n === void 0 || K(e)) return;
+  if (O() === "windows") {
+    t(`[MCP] stdio server process ${n} has no established connection at exit; closing its stdin`), await etn(e);
+    return;
+  }
+  let r = new Promise((i) => {
+    e.once("exit", () => i());
+  }), s = [["SIGINT", ye], ["SIGTERM", Ee], ["SIGKILL", ve]];
+  for (let [i, d] of s) {
+    if (K(e)) return;
+    t(`[MCP] stdio server process ${n} has no established connection at exit; sending ${i}`);
+    try {
+      e.kill(i);
+    } catch {
+      return;
+    }
+    await Pe(r, d);
+  }
+}
+async function etn(e) {
+  let n = e.pid;
+  if (n === void 0 || K(e)) return;
+  let r = new Promise((s) => {
+    e.once("exit", () => s());
+  });
+  if (e.stdin?.end(), await Pe(r, le), K(e)) return;
+  t(`[MCP] stdio server process ${n} is still running ${le}ms after stdin closed; terminating its process tree`), Dw(n), await Pe(r, be);
+}
+function Ae() {
+  return b_() && Wn("tengu_eventual_noodle", false) === true;
+}
+function de(e) {
+  return typeof e === "object" && e !== null && "type" in e && e.type === "text";
+}
+async function qUn(e, n) {
+  if (!Ae()) return;
+  let r = await n([...e.filter((s) => !de(s)), ...e.filter(de)]);
+  if (r.content.every((s) => s.type === "text" && s.text.trim() === "")) {
+    if (r.content.length > 0) p("mcp_content_over_structured", "blank_text");
+    return;
+  }
+  return g("mcp_content_over_structured"), r;
+}
+function YUn() {
+  return k("tengu_serene_teapot", true) !== false;
+}
+var ue = /* @__PURE__ */ new WeakSet();
+function RRs(e) {
+  return ue.has(e);
+}
+function XUn(e, n, r) {
+  let s = new URL(r).href, i = false;
+  return async (d, l) => {
+    if (new URL(d).href !== s) return e(d, l);
+    if (i && l?.method === "GET" && !new Headers(l.headers).has("last-event-id")) {
+      se(n, "Listen-stream GET not sent: the server's last answer had an Allow header that does not list GET, so Claude Code answered the GET with 405 itself");
+      let C = new Response(null, { status: 405, statusText: "Method Not Allowed" });
+      return ue.add(C), C;
+    }
+    let c = await e(d, l), h = c.headers.get("allow");
+    return i = h !== null && !h.split(",").some((C) => C.trim().toUpperCase() === "GET"), c;
+  };
+}
+var ce = 1e3, Re = 3e4, Me = { now: () => performance.now(), arm: (e, n) => {
+  let r = setTimeout(e, n).unref();
+  return () => clearTimeout(r);
+} };
+function Z8e(e, n, r = Me) {
+  let s = true, i, d = Number.NEGATIVE_INFINITY, l = ce, c = () => {
+    l = ce, s = true;
+  }, h = () => {
+    let E = i;
+    if (i = void 0, E === void 0) {
+      c();
+      return;
+    }
+    (async () => n(E.cause))().catch((A) => {
+      se(e.name, `list_changed refetch failed: ${ms(A, e.config)}`);
+    }).finally(() => {
+      if (d = r.now(), E.settle(), i === void 0) {
+        c();
+        return;
+      }
+      T(), l = Math.min(l * 2, Re);
+    });
+  }, C = () => {
+    if (pve(e)) {
+      i?.settle(), i = void 0, c();
+      return;
+    }
+    h();
+  }, T = () => {
+    s = false;
+    let E = d + l - r.now();
+    if (E > 0) r.arm(C, E);
+    else h();
+  };
+  return (E) => {
+    let A = i;
+    if (A === void 0) {
+      let b = () => {
+      }, G = new Promise((P) => b = P);
+      if (A = i = { cause: E, settled: G, settle: b }, s) T();
+    } else A.cause = E;
+    return A.settled;
+  };
+}
+var ke = f(() => u({ server_instructions: o().optional(), server_instructions_by_server: me(o(), o()).optional(), tools: me(o(), o()).optional(), search_hints: me(o(), o()).optional(), param_descriptions: me(o(), me(o(), o())).optional(), prompts: me(o(), o()).optional(), skills: me(o(), o()).optional() })), Oe = f(() => me(o(), oe()));
+function eYe(e) {
+  if (!e.pluginSource) return;
+  let { name: n, marketplace: r } = On(e.pluginSource);
+  if (!md(r) && !wot(n, r)) return;
+  let s = k("tengu_official_plugin_prompt_overrides", {}), i = Oe().safeParse(s);
+  if (!i.success) {
+    t("tengu_official_plugin_prompt_overrides: GB payload is not an object; ignoring", { level: "error" });
+    return;
+  }
+  let d = i.data[n];
+  if (d === void 0) return;
+  let l = ke().safeParse(d);
+  if (!l.success) {
+    t(`tengu_official_plugin_prompt_overrides: entry for '${n}' failed schema (${l.error.issues[0]?.message}); using baked-in text`, { level: "error" });
+    return;
+  }
+  let c = l.data;
+  if (Object.keys(c).length === 0) return;
+  return { ...c, server_instructions_by_server: H(c.server_instructions_by_server), tools: H(c.tools), search_hints: H(c.search_hints), param_descriptions: H(c.param_descriptions), prompts: H(c.prompts), skills: H(c.skills) };
+}
+function H(e) {
+  if (e === void 0) return;
+  let n = /* @__PURE__ */ Object.create(null);
+  return Object.assign(n, e);
+}
+function JUn(e, n) {
+  if (!e) return;
+  let r = e.server_instructions_by_server;
+  if (r) {
+    let s = nbe(n), i = s && r[s.serverName];
+    if (i !== void 0) return i;
+  }
+  return e.server_instructions;
+}
+function QUn(e, n) {
+  if (!n || !e.properties) return e;
+  let r = { ...e.properties }, s = false;
+  for (let [i, d] of Object.entries(n)) {
+    let l = r[i];
+    if (l !== null && typeof l === "object") r[i] = { ...l, description: d }, s = true;
+  }
+  if (!s) return e;
+  return { ...e, properties: r };
+}
+var Ie = new W(() => /* @__PURE__ */ new Map());
+function Ne() {
+  return Ie.of(U().host);
+}
+function ZUn(e, n, r) {
+  let s = Ne().get(e);
+  if (s === void 0 || !s.toolNames.has(n)) return { mayOverlap: false, call: r };
+  return { mayOverlap: true, call: (i, d, ...l) => s.slots.run(d.abortController.signal, () => r(i, d, ...l)) };
+}
+var WSo = /* @__PURE__ */ new Set(["ECONNREFUSED", "ConnectionRefused", "ENOTFOUND", "EAI_AGAIN", "FailedToOpenSocket", "ERR_PROXY_TUNNEL"]);
+function e1n(e, n, r) {
+  let s = { started: 0, ranNothing: [] }, i = e.send.bind(e);
+  return e.send = (d, l) => {
+    if (typeof d !== "object" || d === null || !("method" in d) || d.method !== "tools/call") return i(d, l);
+    let c = ++s.started, h = "params" in d ? d.params : void 0, C = typeof h === "object" && h !== null && "_meta" in h ? h._meta : void 0, T = typeof C === "object" && C !== null && "claudecode/toolUseId" in C ? C["claudecode/toolUseId"] : void 0, E = typeof T === "string" ? [...r].filter((b) => b.toolUseId === T) : [];
+    for (let b of E) if (b.ownSends !== void 0) b.ownSends.started++;
+    let A = E.length === 1 ? E[0]?.ownSends : void 0;
+    return i(d, l).catch((b) => {
+      if (WSo.has(v(b) ?? "") || b instanceof Error && n(b)) {
+        if (s.ranNothing.push(c), A !== void 0) A.ranNothing++;
+      }
+      throw b;
+    });
+  }, s;
+}
+function t1n(e, n, r) {
+  if (r !== void 0 && r.started > 0) return r.ranNothing === r.started;
+  if (e === void 0 || n === void 0) return false;
+  let s = e.started - n;
+  return s > 0 && F(e.ranNothing, (i) => i > n) === s;
+}
+var q0t = { getValidator(e) {
+  if (qi().claim("mcp_output_schema_unchecked")) t("An MCP server listed a tool with an outputSchema in a session that compiles no schemas; that tool's results are not checked against it", { level: "warn" });
+  return (n) => ({ valid: true, data: n, errorMessage: void 0 });
+} };
+function pe(e) {
+  return e.scope === "dynamic" && !jh(e) && yd.bridgeCarrier === void 0 && "url" in e && typeof e.url === "string" && Fbn(e.url);
+}
+function n1n(e, n) {
+  return pe(e) ? n : ont(n);
+}
+function r1n(e, n) {
+  if (n === void 0 || !Object.hasOwn(n, ozt) || !pe(e)) return n;
+  return { ...n, [rnt]: jer };
+}
+class q {
+  byMessageId = /* @__PURE__ */ new Map();
+}
+function o1n(e, n) {
+  if (!n) return {};
+  let r = e.get(q).byMessageId.get(n);
+  return { ["anthropic/memory.response_id"]: n, ...r !== void 0 && { ["anthropic/memory.chain"]: r } };
+}
+function s1n(e, n, r) {
+  if (!n || !r || !("anthropic/memory.chain" in r)) return;
+  let s = r["anthropic/memory.chain"], i = e.get(q).byMessageId;
+  if (i.delete(n), typeof s !== "string" || s.length > 16384) return;
+  i.set(n, s);
+  for (let d of i.keys()) {
+    if (i.size <= 8) break;
+    i.delete(d);
+  }
+}
+function tYe(e) {
+  return async (n, r) => {
+    let s = await e(n, r);
+    if (![301, 302, 303, 307, 308].includes(s.status) || !s.headers.has("Location")) return s;
+    let i = new Headers(s.headers);
+    return i.delete("Location"), new Response(s.body, { status: s.status, statusText: s.statusText, headers: i });
+  };
+}
+function i1n() {
+  let e = gn();
+  if (!e) return;
+  return { accountUuid: e.accountUuid, organizationUuid: e.organizationUuid, credentialInstalled: np() || XKr() };
+}
+function a1n(e, n, r) {
+  let s = () => import("../mcp/args-with-file-inputs.nf9d.js"), i = (h, C) => ({ listed: n, input: h, toolPermissionContext: ae(C), callTool: r(C), signal: C.abortController.signal, session: C.session }), d = e.validateInput;
+  e.validateInput = async (h, C) => (await s()).validateToolFileInputs(n, d, h, C);
+  let l = e.call;
+  e.call = async (h, C, ...T) => {
+    let { argsWithFileInputs: E } = await s(), A = await E({ ...i(h ?? {}, C), toolUseId: C.toolUseId });
+    return l(A, C, ...T);
+  };
+  let c = e.askInputPreparer;
+  e.askInputPreparer = async (h, C, T) => (await s()).fileInputAskPreparer({ ...i(h, C), toolUseId: T }) ?? c?.(h, C, T);
+}
+var l1n = "claudecode/chromeSite", fe = 253, X = /^[a-z0-9._-]+$/, Le = /^\[[0-9a-f:.]+\]$/;
+function Z(e) {
+  return e.length <= fe && X.test(e);
+}
+function d1n(e, n) {
+  if (e.name !== Va || !$F(e.config) || !D(n) || n.chrome_site === void 0 && n.chrome_site_port === void 0) return;
+  let { chrome_site: r, chrome_site_port: s } = n;
+  if (typeof r !== "string" || r.length > fe || !(X.test(r) || Le.test(r)) || ge(`https://${r}`) !== r || s !== void 0 && !xe(s)) return { kind: "unreadable" };
+  return { kind: "named", site: s === void 0 ? r : `${r}:${s}`, offersGrant: s === void 0 && X.test(r) && n.chrome_offers_site_grant === "true" };
+}
+function c1n(e, n) {
+  let r = kYe(n);
+  if (e.kind !== "unreadable") {
+    let s = Upt(r, e.site);
+    return s && { ...s, decideLocation: "pre-ask" };
+  }
+  if (r.denied.size === 0) return;
+  return { behavior: "deny", message: "Claude in Chrome could not tell which site this call would act on, so it could not check the sites that are denied.", decisionReason: { type: "safetyCheck", reason: "Claude in Chrome: unreadable site", classifierApprovable: false }, decideLocation: "pre-ask" };
+}
+function u1n(e, n, r, s) {
+  if (e.kind !== "named") return;
+  let { site: i } = e, d = De(n, r).some((c) => ge(c) !== i), l = !d && e.offersGrant && !Nw(s) && s.forRemoteExecution !== true;
+  return { behavior: "ask", message: "Claude in Chrome requires permission.", decisionReason: { type: "other", reason: d ? `Claude in Chrome action on ${i}, which may also leave that site` : `Claude in Chrome action on ${i}` }, ...l ? { suggestions: [{ type: "addRules", rules: [{ toolName: W2, ruleContent: i }], behavior: "allow", destination: "session" }] } : { suppressAlwaysAllowRule: true } };
+}
+function xe(e) {
+  return typeof e === "string" && /^[0-9]{1,5}$/.test(e) && String(Number(e)) === e && Number(e) <= 65535;
+}
+function ge(e) {
+  if (typeof e !== "string" || kBn(e)) return;
+  let n = TBn(e);
+  return n && _B(n.host);
+}
+function De(e, n) {
+  if (e === "navigate") return [n.url];
+  if (e !== "browser_batch" || !Array.isArray(n.actions)) return [];
+  return n.actions.flatMap((r) => D(r) && r.name === "navigate" ? [D(r.input) ? r.input.url : void 0] : []);
+}
+var Ue = new Set(IBe.map((e) => e.name)), He = "anthropic/chromeWorkerDecides", Fe = "claudecode/chromeJudgedSite", je = 259, ze = 5e3;
+function p1n(e, n, r) {
+  let s = `${V0}${e}`, i = /* @__PURE__ */ new WeakMap();
+  return { coerceInput: (l) => {
+    let c = f2n(l);
+    return c === l ? null : { input: c, shapeClass: "chrome_host_only_args_removed" };
+  }, checkPermissions: async (l, c) => {
+    RBn(c.options?.messageClientPlatform);
+    let h = [], C = false, T = true, E = () => J() && wHe.peek(c.session)?.host === void 0;
+    if (e === "file_upload" && E()) return Q(LRe);
+    if (e === "file_upload" && n?.[PKs] === true && tu({ mcpInfo: { serverName: Va, toolName: e }, excludedFromModeBypassAllow: () => true }, ae(c)) !== "auto") return Q(iai);
+    if (e === "navigate") {
+      if (typeof l.url !== "string") return j("navigate url is not a string");
+      h.push(l.url);
+    } else if (e === "browser_batch") {
+      if (l.actions !== void 0 && !Array.isArray(l.actions)) return j("batch actions is not an array");
+      for (let w of Array.isArray(l.actions) ? l.actions : []) {
+        if (!D(w) || typeof w.name !== "string") return j("unreadable batch item");
+        if (w.name === "browser_batch") return j("nested batch");
+        if (!Ue.has(w.name)) return j("unrecognized batch item name");
+        if (w.name === "file_upload") return Q(E() ? LRe : Zor);
+        if (w.name === "navigate") {
+          if (!D(w.input) || typeof w.input.url !== "string") return j("batch navigate url is not a string");
+          if (h.push(w.input.url), C = true, kBn(w.input.url)) T = false;
+        } else if (!Wte.has(w.name) || w.input !== void 0 && !D(w.input) || !cne(w.name, D(w.input) ? w.input : {})) T = false;
+      }
+    }
+    let A = n?.[He] === true && r !== void 0 && ae(c).mode !== "plan", b = e === "browser_batch" && C && T, G = h.filter((w) => !kBn(w)), P, z = /* @__PURE__ */ new Map();
+    if (G.length > 0) {
+      let w = ae(c), M = kYe(w);
+      for (let I of G) {
+        let y = TBn(I);
+        if (!y) return m("chrome_permission_prompt", "non_web_url"), { behavior: "deny", message: "Can't interact with browser-internal or unparseable URLs. Navigate to a web page first.", decisionReason: { type: "safetyCheck", reason: "Claude in Chrome: non-web or unparseable URL", classifierApprovable: false } };
+        let L = Upt(M, y.host);
+        if (L) return p("chrome_permission_prompt", "domain_rule_denied"), L;
+        let x = _B(y.host);
+        if (!M.allowed.has(x) && !z.has(x)) z.set(x, y.host);
+        P ??= y;
+      }
+      if (P !== void 0 && z.size === 0 && (e === "navigate" || b)) {
+        if (A && e === "navigate" && Z($pt(P.host))) bje(c, l, P.host, s);
+        let I = _B(P.host), y = M.sourceOf.get(I) ?? M.sourceOf.get($pt(I)) ?? "session";
+        if (w.chromeClassifierFloorEnabled !== true) return { behavior: "allow", updatedInput: l, decisionReason: { type: "rule", rule: { source: y, ruleBehavior: "allow", ruleValue: { toolName: W2, ruleContent: P.host } } } };
+        return { behavior: "ask", message: "Claude in Chrome requires permission.", updatedInput: l, decisionReason: { type: "other", reason: `Claude in Chrome action on ${P.host}` }, metadata: { command: { name: s, chrome: { ...P, domainAllowed: true } } } };
+      }
+    }
+    if (Wte.has(e) && cne(e, l)) return { behavior: "allow", updatedInput: l };
+    if (A) {
+      let w = !["navigate", "browser_batch", "file_upload"].includes(e) && !Wte.has(e) && l.tabId, M = typeof w === "number" && c.toolUseId !== void 0 && c.permissionRound !== void 0 ? await r?.(w, c.abortController.signal) : void 0, I = M === void 0 ? void 0 : TBn(M), y = e === "navigate" ? P : I !== void 0 && I.host.length <= je ? I : void 0, L = ae(c), x = kYe(L), ne = y && Upt(x, y.host);
+      if (L.mode === "plan") ;
+      else if (M !== void 0 && y === void 0) return m("chrome_permission_prompt", "non_web_tab_url"), { behavior: "deny", message: "Can't interact with browser-internal or unparseable URLs. Navigate to a web page first.", decisionReason: { type: "safetyCheck", reason: "Claude in Chrome: non-web or unparseable tab URL", classifierApprovable: false } };
+      else if (ne) return p("chrome_permission_prompt", "domain_rule_denied"), ne;
+      else if (y !== void 0 && Z($pt(y.host))) {
+        if (M !== void 0) g("chrome_permission_prompt");
+        bje(c, l, y.host, s);
+        let te = x.allowed.has(_B(y.host)), re = !te && L.chromeClassifierFloorEnabled === true && L.canAutoClassifierRun === true;
+        if (re) i.set(l, y.host);
+        return { behavior: "ask", message: "Claude in Chrome requires permission.", updatedInput: l, suggestions: re ? [{ type: "addRules", rules: [{ toolName: W2, ruleContent: y.host }], behavior: "allow", destination: "session" }] : void 0, decisionReason: { type: "other", reason: `Claude in Chrome action on ${y.host}` }, metadata: { command: { name: s, description: `Allow Claude in Chrome to ${CYe(e, l)} on ${y.host}?`, chrome: { ...y, domainAllowed: te } } } };
+      }
+    }
+    let he = !J();
+    return { behavior: "passthrough", message: "Claude in Chrome requires permission.", suggestions: z.size === 1 && (e === "navigate" || b) && he ? [{ type: "addRules", rules: [...z.values()].map((w) => ({ toolName: W2, ruleContent: w })), behavior: "allow", destination: "session" }] : void 0 };
+  }, suggestedAllowRule: (l, c) => l.toolName === W2 && l.ruleContent !== void 0 && l.ruleContent === i.get(c), suppressesAlwaysAllowRule: () => true, ignoresWholeToolAllowRule: () => true, excludedFromAutoModeAllowlist: () => true, excludedFromModeBypassAllow: () => true };
+}
+async function f1n(e, n, r) {
+  try {
+    let s = await e("tabs_context_mcp", { createIfEmpty: false }, AbortSignal.any([r, AbortSignal.timeout(ze)])), i = Array.isArray(s) ? s[0] : void 0, d = ee(D(i) ? String(i.text) : String(s)), l = D(d) ? d.availableTabs : void 0, c = Array.isArray(l) ? l.find((h) => D(h) && h.tabId === n) : void 0;
+    if (D(c) && typeof c.url === "string" && c.url) return c.url;
+    p("chrome_permission_prompt", "tab_url_unresolved_tab_not_listed");
+  } catch (s) {
+    if (!r.aborted) t(`Claude in Chrome: the tab read failed: ${String(s)}`, { level: "error" }), p("chrome_permission_prompt", "tab_url_unresolved_call_threw");
+  }
+  return;
+}
+function m1n({ permissionPhase: e, toolUseId: n, allowGivenBy: r }) {
+  let s = e?.pipeline !== void 0 && r !== void 0 && r.toolUseId === n && (r.approver === "user" || r.approver === "classifier") ? e.checked?.note : void 0;
+  return typeof s === "string" ? { [Fe]: _B(s) } : void 0;
+}
+function Q(e) {
+  return { behavior: "deny", message: e, decisionReason: { type: "safetyCheck", reason: "Claude in Chrome: a file_upload that cannot be served", classifierApprovable: false } };
+}
+function j(e) {
+  return m("chrome_permission_prompt", "unjudgeable_chrome_input"), { behavior: "deny", message: "Can't run this Claude in Chrome action: its input couldn't be safely checked.", decisionReason: { type: "safetyCheck", reason: `Claude in Chrome: ${e}`, classifierApprovable: false } };
+}
+export {
+  GUn,
+  JUn,
+  K0t,
+  KUn,
+  Kae,
+  QUn,
+  RRs,
+  V0t,
+  VUn,
+  WSo,
+  WUn,
+  XUn,
+  YUn,
+  Z8e,
+  ZUn,
+  a1n,
+  c1n,
+  d1n,
+  e1n,
+  eYe,
+  etn,
+  f1n,
+  i1n,
+  l1n,
+  m1n,
+  mpt,
+  n1n,
+  o1n,
+  p1n,
+  q0t,
+  qUn,
+  r1n,
+  s1n,
+  t1n,
+  tYe,
+  u1n,
+  z0t,
+  zUn
+};

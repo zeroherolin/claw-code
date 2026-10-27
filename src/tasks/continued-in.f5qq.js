@@ -1,0 +1,315 @@
+// tasks/continued-in.f5qq.js — Claude Code 2.1.310 模块 chunk-f5qqy0j6.js
+import { R, v } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { J } from "../context/not-admin-owned.ersa.js";
+import { Jb, ZL, vbe } from "../context/utf-8.yzy3.js";
+import { uC } from "../git/utf-8.vh7e.js";
+import { f } from "../shared/chunk-nyvhtfb3.js";
+import { Mf, Hk } from "../agents/chunk-hv1nfndb.js";
+import { qD } from "../shared/chunk-a1296386.js";
+import { Ki } from "../mcp/allowed-warning.j2d4.js";
+import { D } from "../shared/chunk-6rnejvk7.js";
+import { o, M, u, yt, T } from "../vendor/zod/string-format.k395.js";
+import { Kst } from "../context/tool-result.evq2.js";
+import { z } from "../shared/chunk-mxa4mwnj.js";
+async function* f2e(e) {
+  let n = [];
+  for await (let r of e) {
+    if (typeof r !== "string") throw TypeError("transcriptLines takes text: open the stream with an encoding");
+    let t = 0;
+    for (let i = r.indexOf(`
+`); i !== -1; i = r.indexOf(`
+`, t)) n.push(r.slice(t, i)), yield g(n.join("")), n = [], t = i + 1;
+    if (t < r.length) n.push(r.slice(t));
+  }
+  if (n.length > 0) yield g(n.join(""));
+}
+function g(e) {
+  return e.endsWith("\r") ? e.slice(0, -1) : e;
+}
+var D$t = 6e5;
+function _J(e) {
+  if (e?.kind !== "task-notification") return e;
+  let n = qD(e.runId);
+  return { kind: "task-notification", ...e.subkind !== void 0 && { subkind: e.subkind }, ...e.fireReason !== void 0 && { fireReason: e.fireReason }, ...e.producer !== void 0 && { producer: e.producer }, ...n !== void 0 && { runId: n }, ...e.taskKind === "mcp-task" && { taskKind: e.taskKind } };
+}
+function eU(e, n, r) {
+  let t = _J(e) ?? (n === "task-notification" ? { kind: "task-notification" } : void 0), i = qD(r);
+  return i !== void 0 && t?.kind === "task-notification" && t.runId === void 0 ? { ...t, runId: i } : t;
+}
+function cde(e) {
+  return e?.kind === "task-notification" && e.producer === "session-task";
+}
+function J6(e) {
+  return e?.kind === "task-notification" && Object.keys(e).every((n) => n === "kind" || n === "producer" || n === "runId" || n === "taskKind");
+}
+function H$t(e, n) {
+  return J6(e) && (cde(e) || n === true);
+}
+function tU(e, n) {
+  return k(e, { udsInboxEnabled: typeof n === "boolean" ? n : true });
+}
+function k(e, { udsInboxEnabled: n }) {
+  if (e?.kind === "channel") return true;
+  if (e?.kind === "observer") return true;
+  if (e?.kind === "observer-activity") return true;
+  if (e?.kind === "slack-ping") return true;
+  if (e?.kind === "peer") {
+    if (e.senderTaskId !== void 0) return true;
+    if (n) return true;
+  }
+  return false;
+}
+import { constants as w } from "fs";
+import { open as b, readdir as fe, rm as le, stat as pe } from "fs/promises";
+async function F1s(e, n, r) {
+  if (z() && r !== void 0) return _(r, n);
+  let t;
+  try {
+    t = await b(e, w.O_WRONLY | w.O_APPEND);
+  } catch (i) {
+    let s = v(i);
+    if (s === "ENOENT" || s === "ENOTDIR") return false;
+    throw i;
+  }
+  try {
+    let { size: i } = await t.stat();
+    if (i === 0) return false;
+    let s = void 0, d = Buffer.from(n, "utf8"), a = 0;
+    while (a < d.length) {
+      let { bytesWritten: c } = await t.write(d, a, d.length - a, s);
+      if (c <= 0) throw new R(`tryAppend: short write to ${e} stalled with ${d.length - a} bytes remaining`, "tryAppend: zero-progress short write");
+      if (a += c, s !== void 0) s += c;
+    }
+    return true;
+  } finally {
+    await t.close();
+  }
+}
+async function _({ backend: e, key: n }, r) {
+  let t = await e.append(n, [{ data: r }], { precondition: { type: "ifExists", nonEmpty: true } });
+  if (!t.ok) {
+    if (t.error.code === "NotFound") return false;
+    throw Error("Session append: transcript not writable via storage", { cause: t.error });
+  }
+  return true;
+}
+import { constants as y } from "fs";
+import { open as x } from "fs/promises";
+import { dirname as P, join as j } from "path";
+var h = '"type":"continued-in"', U = f(() => yt({ type: T("continued-in"), continuedInSessionId: o() })), N = f(() => yt({ type: T("assistant"), isApiErrorMessage: M().optional(), message: yt({ stop_reason: o().nullish() }).optional() }));
+function vht(e, { canFork: n } = { canFork: true }) {
+  if (e.provable) return `Your most recent conversation is running in the background (session ${e.sessionId}). Use \`claude agents\` to find and attach to it, or \`claude --resume\` to pick another session.`;
+  let r = n ? ", or add --fork-session to branch off a copy" : "";
+  return `Your most recent conversation moved to a background session (${e.sessionId}) registered from another machine or container, so this one can't tell whether it is still running. Use \`claude --resume\` to pick a session${r}.`;
+}
+function $1s(e, n) {
+  return { type: "continued-in", timestamp: (/* @__PURE__ */ new Date()).toISOString(), sessionId: e, continuedInSessionId: n };
+}
+function QKn(e) {
+  if (!e.includes(h)) return;
+  let n = e.length;
+  while (n > 0) {
+    let r = e.lastIndexOf(`
+`, n - 1), t = e.slice(r + 1, n);
+    n = r;
+    let i = t.includes(h), s = t.includes('"type":"user"') || t.includes('"type":"assistant"');
+    if (i || s) try {
+      let d = JSON.parse(t);
+      if (i) {
+        let a = U().safeParse(d);
+        if (a.success) return ZL(a.data.continuedInSessionId) ?? void 0;
+      }
+      if (s && A(d)) return;
+    } catch {
+    }
+    if (r < 0) break;
+  }
+  return;
+}
+function A(e) {
+  let n = N().safeParse(e);
+  if (n.success) return n.data.isApiErrorMessage !== true && typeof n.data.message?.stop_reason === "string";
+  return D(e) && Kst(e, { commandFallback: "" }) !== void 0;
+}
+async function U1s(e, n, r) {
+  let t = j(P(e), `${n}.jsonl`), i = await vbe(t, Hk(Mf(t, r)));
+  return i !== null && await Wan(t, i.head, i.tail, i.size, r);
+}
+var l = '"parentUuid":', L = 16777216, E = 1048576;
+async function Wan(e, n, r, t, i) {
+  if (n.includes(l) || r.includes(l)) return true;
+  if (t <= Jb) return false;
+  if (Mf(e, i) !== void 0) return true;
+  try {
+    let d = await x(e, y.O_RDONLY | y.O_NOFOLLOW | y.O_NONBLOCK);
+    try {
+      if (!(await d.stat()).isFile()) return false;
+      let a = Buffer.allocUnsafe(E + l.length), c = 0, m = 0;
+      while (m < L) {
+        let { bytesRead: S } = await d.read(a, c, E, m);
+        if (S === 0) return false;
+        let p = c + S;
+        if (a.subarray(0, p).includes(l)) return true;
+        c = Math.min(l.length, p), a.copyWithin(0, p - c, p), m += S;
+      }
+      return true;
+    } finally {
+      await d.close();
+    }
+  } catch {
+    return false;
+  }
+}
+import { readFile as F } from "fs/promises";
+import { dirname as C, join as W } from "path";
+var B = f(() => u({ customTitle: o() }));
+function ZKn(e, n) {
+  return W(C(e), n, "custom-title.json");
+}
+async function B1s(e, n, r) {
+  let t = await K(ZKn(e, n), r);
+  if (t === void 0) return;
+  let i;
+  try {
+    i = JSON.parse(t);
+  } catch {
+    return;
+  }
+  let s = B().safeParse(i);
+  if (!s.success) return;
+  return Ki(s.data.customTitle) || void 0;
+}
+async function K(e, n) {
+  if (z() && n !== void 0) try {
+    let r = uC(e);
+    if (r !== void 0) {
+      let t = await n.readText([r]);
+      if (!t.ok) return;
+      let i = t.value.items[0];
+      return i.found ? i.value : void 0;
+    }
+  } catch {
+    return;
+  }
+  if (J()) return;
+  try {
+    return await F(e, "utf8");
+  } catch {
+    return;
+  }
+}
+var iJe = "Tool permission request failed", DOo = "Tool permission stream closed before response received", VDr = "Stream closed", ze = [`${iJe}: AbortError: ${DOo}`, `${iJe}: AbortError: ${VDr}`, iJe];
+var yp = 6e5, j1s = ["SessionStart", "Setup"], LOo = 3e4, Gan = 6e3, NOo = 3e4, W1s = 5e3;
+class BC {
+  returned;
+  queue = [];
+  readResolve;
+  readReject;
+  isDone = false;
+  hasError;
+  started = false;
+  constructor(e) {
+    this.returned = e;
+  }
+  get ended() {
+    return this.isDone;
+  }
+  [Symbol.asyncIterator]() {
+    if (this.started) throw Error("Stream can only be iterated once");
+    return this.started = true, this;
+  }
+  next() {
+    if (this.queue.length > 0) return Promise.resolve({ done: false, value: this.queue.shift() });
+    if (this.isDone) return Promise.resolve({ done: true, value: void 0 });
+    if (this.hasError) return Promise.reject(this.hasError);
+    return new Promise((e, n) => {
+      this.readResolve = e, this.readReject = n;
+    });
+  }
+  enqueue(e) {
+    if (this.readResolve) {
+      let n = this.readResolve;
+      this.readResolve = void 0, this.readReject = void 0, n({ done: false, value: e });
+    } else this.queue.push(e);
+  }
+  dropNewestQueued(e) {
+    let n = this.queue.findLastIndex(e);
+    if (n !== -1) this.queue.splice(n, 1);
+  }
+  done() {
+    if (this.isDone = true, this.readResolve) {
+      let e = this.readResolve;
+      this.readResolve = void 0, this.readReject = void 0, e({ done: true, value: void 0 });
+    }
+  }
+  error(e) {
+    if (this.hasError = e, this.readReject) {
+      let n = this.readReject;
+      this.readResolve = void 0, this.readReject = void 0, n(e);
+    }
+  }
+  return() {
+    if (this.isDone = true, this.returned) this.returned();
+    return Promise.resolve({ done: true, value: void 0 });
+  }
+}
+function O(e, n) {
+  let r = e.type === "attachment" ? e.attachment : void 0;
+  if (typeof r !== "object" || r === null || !("type" in r) || r.type !== "queued_command") return;
+  let t = Reflect.get(r, n);
+  return typeof t === "string" && t ? t : void 0;
+}
+function kht(e) {
+  return O(e, "source_uuid");
+}
+function FOo(e) {
+  return O(e, "delivery_id");
+}
+function S0e(e) {
+  let { submitUuid: n } = e, r = kht(e) ?? (e.type === "system" && typeof n === "string" ? n : void 0);
+  return r ? [e.uuid, r] : [e.uuid];
+}
+function eqn(e) {
+  return e.type === "user" ? zan(e.droppedPromptUuids) : [];
+}
+function zan(e) {
+  return Array.isArray(e) ? e.filter((n) => typeof n === "string" && n !== "") : [];
+}
+function $Oo(e, n) {
+  let r = e.findIndex((t) => t.uuid === n);
+  return r !== -1 ? r : e.findIndex((t) => kht(t) === n);
+}
+export {
+  $1s,
+  $Oo,
+  B1s,
+  BC,
+  D$t,
+  DOo,
+  F1s,
+  FOo,
+  Gan,
+  H$t,
+  J6,
+  LOo,
+  NOo,
+  QKn,
+  S0e,
+  U1s,
+  VDr,
+  W1s,
+  Wan,
+  ZKn,
+  _J,
+  cde,
+  eU,
+  eqn,
+  f2e,
+  iJe,
+  j1s,
+  kht,
+  tU,
+  vht,
+  yp,
+  zan
+};

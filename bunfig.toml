@@ -1,0 +1,3 @@
+[test]
+# 只运行 test/ 下的测试（assets/ 中有 skill 自带的示例测试，不属于本项目）
+root = "test"

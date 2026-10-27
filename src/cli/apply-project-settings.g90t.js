@@ -1,0 +1,116 @@
+// cli/apply-project-settings.g90t.js — Claude Code 2.1.310 模块 chunk-g90t33hb.js
+import { YCn, oos, aos, los, xf, RA, dos, UXr, Kbe, qXr } from "../context/not-admin-owned.ersa.js";
+import { d, v, G, W1 } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { cl } from "../fs/node-modules.gp4v.js";
+import { Eie } from "../models/claude-3-5-sonnet.21mz.js";
+import { _, Po, sie, SW, KYr, ie, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { om, II } from "../shell/invalid-type.qnva.js";
+import { fn } from "../shared/cli-error.bk7h.js";
+import { Zb, yb } from "./chunk-33ax6j5s.js";
+import { ot } from "../fs/chunk-gzs70jxe.js";
+import { PM } from "../remote/moved-directory.z3m0.js";
+import { go } from "../mcp/init-function-end.wpfb.js";
+import { Hr } from "../mcp/spawn-to-exec-ms.vdbg.js";
+import { Sxe } from "../fs/tempdir-owner-mismatch.5xe1.js";
+import { er, pXo, kp } from "../settings/workflow-launch-exec.t4r2.js";
+import { iQs } from "../shared/chunk-r11rh2z0.js";
+import { D } from "../shared/chunk-6rnejvk7.js";
+import { Yse, C1 } from "../fs/not-utf8.sqq6.js";
+var whn = "apply-project-settings", sQs = "Review and accept settings changes for cloud sessions that use this computer";
+function vGr(e = process.argv) {
+  return e[2] === "apply-project-settings";
+}
+function oZn(e) {
+  return _(e).replace(/[\u007f-\u009f]/g, (r) => "\\u" + r.charCodeAt(0).toString(16).toUpperCase().padStart(4, "0"));
+}
+function sbi(e) {
+  try {
+    let r = e.trim(), i = r.startsWith("{") && r.endsWith("}"), a;
+    if (i) {
+      let o = ot(r);
+      if (!o) return fn("Error: Invalid JSON provided to --settings");
+      let s = oZn(o);
+      a = Sxe("claude-settings", ".json", { contentHash: s }), aos(s);
+    } else {
+      let o = e, s = e, c;
+      try {
+        if (II(e)) o = Po(ie(), e).resolvedPath, s = o;
+        else {
+          let n = SW(ie(), e);
+          o = n.resolvedPath, s = l(n.linksResolvedPath ?? n.resolvedPath);
+        }
+        c = C1(o, om);
+      } catch (n) {
+        if (KYr(n)) return fn(`Error: Cannot use settings file ${e}: ${d(n)}`);
+        if (G(n)) return fn(`Error: Settings file not found: ${o}`);
+        if (v(n) === "ERR_FILE_TOO_LARGE") return fn(`Error: Settings file exceeds the ${om / 1048576}MiB limit: ${o}`);
+        if (Yse(n) || W1(n)) return fn(`Error: Cannot use settings file (${d(n)}): ${o}`);
+        throw n;
+      }
+      a = s, los(c);
+    }
+    oos(a), er();
+  } catch (r) {
+    if (r instanceof Error) t(`Error processing --settings: ${d(r)}`, { level: "error" });
+    return fn(`Error processing settings: ${d(r)}`);
+  }
+}
+function ibi(e) {
+  let r = ot(e.trim(), false);
+  if (!D(r)) {
+    t("--managed-settings ignored: invalid JSON object", { level: "warn" }), UXr(true);
+    return;
+  }
+  let { tier: i, organization: a, memberLost: o } = iQs(r);
+  if (o) UXr(true);
+  dos(i, a), er();
+}
+function g(e) {
+  try {
+    let r = pXo(e);
+    qXr(r), er();
+  } catch (r) {
+    if (r instanceof Error) t(`Invalid --setting-sources flag: ${d(r)}`, { level: "error" });
+    return fn(`Error processing --setting-sources: ${d(r)}`);
+  }
+}
+function dzo() {
+  let e = performance.now();
+  go("eagerLoadSettings_start");
+  let r = Zb("--settings");
+  if (r) sbi(r);
+  let i = Zb("--managed-settings");
+  if (i) ibi(i);
+  kGr(), f(), go("eagerLoadSettings_end"), Hr("settings_load_ms", performance.now() - e, e);
+}
+function f() {
+  let e = Zb("--fast-mode");
+  if (e !== "on" && e !== "off") return;
+  RA({ ...xf() ?? {}, fastMode: e === "on" }), er();
+}
+function kGr() {
+  let e = Zb("--setting-sources");
+  if (e !== void 0) g(e);
+  if (yb("--restricted") || Eie()) g(""), YCn(true);
+  if (PM()) g("");
+  if (vGr()) qXr(Kbe().filter((r) => !kp.has(r))), er();
+}
+function l(e) {
+  if (cl(e)) return e;
+  try {
+    let r = sie(ie(), e);
+    return r.toLowerCase() === e.toLowerCase() ? r : e;
+  } catch {
+    return e;
+  }
+}
+export {
+  dzo,
+  ibi,
+  kGr,
+  oZn,
+  sQs,
+  sbi,
+  vGr,
+  whn
+};

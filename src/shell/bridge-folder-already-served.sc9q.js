@@ -1,0 +1,18 @@
+// shell/bridge-folder-already-served.sc9q.js — Claude Code 2.1.310 模块 chunk-sc9q4c5m.js
+var k_e = "Remote Control is only available with claude.ai subscriptions. Please use `/login` to sign in with your claude.ai account.", mGt = "Error: You must be logged in to use Remote Control.\n\nRemote Control is only available with claude.ai subscriptions. Run `claude auth login` to sign in with your claude.ai account.", Jhn = "To sandbox sessions, set sandbox.enabled to true in settings.", gGt = "bridge_folder_already_served", N6e = "Remote Control disconnected.", Jwt = "/login", hGt = "Remote Control got an unexpected server response — try again after updating Claude Code", Ntt = "the session refused a request that only the computer it is bound to can sign, so signing in again won't fix it", Qhn = "Remote Control could not verify the signed-in account — run /remote-control to reconnect", fzr = "signed-in claude.ai account or organization changed on this machine — run /remote-control to start a session for the current account, or /login to switch back, then /remote-control", P6o = "Remote Control stopped — the app running this session is signed out of Claude. Sign in there, then turn Remote Control back on", I6o = "Remote Control stopped — the app running this session is now signed in to a different Claude account", Ftt = "Previous session is unavailable — run /remote-control to start a new one", O6o = "queued";
+export {
+  Ftt,
+  I6o,
+  Jhn,
+  Jwt,
+  N6e,
+  Ntt,
+  O6o,
+  P6o,
+  Qhn,
+  fzr,
+  gGt,
+  hGt,
+  k_e,
+  mGt
+};

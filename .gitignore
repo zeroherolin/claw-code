@@ -1,0 +1,7 @@
+node_modules/
+dist/
+
+extract/upstream/
+
+.claude/
+.DS_Store

@@ -1,0 +1,5 @@
+Each entry reaches the executable as one argument, exactly as written: `["--environment", "production"]` runs `helper --environment production`. Use it to keep one installed script and let the configuration each user receives decide what it does (which environment, tenant or vault to read), instead of packaging a script per case.
+
+Entries may not be empty and may not contain a double quote (`"`), a percent sign (`%`) or control characters, on any platform: a Windows `.cmd`/`.bat` helper receives its arguments through `cmd.exe`, where those characters would change the command. A `.cmd`/`.bat` script sees each argument quoted (`%1` is `"production"`, `%~1` strips the quotes); `.ps1`, `.exe` and POSIX helpers receive them bare. Arguments are visible in the diagnostic report and to other processes on the machine, so do not put secrets in them; the helper exists to fetch the secret.
+
+A changed list takes effect the way a changed path does.

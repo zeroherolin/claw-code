@@ -1,0 +1,174 @@
+// ui/watch-system-theme.cpwf.js — Claude Code 2.1.310 模块 chunk-cpwfzcff.js
+import "../shared/chunk-9sbknd2z.js";
+import "../fs/async-hooks.9s1z.js";
+import "../context/not-admin-owned.ersa.js";
+import "../fs/chunk-kqpf5fh3.js";
+import "../agents/third-party.ydpb.js";
+import "../telemetry/anthropic-workspace-id.36ys.js";
+import { X } from "../shared/chunk-3kevgx4j.js";
+import "../fs/node-modules.gp4v.js";
+import "../shared/chunk-3y73jbfr.js";
+import "../artifacts/cowritten-artifact-html.thm2.js";
+import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import "../shared/chunk-x6r6k81p.js";
+import "../models/claude-3-5-sonnet.21mz.js";
+import "../fs/backed-up.p1qn.js";
+import "../shared/chunk-j79dwkaq.js";
+import { M0, gm, Ws } from "../terminal/wl-copy.gdbt.js";
+import "../context/chunk-ce3zw0qt.js";
+import { h0n } from "../shared/chunk-b4jb4pbg.js";
+import "../plugins/chunk-x0a7sawk.js";
+import "../artifacts/chunk-m8t7qekn.js";
+import "../shared/chunk-nrx8c90j.js";
+import { i } from "../shared/environment.9a41.js";
+import "../auth/oauth-2025-04-20.ke15.js";
+import "../fs/chunk-dz0rx1wn.js";
+import "../shared/chunk-4kxy1036.js";
+import "../shared/chunk-nfgwaxf2.js";
+import "../agents/session-stable-address.6kf8.js";
+import "../agents/in-process-teammate.5te1.js";
+import "../remote/local-agent.we9a.js";
+import "../shell/chunk-gx93fya1.js";
+import "../cli/chunk-33ax6j5s.js";
+import "../mcp/toolbox-mcp-server-id.fewh.js";
+import "../remote/self-hosted.qq4m.js";
+import "../context/fetch-project-timeline.g27d.js";
+import "../mcp/claude-browser.hdf6.js";
+import "../shared/chunk-xz73gv4f.js";
+import "../shared/chunk-cg45s1mf.js";
+import "../shared/chunk-nyvhtfb3.js";
+import "../auth/profile-explicit.b7t3.js";
+import "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
+import "../shared/chunk-5x6nmyvf.js";
+import "../git/utf-8.vh7e.js";
+import "../telemetry/chunk-wq923bwc.js";
+import "../telemetry/chunk-wn8xtaqg.js";
+import "../shared/async-hooks.m2fg.js";
+import "../shared/async-hooks.923e.js";
+import "../context/tool-cgroup-exclude-classes.t1za.js";
+import "../shared/chunk-z6efcye4.js";
+import "../git/utf8-keep-bom.c49x.js";
+import "../git/chunk-q8vnfcnf.js";
+import "../shared/chunk-abagh0tt.js";
+import "../shared/chunk-daaayw23.js";
+import "../shell/chunk-tjkwy3jp.js";
+import "../context/utf-8.yzy3.js";
+import "../fs/utf-8.7pve.js";
+import "../fs/tempdir-owner-mismatch.5xe1.js";
+import "../fs/utf-8.fmbx.js";
+import "../fs/async-hooks.2k4e.js";
+import "../shell/invalid-type.qnva.js";
+import "../fs/chunk-w461d8x8.js";
+import "../permissions/classifier-transcript-too-long.8zvz.js";
+import "../permissions/quota-auto-resume-disabled.gt6d.js";
+import "../terminal/chunk-9vttrktj.js";
+import "../mcp/chunk-ykcv164t.js";
+import "../mcp/always-allow.9m89.js";
+import "../plugins/skills-dir.cemw.js";
+import "../fs/chunk-gzs70jxe.js";
+import "../settings/workflow-launch-exec.t4r2.js";
+import "../shared/chunk-s56ftfc1.js";
+import "../remote/moved-directory.z3m0.js";
+import "../models/total-tokens-reminder.psq3.js";
+import "../mcp/init-function-end.wpfb.js";
+import "../shell/spawn-error.7yg0.js";
+import "../fs/content-encoding.v6wj.js";
+import "../auth/descriptor-direct.zd2z.js";
+import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../git/ssh-placeholder.1144.js";
+import "../fs/reply-across-default-dirs.esvz.js";
+import "../fs/chunk-tzqhxyjb.js";
+import "../fs/chunk-q5g832za.js";
+import "../settings/global-config-and-gates.27xj.js";
+import "../mcp/allowed-warning.j2d4.js";
+import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../auth/secure-storage-credentials-write.vafw.js";
+import "../auth/claude-code-user.tvhr.js";
+import "../shell/find-generic-password.dx7z.js";
+import "../shared/async-hooks.t1gs.js";
+import "../shared/chunk-w13tcac4.js";
+import "../auth/auth-launcher-host-login.9f3m.js";
+import "../permissions/turn-abort.yvwf.js";
+import "../settings/ax-sr-suggestion-nav.8qsa.js";
+import "../telemetry/chunk-8c3dyx0k.js";
+import "../telemetry/chunk-w9t64bcr.js";
+import "../agents/chunk-j350yvzv.js";
+import "../git/get-url.pbym.js";
+import "../shared/chunk-vf2gp3w9.js";
+import "../artifacts/cobalt-plinth-lovage.hxm5.js";
+import "../computer-use/chunk-ec42nx0x.js";
+import "../workflows/chunk-exaq0a52.js";
+import "../permissions/light-daltonized.tkrm.js";
+import { afs } from "../terminal/chunk-7nftncqk.js";
+import { She } from "../telemetry/focus-events.e5dw.js";
+import "../fs/files-directories.md42.js";
+import "../vendor/highlight/chunk-0c6r1zf7.js";
+import "../fs/chunk-7pm5bpdr.js";
+import { wv } from "../vendor/ink/chunk-vtw8nj6v.js";
+import "../shared/chunk-h88ymh3y.js";
+import { tte, JPe } from "../shared/chunk-x7g4gvxc.js";
+import { eZt, qCs } from "../shared/chunk-tnnwxyz2.js";
+import "../fs/chunk-6tvcm7a7.js";
+import "../shared/chunk-bkvejkkf.js";
+import "../shared/chunk-ztrzej16.js";
+import "../shared/chunk-zmrs49f3.js";
+import "../shared/chunk-dpjnt83j.js";
+import "../models/claude-mythos-preview.rw6s.js";
+import "../shared/sk-ant-sid.0hme.js";
+import "../shared/chunk-s06z5etx.js";
+import "../shared/chunk-81mpzfkq.js";
+import "../fs/not-utf8.sqq6.js";
+import "../context/tool-result.evq2.js";
+import "../shared/chunk-bhdett2m.js";
+import "../vendor/aws-sdk/chunk-yc0hxjyg.js";
+import "../shared/chunk-n07cvysj.js";
+import "../shared/chunk-19a02m7w.js";
+import "../remote/chunk-t0kv6pst.js";
+var v = 2e3;
+function _(e, l, p) {
+  let n = false, u = false, y = p?.muxTimeoutMs ?? v, a = Boolean(i.TMUX || i.STY) && !She();
+  async function c() {
+    if (u) return;
+    u = true;
+    try {
+      let r = afs(gm.SET_BG_COLOR), s = a ? { ...r, request: M0(r.request) } : r, o, f = a ? "dcs" : "direct";
+      if (a) {
+        if (o = await Promise.race([e.send(s), X(y, void 0, { unref: true }).then(() => {
+          return;
+        })]), !o) if (n) e.cancel(s);
+        else e.flush(), f = "mux-bare", [o] = await Promise.all([e.send(r), e.flush()]);
+      } else [o] = await Promise.all([e.send(s), e.flush()]);
+      if (n) return;
+      if (!o) {
+        t(`systemTheme: OSC 11 query (via=${f}) got no response`, { level: "debug" }), wv().osc11Responsive = false;
+        return;
+      }
+      wv().osc11Responsive = true;
+      let m = qCs(o.data);
+      if (t(`systemTheme: OSC 11 response=${o.data} detected=${m} via=${f}`, { level: "debug" }), m === void 0) return;
+      eZt(m), l(m);
+    } finally {
+      u = false;
+    }
+  }
+  let d = i.CLAUDE_BG_BACKEND === "daemon";
+  if (wv().osc11Responsive !== false && !d) c();
+  let T = e.subscribeThemeChange((r) => {
+    if (Ws().get(process.stdout)?.modes.isSet("surface")) {
+      let s = r ? "dark" : "light";
+      t(`systemTheme: theme-change push reported=${s}; surface override active, skipping OSC 11 query`, { level: "debug" }), eZt(s), l(s);
+      return;
+    }
+    c();
+  }), h = d ? JPe(() => {
+    if (tte() === "focused") h0n().then(() => {
+      if (!n) c();
+    });
+  }) : void 0;
+  return () => {
+    n = true, T(), h?.();
+  };
+}
+export {
+  _ as watchSystemTheme
+};

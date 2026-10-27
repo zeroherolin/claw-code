@@ -1,0 +1,178 @@
+// fs/send-file-received.w8v9.js — Claude Code 2.1.310 模块 chunk-w8v9mtan.js
+import { J } from "../context/not-admin-owned.ersa.js";
+import { c } from "../agents/third-party.ydpb.js";
+import { R } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { Yn } from "./node-modules.gp4v.js";
+import { a } from "../telemetry/chunk-wq923bwc.js";
+import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
+import { t } from "./gitlab-runner-authentication-token.d7b0.js";
+import { Le } from "../models/claude-3-5-sonnet.21mz.js";
+import { zut } from "./bridge-attachment-user-data-root.49f2.js";
+import { f } from "../shared/chunk-nyvhtfb3.js";
+import { fZo, Gw, nkn } from "../git/utf-8.vh7e.js";
+import { dle, Qte, Mjn, VPs, Hjn } from "../telemetry/chunk-d2xe79w0.js";
+import { Vut } from "../telemetry/sdk-hosted-disabled.n8b9.js";
+import { bx } from "../shared/chunk-1w4xax5d.js";
+import { o, E, C, u } from "../vendor/zod/string-format.k395.js";
+import { et } from "../shared/chunk-tftf1nn4.js";
+import { randomUUID as A } from "crypto";
+import { lstat as I, mkdir as k, readdir as H, stat as O, unlink as N, writeFile as T } from "fs/promises";
+import { basename as w, dirname as U, isAbsolute as B, join as y, resolve as j } from "path";
+var G = Hjn * 24 * 60 * 60 * 1e3, M = "file-transfers";
+function b(r) {
+  t(`[peer-file-transfer] ${r}`);
+}
+function F8e(r) {
+  let e = w(r).replace(/[^a-zA-Z0-9._-]/g, "_") || "attachment", i = e.lastIndexOf("."), n = i > 0 && e.length - i <= 16 ? e.slice(i) : "", s = n ? e.slice(0, i) : e, l = 200 - n.length;
+  return (s.length > l ? s.slice(0, l) : s) + n;
+}
+function C$n(r, e) {
+  return `[SendFile: "${F8e(r)}" was not delivered — ${e}]`;
+}
+function T$n(r) {
+  return `[SendFile: ${r} additional attachment(s) were dropped — max ${Qte} per message]`;
+}
+function A$n(r, e) {
+  if (typeof e.file_size === "number" && r.length !== e.file_size) return false;
+  return et(r) === e.sha256;
+}
+function Mkr(r, e, i) {
+  if (a("tengu_send_file_received", { transport: c(r), file_count: e, verified_count: i }), i === e) g("peer_file_receive");
+  else if (i > 0) p("peer_file_receive", "partial_failed");
+  else m("peer_file_receive", "all_failed");
+}
+async function xte(r, e) {
+  try {
+    let n = await O(r);
+    if (!n.isFile() || n.size > e) return null;
+  } catch {
+    return null;
+  }
+  let i;
+  try {
+    i = await nkn(r);
+  } catch {
+    return null;
+  }
+  try {
+    let n = await i.stat();
+    if (!n.isFile() || n.size > e) return null;
+    let s = await Gw(i, e, n.size);
+    return s.overLimit ? null : s.bytes;
+  } catch {
+    return null;
+  } finally {
+    await i.close().catch(() => {
+    });
+  }
+}
+function Hkr(r, e) {
+  if (!e) return r;
+  let i = /^<cross-session-message\b[^>]*>\n?/.exec(r);
+  return i ? i[0] + e + r.slice(i[0].length) : e + r;
+}
+function jZt() {
+  return y(Le(), M);
+}
+function X() {
+  return bx();
+}
+var Y = /^[0-9a-f]{64}$/, K = f(() => u({ path: o(), file_name: o(), file_size: E().int().nonnegative(), sha256: o().regex(Y), media_type: o().optional() })), V = f(() => C(K()));
+async function Ryo(r) {
+  if (J()) throw new R(VPs, "peer file transfer: no disk in this session");
+  let e = await xte(r, dle);
+  if (e === null) throw new R(Mjn, "peer file transfer: source unreadable or over the size limit");
+  let i = et(e), n = jZt();
+  await k(n, { recursive: true, mode: 448 });
+  let s = w(r), l = y(n, `${i.slice(0, 8)}-${A().slice(0, 8)}-${F8e(s)}`);
+  return await T(l, e, { mode: 384 }), { path: l, file_name: s, file_size: e.length, sha256: i, media_type: Vut(s) };
+}
+async function xyo() {
+  if (J()) return;
+  let r = jZt();
+  try {
+    let e = await H(r), i = Date.now() - G;
+    for (let n of e.slice(0, 200)) {
+      let s = y(r, n);
+      try {
+        let l = await O(s);
+        if (l.isFile() && l.mtimeMs < i) await N(s);
+      } catch {
+      }
+    }
+  } catch {
+  }
+}
+var L = { prefix: "", received: 0, verified: 0 };
+async function oAi(r) {
+  if (J()) return L;
+  let e = V().safeParse(r);
+  if (!e.success || e.data.length === 0) {
+    if (!e.success) b(`ignoring malformed file_attachments: ${e.error.message}`);
+    return L;
+  }
+  let i = [], n = e.data;
+  if (n.length > Qte) i.push(T$n(n.length - Qte)), n = n.slice(0, Qte);
+  let s = X(), l = jZt(), z = [], x = 0;
+  for (let d of n) {
+    let h = (_) => {
+      b(`${d.file_name}: ${_}`), i.push(C$n(d.file_name, _));
+    };
+    if (Yn(d.path) || fZo(d.path) || !B(d.path)) {
+      h("invalid transfer path");
+      continue;
+    }
+    let F = j(d.path), P = U(F);
+    if (Yn(F) || fZo(F) || w(P) !== M) {
+      h("transfer path is outside the file-transfer spool");
+      continue;
+    }
+    try {
+      if (!(await I(P)).isDirectory() || !(await I(F)).isFile()) {
+        h("the transfer copy is not a regular file");
+        continue;
+      }
+    } catch {
+      h("the transfer copy could not be read (it may have expired)");
+      continue;
+    }
+    let S = await xte(F, dle);
+    if (S === null) {
+      h("the transfer copy could not be read (it may have expired)");
+      continue;
+    }
+    if (!A$n(S, d)) {
+      h("it failed integrity verification");
+      continue;
+    }
+    let v = y(s, `${d.sha256.slice(0, 8)}-${A().slice(0, 8)}-${F8e(d.file_name)}`);
+    try {
+      let _ = await zut(s);
+      try {
+        await T(y(_.at, w(v)), S, { mode: 384, flag: "wx" });
+      } finally {
+        await _.release();
+      }
+    } catch (_) {
+      h("it could not be written to the uploads directory"), b(`write ${v} failed: ${_}`);
+      continue;
+    }
+    if (x++, z.push(`@"${v}"`), P === l) N(F).catch(() => {
+    });
+  }
+  let D = [...z, ...i];
+  return { prefix: D.length > 0 ? D.join(" ") + " " : "", received: n.length, verified: x };
+}
+export {
+  A$n,
+  C$n,
+  F8e,
+  Hkr,
+  Mkr,
+  Ryo,
+  T$n,
+  jZt,
+  oAi,
+  xte,
+  xyo
+};

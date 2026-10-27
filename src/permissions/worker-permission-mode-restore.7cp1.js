@@ -1,0 +1,145 @@
+// permissions/worker-permission-mode-restore.7cp1.js — Claude Code 2.1.310 模块 chunk-7cp1ff55.js
+import { c, ce } from "../agents/third-party.ydpb.js";
+import { a } from "../telemetry/chunk-wq923bwc.js";
+import { Ap } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { ZE } from "../tools/device-session-limit.cjq3.js";
+import { ql } from "../shell/invalid-type.qnva.js";
+import { Ny, Wn } from "../settings/global-config-and-gates.27xj.js";
+import { ph } from "./classifier-transcript-too-long.8zvz.js";
+import { oo } from "./bot-protected-tengu-atomic-magpie.zc9j.js";
+import { wD } from "./auto-mode-config.nbjc.js";
+import { K6, Th } from "../core/conversation-engine.31gx.js";
+import { c9 } from "../tools/exit-plan-mode-tool.5tnq.js";
+import { Zd } from "../shared/chunk-w7s7vczj.js";
+var R = "tengu_tranquil_fern";
+function f() {
+  return Wn(R, true);
+}
+function dao() {
+  return { source: "none", trustedMode: void 0, recordedMode: "absent" };
+}
+function wys(e) {
+  if (e.source !== "none") return "restored";
+  return (e.recordedMode === "plan" || e.transcriptOpen === true) && e.trustedMode !== "plan" ? "declined" : "none";
+}
+function g(e) {
+  if (e === void 0 || e === null) return "absent";
+  return typeof e === "string" && ph(e) || "invalid";
+}
+function P(e) {
+  return { ...wD(e.mode, "plan", e), mode: "plan" };
+}
+function S(e) {
+  return { ...e, toolPermissionContext: P(e.toolPermissionContext) };
+}
+function _(e) {
+  return f() && e.mode !== "plan" && c9.isEnabled() && !oo(e, c9);
+}
+function ohi(e, n, { forkSession: o, transcript: s } = {}) {
+  if (n.recordedMode = g(e?.worker_permission_mode), n.recordedMode === "invalid") t("[planModeResume] ignoring unrecognized internal_metadata.worker_permission_mode", { level: "warn" });
+  if (n.recordedMode === "plan" && s && f()) n.recordTranscriptState = b_r(s);
+  return (r) => {
+    if (n.trustedMode ??= r.toolPermissionContext.mode, n.recordedMode !== "plan" || o || !_(r.toolPermissionContext)) return r;
+    return n.source = "internal", t(`[planModeResume] re-entering plan mode from the prior worker's record (was ${r.toolPermissionContext.mode})`), S(r);
+  };
+}
+function cao(e, n, { planModeOnResume: o, restored: s, restartedWorker: r }) {
+  let i = Boolean(s?.external || s?.internal);
+  if (r && !i) return;
+  if (e.enableWorkerPermissionModeRecord(), o !== void 0 && i) e.notifyInternalMetadataChanged({ worker_permission_mode: ql(n) });
+}
+function Eys(e, n, o, s) {
+  let r = s && n.source === "none" && (n.recordedMode === "absent" || n.recordedMode === "invalid") && f() && b_r(e) === "open";
+  if (r) n.transcriptOpen = true;
+  o((i) => {
+    if (n.trustedMode ??= i.toolPermissionContext.mode, !r || i.toolPermissionContext.mode === "plan" || oo(i.toolPermissionContext, c9)) return i;
+    return n.source = "transcript", t(`[planModeResume] re-entering plan mode from the transcript's open plan segment (was ${i.toolPermissionContext.mode})`), S(i);
+  });
+}
+function b_r(e) {
+  let n = `<${Ap}>/plan</${Ap}>`, o = /* @__PURE__ */ new Set(), s = /* @__PURE__ */ new Set(), r = x(e), i = false, d = () => i ? "none" : "open";
+  for (let M = e.length - 1; M >= 0; M--) {
+    let l = e[M];
+    if (l.type === "attachment") {
+      let m = l.attachment.type;
+      if (m === "plan_mode" || m === "plan_mode_reentry") return d();
+      if (m === "plan_mode_exit") return "exited";
+    } else if (l.type === "assistant" && Array.isArray(l.message.content)) {
+      let m = l.message.content;
+      for (let p = m.length - 1; p >= 0; p--) {
+        let u = m[p];
+        if (u.type !== "tool_use") continue;
+        if (u.name === Zd && s.has(u.id) && !o.has(u.id) && !r.has(u.id)) return "exited";
+        if (u.name === ZE && s.has(u.id) && (!o.has(u.id) || r.has(u.id))) return d();
+      }
+    } else if (l.type === "user" && K6(l)) {
+      let m = l.message.content;
+      if (Array.isArray(m)) {
+        for (let p of m) if (p.type === "tool_result") (p.is_error || y(l, p.content) ? o : s).add(p.tool_use_id);
+      }
+    } else if (l.type === "user") {
+      if (Th(l)?.trimStart().startsWith(n)) return d();
+      if (l.permissionMode === "plan") return d();
+      if (l.permissionMode !== void 0 && !l.isMeta && Ny(l.origin)) i = true;
+    }
+  }
+  return "none";
+}
+function x(e) {
+  let n = /* @__PURE__ */ new Set(), o = /* @__PURE__ */ new Set();
+  for (let s of e) {
+    if (s.type !== "assistant" || !Array.isArray(s.message.content)) continue;
+    for (let r of s.message.content) {
+      if (r.type !== "tool_use") continue;
+      if (n.has(r.id)) o.add(r.id);
+      else n.add(r.id);
+    }
+  }
+  return o;
+}
+function y(e, n) {
+  let o = e.toolUseResult;
+  if (o !== null && typeof o === "object" && o.awaitingLeaderApproval === true) return true;
+  return typeof n === "string" && n.startsWith("Your plan has been submitted to the team lead");
+}
+function w_r({ sdkUrl: e, permissionModeSuppliedOnInvocation: n, forkSession: o }) {
+  if (!c9.isEnabled() || o) return false;
+  return !!e || n === false;
+}
+function uao(e, n, o) {
+  let s = dao();
+  return Eys(e, s, o, w_r(n)), pao(s, { lane: n.sdkUrl ? "sdk_url" : "print", hadExternal: false, hadInternal: false }), wys(s);
+}
+function E_r(e, n, { lane: o, forkSession: s, transcript: r }) {
+  let i = dao();
+  if (n(ohi(e?.internal, i, { forkSession: s, transcript: r?.messages })), r) Eys(r.sourceRows, i, n, r.sourceAllowed);
+  return pao(i, { lane: o, hadExternal: !!e?.external, hadInternal: !!e?.internal }), wys(i);
+}
+function yCi(e, { storedPermissionMode: n, messages: o, forkSession: s, startupModePinned: r, lane: i }) {
+  let d = dao();
+  if (d.trustedMode = e.mode, d.recordedMode = g(n), !r && !s && _(e)) {
+    if (d.recordedMode === "plan") {
+      if (d.recordTranscriptState = b_r(o), d.recordTranscriptState !== "exited") d.source = "stored";
+    } else if ((d.recordedMode === "absent" || d.recordedMode === "invalid") && b_r(o) === "open") d.transcriptOpen = true, d.source = "transcript";
+  }
+  if (pao(d, { lane: i, hadExternal: false, hadInternal: false }), d.source === "none") return;
+  return t(`[planModeResume] re-entering plan mode on resume (source: ${d.source}, was ${e.mode})`), P(e);
+}
+function pao(e, { lane: n, hadExternal: o, hadInternal: s }) {
+  let r = e.source === "none" ? e.trustedMode : "plan";
+  a("tengu_worker_permission_mode_restore", { source: c(e.source), lane: c(n), trusted_mode: ce(e.trustedMode), recorded_mode: c(e.recordedMode), target_mode: ce(r), had_external: o, had_internal: s, guard_enabled: f(), ...e.recordTranscriptState && { record_transcript_state: c(e.recordTranscriptState) }, ...e.transcriptOpen && { transcript_open: true } });
+}
+export {
+  E_r,
+  Eys,
+  b_r,
+  cao,
+  dao,
+  ohi,
+  pao,
+  uao,
+  w_r,
+  wys,
+  yCi
+};

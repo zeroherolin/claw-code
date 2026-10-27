@@ -1,0 +1,4 @@
+The following MCP servers are configured, but Claude Code itself refuses them because it reserves their address for its own use. Their tools are unavailable for this session:
+Each part of a plugin id (plugin@marketplace) may use only the letters a-z and A-Z, digits, ".", "_" and "-", and must start with a letter or digit.
+
+This is not a connection failure or an administrator's setting, so retrying will not help. If the user's request depends on one of these servers, tell them that Claude Code refuses the entry, and that whoever added it can remove it or change its address. If the refusal looks like a mistake, they can ${…}.

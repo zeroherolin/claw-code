@@ -1,0 +1,120 @@
+// auth/api-metrics-opt-out-check.j2g0.js — Claude Code 2.1.310 模块 chunk-j2g09mgf.js
+import { U, I5 } from "../context/not-admin-owned.ersa.js";
+import { d } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { W } from "../shared/chunk-3y73jbfr.js";
+import { rn } from "./oauth-2025-04-20.ke15.js";
+import { i } from "../shared/environment.9a41.js";
+import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { g, m } from "../telemetry/chunk-wn8xtaqg.js";
+import { DAe, nl, Ef, Ng, vt, vp, gn, sT, Pj, wE, $4, Wt, Re, ue, Qk } from "../settings/global-config-and-gates.27xj.js";
+import { bM } from "./auth-launcher-host-login.9f3m.js";
+import { Jse } from "../shared/chunk-bhdett2m.js";
+import { et } from "../shared/chunk-tftf1nn4.js";
+var S = 36e5, _ = 864e5, h = "/api/claude_code/organizations/metrics_enabled";
+class a extends Error {
+}
+async function w() {
+  let e = DAe(await Pj(), `${rn().BASE_API_URL}${h}`);
+  if (e.error) throw new a("Auth error: no credential usable for the metrics opt-out check");
+  let n = await Wt.get(h, { auth: "none", headers: e.headers, timeout: 5e3, bypassEssentialTrafficOnly: true, maxRedirects: 0 });
+  if (!n.ok) throw new a(`metrics_enabled unavailable: ${n.reason}`);
+  if (typeof n.data?.metrics_logging_enabled !== "boolean") throw Error("metrics_enabled response missing metrics_logging_enabled");
+  return n.data;
+}
+async function M(e) {
+  try {
+    let n = await wE(w, { also403Revoked: true, gateToSessionOAuthCredential: true, oauthRefreshLatch: e });
+    return e.attempted = false, t(`${$4} Metrics opt-out API response: enabled=${n.metrics_logging_enabled}`), g("api_metrics_opt_out_check"), { enabled: n.metrics_logging_enabled, hasError: false };
+  } catch (n) {
+    return t(`${$4} Failed to check metrics opt-out status: ${d(n)}`, n instanceof a ? { level: "error" } : void 0), m("api_metrics_opt_out_check", "request_failed"), { enabled: false, hasError: true };
+  }
+}
+var y = new W(() => {
+  let e = { attempted: false };
+  return { memo: Jse(() => M(e), S), oauthRefreshLatch: e };
+}), E = new W(() => ({ identity: void 0 }));
+function u() {
+  let { key: e, source: n } = Ef();
+  if (e === null) return null;
+  if (n === "apiKeyHelper") {
+    let r = Ng();
+    return r ? `key:helper:${et(r).slice(0, 16)}` : null;
+  }
+  return `key:${et(e).slice(0, 16)}`;
+}
+function c(e) {
+  let n = sT();
+  if (n !== void 0) return n.organizationUuid !== void 0 ? `acct:${n.accountUuid}/${n.organizationUuid}` : null;
+  if (!e?.accountUuid || !e.organizationUuid) return null;
+  return i.CLAUDE_CODE_OAUTH_TOKEN || I5() || bM() !== null ? null : `acct:${e.accountUuid}/${e.organizationUuid}`;
+}
+function s() {
+  let e = gn();
+  if (e !== void 0) return c(e);
+  return nl() ? null : u();
+}
+async function p(e) {
+  let n = gn();
+  if (n === void 0) return nl() ? null : u();
+  if (sT() !== void 0) return c(n);
+  return c(await Qk(e));
+}
+function P() {
+  let e = gn();
+  if (e !== void 0 || nl()) {
+    let n = sT();
+    if (n !== void 0) return `acct:${n.accountUuid}/${n.organizationUuid ?? "?"}`;
+    if (e !== void 0) return `acct:${e.accountUuid ?? "?"}/${e.organizationUuid ?? "?"}`;
+    return "oauth:no-record";
+  }
+  return u() ?? "none";
+}
+function I() {
+  let e = U().host, n = y.of(e), r = E.of(e), o = P();
+  if (r.identity !== void 0 && r.identity !== o) n.memo.cache.clear(), n.oauthRefreshLatch.attempted = false;
+  return r.identity = o, n.memo();
+}
+function tCs() {
+  let e = U().host, n = y.of(e);
+  n.memo.cache.clear(), n.oauthRefreshLatch.attempted = false, E.of(e).identity = void 0;
+}
+async function b(e) {
+  let n = s() === null ? null : await p(e), r = await I();
+  if (r.hasError) return r;
+  if (n === null) return r;
+  if (await p(e) !== n) return m("api_metrics_opt_out_check", "principal_changed_mid_flight"), { enabled: false, hasError: true };
+  if (s() !== n) return r;
+  let o = k(n);
+  if (o !== void 0 && o.enabled === r.enabled && Date.now() - o.timestamp < _) return r;
+  return await Re((C) => T(C, n, r.enabled), e), r;
+}
+function T(e, n, r) {
+  if (s() !== n || n.startsWith("acct:") && e.oauthAccount === void 0) return e;
+  return { ...e, metricsStatusCache: void 0, metricsStatusCacheByPrincipal: O({ ...e.metricsStatusCacheByPrincipal, [n]: { enabled: r, timestamp: Date.now() } }) };
+}
+var F = 8;
+function O(e) {
+  let r = Object.entries(e).filter(([, o]) => A(o)).sort(([, o], [, f]) => f.timestamp - o.timestamp).slice(0, F);
+  return Object.fromEntries(r);
+}
+function A(e) {
+  return typeof e?.enabled === "boolean" && Number.isFinite(e.timestamp) && e.timestamp <= Date.now();
+}
+function k(e) {
+  let n = ue().metricsStatusCacheByPrincipal?.[e];
+  return n !== void 0 && A(n) ? n : void 0;
+}
+async function nCs(e) {
+  if (vt() && !vp()) return { enabled: false, hasError: false };
+  let n = s(), r = n === null ? void 0 : k(n);
+  if (r !== void 0) {
+    if (Date.now() - r.timestamp > _) b(e).catch(l);
+    return { enabled: r.enabled, hasError: false };
+  }
+  return b(e);
+}
+export {
+  nCs,
+  tCs
+};

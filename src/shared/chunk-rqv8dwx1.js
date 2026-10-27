@@ -1,0 +1,29 @@
+// shared/chunk-rqv8dwx1.js — Claude Code 2.1.310 模块 chunk-rqv8dwx1.js
+var o = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", colon: ":", semi: ";", sol: "/", Tab: "	", NewLine: `
+` };
+function s(n) {
+  return n.replace(/&(?:#[xX]([0-9a-fA-F]+);?|#(\d+);?|([a-zA-Z][a-zA-Z0-9]*);)/g, (r, t, e, i) => {
+    if (t !== void 0) return String.fromCodePoint(parseInt(t, 16));
+    if (e !== void 0) return String.fromCodePoint(parseInt(e, 10));
+    return i in o ? o[i] : r;
+  });
+}
+function nft(n) {
+  let r;
+  try {
+    r = s(n);
+  } catch {
+    return false;
+  }
+  if (/&(?:#|[a-zA-Z][a-zA-Z0-9]*;)/.test(r)) return false;
+  let t;
+  try {
+    t = new URL(r, "https://artifact.invalid/");
+  } catch {
+    return false;
+  }
+  return t.protocol === "https:" || t.protocol === "http:" || t.protocol === "mailto:";
+}
+export {
+  nft
+};

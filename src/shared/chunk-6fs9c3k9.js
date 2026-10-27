@@ -1,0 +1,111 @@
+// shared/chunk-6fs9c3k9.js — Claude Code 2.1.310 模块 chunk-6fs9c3k9.js
+import { Dt } from "../fs/content-encoding.v6wj.js";
+import { V } from "../context/not-admin-owned.ersa.js";
+import { w4t } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { Qr } from "../models/claude-3-5-sonnet.21mz.js";
+import { lmi, _t, UM, _, ie, Ms, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { fdr, sAt, tts, cit, nts } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { g2e } from "../vendor/anthropic-sdk/claude-code-error-tracking.ba0h.js";
+import { wJs } from "../context/account-memory-text-not-identified.y6np.js";
+import { Wh } from "./chunk-mzb69x1h.js";
+import { dirname as p, join as g } from "path";
+var a = Qr(() => tts(/* @__PURE__ */ new Date()));
+function l() {
+  return g(sAt.errors(), a() + ".jsonl");
+}
+function f(e) {
+  return g(sAt.mcpLogs(e), a() + ".jsonl");
+}
+function d(e) {
+  let r = lmi(e);
+  return { write(o) {
+    r.write(_(o) + `
+`);
+  }, flush: r.flush, dispose: r.dispose };
+}
+function u() {
+}
+class c {
+  writers = /* @__PURE__ */ new Map();
+  pendingWrites = Wh();
+  writerFor(e) {
+    let r = this.writers.get(e);
+    if (!r) {
+      let o = p(e), i = false;
+      r = d({ writeFn: (s) => {
+        this.pendingWrites.run(e, async () => {
+          try {
+            await m(o, e, s);
+          } catch (n) {
+            if (!i) i = true, t(`Dropping log batch for ${e}: ${n instanceof Error ? n.message : String(n)}`);
+          }
+        });
+      }, flushIntervalMs: 1e3, maxBufferSize: 50 }), this.writers.set(e, r), _t(async () => {
+        r?.dispose(), await this.pendingWrites.settle();
+      }), UM(this.flushBeforeExit);
+    }
+    return r;
+  }
+  async flush() {
+    for (let e of this.writers.values()) e.flush();
+    await this.pendingWrites.settle();
+  }
+  flushBeforeExit = () => this.flush();
+  async reset() {
+    for (let e of this.writers.values()) e.dispose();
+    await this.pendingWrites.settle(), this.writers.clear(), this.pendingWrites.clearForTest();
+  }
+}
+async function m(e, r, o) {
+  let i = ie();
+  try {
+    await i.appendFile(r, o);
+  } catch {
+    await i.mkdir(e).catch(u), await i.appendFile(r, o);
+  }
+}
+function w(e, r, o) {
+  return;
+}
+function E(e) {
+  if (typeof e === "string") return e;
+  if (e && typeof e === "object") {
+    let r = e;
+    if (typeof r.message === "string") return r.message;
+    if (typeof r.error === "object" && r.error && "message" in r.error && typeof r.error.message === "string") return r.error.message;
+  }
+  return;
+}
+function v(e, r) {
+  wJs(r), g2e(r);
+  let o = w4t(r), i = "";
+  if (Dt.isAxiosError(r) && r.config?.url) {
+    let s = [`url=${r.config.url}`];
+    if (r.response?.status !== void 0) s.push(`status=${r.response.status}`);
+    let n = E(r.response?.data);
+    if (n) s.push(`body=${n}`);
+    i = `[${s.join(",")}] `;
+  }
+  t(`${r.name}: ${i}${o}`, { level: "error" }), w(e, l(), { error: `${i}${o}` });
+}
+function h(e, r, o) {
+  t(`MCP server "${r}" ${o}`, { level: "error" });
+  let i = f(r), s = o instanceof Error ? w4t(o) : String(o), n = { error: Ms(s), timestamp: (/* @__PURE__ */ new Date()).toISOString(), sessionId: V(), cwd: fdr() };
+  e.writerFor(i).write(n);
+}
+function S(e, r, o) {
+  t(`MCP server "${r}": ${o}`);
+  let i = f(r), s = { debug: Ms(o), timestamp: (/* @__PURE__ */ new Date()).toISOString(), sessionId: V(), cwd: fdr() };
+  e.writerFor(i).write(s);
+}
+function xso() {
+  nts(y(new c()));
+  let e = cit.droppedBeforeSink;
+  t(e === 0 ? "Error log sink initialized" : `Error log sink initialized; ${e} events logged before it attached were dropped`);
+}
+function y(e) {
+  return { logError: (r) => v(e, r), logMCPError: (r, o) => h(e, r, o), logMCPDebug: (r, o) => S(e, r, o) };
+}
+export {
+  xso
+};

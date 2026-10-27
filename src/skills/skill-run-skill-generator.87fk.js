@@ -1,0 +1,12 @@
+// skills/skill-run-skill-generator.87fk.js — Claude Code 2.1.310 模块 chunk-87fk1p13.js
+import { __asset_path, __asset_text } from "../runtime/assets.js";
+import { dt } from "../fs/chunk-m1c94bsz.js";
+import { $e } from "../vendor/react/chunk-meds60nn.js";
+var e = __asset_path("skills/run-skill-generator/SKILL.md");
+var t = dt(e, import.meta.dirname);
+var a = __asset_text("skills/run-skill-generator/TEMPLATE.md");
+var p = t, m = a;
+export {
+  p as SKILL_MD,
+  m as TEMPLATE_MD
+};

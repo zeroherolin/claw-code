@@ -1,0 +1,40 @@
+// shared/chunk-y84qhfer.js — Claude Code 2.1.310 模块 chunk-y84qhfer.js
+import { OF } from "../fs/chunk-182nrm88.js";
+import { lh } from "../vendor/aws-sdk/chunk-k5hq3azn.js";
+import { x } from "../vendor/react/chunk-meds60nn.js";
+var nM = x(function(y) {
+  var t = lh(), l = OF();
+  function d(e) {
+    try {
+      let o = new Set(Array.from(e.match(/([A-Z_]){3,}/g) ?? []));
+      return o.delete("CONFIG"), o.delete("CONFIG_PREFIX_SEPARATOR"), o.delete("ENV"), [...o].join(", ");
+    } catch (o) {
+      return e;
+    }
+  }
+  var h = (e, o) => async () => {
+    try {
+      let r = e(process.env, o);
+      if (r === void 0) throw Error();
+      return r;
+    } catch (r) {
+      throw new t.CredentialsProviderError(r.message || `Not found in ENV: ${d(e.toString())}`, { logger: o?.logger });
+    }
+  }, w = (e, { preferredFile: o = "config", ...r } = {}) => async () => {
+    let n = l.getProfileName(r), { configFile: i, credentialsFile: c } = await l.loadSharedConfigFiles(r), s = c[n] || {}, g = i[n] || {}, m = o === "config" ? { ...s, ...g } : { ...g, ...s };
+    try {
+      let f = e(m, o === "config" ? i : c);
+      if (f === void 0) throw Error();
+      return f;
+    } catch (a) {
+      throw new t.CredentialsProviderError(a.message || `Not found in config files w/ profile [${n}]: ${d(e.toString())}`, { logger: r.logger });
+    }
+  }, F = (e) => typeof e === "function", u = (e) => F(e) ? async () => await e() : t.fromStatic(e), C = ({ environmentVariableSelector: e, configFileSelector: o, default: r }, n = {}) => {
+    let { signingName: i, logger: c } = n, s = { signingName: i, logger: c };
+    return t.memoize(t.chain(h(e, s), w(o, n), u(r)));
+  };
+  y.loadConfig = C;
+});
+export {
+  nM
+};

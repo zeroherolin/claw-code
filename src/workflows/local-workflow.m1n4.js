@@ -1,0 +1,29 @@
+// workflows/local-workflow.m1n4.js — Claude Code 2.1.310 模块 chunk-m1n4rm91.js
+import { et } from "../shared/chunk-tftf1nn4.js";
+class _Ot {
+  scriptSha256ById = /* @__PURE__ */ new Map();
+}
+function Cuo(r, s, i) {
+  let n = s.get(_Ot).scriptSha256ById.get(r);
+  if (n !== void 0) return n;
+  let e = Object.values(i.all()).find((t) => t.type === "local_workflow" && t.workflowRunId === r && t.withholdScriptFromSdkEvents === true);
+  if (e === void 0) return;
+  return e.script === "" ? "" : et(e.script);
+}
+var Tuo = "This workflow run hides its script, and this session has not loaded that script, so it cannot resume the run. Start a new run without resumeFromRunId.";
+async function Aws(r, s, i, n) {
+  let e = Cuo(r, s, i);
+  if (e === "") return { kind: "refused", reason: Tuo };
+  if (e !== void 0) return { kind: "hidden", scriptSha256: e };
+  let t = await n();
+  if ("refusal" in t) return { kind: "refused", reason: t.refusal };
+  if (t.hiddenScriptSha256 !== void 0) return { kind: "refused", reason: "This workflow run hides its script, and this process has no record of starting it, so it will not resume it. Start a new run without resumeFromRunId." };
+  if (t.hasUnreadLine === true) return { kind: "refused", reason: `A line of the journal of workflow run ${r} cannot be read, so this session cannot tell whether the run hides its script and will not resume it. Start a new run without resumeFromRunId; it runs again the agents this run had finished.` };
+  return { kind: "shared" };
+}
+export {
+  Aws,
+  Cuo,
+  Tuo,
+  _Ot
+};

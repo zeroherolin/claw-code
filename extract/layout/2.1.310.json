@@ -1,0 +1,204 @@
+{
+  "version": "2.1.310",
+  "modules": {
+    "chunk-7pf88165.js": {
+      "path": "api/anthropic-client",
+      "why": "Anthropic SDK 客户端（anthropic-version: 2023-06-01、maxRetries）及 Bedrock/Vertex/Foundry 适配"
+    },
+    "chunk-tt02vrrp.js": {
+      "path": "cli/headless-print-mode",
+      "why": "-p/--print 与 SDK stream-json：runHeadless_entry、control_request、initialize"
+    },
+    "chunk-q3ah31rn.js": {
+      "path": "cli/main",
+      "why": "导出 main；cli.js 最后 import 它；构建 commander 程序并 parseAsync"
+    },
+    "chunk-fnas6tz1.js": {
+      "path": "cli/root-command",
+      "why": "r.name(\"claude\").description(...) 及根命令 44 个选项、preAction"
+    },
+    "chunk-jbe4pes4.js": {
+      "path": "cli/session-setup",
+      "why": "根命令 action 的准备阶段 Uso()：action_handler_start、tengu_init、session_start、skills/托管设置加载，随后交给 runInteractiveSession 或 runHeadless"
+    },
+    "chunk-0s3jtbsx.js": {
+      "path": "context/team-memory-sync",
+      "why": "团队记忆同步：tengu_team_mem_*、team_memory API"
+    },
+    "chunk-31gxg38t.js": {
+      "path": "core/conversation-engine",
+      "why": "12 万行核心：流式请求（YNt）、上下文压缩（tengu_compact_*）、hooks 执行、工具权限与 auto mode、文件历史、环境信息段（Primary working directory）"
+    },
+    "chunk-ae1068t2.js": {
+      "path": "core/query-loop",
+      "why": "回合循环：Stop hooks（hook_stopped_continuation）、重试判定（max_output_tokens/rate_limited）、toolUseContext 驱动"
+    },
+    "chunk-dpjpry6w.js": {
+      "path": "core/system-prompt-blocks",
+      "why": "系统提示词分块：__SYSTEM_PROMPT_STATIC_BREAKPOINT__、\"You are Claude Code, Anthropic's official CLI\" 常量"
+    },
+    "chunk-27xjmczp.js": {
+      "path": "settings/global-config-and-gates",
+      "why": "~/.claude.json 全局配置读写、特性开关（pinnedFeatureValues，见 extract-gates.mjs）、OAuth 账户"
+    },
+    "chunk-9a41hw1t.js": {
+      "path": "shared/environment",
+      "why": "运行环境探测：Tf()=Bun.isStandaloneExecutable、配置目录、CLAUDE_CODE_ENTRYPOINT 等环境变量"
+    },
+    "chunk-aet23r5k.js": {
+      "path": "shell/sandbox",
+      "why": "命令沙箱：macOS sandbox-exec、Linux bwrap、ripgrep 可用性；内含 protobuf 运行时"
+    },
+    "chunk-bt9cmdj7.js": {
+      "path": "terminal/cell-segmenter-factory",
+      "why": "创建 Bun.ant.CellSegmenter（RKn）、ANSI 切分、tmux 图片直通检测"
+    },
+    "chunk-pma0w0g1.js": {
+      "path": "terminal/ink-renderer",
+      "why": "Ink 终端渲染器：Yoga 布局、altScreen、帧调度（frameHeldForBacklog）"
+    },
+    "chunk-neh1j60a.js": {
+      "path": "ui/launch-repl-session",
+      "why": "oRt/rgi：设置权限模式后挂载 AppRoot + REPL（ui/repl-screen）"
+    },
+    "chunk-ztmf7n3c.js": {
+      "path": "ui/repl",
+      "why": "导出 REPL 组件（包装 ui/repl-screen 的 Fur）"
+    },
+    "chunk-zq77a89q.js": {
+      "path": "ui/repl-screen",
+      "why": "交互式主界面：PromptInput、权限确认（Do you want to proceed?）、spinner、输入历史"
+    },
+    "chunk-cz421hr0.js": {
+      "path": "ui/tool-message-rendering",
+      "why": "工具调用/结果消息渲染（renderToolUseMessage / userFacingName）"
+    }
+  },
+  "assets": {
+    "chunkGroup": {
+      "chunk-dehvc445.js": "skills/claude-code-docs",
+      "chunk-2497tyw9.js": "skills/claude-code-docs",
+      "chunk-92zrg6a8.js": "skills/claude-code-docs",
+      "chunk-t6eehhdn.js": "skills/claude-api",
+      "chunk-k0mcdpfx.js": "plugins/claude-test",
+      "chunk-9stddnqh.js": "skills/dataviz",
+      "chunk-5j21306x.js": "skills/run",
+      "chunk-e1ja5bdc.js": "skills/verify",
+      "chunk-87fk1p13.js": "skills/run-skill-generator",
+      "chunk-gdzen90v.js": "skills/cowork-plugin",
+      "chunk-jsy60ys5.js": "skills/plugin-authoring",
+      "chunk-c6nmm67v.js": "skills/prototype",
+      "chunk-ryj60c9z.js": "skills/design-sync",
+      "chunk-gr88cgcj.js": "skills/workshop",
+      "chunk-bszfkq8x.js": "skills/artifact-components",
+      "chunk-pgcarp1a.js": "skills/doc",
+      "chunk-h852fhqn.js": "skills/artifact-diagramming",
+      "chunk-16vejqnd.js": "skills/artifact-design",
+      "chunk-gzaa5nta.js": "skills/artifact-types",
+      "chunk-t5sjtkqz.js": "prompts/repl-route",
+      "chunk-c3j6hpkh.js": "prompts/loop",
+      "chunk-31gxg38t.js": "prompts/workflow-examples",
+      "chunk-0nej4jsc.js": "skills/workshop",
+      "chunk-t6f20pqm.js": "sdk",
+      "chunk-7dbj3tnn.js": "sdk",
+      "chunk-wte097yz.js": "fonts",
+      "chunk-ahz28xsf.js": "vendor",
+      "chunk-zsth6qpw.js": "vendor",
+      "chunk-w03h7t5s.js": "vendor",
+      "chunk-vy1w5pmp.js": "artifact-runtime",
+      "chunk-9amyqxcf.js": "artifact-runtime",
+      "chunk-cyfns0f1.js": "artifact-runtime",
+      "chunk-dbj90r18.js": "native",
+      "chunk-bqp70210.js": "native",
+      "chunk-rrrrq3eh.js": "native"
+    },
+    "named": {
+      "SKILL-0vb5xk0r.md": "skills/claude-code-docs/SKILL.md",
+      "SKILL-1755097b.md.zst": "skills/claude-api/SKILL.md",
+      "SKILL-4364cf72.md.zst": "plugins/claude-test/skills/draft/SKILL.md",
+      "SKILL-616338f0.md.zst": "plugins/claude-test/skills/execute/SKILL.md",
+      "SKILL-cc984d7e.md.zst": "plugins/claude-test/skills/run/SKILL.md",
+      "SKILL-8zd8x5rj.md": "skills/dataviz/SKILL.md",
+      "SKILL-9ddmsnpa.md": "skills/run/SKILL.md",
+      "SKILL-cf37e4b8.md.zst": "skills/verify/SKILL.md",
+      "SKILL-e3d212e9.md.zst": "skills/run-skill-generator/SKILL.md",
+      "template-eg8004mh.md": "skills/run-skill-generator/TEMPLATE.md",
+      "SKILL-a71d0623.md.zst": "skills/cowork-plugin/SKILL.md",
+      "SKILL-aa0d9c2d.md.zst": "skills/plugin-authoring/SKILL.md",
+      "reference-b976cc65.md.zst": "skills/plugin-authoring/REFERENCE.md",
+      "band.tsx-1v7nt0yx.txt": "skills/plugin-authoring/examples/band.tsx",
+      "band-state.d.ts-jt01vrsc.txt": "skills/plugin-authoring/examples/band-state.d.ts",
+      "pane.tsx-mhv389ra.txt": "skills/plugin-authoring/examples/pane.tsx",
+      "pane-state.d.ts-11bz0njc.txt": "skills/plugin-authoring/examples/pane-state.d.ts",
+      "pane.test.tsx-ee55mcxg.txt": "skills/plugin-authoring/examples/pane.test.tsx",
+      "tool-call.ts-tv29hdsd.txt": "skills/plugin-authoring/examples/tool-call.ts",
+      "SKILL-b0897508.md.zst": "skills/prototype/SKILL.md",
+      "SKILL-b6859017.md.zst": "skills/design-sync/SKILL.md",
+      "SKILL-e92179a2.md.zst": "skills/workshop/SKILL.md",
+      "artifact-plan.html-80a36a32.txt.zst": "skills/workshop/templates/artifact-plan.html",
+      "SKILL-fjp06kkf.md": "skills/artifact-components/SKILL.md",
+      "SKILL-h8rn0xak.md": "skills/doc/SKILL.md",
+      "SKILL-kyber1ah.md": "skills/artifact-diagramming/SKILL.md",
+      "SKILL-15dc2cc1.md.zst": "skills/artifact-design/SKILL.md",
+      "SKILL-5vqnvygj.md": "skills/artifact-types/data-table/SKILL.md",
+      "template.html-cad26093.txt.zst": "skills/artifact-types/data-table/template.html",
+      "template.html-j5g90adz.txt": "skills/artifact-types/explainer/template.html",
+      "template.html-268183fd.txt.zst": "skills/artifact-types/report/template.html",
+      "SKILL-sq87gt02.md": "skills/artifact-types/explainer/SKILL.md",
+      "SKILL-z3x847gz.md": "skills/artifact-types/report/SKILL.md",
+      "loopAutonomousPreamble-07qcyhv4.md": "prompts/loop/loopAutonomousPreamble.md",
+      "loopAutonomousPreamblePersistent-3zqtkrvg.md": "prompts/loop/loopAutonomousPreamblePersistent.md",
+      "simple_plan-s5yyk7xh.txt": "prompts/workflow-examples/simple_plan.txt",
+      "visual_plan-9bza2qe2.txt": "prompts/workflow-examples/visual_plan.txt",
+      "three_subagents_with_critique-bd1egk7q.txt": "prompts/workflow-examples/three_subagents_with_critique.txt",
+      "claude-code.d.ts-bf9d954c.txt.zst": "sdk/claude-code.d.ts",
+      "permissions_external-df98b90a.txt.zst": "sdk/permissions_external.txt",
+      "anthropicSans400.woff2.asset": "fonts/anthropicSans400.woff2",
+      "anthropicSerif400.woff2.asset": "fonts/anthropicSerif400.woff2",
+      "chart.umd.min.js": "vendor/chart.umd.min.js",
+      "mermaid.min.js": "vendor/mermaid.min.js",
+      "hljsBundle.generated.min.js": "vendor/hljsBundle.generated.min.js",
+      "state-library.js-wy8y4843.txt": "artifact-runtime/state-library.js",
+      "appifact_sdk.js-852e8bcb.txt.zst": "artifact-runtime/appifact_sdk.js",
+      "kit-modules.js-02f8fcd0.txt.zst": "artifact-runtime/kit-modules.js",
+      "audio-capture.node": "native/audio-capture.node",
+      "computer-use-input.node": "native/computer-use-input.node",
+      "computer-use-swift.node": "native/computer-use-swift.node",
+      "validate_palette.js-f945bc6a.txt.zst": "skills/dataviz/scripts/validate_palette.js",
+      "validate_palette.py-f97163c4.txt.zst": "skills/dataviz/scripts/validate_palette.py"
+    },
+    "replRoute": {
+      "design-6m4nsdef.md": "design.md",
+      "designHowTo-p8zjfw0e.md": "designHowTo.md",
+      "designTwoSteps-g0bev2xr.md": "designTwoSteps.md",
+      "slides-zdpeg77q.md": "slides.md",
+      "slidesHowTo-09m4dbj2.md": "slidesHowTo.md",
+      "slidesTwoSteps-1shjmnfb.md": "slidesTwoSteps.md"
+    },
+    "designSyncScripts": [
+      "bundle.mjs",
+      "capture.mjs",
+      "common.mjs",
+      "compare.mjs",
+      "css.mjs",
+      "css-fallback.mjs",
+      "detect.mjs",
+      "docs.mjs",
+      "dts.mjs",
+      "emit.mjs",
+      "http-serve.mjs",
+      "package-build.mjs",
+      "package-validate.mjs",
+      "preview-gen-storybook.mjs",
+      "preview-rebuild.mjs",
+      "previews.mjs",
+      "probe.mjs",
+      "remote-diff.mjs",
+      "resync.mjs",
+      "source-kit.mjs",
+      "source-storybook.mjs",
+      "story-imports.mjs",
+      "sync-hashes.mjs"
+    ]
+  }
+}

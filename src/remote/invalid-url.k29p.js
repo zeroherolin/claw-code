@@ -1,0 +1,208 @@
+// remote/invalid-url.k29p.js — Claude Code 2.1.310 模块 chunk-k29pnrtn.js
+import { __asset_src } from "../runtime/assets.js";
+import { An, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { i } from "../shared/environment.9a41.js";
+import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { wr, Te, op } from "../models/total-tokens-reminder.psq3.js";
+import { mz } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { gti, hti, yti, d_n, pH, $_e, it, t1, eZ } from "../settings/global-config-and-gates.27xj.js";
+import { on } from "../auth/env-quad.nmae.js";
+import { I6e } from "../auth/policy-limits-principal-changed.cb7h.js";
+import { Fjn, iDt } from "../shared/chunk-vxgqfz66.js";
+import { knn, FEo, Njn, sDt } from "../fs/compiled-roots.y95h.js";
+import { Fn } from "../models/claude-mythos-preview.rw6s.js";
+import { stripVTControlCharacters as R } from "util";
+function f(e) {
+  return `Error: --client-data-url: ${e}. Claude Code does not start without the configuration it was given; to start without it, remove the flag, or remove CLAUDE_CODE_CLIENT_DATA_URL from your environment or settings.`;
+}
+function m(e, { httpStatus: n, minClaudeCodeVersion: r, buildVersion: o } = {}) {
+  switch (e) {
+    case "invalid_url":
+      return "the URL must be the https://downloads.claude.ai/ address Anthropic gave you, exactly as given";
+    case "remote_session":
+      return "it cannot be used in a cloud, remote-environment or ssh session, which runs Claude Code on another machine";
+    case "third_party_provider":
+      return "it only works when Claude Code talks to the Anthropic API directly, not through a cloud provider such as Bedrock, Vertex or Foundry, or a cloud gateway";
+    case "policy_denied":
+      return "your organization's policy does not allow it";
+    case "not_found":
+      return "there is nothing at that URL; it may have been withdrawn, so ask Anthropic for a new one";
+    case "http_status":
+    case "timeout":
+    case "network":
+    case "read_failed":
+      return `Claude Code could not fetch the document from downloads.claude.ai (${e === "http_status" ? `HTTP ${n ?? "error"}` : e}); check that your network or proxy allows https://downloads.claude.ai`;
+    case "too_large":
+      return "the server returned something too large to be a configuration document; try again, and if it keeps happening ask Anthropic";
+    case "unsigned":
+    case "sidecar_invalid":
+    case "bad_signature":
+    case "parse_failed":
+      return `the document or its signature is not valid (${e}); ask Anthropic for a new URL`;
+    case "unknown_key":
+    case "key_unusable":
+    case "unsupported_schema":
+      return `this version of Claude Code cannot read the document (${e}); update Claude Code`;
+    case "replayed_version":
+      return "the server returned an older document than one already accepted on this machine; a proxy on your network may be serving an old copy; if not, ask Anthropic for a new URL";
+    case "below_minimum_version":
+      return `the document requires Claude Code ${r} or newer and this build is ${o}; run claude update`;
+    case "exception":
+      return "Claude Code hit an internal error loading it; run with --debug for details";
+  }
+}
+function A(e, n) {
+  let r = E(e);
+  return r === "" ? "Error: --client-data-url: the document has nothing for any model (its publisher switched it off). Remove --client-data-url or CLAUDE_CODE_CLIENT_DATA_URL, or pass --allow-other-models (CLAUDE_CODE_ALLOW_OTHER_MODELS=1) to start without applying it." : `Error: --client-data-url: the document has no entry for ${p(n)}; it has entries for models matching ${r}. Pass a matching --model, or --allow-other-models (CLAUDE_CODE_ALLOW_OTHER_MODELS=1) to start without applying it.`;
+}
+function v(e, n, r) {
+  let o = E(e), a = d_n(e, n) !== null ? `applied to ${p(n)} (document v${e.version})` : o === "" ? `loaded (document v${e.version}), nothing in it for any model (its publisher switched it off)` : `loaded (document v${e.version}), nothing in it for ${p(n)}; it has entries for models matching ${o}`;
+  return r ? `${a}; base URL treated as the Anthropic API` : a;
+}
+function E(e) {
+  return p(e.entries.map((n) => n.pattern.source).join(", "));
+}
+function p(e) {
+  return An(R(e));
+}
+function D() {
+  let e = i.CLAUDE_CODE_CLIENT_DATA_URL?.trim();
+  if (!e) return { kind: "unset" };
+  let n;
+  try {
+    n = new URL(e);
+  } catch {
+    return { kind: "invalid_url" };
+  }
+  if (n.protocol !== "https:" || n.username !== "" || n.password !== "" || n.port !== "" || !mz(n.hostname) || /[?#]/.test(e) || !gti.test(n.pathname)) return { kind: "invalid_url" };
+  return { kind: "ok", source: { url: n.toString(), signingContext: hti(n.pathname), cacheKey: FEo(n.pathname), roots: knn } };
+}
+function d() {
+  return wr().clientDataUrl;
+}
+function KPs({ flagUrl: e, runsOnAnotherMachine: n = false, buildVersion: r = { ISSUES_EXPLAINER: "report the issue at https://github.com/anthropics/claude-code/issues", PACKAGE_URL: "@anthropic-ai/claude-code", README_URL: "https://code.claude.com/docs/en/overview", VERSION: "2.1.310", FEEDBACK_CHANNEL: "https://github.com/anthropics/claude-code/issues", BUILD_TIME: "2026-10-23T17:43:32Z", GIT_SHA: "0d2056ecf42d9452a8cd8e054600024e7c557add", HOOKS_WORKER_URL: __asset_src("hooks/hooks-worker.js"), DD_SOURCEMAP_GROUP: "darwin" }.VERSION } = {}) {
+  try {
+    if (e !== void 0) i.set("CLAUDE_CODE_CLIENT_DATA_URL", e);
+    let o = D();
+    if (o.kind === "unset" || !k() || U(o, n) !== void 0) return;
+    let a = g(o, n, r);
+    a.catch(() => {
+    }), d().pending = { resolution: o, loaded: a };
+  } catch (o) {
+    l(o);
+  }
+}
+async function qPs() {
+  try {
+    let e = d().pending;
+    if (e === void 0) return false;
+    let n = await e.loaded;
+    return "document" in n && L(n.document);
+  } catch (e) {
+    return l(e), false;
+  }
+}
+async function YPs({ runsOnAnotherMachine: e = false, buildVersion: n = { ISSUES_EXPLAINER: "report the issue at https://github.com/anthropics/claude-code/issues", PACKAGE_URL: "@anthropic-ai/claude-code", README_URL: "https://code.claude.com/docs/en/overview", VERSION: "2.1.310", FEEDBACK_CHANNEL: "https://github.com/anthropics/claude-code/issues", BUILD_TIME: "2026-10-23T17:43:32Z", GIT_SHA: "0d2056ecf42d9452a8cd8e054600024e7c557add", HOOKS_WORKER_URL: __asset_src("hooks/hooks-worker.js"), DD_SOURCEMAP_GROUP: "darwin" }.VERSION } = {}) {
+  try {
+    let r = D(), o = d().pending;
+    d().pending = void 0;
+    let a = o !== void 0 && b(o.resolution, r) ? o : void 0;
+    if (r.kind === "unset") {
+      w();
+      return;
+    }
+    let s = U(r, e);
+    if (s !== void 0 || o !== void 0 && a === void 0) w();
+    if (s === void 0 && a === void 0 && !on("allow_model_catalog")) return f(m("policy_denied"));
+    let u = s !== void 0 ? { failure: s } : a !== void 0 ? await a.loaded : await g(r, e, n);
+    if (a !== void 0 && "failure" in u && S.has(u.failure)) u = await g(r, e, n);
+    if ("failure" in u) return f(m(u.failure, u));
+    if (a !== void 0 && !on("allow_model_catalog")) return f(m("policy_denied"));
+    if (L(u.document)) I6e();
+    if (r.kind === "ok") await iDt(r.source.cacheKey, u.document);
+    d().document = u.document, t(`[clientDataUrl] loaded document v${u.document.version} covering ${u.document.entries.length} model pattern(s)`);
+    return;
+  } catch (r) {
+    return l(r), f(m("exception"));
+  }
+}
+function L(e) {
+  if (d().assumesFirstPartyBaseUrl) return false;
+  let n = e.entries.find((r) => r.clientData.assume_first_party_base_url === true);
+  if (n === void 0 || op()) return false;
+  if (i._CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL !== void 0 || y()) return t(`[clientDataUrl] assume_first_party_base_url in the document not applied: ${y() ? "the host manages the provider" : "_CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL is already set"}`), false;
+  return d().assumesFirstPartyBaseUrl = true, t1(), eZ(), t(`[clientDataUrl] assume_first_party_base_url applied (entry ${n.pattern.source}): the base URL is treated as the Anthropic API from here on`), true;
+}
+function XPs() {
+  let { document: e } = d();
+  if (e === void 0 || i.CLAUDE_CODE_ALLOW_OTHER_MODELS) return;
+  let n = Fn(it());
+  return d_n(e, n) === null ? A(e, n) : void 0;
+}
+function JPs(e, n) {
+  let { document: r } = d();
+  if (r === void 0) return e;
+  let o = d_n(r, Fn(n ?? it()));
+  return o === null ? e : { ...e, ...o };
+}
+function QPs(e) {
+  let { document: n } = d();
+  return n !== void 0 && n.entries.length > 0 && d_n(n, Fn(e ?? it())) === null;
+}
+function ZPs() {
+  let { document: e } = d();
+  return e === void 0 ? void 0 : v(e, Fn(it()), d().assumesFirstPartyBaseUrl);
+}
+async function g(e, n, r) {
+  let o = U(e, n);
+  if (o !== void 0 || e.kind !== "ok") return { failure: o ?? "invalid_url" };
+  let { source: a } = e, s = await Njn({ kind: "hosted", url: a.url, trust: { kind: "compiled_roots", roots: a.roots }, cacheKey: a.cacheKey }, { noCache: true });
+  if (s.status !== "ok") {
+    let { httpStatus: c } = s;
+    if (c === 404 || c === 410) return { failure: "not_found" };
+    return { failure: s.status === "error" ? s.reason : "http_status", httpStatus: c };
+  }
+  if (!s.hasSidecar) {
+    let { sidecarHttpStatus: c } = s;
+    if (c === void 0 || c === 404 || c === 410) return { failure: "unsigned" };
+    return c >= 200 && c < 300 ? { failure: "too_large" } : { failure: "http_status", httpStatus: c };
+  }
+  let u = await sDt({ documentBytes: s.documentBytes, sidecar: s.sidecar, roots: a.roots, context: a.signingContext });
+  if (!u.ok) return { failure: u.reason };
+  let _ = yti(s.documentBytes);
+  if (!_.ok) return { failure: _.reason };
+  let { document: h } = _;
+  if (h.version < await Fjn(a.cacheKey)) return { failure: "replayed_version" };
+  let { minClaudeCodeVersion: C } = h;
+  if (C !== void 0 && pH($_e(r), C)) return { failure: "below_minimum_version", minClaudeCodeVersion: C, buildVersion: r };
+  return { document: h };
+}
+function U(e, n) {
+  if (e.kind === "invalid_url") return "invalid_url";
+  if (n) return "remote_session";
+  if (Te() !== "firstParty") return "third_party_provider";
+  return;
+}
+function y() {
+  return i.CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST || i.CLAUDE_CODE_HOST_AUTH_ENV_VAR !== void 0;
+}
+function k() {
+  return Te() === "firstParty" && !op() && i._CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL === void 0 && !y();
+}
+var S = /* @__PURE__ */ new Set(["network", "http_status", "read_failed"]);
+function b(e, n) {
+  return e.kind === "ok" ? n.kind === "ok" && e.source.url === n.source.url : n.kind === "invalid_url";
+}
+function w() {
+  if (!d().assumesFirstPartyBaseUrl) return;
+  d().assumesFirstPartyBaseUrl = false, t1(), eZ(), t("[clientDataUrl] assume_first_party_base_url withdrawn: the launch does not use the document it came from");
+}
+export {
+  JPs,
+  KPs,
+  QPs,
+  XPs,
+  YPs,
+  ZPs,
+  qPs
+};

@@ -1,0 +1,69 @@
+// shell/not-running.cb9v.js — Claude Code 2.1.310 模块 chunk-cb9v42g9.js
+import { t6e } from "../context/tool-result-clearing-after-idle-server-report.epan.js";
+import { f } from "../shared/chunk-nyvhtfb3.js";
+import { Be, Tt } from "../mcp/allowed-warning.j2d4.js";
+import { o, E, M, u, B, T } from "../vendor/zod/string-format.k395.js";
+var d = 2147483647;
+var doo = 2, c = 64, p = /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/, l = f(() => E().int().min(0).max(d)), y = f(() => u({ side: B(["device", "cloud"]), generation: l(), tree: o().regex(p).nullable(), appliedGeneration: l(), mayHaveUnuploadedChanges: M(), shipping: l().nullable(), appliesOtherSide: M(), instanceId: o().regex(t6e), sequence: E().int().min(0).max(d) })), S = ["shipped", "shipping", "unchanged", "deferred", "kept_here", "failed", "not_running"], m = (e) => o().max(e).regex(/^[a-z0-9_]+$/), s = f(() => m(c)), h = f(() => u({ v: T(doo), frame: y(), outcome: u({ kind: B(S), reason: s().optional() }), ask_id: o().regex(t6e).optional() }));
+function Dfs(e) {
+  let n = h().safeParse(e);
+  if (!n.success) return null;
+  let { v: t, frame: r, outcome: a, ask_id: i } = n.data;
+  if (r.side !== "device") return null;
+  return { v: t, frame: r, outcome: { kind: a.kind, ...a.reason !== void 0 && { reason: a.reason } }, ...i !== void 0 && { askId: i } };
+}
+function Lfs(e) {
+  let n = s().safeParse(e.outcome.reason);
+  return { v: e.v, frame: e.frame, outcome: { kind: e.outcome.kind, ...n.success && { reason: n.data } }, ...e.askId !== void 0 && { ask_id: e.askId } };
+}
+var g = { frame: null, heardAt: null, stale: true };
+function pdt() {
+  let e = /* @__PURE__ */ new Map(), n = (r) => `${r.source}:${r.name}`, t = (r) => {
+    let a = e.get(n(r));
+    return a !== void 0 && a.servingEpoch === r.description?.epoch ? a.value : void 0;
+  };
+  return { of: t, file(r, a) {
+    let i = r.description?.epoch;
+    if (i !== void 0) e.set(n(r), { servingEpoch: i, value: a(t(r)) });
+  } };
+}
+function Nfs() {
+  let e = pdt(), n = 0;
+  return { peer(t) {
+    let r = e.of(t);
+    return r === void 0 ? g : { frame: r.frame, heardAt: r.heardAt, stale: r.era < n };
+  }, heard(t, r, a) {
+    e.file(t, (i) => i === void 0 || i.frame.instanceId !== r.instanceId || r.sequence > i.frame.sequence ? { frame: r, heardAt: a, era: n } : i);
+  }, invalidateAll() {
+    n += 1;
+  } };
+}
+var _ = /^(bash|powershell|bash\+powershell)(?::(core|desktop))?$/;
+function Mfs(e) {
+  let n = [...e.bash ? ["bash"] : [], ...e.powershell ? ["powershell"] : []];
+  if (n.length === 0) return;
+  let t = e.powershell?.edition;
+  return `${n.join("+")}${t === void 0 ? "" : `:${t}`}`;
+}
+function yOn(e) {
+  let n = e === void 0 ? null : _.exec(e);
+  if (n === null) return;
+  let t = n[2];
+  if (n[1] === "bash") return t === void 0 ? { bash: true, powershell: void 0 } : void 0;
+  return { bash: n[1] === "bash+powershell", powershell: { edition: t } };
+}
+function Hfs(e, n) {
+  return { bash: e.includes(Be), powershell: e.includes(Tt) ? { edition: n ?? void 0 } : void 0 };
+}
+var Zee = 864e5;
+export {
+  Dfs,
+  Hfs,
+  Lfs,
+  Mfs,
+  Nfs,
+  Zee,
+  doo,
+  pdt,
+  yOn
+};

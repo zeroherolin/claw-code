@@ -1,0 +1,81 @@
+本项目由两部分组成，适用不同的条款。
+
+================================================================================
+一、Claude Code 2.1.310（src/ 中的生成代码、assets/、reference/、docs/reference/）
+================================================================================
+
+这些内容提取自 Anthropic PBC 发布的 Claude Code 2.1.310
+（npm 包 @anthropic-ai/claude-code 与 @anthropic-ai/claude-code-darwin-arm64），
+版权归 Anthropic PBC 所有。本项目只对其做了提取、格式化与重新组织，未取得任何额外授权。
+
+原版 LICENSE.md:
+
+  © Anthropic PBC. All rights reserved. Use is subject to the Legal Agreements outlined here: https://code.claude.com/docs/en/legal-and-compliance.
+
+原版每个模块开头附带的声明:
+
+  Claude Code is a Beta product per Anthropic's Commercial Terms of Service.
+  By using Claude Code, you agree that all code acceptance or rejection decisions you make,
+  and the associated conversations in context, constitute Feedback under Anthropic's Commercial Terms,
+  and may be used to improve Anthropic's products, including training models.
+  You are responsible for reviewing any code suggestions before use.
+
+  (c) Anthropic PBC. All rights reserved. Use is subject to the Legal Agreements outlined here: https://code.claude.com/docs/en/legal-and-compliance.
+
+使用这些内容须遵守上述法律协议。本项目仅用于学习、研究与互操作性分析，
+不得用于规避原版的授权或计费机制。
+
+================================================================================
+二、本项目新增的部分
+================================================================================
+
+src/main.js、src/runtime/、scripts/、bin/、test/、extract/（upstream/ 除外）以及 docs/ 中的
+手写文档为本项目新增内容，以 MIT 许可发布:
+
+MIT License
+
+Copyright (c) 2026 Linz
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+三、原版中包含的第三方库
+================================================================================
+
+原版打包了下列第三方库（主要位于 src/vendor/），它们沿用各自的开源许可。
+以下为原版代码中保留的许可注释，共 5 段:
+
+/*!
+* content-type
+* Copyright(c) 2015 Douglas Christopher Wilson
+* MIT Licensed
+*/
+    （位于 src/vendor/mcp-sdk/not-in-era.0ynw.js）
+
+/*! @azure/msal-common v15.13.1 2025-10-29 */
+    （位于 src/auth/get-bearer-token-provider.hrvv.js）
+
+/*! @azure/msal-node v3.8.1 2025-10-29 */
+    （位于 src/auth/get-bearer-token-provider.hrvv.js）
+
+/*! chokidar - MIT License (c) 2012 Paul Miller (paulmillr.com) */
+    （位于 src/fs/files-directories.md42.js）
+
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+    （位于 src/shared/chunk-967bck0p.js）

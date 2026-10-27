@@ -1,0 +1,191 @@
+// settings/chunk-emepk0bf.js — Claude Code 2.1.310 模块 chunk-emepk0bf.js
+import { ke } from "../context/not-admin-owned.ersa.js";
+import { re } from "../shared/chunk-j79dwkaq.js";
+import { wCt } from "../shell/invalid-type.qnva.js";
+import { i$e } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { dn } from "../mcp/chunk-ykcv164t.js";
+import { fe } from "./settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
+import { Bx } from "./global-config-and-gates.27xj.js";
+import { Be } from "../mcp/allowed-warning.j2d4.js";
+import { WJn } from "./built-in.5fzv.js";
+import { t7n, wce } from "../permissions/frontmatter-grant-withheld.8tyz.js";
+import { pQ } from "../context/org-memory-writes-setting-changed.w8x9.js";
+import { isAbsolute as h } from "path";
+function S() {
+  return { sources: m(), read: fe, rules: wce };
+}
+var m = () => {
+  let { gateProject: t } = t7n(), e = Bx({ onIndeterminate: "tracked" });
+  return [...t ? [["projectSettings", ".claude/settings.json"]] : [], ...e ? [["localSettings", ".claude/settings.local.json"]] : []];
+};
+function tyr(t) {
+  if (t === null) return false;
+  if (t.statusLine) return true;
+  if (t.fileSuggestion) return true;
+  if (t.subagentStatusLine) return true;
+  if (!t.hooks) return false;
+  for (let e of Object.values(t.hooks)) if (e.length > 0) return true;
+  return false;
+}
+function nso(t = { sources: [["projectSettings", ".claude/settings.json"], ["localSettings", ".claude/settings.local.json"]], read: fe, rules: wce }, e = ke()) {
+  let s = [];
+  for (let [n, c] of t.sources) if (tyr(t.read(n))) s.push(c);
+  let r = WJn(e);
+  if (r !== null) s.push(pQ(r));
+  return s;
+}
+function l(t) {
+  return t.some((e) => e.ruleBehavior === "allow" && (e.ruleValue.toolName === Be || e.ruleValue.toolName.startsWith(Be + "(")));
+}
+var j = /[\x00-\x1f\x7f-\x9f\u2028\u2029]|\p{Cf}/gu, a = 60;
+function nyr(t) {
+  let e = i$e(t).replace(j, "").trim();
+  return e.length > a ? `${re(e, a)}…` : e;
+}
+var R = /* @__PURE__ */ new Set([Be, "PowerShell", "Write", "Edit", "MultiEdit", "NotebookEdit", "WebFetch", "WebSearch"]);
+function g(t) {
+  let { toolName: e, ruleContent: s } = t.ruleValue, r = R.has(e) || e.startsWith("mcp__"), n = s === void 0;
+  if (r) return n ? 0 : 1;
+  return n ? 2 : 3;
+}
+function YPt(t = S()) {
+  let e = [], s = [];
+  for (let [i, o] of t.sources) {
+    let u = t.rules(i).filter((d) => d.ruleBehavior === "allow");
+    if (u.length > 0) e.push(o), s.push(...u);
+  }
+  let r = s.length;
+  s.sort((i, o) => g(i) - g(o));
+  let n = /* @__PURE__ */ new Set(), c = [];
+  for (let i of s) {
+    let o = nyr(dn(i.ruleValue));
+    if (o.length > 0 && !n.has(o)) n.add(o), c.push(o);
+  }
+  return { rules: c, sources: e, rawCount: r };
+}
+function p(t) {
+  if (h(t) || t.startsWith("~")) return 0;
+  if (t.includes("..")) return 1;
+  return 2;
+}
+function XPt(t = S()) {
+  let e = [], s = [];
+  for (let [i, o] of t.sources) {
+    let u = t.read(i)?.permissions?.additionalDirectories ?? [];
+    if (u.length > 0) e.push(o), s.push(...u);
+  }
+  let r = s.length, n = /* @__PURE__ */ new Set(), c = [];
+  for (let i of s) {
+    let o = nyr(i);
+    if (o.length > 0 && !n.has(o)) n.add(o), c.push(o);
+  }
+  return c.sort((i, o) => p(i) - p(o)), { dirs: c, sources: e, rawCount: r };
+}
+function rso() {
+  let t = [], e = wce("projectSettings");
+  if (l(e)) t.push(".claude/settings.json");
+  let s = wce("localSettings");
+  if (l(s)) t.push(".claude/settings.local.json");
+  return t;
+}
+function Eb(t, e) {
+  if (t.length === 0) return "";
+  let s = e === 0 ? void 0 : e;
+  if (!s || t.length <= s) {
+    if (t.length === 1) return t[0];
+    if (t.length === 2) return `${t[0]} and ${t[1]}`;
+    let c = t.at(-1);
+    return `${t.slice(0, -1).join(", ")}, and ${c}`;
+  }
+  let r = t.slice(0, s), n = t.length - s;
+  if (r.length === 1) return `${r[0]} and ${n} more`;
+  return `${r.join(", ")}, and ${n} more`;
+}
+function ryr(t) {
+  return !!t?.otelHeadersHelper;
+}
+function oso() {
+  let t = [], e = fe("projectSettings");
+  if (ryr(e)) t.push(".claude/settings.json");
+  let s = fe("localSettings");
+  if (ryr(s)) t.push(".claude/settings.local.json");
+  return t;
+}
+function NYt() {
+  let t = [];
+  if (fe("projectSettings")?.autoMemoryDirectory !== void 0) t.push(".claude/settings.json");
+  if (fe("localSettings")?.autoMemoryDirectory !== void 0) t.push(".claude/settings.local.json");
+  return t;
+}
+function oyr(t) {
+  return !!t?.apiKeyHelper;
+}
+function sso() {
+  let t = [], e = fe("projectSettings");
+  if (oyr(e)) t.push(".claude/settings.json");
+  let s = fe("localSettings");
+  if (oyr(s)) t.push(".claude/settings.local.json");
+  return t;
+}
+function syr(t) {
+  return !!(t?.awsAuthRefresh || t?.awsCredentialExport);
+}
+function iso() {
+  let t = [], e = fe("projectSettings");
+  if (syr(e)) t.push(".claude/settings.json");
+  let s = fe("localSettings");
+  if (syr(s)) t.push(".claude/settings.local.json");
+  return t;
+}
+function iyr(t) {
+  return !!t?.gcpAuthRefresh;
+}
+function aso() {
+  let t = [], e = fe("projectSettings");
+  if (iyr(e)) t.push(".claude/settings.json");
+  let s = fe("localSettings");
+  if (iyr(s)) t.push(".claude/settings.local.json");
+  return t;
+}
+function ayr(t) {
+  return !!t?.proxyAuthHelper;
+}
+function lso() {
+  let t = [], e = fe("projectSettings");
+  if (ayr(e)) t.push(".claude/settings.json");
+  let s = fe("localSettings");
+  if (ayr(s)) t.push(".claude/settings.local.json");
+  return t;
+}
+function f(t) {
+  if (!t?.env) return false;
+  return Object.entries(t.env).some(([e, s]) => !wCt(e, s));
+}
+function FYt() {
+  let t = [], e = fe("projectSettings");
+  if (f(e)) t.push(".claude/settings.json");
+  let s = fe("localSettings");
+  if (f(s)) t.push(".claude/settings.local.json");
+  return t;
+}
+export {
+  Eb,
+  FYt,
+  NYt,
+  XPt,
+  YPt,
+  aso,
+  ayr,
+  iso,
+  iyr,
+  lso,
+  nso,
+  nyr,
+  oso,
+  oyr,
+  rso,
+  ryr,
+  sso,
+  syr,
+  tyr
+};
