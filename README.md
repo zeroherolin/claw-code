@@ -20,9 +20,11 @@ npm run build         # 编译出 dist/claude（约 1 秒）
 ./dist/claude         # 交互模式；用法与原版相同，例如 ./dist/claude -p "hello"
 ```
 
+`dist/claude` 是自包含的单文件可执行程序，可以拷到别处，也可以链接到 PATH 中的目录以便随处使用，例如 `ln -s "$PWD/dist/claude" ~/.local/bin/claude`。
+
 建议安装 `brew install ripgrep bfs ugrep`。原版把这三个工具内嵌在可执行文件里，本项目改为调用系统里的同名工具，详见 [docs/runtime.md](docs/runtime.md#内嵌命令行工具)。
 
-不构建也能直接运行，即开发模式：`npm start -- -p "hello"` 或 `bin/claude`。开发模式有两处与原版不同：内置 hooks 模块不加载，Bash 工具里的 `find`、`grep`、`rg` 函数不可用，原因见 [docs/runtime.md](docs/runtime.md#开发模式与构建产物的差异)。
+不构建也能直接运行，即开发模式：`bin/claude -p "hello"`。它直接运行 `src/`，在你当前所在的目录工作，可用于任意项目（`npm start` 也行，但 npm 总是在本项目根目录里运行）。开发模式有两处与原版不同：内置 hooks 模块不加载，Bash 工具里的 `find`、`grep`、`rg` 函数不可用，原因见 [docs/runtime.md](docs/runtime.md#开发模式与构建产物的差异)。
 
 ## 目录结构
 
@@ -38,7 +40,8 @@ npm run build         # 编译出 dist/claude（约 1 秒）
 | `reference/` | 机器可读的参考数据：模块对照、工具、命令、特性开关、提示词全文 | 生成 |
 | `docs/` | 架构与运行时文档；`docs/reference/` 为参考手册 | 手写 + 生成 |
 | `scripts/` | `build.js` 编译单文件可执行程序，`boot.js` 是它的入口 | 手写 |
-| `bin/claude` | 开发模式启动器 | 手写 |
+| `bin/claude` | 开发模式启动器：直接运行 `src/`，无需构建；与原版有两处行为差异，见 [runtime.md](docs/runtime.md#开发模式与构建产物的差异) | 手写 |
+| `dist/claude` | `npm run build` 的产物：自包含的单文件可执行程序（约 160 MB，含 Bun 运行时与全部 `src/`、`assets/`），行为与原版一致 | 构建，不提交 |
 | `test/` | 单元、完整性、冒烟测试；`parity/` 为与原版的对比测试 | 手写 |
 | `extract/` | 维护者工具：从官方发布内容重新生成上表中"生成"的部分以及 `LICENSE` | 手写 |
 

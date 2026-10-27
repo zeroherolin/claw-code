@@ -2,7 +2,7 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
-import { ROOT, DIST, makeHome, cleanEnv, startFakeApi, runCli } from "./harness.js";
+import { ROOT, DIST, VERSION, makeHome, cleanEnv, startFakeApi, runCli } from "./harness.js";
 
 let home, api;
 const run = (cmd, args) => runCli(cmd, args, { cwd: home.work, env: cleanEnv(home.home, api.url) });
@@ -20,7 +20,7 @@ afterAll(() => {
 describe("开发模式 bun src/main.js", () => {
   test("--version", async () => {
     const r = await run(DEV, ["--version"]);
-    expect(r.output.trim()).toBe("2.1.310 (Claude Code)");
+    expect(r.output.trim()).toBe(`${VERSION} (Claude Code)`);
     expect(r.code).toBe(0);
   });
 

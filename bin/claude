@@ -1,7 +1,23 @@
 #!/bin/sh
 # 开发模式启动器：用项目固定版本的 Bun 直接运行 src/，无需构建。
 # 与 dist/claude 的行为差异见 docs/runtime.md#开发模式与构建产物的差异。
-ROOT=$(cd "$(dirname "$0")/.." && pwd)
-BUN="$ROOT/node_modules/.bin/bun"
-[ -x "$BUN" ] || BUN=$(command -v bun) || { echo "claw-code: 找不到 bun，请先在项目根目录执行 npm install" >&2; exit 1; }
-exec "$BUN" "$ROOT/src/main.js" "$@"
+set -eu
+
+# 经符号链接调用时（npm link、链入 PATH），$0 是链接本身：逐级解析到真实文件后再推算项目根目录。
+# 不用 readlink -f：macOS 12.3 之前的 readlink 不支持它。
+self=$0
+while [ -L "$self" ]; do
+  target=$(readlink "$self")
+  case $target in
+    /*) self=$target ;;
+    *) self=$(dirname "$self")/$target ;;
+  esac
+done
+root=$(cd -P "$(dirname "$self")/.." && pwd -P) # -P：bin/ 本身是符号链接时也能走到真实的项目根目录
+
+bun=$root/node_modules/.bin/bun
+[ -x "$bun" ] || bun=$(command -v bun) || {
+  echo "claw-code: 找不到 bun。请在项目根目录执行 npm install（安装固定版本），或自行安装 Bun。" >&2
+  exit 127
+}
+exec "$bun" "$root/src/main.js" "$@"

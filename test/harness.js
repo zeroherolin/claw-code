@@ -7,6 +7,7 @@ import { Terminal } from "@xterm/headless";
 
 export const ROOT = path.resolve(import.meta.dir, "..");
 export const DIST = path.join(ROOT, "dist/claude");
+export const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8")).version;
 const FAKE_KEY = "sk-ant-fake-test-key-tail";
 const CLEAN_PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
 
@@ -26,7 +27,7 @@ export function makeHome({ fresh = false } = {}) {
   fs.writeFileSync(path.join(work, "x.txt"), "alpha\nneedle here\n");
   if (!fresh) {
     fs.writeFileSync(path.join(home, ".claude/.claude.json"), JSON.stringify({
-      numStartups: 5, theme: "dark", hasCompletedOnboarding: true, lastOnboardingVersion: "2.1.310", tipsHistory: {},
+      numStartups: 5, theme: "dark", hasCompletedOnboarding: true, lastOnboardingVersion: VERSION, tipsHistory: {},
       customApiKeyResponses: { approved: [FAKE_KEY.slice(-20)], rejected: [] }, // 按 key 的后 20 个字符匹配
       projects: { [work]: { hasTrustDialogAccepted: true, allowedTools: [] } },
     }));
