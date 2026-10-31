@@ -134,8 +134,9 @@ export async function runCli(cmd, args, { cwd, env, timeout = 60_000 }) {
  * 在固定尺寸的伪终端里运行交互式 CLI，返回原始输出字节与是否超时。
  *   1. 等启动输出静止 idle 毫秒；
  *   2. 按 keys 发送按键，时刻相对第 1 步结束时（秒），保持按键之间的间隔（如双击 Esc）；
- *   3. 等输出再次静止 idle 毫秒后结束。
+ *   3. 从最后一次按键或输出起，静止 idle 毫秒后结束。
  * 以输出静止为准而不是固定时刻：机器繁忙时启动或回合变慢，不会截到中间状态。
+ * 按键也算作一次活动：否则按键前已静止了一段时间时，程序还没来得及响应就会被判定为静止。
  * 启动后约 10 秒 CLI 会自行撤掉启动提示，截屏须在此之前完成，因此 idle 不宜过大。
  * @param keys [[秒, 按键文本], ...]
  * @returns {{ bytes: Buffer, timedOut: boolean }} timedOut：timeout 毫秒内输出始终没有静止
@@ -157,6 +158,7 @@ export async function runInPty(cmd, { cwd, env, cols, rows, keys, idle = 1500, t
   for (const [at, text] of keys) {
     await Bun.sleep(Math.max(0, at * 1000 - (performance.now() - t0)));
     proc.terminal.write(text);
+    last = performance.now();
   }
   if (keys.length) await settle();
   proc.kill("SIGKILL");

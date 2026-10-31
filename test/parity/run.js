@@ -12,7 +12,7 @@
 //   tui       交互界面：scenarios/*.json 的按键脚本在固定尺寸伪终端中运行，比较最终屏幕的每个格子
 //
 // 场景文件：{ keys: [[秒, 按键文本], ...], args?, cols?, rows?, fresh? }
-//   启动输出静止后开始计时发送按键，最后一次按键后输出再次静止时截屏（见 harness.runInPty）；
+//   启动输出静止后开始计时发送按键，从最后一次按键或输出起再静止一段时间后截屏（见 harness.runInPty）；
 //   args 为启动参数；fresh 为 true 时使用全新的 HOME（首次引导）。默认 100×30。
 import fs from "node:fs";
 import path from "node:path";
