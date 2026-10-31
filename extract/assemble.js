@@ -17,21 +17,40 @@ const HOOKS_WORKER_ID = "src/plugins/functionHooks/hooks-worker/hooks-worker.js"
 const NATIVE_WRAPPER = /^(audio-capture|computer-use-input|computer-use-swift)\.js$/;
 
 /**
+ * 按特征字符串定位人工命名的模块：每条的 match 须全部出现在且只出现在一个模块的源码中。
+ * chunk id 每个版本都会变，特征字符串（提示词片段、事件名、选项名等）通常不变。
+ * @param curated { 路径: { match: string[] } }
+ * @returns { chunkId: 路径 }
+ */
+export function locateCurated(mods, curated) {
+  const byId = {}, problems = [];
+  for (const [rel, { match }] of Object.entries(curated)) {
+    const hits = mods.filter((m) => match.every((s) => m.raw.includes(s)));
+    if (hits.length !== 1) problems.push(`${rel}：${JSON.stringify(match)} 命中 ${hits.length} 个模块${hits.length ? `（${hits.slice(0, 5).map((m) => m.id).join("、")}）` : ""}`);
+    else if (byId[hits[0].id]) problems.push(`${rel} 与 ${byId[hits[0].id]} 命中同一个模块 ${hits[0].id}`);
+    else byId[hits[0].id] = rel;
+  }
+  if (problems.length) throw new Error(`layout 中的人工命名无法唯一定位，请调整 match 或删除该条（见 extract/README.md#升级到新版本）:\n  ${problems.join("\n  ")}`);
+  return byId;
+}
+
+/**
  * 为每个模块确定 src/ 下的相对路径。
  * @param mods     { id, raw }[]：原版模块源码（未格式化，命名与分区规则按它计算）
  * @param owners   { tool, command, skill }：chunk id → 该 chunk 定义的名字集合（来自分析阶段）
- * @param curated  人工命名 { chunkId: { path } }，优先于自动命名
+ * @param curated  人工命名 { 路径: { match } }，优先于自动命名
  */
 export function planLayout(mods, owners, curated) {
   const only = (m, id) => (m.get(id)?.size === 1 ? [...m.get(id)][0] : undefined);
   const sets = { tool: new Set(owners.tool.keys()), command: new Set(owners.command.keys()), skill: new Set(owners.skill.keys()) };
+  const named = locateCurated(mods, curated);
   const plan = {}, used = new Set();
   for (const { id, raw } of mods) {
     let rel;
     if (id === "cli") rel = "cli.js"; // 入口模块
     else if (id === HOOKS_WORKER_ID) rel = "hooks/hooks-worker.js";
     else if (NATIVE_WRAPPER.test(id)) rel = `native/${id}`;
-    else if (curated[id]) rel = `${curated[id].path}.${id.slice(6, 10)}.js`;
+    else if (named[id]) rel = `${named[id]}.${id.slice(6, 10)}.js`;
     else {
       const dir = classify(id, raw, sets);
       const base = semanticName(raw, { tool: only(owners.tool, id), command: only(owners.command, id), skill: only(owners.skill, id) });

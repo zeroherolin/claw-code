@@ -1,76 +1,122 @@
 {
   "version": "2.1.310",
   "modules": {
-    "chunk-7pf88165.js": {
-      "path": "api/anthropic-client",
+    "api/anthropic-client": {
+      "match": [
+        "[Anthropic SDK WARN]",
+        "skip-foundry-auth"
+      ],
       "why": "Anthropic SDK 客户端（anthropic-version: 2023-06-01、maxRetries）及 Bedrock/Vertex/Foundry 适配"
     },
-    "chunk-tt02vrrp.js": {
-      "path": "cli/headless-print-mode",
+    "cli/headless-print-mode": {
+      "match": [
+        "runHeadless_entry",
+        "client_initialize"
+      ],
       "why": "-p/--print 与 SDK stream-json：runHeadless_entry、control_request、initialize"
     },
-    "chunk-q3ah31rn.js": {
-      "path": "cli/main",
+    "cli/main": {
+      "match": [
+        "Manage authentication"
+      ],
       "why": "导出 main；cli.js 最后 import 它；构建 commander 程序并 parseAsync"
     },
-    "chunk-fnas6tz1.js": {
-      "path": "cli/root-command",
+    "cli/root-command": {
+      "match": [
+        "Output the version number"
+      ],
       "why": "r.name(\"claude\").description(...) 及根命令 44 个选项、preAction"
     },
-    "chunk-jbe4pes4.js": {
-      "path": "cli/session-setup",
+    "cli/session-setup": {
+      "match": [
+        "action_handler_start",
+        "tengu_session_start"
+      ],
       "why": "根命令 action 的准备阶段 Uso()：action_handler_start、tengu_init、session_start、skills/托管设置加载，随后交给 runInteractiveSession 或 runHeadless"
     },
-    "chunk-0s3jtbsx.js": {
-      "path": "context/team-memory-sync",
+    "context/team-memory-sync": {
+      "match": [
+        "tengu_team_mem_multistore_sync"
+      ],
       "why": "团队记忆同步：tengu_team_mem_*、team_memory API"
     },
-    "chunk-31gxg38t.js": {
-      "path": "core/conversation-engine",
+    "core/conversation-engine": {
+      "match": [
+        "Primary working directory"
+      ],
       "why": "12 万行核心：流式请求（YNt）、上下文压缩（tengu_compact_*）、hooks 执行、工具权限与 auto mode、文件历史、环境信息段（Primary working directory）"
     },
-    "chunk-ae1068t2.js": {
-      "path": "core/query-loop",
+    "core/query-loop": {
+      "match": [
+        "hook_stopped_continuation",
+        "CLAUDE_CODE_NO_MODEL_FALLBACK forbids model substitution"
+      ],
       "why": "回合循环：Stop hooks（hook_stopped_continuation）、重试判定（max_output_tokens/rate_limited）、toolUseContext 驱动"
     },
-    "chunk-dpjpry6w.js": {
-      "path": "core/system-prompt-blocks",
+    "core/system-prompt-blocks": {
+      "match": [
+        "__SYSTEM_PROMPT_STATIC_BREAKPOINT__"
+      ],
       "why": "系统提示词分块：__SYSTEM_PROMPT_STATIC_BREAKPOINT__、\"You are Claude Code, Anthropic's official CLI\" 常量"
     },
-    "chunk-27xjmczp.js": {
-      "path": "settings/global-config-and-gates",
+    "settings/global-config-and-gates": {
+      "match": [
+        "pinnedFeatureValues",
+        "gbFeaturesCache"
+      ],
       "why": "~/.claude.json 全局配置读写、特性开关（pinnedFeatureValues，取值函数的定位见 analyze.js 的 analyzeGates）、OAuth 账户"
     },
-    "chunk-9a41hw1t.js": {
-      "path": "shared/environment",
+    "shared/environment": {
+      "match": [
+        "isStandaloneExecutable",
+        "CLAUDE_CODE_ENTRYPOINT"
+      ],
       "why": "运行环境探测：Tf()=Bun.isStandaloneExecutable、配置目录、CLAUDE_CODE_ENTRYPOINT 等环境变量"
     },
-    "chunk-aet23r5k.js": {
-      "path": "shell/sandbox",
+    "shell/sandbox": {
+      "match": [
+        "sandbox-exec",
+        "CLAUDE_CODE_SANDBOX_LEAVE_PARENT_FOLDERS_ALONE"
+      ],
       "why": "命令沙箱：macOS sandbox-exec、Linux bwrap、ripgrep 可用性；内含 protobuf 运行时"
     },
-    "chunk-bt9cmdj7.js": {
-      "path": "terminal/cell-segmenter-factory",
+    "terminal/cell-segmenter-factory": {
+      "match": [
+        "CellSegmenter",
+        "ambiguousIsNarrow"
+      ],
       "why": "创建 Bun.ant.CellSegmenter（RKn）、ANSI 切分、tmux 图片直通检测"
     },
-    "chunk-pma0w0g1.js": {
-      "path": "terminal/ink-renderer",
+    "terminal/ink-renderer": {
+      "match": [
+        "frameHeldForBacklog"
+      ],
       "why": "Ink 终端渲染器：Yoga 布局、altScreen、帧调度（frameHeldForBacklog）"
     },
-    "chunk-neh1j60a.js": {
-      "path": "ui/launch-repl-session",
+    "ui/launch-repl-session": {
+      "match": [
+        "engine: queryParams called before REPL registered builder"
+      ],
       "why": "oRt/rgi：设置权限模式后挂载 AppRoot + REPL（ui/repl-screen）"
     },
-    "chunk-ztmf7n3c.js": {
-      "path": "ui/repl",
+    "ui/repl": {
+      "match": [
+        "as REPL}"
+      ],
       "why": "导出 REPL 组件（包装 ui/repl-screen 的 Fur）"
     },
-    "chunk-zq77a89q.js": {
-      "path": "ui/repl-screen",
+    "ui/repl-screen": {
+      "match": [
+        "Do you want to proceed?",
+        "stash prompt"
+      ],
       "why": "交互式主界面：PromptInput、权限确认（Do you want to proceed?）、spinner、输入历史"
     },
-    "chunk-cz421hr0.js": {
-      "path": "ui/tool-message-rendering",
+    "ui/tool-message-rendering": {
+      "match": [
+        "renderToolUseMessage",
+        "Tool use rejected"
+      ],
       "why": "工具调用/结果消息渲染（renderToolUseMessage / userFacingName）"
     }
   },

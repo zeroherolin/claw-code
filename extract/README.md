@@ -83,6 +83,14 @@ rm *.tgz
 6. 最具代表性的特征字符串
 7. 以上都没有：`chunk-<8 位 id>`
 
+**人工命名**：`modules` 以目标路径为键，`match` 是一组特征字符串，必须全部出现在、且只出现在一个模块的原版源码中；`why` 说明这个模块的职责。chunk id 每个版本都会变，特征字符串通常不变，因此升级时一般不用改。
+
+```json
+"core/system-prompt-blocks": { "match": ["__SYSTEM_PROMPT_STATIC_BREAKPOINT__"], "why": "系统提示词分块…" }
+```
+
+特征字符串宜选用户可见的文案、遥测事件名、选项名等，不要用混淆后的标识符。
+
 **目录**（`areas.js`）：
 
 - 工具、命令、skill 模块直接进入对应目录；
@@ -100,14 +108,9 @@ rm *.tgz
    - `chunkGroup`：某个 chunk 引用的资源归入哪个目录。例如内置 skill 的文档归入 `skills/<名字>`：skill 看 SKILL.md 头部的 `name:`，提示词看引用它的模块。
    - `named`：没有逻辑路径的单个资源（字体、vendor 库、原生模块等），从原名映射到新路径。
    - `replRoute`、`designSyncScripts`：两个特殊分组的成员。
-3. 更新 `modules` 中的人工命名。每条的 `why` 记录了判断依据（特征字符串），据此在新版本中找到对应的 chunk：
-
-   ```sh
-   rg -l '__SYSTEM_PROMPT_STATIC_BREAKPOINT__' src     # 找到文件
-   rg '"chunk-[a-z0-9]{8}\.js": "core/system-prompt-blocks' reference/module-map.json
-   ```
-
-   这一步可以跳过：缺少人工命名时，这些模块会退回到自动命名。
+3. 人工命名按 `match` 自动定位。某条命中 0 个或多个模块时，提取会列出命中情况并停止，项目保持原样。处理方式：
+   - 按 `why` 的说明在新版本的源码中重新挑选特征字符串；
+   - 或删除这一条，让该模块使用自动命名。手写文档若引用了它，`npm test` 中的文档检查会指出。
 4. 检查运行时层是否需要调整：`rg -o 'Bun\.ant\??\.\w+' src | sort | uniq -c`。
    - 新增的 API 若有回退（try/catch 或 `typeof` 检查），只需更新 `docs/runtime.md` 中的表格；
    - 若没有回退，要在 `src/runtime/bun-ant.js` 中补上实现。
