@@ -131,21 +131,37 @@ export async function runCli(cmd, args, { cwd, env, timeout = 60_000 }) {
 }
 
 /**
- * 在固定尺寸的伪终端里运行交互式 CLI，按时间表发送按键，返回原始输出字节。
- * @param keys [[秒, 按键文本], ...]；end 为结束时刻（秒）
+ * 在固定尺寸的伪终端里运行交互式 CLI，返回原始输出字节与是否超时。
+ *   1. 等启动输出静止 idle 毫秒；
+ *   2. 按 keys 发送按键，时刻相对第 1 步结束时（秒），保持按键之间的间隔（如双击 Esc）；
+ *   3. 等输出再次静止 idle 毫秒后结束。
+ * 以输出静止为准而不是固定时刻：机器繁忙时启动或回合变慢，不会截到中间状态。
+ * 启动后约 10 秒 CLI 会自行撤掉启动提示，截屏须在此之前完成，因此 idle 不宜过大。
+ * @param keys [[秒, 按键文本], ...]
+ * @returns {{ bytes: Buffer, timedOut: boolean }} timedOut：timeout 毫秒内输出始终没有静止
  */
-export async function runInPty(cmd, { cwd, env, cols, rows, keys, end }) {
+export async function runInPty(cmd, { cwd, env, cols, rows, keys, idle = 1500, timeout = 30_000 }) {
   const chunks = [];
-  const proc = Bun.spawn(cmd, { cwd, env, terminal: { cols, rows, data: (_t, d) => chunks.push(Buffer.from(d)) } });
+  let last = 0;
+  const proc = Bun.spawn(cmd, { cwd, env, terminal: { cols, rows, data: (_t, d) => (chunks.push(Buffer.from(d)), (last = performance.now())) } });
+  const deadline = performance.now() + timeout;
+  let timedOut = false;
+  const settle = async () => {
+    while (!last || performance.now() - last < idle) {
+      if (performance.now() > deadline) return (timedOut = true);
+      await Bun.sleep(50);
+    }
+  };
+  await settle();
   const t0 = performance.now();
   for (const [at, text] of keys) {
     await Bun.sleep(Math.max(0, at * 1000 - (performance.now() - t0)));
-    if (text) proc.terminal.write(text);
+    proc.terminal.write(text);
   }
-  await Bun.sleep(Math.max(0, end * 1000 - (performance.now() - t0)));
+  if (keys.length) await settle();
   proc.kill("SIGKILL");
   await proc.exited;
-  return Buffer.concat(chunks);
+  return { bytes: Buffer.concat(chunks), timedOut };
 }
 
 /**

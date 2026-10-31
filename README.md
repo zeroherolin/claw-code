@@ -69,7 +69,7 @@ npm run build         # 编译出 dist/claude（约 1 秒）
 
 ```sh
 npm test               # 单元、完整性、冒烟测试（几秒钟）
-npm run test:parity    # 与官方可执行程序逐项对比（约 10 分钟）
+npm run test:parity    # 与官方可执行程序逐项对比（约 3 分钟）
 ```
 
 - 对比测试默认使用 `extract/upstream/` 中的官方可执行程序，获取方式见 [extract/README.md](extract/README.md#获取官方发布内容)。也可以用参数或 `CLAUDE_ORIG_BIN` 指定其他位置。
@@ -86,7 +86,7 @@ npm run test:parity    # 与官方可执行程序逐项对比（约 10 分钟）
   - Bash 和 Read 的工具循环、`--model`、`--append-system-prompt`；
   - Bash 工具里的 find、grep、rg。
   - 以上每一项都同时比较发往 API 的每个请求（系统提示词、工具定义、消息、请求头），要求逐字节一致。
-- **交互界面**（17 项）：在固定尺寸的伪终端中按相同时间表发送按键，比较最终屏幕每个格子的字符、颜色和样式。场景包括首次引导、启动页、中日文与 emoji 输入、键帽和国旗等特殊 emoji 字素、斜杠命令菜单、`/help`、对话回合、工具调用、Markdown 渲染、长输出、多行输入、Esc、Shift+Tab 切换模式、60 列窄屏和 160 列宽屏。
+- **交互界面**（17 项）：在固定尺寸的伪终端中，等启动输出静止后按相同的节奏发送按键，输出再次静止后比较屏幕每个格子的字符、颜色和样式。场景包括首次引导、启动页、中日文与 emoji 输入、键帽和国旗等特殊 emoji 字素、斜杠命令菜单、`/help`、对话回合、工具调用、Markdown 渲染、长输出、多行输入、Esc、Shift+Tab 切换模式、60 列窄屏和 160 列宽屏。
 
 比较前只归一化与运行环境有关的内容：路径、端口、时间、随机 id、动画相位。规则见 `test/parity/normalize.js`。
 

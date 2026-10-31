@@ -10,6 +10,10 @@
 //   cli       CLI 自身输出（--version、--help、子命令帮助）
 //   print     -p 非交互：输出（text / json / stream-json）以及发往 API 的每一个请求
 //   tui       交互界面：scenarios/*.json 的按键脚本在固定尺寸伪终端中运行，比较最终屏幕的每个格子
+//
+// 场景文件：{ keys: [[秒, 按键文本], ...], cols?, rows?, fresh? }
+//   启动输出静止后开始计时发送按键，最后一次按键后输出再次静止时截屏（见 harness.runInPty）；
+//   fresh 为 true 时使用全新的 HOME（首次引导）。默认 100×30。
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
@@ -90,11 +94,12 @@ for (const file of fs.readdirSync(SCENARIO_DIR).filter((f) => f.endsWith(".json"
   const sc = JSON.parse(fs.readFileSync(path.join(SCENARIO_DIR, file), "utf8"));
   const cols = sc.cols ?? 100, rows = sc.rows ?? 30;
   const [o, n] = await both({ fresh: sc.fresh }, async (bin, c) => {
-    const raw = await runInPty([bin], { cwd: c.work, env: c.env, cols, rows, keys: sc.keys, end: sc.end });
-    const text = normalizeStream(raw.toString("latin1"), c.home);
-    return { screen: await renderScreen(Buffer.from(text, "latin1"), cols, rows) };
+    const { bytes, timedOut } = await runInPty([bin], { cwd: c.work, env: c.env, cols, rows, keys: sc.keys });
+    const text = normalizeStream(bytes.toString("latin1"), c.home);
+    return { timedOut, screen: await renderScreen(Buffer.from(text, "latin1"), cols, rows) };
   });
-  report(`${name}（${cols}×${rows}）`, screenDiff(o.screen, n.screen, o.home, n.home));
+  const stuck = [o, n].flatMap((r, i) => (r.timedOut ? [`${i ? "本项目" : "原版"}的输出始终没有静止`] : []));
+  report(`${name}（${cols}×${rows}）`, [...stuck, ...screenDiff(o.screen, n.screen, o.home, n.home)]);
 }
 
 console.log(`\n通过 ${passed}，失败 ${failed}`);
