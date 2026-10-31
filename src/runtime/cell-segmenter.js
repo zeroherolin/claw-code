@@ -27,7 +27,7 @@ function graphemeWidth(g, ambiguousIsNarrow) {
   if (g === "\t") return 0;
   const cp = g.codePointAt(0);
   if (cp < 0x20 || (cp >= 0x7f && cp < 0xa0)) return 0;
-  if (cp < 0x7f) return 1;
+  if (cp < 0x7f && g.length === 1) return 1; // 键帽 emoji（1️⃣ = "1" + U+FE0F + U+20E3）以 ASCII 开头但占两格
   // 以 Bun 内置的 stringWidth 为准（与原生实现同源的 East Asian Width / emoji 表）
   const w = Bun.stringWidth(g, { ambiguousIsNarrow });
   return w > 255 ? 255 : w;

@@ -59,6 +59,7 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 以下要点会直接影响逐格一致性：
 
 - **字素切分**：用 `Intl.Segmenter`，宽度用 `Bun.stringWidth`（`ambiguousIsNarrow`）。组合字符、ZWJ 序列、肤色修饰符都算一个字素。
+  - 只有单个 ASCII 字符可以直接按宽度 1 处理。键帽 emoji（如 `1️⃣`）以 ASCII 开头，却占两格；最初按首字符判断时，对比测试的 `emoji` 场景出现了错位。
 - **控制字符与零宽字符**：不占格。substitute 区间内的码点替换为 U+FFFD。
 - **SGR 状态**：按"类别"保存，即粗体、暗淡、斜体、下划线、前景色、背景色等各占一类。
   - 同一类别重新设置时，移到末尾。

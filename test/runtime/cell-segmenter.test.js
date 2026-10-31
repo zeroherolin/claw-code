@@ -41,6 +41,11 @@ describe("CellSegmenter.segment", () => {
     expect(r.cells.map((c) => [c.g, c.width])).toEqual([["é", 1], ["👍🏽", 2]]);
   });
 
+  test("以 ASCII 开头的字素簇：键帽 emoji 占两格，组合字符占一格", () => {
+    const r = segment(seg, "1️⃣#️⃣é");
+    expect(r.cells.map((c) => [c.g, c.width])).toEqual([["1️⃣", 2], ["#️⃣", 2], ["é", 1]]);
+  });
+
   test("tab 标记为 tab 格，宽度 0（由 paint 展开到制表位）", () => {
     const r = segment(seg, "a\tb");
     expect(r.cells[1]).toEqual({ g: " ", run: 0, tab: true, width: 0 });
