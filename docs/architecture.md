@@ -123,7 +123,7 @@
 **Bash 工具的 shell**：
 
 - 首次执行时，在 `~/.claude/shell-snapshots/` 生成 shell 快照，用来复用用户 shell 的 PATH、别名和函数。
-- 快照里会注入 `find`、`grep`、`rg` 三个函数（`core/conversation-engine.31gx.js:72857` 起）。这些函数用 `ARGV0=bfs|ugrep|rg` 回调 `$CLAUDE_CODE_EXECPATH`，也就是当前可执行文件（`:73297` 设为 `process.execPath`），从而用上内嵌工具。
+- 快照里会注入 `find`、`grep`、`rg` 三个函数（由 `core/conversation-engine.31gx.js:72858` 的 `dot()` 生成）。这些函数把 argv0 设为 `bfs`、`ugrep` 或 `rg`，回调 `$CLAUDE_CODE_EXECPATH`，也就是当前可执行文件（`:73297` 设为 `process.execPath`），从而用上内嵌工具。
 
 **沙箱**：
 

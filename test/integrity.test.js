@@ -47,7 +47,7 @@ describe("源码", () => {
     expect(missing).toEqual([]);
   });
 
-  test("不再引用原版的 /$bunfs 虚拟路径，也不引用 extract/upstream", () => {
+  test("不引用原版的 /$bunfs 虚拟路径，也不引用 extract/upstream", () => {
     const bad = [];
     for (const { file, code } of sources) {
       if (rel(file).startsWith("src/runtime/")) continue; // 运行时层按设计识别编译后的 /$bunfs/root

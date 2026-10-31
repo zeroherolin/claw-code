@@ -39,7 +39,7 @@
     },
     "chunk-27xjmczp.js": {
       "path": "settings/global-config-and-gates",
-      "why": "~/.claude.json 全局配置读写、特性开关（pinnedFeatureValues，见 extract-gates.mjs）、OAuth 账户"
+      "why": "~/.claude.json 全局配置读写、特性开关（pinnedFeatureValues，取值函数的定位见 analyze.js 的 analyzeGates）、OAuth 账户"
     },
     "chunk-9a41hw1t.js": {
       "path": "shared/environment",

@@ -4,7 +4,7 @@
 // 终端渲染器把"一行带 ANSI 的文本 → 屏幕格子"这一步交给原生的 Bun.ant.CellSegmenter。
 // 公开版 Bun 没有这个 API，这里按 JS 侧的调用约定重新实现（契约见 docs/runtime.md#cellsegmenter）。
 //
-// 契约（由 src/ui 渲染器的使用方式推得）:
+// 契约（依据 src/terminal/ 中渲染器的调用方式）:
 //   new CellSegmenter({ ambiguousIsNarrow, substitute: [[first,last],...], screen?: {...} })
 //   .graphemes / .sgrKeys / .sgrCloseKeys / .uris   —— 只增不减的驻留表，index 0 为空项
 //   .segment(text, cells, runs, reorder) -> count；数组不够大时返回 -(需要的格数)

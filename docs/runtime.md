@@ -12,7 +12,7 @@
 
 ## Bun.ant
 
-原版代码通过 `Bun.ant.*` 调用 12 个原生能力。公开版 Bun 没有 `Bun.ant`。逐个检查调用点后，结论是只有 `CellSegmenter` 没有回退：
+原版代码通过 `Bun.ant.*` 调用 12 个原生能力，公开版 Bun 没有 `Bun.ant`。其中只有 `CellSegmenter` 的调用点没有回退：
 
 | API | 用途 | 调用位置 | 缺失时原版的行为 |
 |---|---|---|---|
@@ -33,7 +33,7 @@
 
 ### CellSegmenter
 
-实现文件：`src/runtime/cell-segmenter.js`。原生实现不公开，契约是从渲染器的调用方式反推出来的；`test/runtime/cell-segmenter.test.js` 覆盖了各项约定。
+实现文件：`src/runtime/cell-segmenter.js`。原生实现不公开，下面的契约依据 `src/terminal/` 中渲染器的调用方式确定，由 `test/runtime/cell-segmenter.test.js` 覆盖。
 
 ```
 new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?, replacement? })
@@ -59,12 +59,12 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 以下要点会直接影响逐格一致性：
 
 - **字素切分**：用 `Intl.Segmenter`，宽度用 `Bun.stringWidth`（`ambiguousIsNarrow`）。组合字符、ZWJ 序列、肤色修饰符都算一个字素。
-  - 只有单个 ASCII 字符可以直接按宽度 1 处理。键帽 emoji（如 `1️⃣`）以 ASCII 开头，却占两格；最初按首字符判断时，对比测试的 `emoji` 场景出现了错位。
+  - 宽度不能只看首字符：键帽 emoji（如 `1️⃣`）以 ASCII 字符开头，占两格。
 - **控制字符与零宽字符**：不占格。substitute 区间内的码点替换为 U+FFFD。
 - **SGR 状态**：按"类别"保存，即粗体、暗淡、斜体、下划线、前景色、背景色等各占一类。
   - 同一类别重新设置时，移到末尾。
   - 粗体或暗淡已经生效时，再次设置不改变顺序；这与渲染器对 `\e[22m` 同时关闭两者的处理方式一致。
-  - 顺序会直接影响输出的转义序列，因此必须与原生实现一致。最初用固定顺序时，TUI 对比测试出现了属性差异，改为按插入顺序后消除。
+  - 顺序决定输出的转义序列，必须与原生实现一致，即按设置的先后排列，而不是按固定的类别顺序。
 - **reorder**：在不做 bidi 的终端（如 Windows Terminal、VS Code 终端）上，把连续的 RTL 字符反转成视觉顺序。
 
 ## 内嵌命令行工具
@@ -72,9 +72,9 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 原版的可执行程序以 argv0 = `rg`、`bfs` 或 `ugrep` 启动时，会直接作为对应工具运行。Claude Code 在两处依赖这个能力：
 
 1. **Bash 工具的 shell 快照**：
-   - 快照里注入了 `find`、`grep`、`rg` 三个函数，定义在 `core/conversation-engine.31gx.js:72857` 起。
-   - 函数体大致是 `ARGV0=bfs "$CLAUDE_CODE_EXECPATH" …`，`CLAUDE_CODE_EXECPATH` 即当前可执行文件。
-   - 所以模型在 Bash 里执行 `find`，实际运行的是 bfs；执行 `grep`，实际运行的是 ugrep。
+   - 快照里注入了 `find`、`grep`、`rg` 三个函数，由 `core/conversation-engine.31gx.js:72858` 的 `dot()` 生成。
+   - 函数以 `$CLAUDE_CODE_EXECPATH`（当前可执行文件）为程序，把 argv0 设为 `bfs`、`ugrep` 或 `rg` 后执行：zsh 下是 `ARGV0=bfs "$_cc_bin" …`，bash 下是 `(exec -a bfs "$_cc_bin" …)`。该变量不可执行时，依次退回安装路径下的 `claude` 和系统里的同名命令。
+   - 因此模型在 Bash 里执行 `find`，实际运行的是 bfs；执行 `grep`，实际运行的是 ugrep。
 2. **Grep 工具与文件搜索**：`shell/sandbox.aet2.js:24007` 的 `rue()` 选择 ripgrep 的运行方式。
    - 以单文件可执行程序运行时（`Tf()` 为真），默认用 embedded 模式：`{ command: process.execPath, argv0: "rg" }`。
    - 否则使用系统 rg。
@@ -140,8 +140,8 @@ external: ["/$bunfs/*"],
 | 场景 | 原因 | 开发模式下的表现 |
 |---|---|---|
 | 内置 hooks 模块 | `shared/environment` 的 `Tf()`（`Bun.isStandaloneExecutable === true`）为假时，原版会去找源码树中的 `hooks/register.ts`，而发布包里没有这个文件 | 内置 hooks 模块不加载，debug 日志中可见 |
-| Bash 中的 `find`、`grep`、`rg` 函数 | 函数以 `ARGV0=…` 回调 `$CLAUDE_CODE_EXECPATH`；开发模式下它是 `bun` 本身，argv0 分发到不了 `src/main.js` | 这三个函数会报错；直接调用 `/usr/bin/find` 等命令不受影响 |
+| Bash 中的 `find`、`grep`、`rg` 函数 | 函数以指定的 argv0 回调 `$CLAUDE_CODE_EXECPATH`；开发模式下它是 `bun` 本身，argv0 分发到不了 `src/main.js` | 这三个函数会报错；直接调用 `/usr/bin/find` 等命令不受影响 |
 
 另外，以下行为也取决于 `Tf()`：子进程重启 CLI 自身时 argv 的构造方式（`fs/chunk-tcpay5ps.js:18`），以及 ripgrep 的运行方式（见上文）。开发模式下它们走的是原版为"以脚本方式运行"准备的分支，只有 `dist/claude` 与官方可执行程序一致。
 
-结论：开发模式适合阅读、调试和快速试验；需要与原版完全一致的行为时，请用 `dist/claude`。
+开发模式适合阅读、调试和快速试验；需要与原版完全一致的行为时，请用 `dist/claude`。
