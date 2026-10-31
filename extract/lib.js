@@ -7,7 +7,7 @@ export const BUNFS = "/$bunfs/root/";
 
 // ---------- Bun standalone 模块图 ----------
 //
-// Mach-O 段 __BUN,__bun 的布局（Bun 1.4.x）:
+// 模块图存放在 Mach-O 的 __BUN,__bun 段或 ELF 的 .bun 节，两者布局相同（Bun 1.4.x）:
 //   [u64 payload_len][payload]
 //   payload 末尾: [Offsets 32 字节]["\n---- Bun! ----\n"]
 //     Offsets = u64 byte_count, u32 modules.off, u32 modules.len, u32 entry_id,
@@ -19,9 +19,30 @@ const RECORD = 52;
 const LOADERS = ["jsx", "js", "ts", "tsx", "css", "file", "json", "jsonc", "toml", "wasm", "napi", "base64", "dataurl", "text", "bunsh", "sqlite", "sqlite_embedded", "html"];
 const ENCODING = { 0: "binary", 1: "latin1", 2: "utf16le" };
 
-/** 在 64 位 Mach-O 中找到 __BUN,__bun 段，返回 { offset, size } */
+/** 找到存放模块图的段或节，返回 { offset, size } */
 function findBunSection(buf) {
-  if (buf.readUInt32LE(0) !== 0xfeedfacf) throw new Error("不是 64 位 Mach-O 文件");
+  if (buf.readUInt32LE(0) === 0xfeedfacf) return findMachOSection(buf);
+  if (buf.readUInt32BE(0) === 0x7f454c46 && buf[4] === 2 && buf[5] === 1) return findElfSection(buf);
+  throw new Error("不是 64 位 Mach-O 或小端 64 位 ELF 文件");
+}
+
+/** 64 位小端 ELF：按节名找到 .bun */
+function findElfSection(buf) {
+  const shoff = Number(buf.readBigUInt64LE(0x28)), shentsize = buf.readUInt16LE(0x3a), shnum = buf.readUInt16LE(0x3c);
+  const header = (i) => {
+    const o = shoff + i * shentsize;
+    return { name: buf.readUInt32LE(o), offset: Number(buf.readBigUInt64LE(o + 0x18)), size: Number(buf.readBigUInt64LE(o + 0x20)) };
+  };
+  const names = header(buf.readUInt16LE(0x3e));
+  for (let i = 0; i < shnum; i++) {
+    const s = header(i), at = names.offset + s.name;
+    if (buf.toString("latin1", at, buf.indexOf(0, at)) === ".bun") return { offset: s.offset, size: s.size };
+  }
+  throw new Error("未找到 .bun 节（不是 Bun 编译的可执行程序？）");
+}
+
+/** 64 位 Mach-O：找到 __BUN,__bun 段 */
+function findMachOSection(buf) {
   const ncmds = buf.readUInt32LE(16);
   let p = 32;
   for (let i = 0; i < ncmds; i++) {
@@ -95,11 +116,15 @@ function splitLegal(s) {
   return s.split(/\n(?=\/[*/])/).map((x) => x.trim()).filter(Boolean);
 }
 
+const ACORN = { ecmaVersion: "latest", sourceType: "module", allowHashBang: true, allowAwaitOutsideFunction: true, allowReturnOutsideFunction: true };
+
 export function parse(code) {
-  return acorn.parse(code, {
-    ecmaVersion: "latest", sourceType: "module", locations: true,
-    allowHashBang: true, allowAwaitOutsideFunction: true, allowReturnOutsideFunction: true,
-  });
+  return acorn.parse(code, { ...ACORN, locations: true });
+}
+
+/** 逐个产出 token（acorn 的 Token：type.label、value、start、end） */
+export function tokens(code) {
+  return acorn.tokenizer(code, ACORN);
 }
 
 // ---------- 输出 ----------

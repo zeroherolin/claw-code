@@ -3,7 +3,7 @@
 //
 //   bun test/parity/run.js [官方可执行程序] [--filter <正则>]
 //
-// 官方可执行程序默认为 extract/upstream/claude-code-darwin-arm64/claude，也可由 CLAUDE_ORIG_BIN 指定。
+// 官方可执行程序默认为当前平台的 extract/upstream/claude-code-<系统>-<架构>/claude，也可由 CLAUDE_ORIG_BIN 指定。
 // 被测的是 dist/claude（先执行 npm run build）。
 //
 // 用例:
@@ -21,7 +21,7 @@ import { ROOT, DIST, makeHome, cleanEnv, startFakeApi, runCli, runInPty, renderS
 import { normalizeStream, normalizeText, normalizeRequest, jsonDiff, screenDiff } from "./normalize.js";
 
 const { values, positionals } = parseArgs({ allowPositionals: true, options: { filter: { type: "string" } } });
-const ORIG = path.resolve(positionals[0] ?? process.env.CLAUDE_ORIG_BIN ?? path.join(ROOT, "extract/upstream/claude-code-darwin-arm64/claude"));
+const ORIG = path.resolve(positionals[0] ?? process.env.CLAUDE_ORIG_BIN ?? path.join(ROOT, `extract/upstream/claude-code-${process.platform}-${process.arch}/claude`));
 const filter = values.filter ? new RegExp(values.filter) : null;
 for (const [what, file] of [["官方可执行程序（获取方式见 extract/README.md）", ORIG], ["dist/claude（先执行 npm run build）", DIST]]) {
   if (!fs.existsSync(file)) { console.error(`找不到${what}: ${file}`); process.exit(2); }

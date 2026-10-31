@@ -5,7 +5,8 @@
 //   var X = $e("/$bunfs/root/F")                     text loader（import.meta.require 得到字符串）
 //   var a = "/$bunfs/root/F"; var X = dt(a, …)       file loader（运行期读取，自动识别 zstd）
 //   { "references/foo.md": X, … }                     逻辑路径表：skill 按相对路径查找附带文件
-// 归档规则（layout/<版本>.json）把引用方 chunk 映射到分组目录，逻辑路径即组内相对路径。
+// 归档规则（layout/<版本>.json）通过锚点资源确定引用方 chunk 所属的分组目录，逻辑路径即组内相对路径；
+// 规则只引用资源名，不引用 chunk id，因此对各系统同样适用。
 import fs from "node:fs";
 import path from "node:path";
 import { BUNFS } from "./lib.js";
@@ -85,40 +86,80 @@ function decode(mod) {
 }
 
 /**
- * 解压、转码并归档全部资源。
- * @param layout 归档规则 { chunkGroup, named, replRoute, designSyncScripts }
- * @returns INDEX 条目 { bunfs, path, bytes, logical_keys, referenced_by }[]，按 path 排序
+ * 为全部平台的资源确定 assets/ 下的位置，并写入 outDir。
+ *   原生模块（napi）各平台不同：native/<平台>/<名字>，源码经 __asset_native(<名字>) 按当前平台取用；
+ *   其余资源各系统共用：同一个资源在各平台必须落到同一位置、内容相同，否则报错。
+ * @param platforms { name, system, modules }[]：各平台的模块图
+ * @param refs      { [系统]: scanAssetRefs 的结果 }（按系统基准平台的模块计算）
+ * @param layout    归档规则 { groups, named, replRoute, designSyncScripts }；
+ *                  groups 为 { 分组目录: [锚点资源名…] }：引用锚点资源的 chunk 所引用的资源都归入该分组
+ * @returns {{ assets, bySystem }}
+ *   assets：{ bunfs, path, bytes, platforms?, logical_keys, chunks: { [系统]: chunk id[] } }[]，按 path 排序
+ *   bySystem：{ [系统]: Map<bunfs 名, { path } | { native: 名字 }> }，供组装阶段改写源码中的资源引用
  */
-export function writeAssets(modules, refs, layout, outDir) {
+export function writeAssets(platforms, refs, layout, outDir) {
   const designSync = new Set(layout.designSyncScripts);
-  const place = (name, { chunks, keys }) => {
+  const groupOf = {};
+  for (const [system, r] of Object.entries(refs)) {
+    const map = (groupOf[system] = new Map());
+    for (const [group, anchors] of Object.entries(layout.groups)) {
+      for (const a of anchors) for (const c of r[a]?.chunks ?? []) {
+        if (map.has(c) && map.get(c) !== group) throw new Error(`${system} 的 ${c} 同时引用了分组 ${map.get(c)} 与 ${group} 的锚点资源`);
+        map.set(c, group);
+      }
+    }
+  }
+  const place = (system, name, { chunks, keys }) => {
     if (layout.named[name]) return layout.named[name];
     if (layout.replRoute[name]) return "prompts/repl-route/" + layout.replRoute[name];
     if (designSync.has(cleanName(name))) return "skills/design-sync/converter/" + cleanName(name);
-    const group = chunks.map((c) => layout.chunkGroup[c]).find(Boolean);
+    const group = chunks.map((c) => groupOf[system].get(c)).find(Boolean);
     if (!group) return null;
     const key = keys.find((k) => k.includes("/") || k.includes(".")) ?? (keys[0] ? `${keys[0]}/${cleanName(name)}` : cleanName(name));
     return `${group}/${key}`;
   };
 
-  const index = [], used = new Set(), unplaced = [];
-  for (const mod of modules) {
-    if (mod.loader === "js") continue; // JS 模块（含原生模块的 JS 包装）由组装阶段处理
-    const r = refs[mod.name];
-    const base = place(mod.name, r);
-    if (!base) { unplaced.push(`${mod.name}（被 ${r.chunks.join(", ") || "无"} 引用）`); continue; }
-    let rel = base;
-    for (let i = 2; used.has(rel); i++) rel = base.replace(/(\.[^./]+)?$/, `.${i}$1`);
-    used.add(rel);
-    const data = decode(mod);
-    const dst = path.join(outDir, rel);
+  const byName = new Map(), byPath = new Map(), bySystem = {}, unplaced = [], conflicts = [];
+  for (const { name: platform, system, modules } of platforms) {
+    const seen = (bySystem[system] ??= new Map());
+    for (const mod of modules) {
+      if (mod.loader === "js") continue; // JS 模块（含原生模块的 JS 包装）由组装阶段处理
+      const r = refs[system][mod.name] ?? { chunks: [], keys: [] };
+      const data = decode(mod);
+      if (mod.loader === "napi") {
+        const name = cleanName(mod.name), rel = `native/${platform}/${name}`;
+        seen.set(mod.name, { native: name });
+        byPath.set(rel, { bunfs: mod.name, path: rel, data, platforms: [platform], logical_keys: r.keys, chunks: { [system]: r.chunks } });
+        continue;
+      }
+      let entry = byName.get(mod.name);
+      if (!entry) {
+        const base = place(system, mod.name, r);
+        if (!base) { unplaced.push(`${mod.name}（${system} 中被 ${r.chunks.join(", ") || "无"} 引用）`); continue; }
+        let rel = base;
+        for (let i = 2; byPath.has(rel); i++) rel = base.replace(/(\.[^./]+)?$/, `.${i}$1`);
+        entry = { bunfs: mod.name, path: rel, data, logical_keys: r.keys, chunks: {}, base };
+        byName.set(mod.name, entry), byPath.set(rel, entry);
+      } else {
+        if (!entry.data.equals(data)) conflicts.push(`${mod.name}：${platform} 中的内容与其他平台不同`);
+        const base = place(system, mod.name, r);
+        if (base && base !== entry.base) conflicts.push(`${mod.name}：${system} 中归入 ${base}，其他系统归入 ${entry.base}`);
+      }
+      entry.chunks[system] = r.chunks;
+      seen.set(mod.name, { path: entry.path });
+    }
+  }
+  if (unplaced.length) throw new Error(`${unplaced.length} 个资源没有归档规则，请补进 layout 文件（见 extract/README.md#升级到新版本）:\n  ${unplaced.join("\n  ")}`);
+  if (conflicts.length) throw new Error(`资源在各平台之间不一致:\n  ${conflicts.join("\n  ")}`);
+
+  for (const e of byPath.values()) {
+    const dst = path.join(outDir, e.path);
     fs.mkdirSync(path.dirname(dst), { recursive: true });
-    fs.writeFileSync(dst, data);
-    if (rel.endsWith(".node")) fs.chmodSync(dst, 0o755);
-    index.push({ bunfs: mod.name, path: rel, bytes: data.length, logical_keys: r.keys, referenced_by: r.chunks });
+    fs.writeFileSync(dst, e.data);
+    if (e.path.endsWith(".node")) fs.chmodSync(dst, 0o755);
   }
-  if (unplaced.length) {
-    throw new Error(`${unplaced.length} 个资源没有归档规则，请补进 layout 文件（见 extract/README.md#升级到新版本）:\n  ${unplaced.join("\n  ")}`);
-  }
-  return index.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+  const assets = [...byPath.values()]
+    .map(({ bunfs, path: p, data, platforms: pf, logical_keys, chunks }) => ({ bunfs, path: p, bytes: data.length, ...(pf && { platforms: pf }), logical_keys, chunks }))
+    .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+  return { assets, bySystem };
 }

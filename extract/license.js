@@ -7,9 +7,10 @@
 import fs from "node:fs";
 
 /**
- * @param legal Map<许可注释, Set<出现的 src/ 路径>>
+ * @param packages 提取所用的官方 npm 包名
+ * @param legal    Map<许可注释, Set<出现的 src/ 路径>>
  */
-export function writeLicense(file, { version, upstreamLicense, upstreamHeader, legal }) {
+export function writeLicense(file, { version, packages, upstreamLicense, upstreamHeader, legal }) {
   const header = upstreamHeader.split("\n").map((l) => l.replace(/^\/\/ ?/, "")).join("\n").trim();
   const thirdParty = [...legal].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)).map(([text, files]) => {
     const where = [...files].sort();
@@ -19,11 +20,11 @@ export function writeLicense(file, { version, upstreamLicense, upstreamHeader, l
   fs.writeFileSync(file, `本项目由两部分组成，适用不同的条款。
 
 ================================================================================
-一、Claude Code ${version}（src/ 中的生成代码、assets/、reference/、docs/reference/）
+一、Claude Code ${version}（src/ 下各系统的生成代码、assets/、reference/、docs/reference/）
 ================================================================================
 
 这些内容提取自 Anthropic PBC 发布的 Claude Code ${version}
-（npm 包 @anthropic-ai/claude-code 与 @anthropic-ai/claude-code-darwin-arm64），
+（npm 包 ${packages.join("、")}），
 版权归 Anthropic PBC 所有。本项目只对其做了提取、格式化与重新组织，未取得任何额外授权。
 
 原版 LICENSE.md:

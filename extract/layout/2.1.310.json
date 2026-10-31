@@ -121,42 +121,41 @@
     }
   },
   "assets": {
-    "chunkGroup": {
-      "chunk-dehvc445.js": "skills/claude-code-docs",
-      "chunk-2497tyw9.js": "skills/claude-code-docs",
-      "chunk-92zrg6a8.js": "skills/claude-code-docs",
-      "chunk-t6eehhdn.js": "skills/claude-api",
-      "chunk-k0mcdpfx.js": "plugins/claude-test",
-      "chunk-9stddnqh.js": "skills/dataviz",
-      "chunk-5j21306x.js": "skills/run",
-      "chunk-e1ja5bdc.js": "skills/verify",
-      "chunk-87fk1p13.js": "skills/run-skill-generator",
-      "chunk-gdzen90v.js": "skills/cowork-plugin",
-      "chunk-jsy60ys5.js": "skills/plugin-authoring",
-      "chunk-c6nmm67v.js": "skills/prototype",
-      "chunk-ryj60c9z.js": "skills/design-sync",
-      "chunk-gr88cgcj.js": "skills/workshop",
-      "chunk-bszfkq8x.js": "skills/artifact-components",
-      "chunk-pgcarp1a.js": "skills/doc",
-      "chunk-h852fhqn.js": "skills/artifact-diagramming",
-      "chunk-16vejqnd.js": "skills/artifact-design",
-      "chunk-gzaa5nta.js": "skills/artifact-types",
-      "chunk-t5sjtkqz.js": "prompts/repl-route",
-      "chunk-c3j6hpkh.js": "prompts/loop",
-      "chunk-31gxg38t.js": "prompts/workflow-examples",
-      "chunk-0nej4jsc.js": "skills/workshop",
-      "chunk-t6f20pqm.js": "sdk",
-      "chunk-7dbj3tnn.js": "sdk",
-      "chunk-wte097yz.js": "fonts",
-      "chunk-ahz28xsf.js": "vendor",
-      "chunk-zsth6qpw.js": "vendor",
-      "chunk-w03h7t5s.js": "vendor",
-      "chunk-vy1w5pmp.js": "artifact-runtime",
-      "chunk-9amyqxcf.js": "artifact-runtime",
-      "chunk-cyfns0f1.js": "artifact-runtime",
-      "chunk-dbj90r18.js": "native",
-      "chunk-bqp70210.js": "native",
-      "chunk-rrrrq3eh.js": "native"
+    "groups": {
+      "plugins/claude-test": [
+        "NOTICE-chm3rwx9.txt"
+      ],
+      "skills/artifact-components": [
+        "SKILL-fjp06kkf.md"
+      ],
+      "skills/claude-api": [
+        "README-29cff9e7.md.zst"
+      ],
+      "skills/claude-code-docs": [
+        "SKILL-0vb5xk0r.md",
+        "plugin-eval-quickref-e95bcd1b.md.zst"
+      ],
+      "skills/cowork-plugin": [
+        "SKILL-a71d0623.md.zst"
+      ],
+      "skills/dataviz": [
+        "SKILL-8zd8x5rj.md"
+      ],
+      "skills/design-sync": [
+        "SKILL-76b8b2a9.md.zst"
+      ],
+      "skills/doc": [
+        "SKILL-h8rn0xak.md"
+      ],
+      "skills/run": [
+        "SKILL-9ddmsnpa.md"
+      ],
+      "skills/verify": [
+        "SKILL-cf37e4b8.md.zst"
+      ],
+      "skills/workshop": [
+        "SKILL-e92179a2.md.zst"
+      ]
     },
     "named": {
       "SKILL-0vb5xk0r.md": "skills/claude-code-docs/SKILL.md",
@@ -207,9 +206,6 @@
       "state-library.js-wy8y4843.txt": "artifact-runtime/state-library.js",
       "appifact_sdk.js-852e8bcb.txt.zst": "artifact-runtime/appifact_sdk.js",
       "kit-modules.js-02f8fcd0.txt.zst": "artifact-runtime/kit-modules.js",
-      "audio-capture.node": "native/audio-capture.node",
-      "computer-use-input.node": "native/computer-use-input.node",
-      "computer-use-swift.node": "native/computer-use-swift.node",
       "validate_palette.js-f945bc6a.txt.zst": "skills/dataviz/scripts/validate_palette.js",
       "validate_palette.py-f97163c4.txt.zst": "skills/dataviz/scripts/validate_palette.py"
     },

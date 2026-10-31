@@ -1,8 +1,9 @@
-// 项目完整性：所有模块 / 资源引用都能在项目内解析，不依赖 extract/upstream 或原版虚拟文件系统。
+// 项目完整性：各系统的模块 / 资源引用都能在项目内解析，不依赖 extract/upstream 或原版虚拟文件系统。
 import { describe, expect, test } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
 import { ROOT } from "./harness.js";
+import { SYSTEMS } from "../src/runtime/platforms.js";
 
 const SRC = path.join(ROOT, "src");
 const ASSETS = path.join(ROOT, "assets");
@@ -14,13 +15,22 @@ function* walk(dir) {
     else yield p;
   }
 }
+const rel = (f) => path.relative(ROOT, f).split(path.sep).join("/");
 const sources = [...walk(SRC)].filter((f) => f.endsWith(".js")).map((f) => ({ file: f, code: fs.readFileSync(f, "utf8") }));
-const rel = (f) => path.relative(ROOT, f);
+// 各系统的生成源码：系统 → Map<src/<系统>/ 下的相对路径, 源码>
+const trees = Object.fromEntries(Object.keys(SYSTEMS).map((s) => [s, new Map(sources
+  .filter((x) => rel(x.file).startsWith(`src/${s}/`))
+  .map((x) => [path.relative(path.join(SRC, s), x.file).split(path.sep).join("/"), x.code]))]));
+const moduleMap = JSON.parse(fs.readFileSync(path.join(ROOT, "reference/module-map.json"), "utf8"));
 
 describe("源码", () => {
-  test("模块数量与原版一致（2568 个 + 运行时层与入口）", () => {
-    const generated = sources.filter((s) => !rel(s.file).startsWith("src/runtime/") && rel(s.file) !== "src/main.js");
-    expect(generated.length).toBe(2568);
+  test("src/ 下只有手写的入口、运行时层，以及每个支持的系统各一份生成代码", () => {
+    expect(fs.readdirSync(SRC).sort()).toEqual(["main.js", "runtime", ...Object.keys(SYSTEMS)].sort());
+  });
+
+  test.each(Object.keys(SYSTEMS))("%s：模块数量与 module-map.json 一致，路径一一对应", (system) => {
+    const mapped = Object.entries(moduleMap).filter(([, v]) => v[system]).map(([p]) => p).sort();
+    expect([...trees[system].keys()].sort()).toEqual(mapped);
   });
 
   test("相对路径的静态 import / export from / import() / import.meta.require 全部可解析", () => {
@@ -36,12 +46,16 @@ describe("源码", () => {
     expect(missing).toEqual([]);
   });
 
-  test("__asset_text / __asset_path / __asset_src 引用的文件都存在", () => {
+  test("__asset_* 引用的文件都存在；原生模块在该系统的每个平台都有", () => {
     const missing = [];
-    for (const { file, code } of sources) {
-      for (const m of code.matchAll(/__asset_(text|path|src)\("([^"]+)"\)/g)) {
-        const base = m[1] === "src" ? SRC : ASSETS;
-        if (!fs.existsSync(path.join(base, m[2]))) missing.push(`${rel(file)} → ${m[1]}:${m[2]}`);
+    for (const [system, tree] of Object.entries(trees)) {
+      for (const [file, code] of tree) {
+        for (const [, kind, name] of code.matchAll(/__asset_(text|path|src|native)\("([^"]+)"\)/g)) {
+          const targets = kind === "src" ? [path.join(SRC, name)]
+            : kind === "native" ? SYSTEMS[system].map((arch) => path.join(ASSETS, "native", `${system}-${arch}`, name))
+            : [path.join(ASSETS, name)];
+          for (const t of targets) if (!fs.existsSync(t)) missing.push(`src/${system}/${file} → ${kind}:${rel(t)}`);
+        }
       }
     }
     expect(missing).toEqual([]);
@@ -52,7 +66,7 @@ describe("源码", () => {
     for (const { file, code } of sources) {
       if (rel(file).startsWith("src/runtime/")) continue; // 运行时层按设计识别编译后的 /$bunfs/root
       if (/"\/\$bunfs\/root\/[^"]+\.(js|node|txt|md|json|zst)"/.test(code)) bad.push(`${rel(file)}: /$bunfs`);
-      if (/extract\/upstream|claude-code-darwin-arm64\/claude/.test(code)) bad.push(`${rel(file)}: extract/upstream`);
+      if (/extract\/upstream|claude-code-(darwin|linux)-[a-z0-9]+\/claude/.test(code)) bad.push(`${rel(file)}: extract/upstream`);
     }
     expect(bad).toEqual([]);
   });
@@ -81,40 +95,35 @@ describe("资源", () => {
     const extra = [...walk(ASSETS)].map((f) => path.relative(ASSETS, f)).filter((p) => !listed.has(p) && path.basename(p) !== ".DS_Store");
     expect(extra).toEqual([]);
   });
-});
 
-describe("手写文档", () => {
-  // 生成源码的文件名带 chunk id 后缀，重新提取后模块可能换目录；文档中的引用须随之更新
-  const DOCS = ["README.md", "docs/architecture.md", "docs/runtime.md", "extract/README.md"];
-  const files = new Set(sources.map((s) => path.relative(SRC, s.file).split(path.sep).join("/")));
-  const lineCount = (p) => sources.find((s) => s.file === path.join(SRC, p)).code.split("\n").length;
-
-  test("引用的生成源码文件都存在，行号不超出文件长度", () => {
-    const bad = [];
-    // shell/sandbox.aet2.js:24007、fs/chunk-tzqhxyjb.js、src/cli.js:59；通配：shell/sandbox.*、remote/self-hosted-runner-*.js
-    // 路径须以 src/ 下的目录开头，且前面不是别的路径成分（排除 test/runtime/… 之类）
-    const areas = fs.readdirSync(SRC, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).join("|");
-    const RE = new RegExp(String.raw`(?<![\w./-])(?:src/)?((?:${areas})/(?:[\w-]+/)*(?:[\w-]+\.[a-z0-9]{4}|chunk-[a-z0-9]{8})\.js|cli\.js)(?::(\d+))?|(?<![\w./-])((?:${areas})/[\w-]+(?:\.\*|-\*\.js))`, "g");
-    for (const doc of DOCS) {
-      for (const m of fs.readFileSync(path.join(ROOT, doc), "utf8").matchAll(RE)) {
-        const [ref, file, line, glob] = m;
-        if (glob) {
-          const prefix = glob.replace(/\*(\.js)?$/, "");
-          if (![...files].some((f) => f.startsWith(prefix))) bad.push(`${doc}: ${ref}`);
-        } else if (!files.has(file)) bad.push(`${doc}: ${ref}（文件不存在）`);
-        else if (line && +line > lineCount(file)) bad.push(`${doc}: ${ref}（超出 ${lineCount(file)} 行）`);
-      }
-    }
-    expect(bad).toEqual([]);
+  test("原生模块按平台存放：每个支持的平台一个目录，且只有这些目录", () => {
+    const platforms = Object.entries(SYSTEMS).flatMap(([s, arches]) => arches.map((a) => `${s}-${a}`)).sort();
+    expect(fs.readdirSync(path.join(ASSETS, "native")).filter((d) => d !== ".DS_Store").sort()).toEqual(platforms);
   });
 });
 
-describe("参考映射", () => {
-  test("module-map.json 覆盖全部模块，且指向的文件都存在", () => {
-    const map = JSON.parse(fs.readFileSync(path.join(ROOT, "reference/module-map.json"), "utf8"));
-    const targets = Object.values(map);
-    expect(targets.length).toBe(2568);
-    expect(targets.filter((p) => !fs.existsSync(path.join(SRC, p)))).toEqual([]);
-    expect(new Set(targets).size).toBe(targets.length);
+describe("手写文档", () => {
+  // 文档用“路径”或“路径「特征字符串」”指向生成源码，例如 `core/query-loop.js`「hook_stopped_continuation」：
+  // 不写某个系统的行号和混淆名，路径与特征字符串须在每个系统中都成立；
+  // 只属于某个系统的写成 `src/<系统>/…`，只在该系统中检查。
+  const DOCS = ["README.md", "docs/architecture.md", "docs/runtime.md", "extract/README.md"];
+  const areas = [...new Set(Object.values(trees).flatMap((t) => [...t.keys()].map((p) => p.split("/")[0])))].filter((d) => !d.endsWith(".js"));
+  const RE = new RegExp(String.raw`(?<![\w./-])\`(?:src/(${Object.keys(SYSTEMS).join("|")})/)?((?:${areas.join("|")})/[\w./-]+\.js|cli\.js)\`(?:「([^」]+)」)?`, "g");
+
+  test("引用的生成源码在相应系统中存在，特征字符串在文件中出现", () => {
+    const bad = [];
+    let checked = 0;
+    for (const doc of DOCS) {
+      for (const [ref, only, file, anchor] of fs.readFileSync(path.join(ROOT, doc), "utf8").matchAll(RE)) {
+        checked++;
+        for (const system of only ? [only] : Object.keys(SYSTEMS)) {
+          const code = trees[system].get(file);
+          if (code === undefined) bad.push(`${doc}: ${ref}（${system} 中不存在）`);
+          else if (anchor && !code.includes(anchor)) bad.push(`${doc}: ${ref}（${system} 的该文件中没有「${anchor}」）`);
+        }
+      }
+    }
+    expect(bad).toEqual([]);
+    expect(checked).toBeGreaterThan(0);
   });
 });

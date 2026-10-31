@@ -11,7 +11,7 @@ const ASSETS = join(ROOT, "assets");
 const SRC = join(ROOT, "src");
 const textCache = new Map();
 
-/** 资源的绝对路径（file / napi loader：交给 fs 读取或加载原生模块） */
+/** 资源的绝对路径（file loader：交给 fs 读取） */
 export function __asset_path(rel) {
   return join(ASSETS, rel);
 }
@@ -20,6 +20,11 @@ export function __asset_path(rel) {
 export function __asset_text(rel) {
   if (!textCache.has(rel)) textCache.set(rel, readFileSync(join(ASSETS, rel), "utf8"));
   return textCache.get(rel);
+}
+
+/** 当前平台的原生模块（napi loader）：assets/native/<系统>-<架构>/<名字> */
+export function __asset_native(name) {
+  return join(ASSETS, "native", `${process.platform}-${process.arch}`, name);
 }
 
 /** src/ 下脚本的绝对路径（用于 new Worker） */

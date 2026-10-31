@@ -250,7 +250,7 @@ export function analyzeTools(mods) {
 
 // ---------- 特性开关 ----------
 //
-// 取值函数是混淆名且随版本变化，按结构特征定位所在模块:
+// 取值函数是混淆名且随版本、系统变化，按结构特征定位所在模块（参数名也是混淆名，用反向引用匹配）:
 //   基础取值   function B(e, n) { return X(e, n).value; }      X 返回 { value, source }
 //   会话固定值 function W(e, n) { let r = …().pinnedFeatureValues …
 //   直通包装   function Y(e, n, …) { return B(e, n); }
@@ -259,16 +259,16 @@ export function analyzeTools(mods) {
 function locateGateModule(mods) {
   for (const { id, code } of mods) {
     if (!code.includes("pinnedFeatureValues")) continue;
-    const base = code.match(/function ([\w$]+)\(e, n2?\) \{\n  return ([\w$]+)\(e, n2?\)\.value;\n\}/);
+    const base = code.match(/function ([\w$]+)\(([\w$]+), ([\w$]+)\) \{\n  return ([\w$]+)\(\2, \3\)\.value;\n\}/);
     if (!base) continue;
-    const [, getValue, getWithSource] = base;
-    const pinned = code.match(/function ([\w$]+)\(e, n2?\) \{\n  let r2? = [\w$]+\(\)\.pinnedFeatureValues/);
+    const [, getValue, , , getWithSource] = base;
+    const pinned = code.match(/function ([\w$]+)\([\w$]+, [\w$]+\) \{\n  let [\w$]+ = [\w$]+\(\)\.pinnedFeatureValues/);
     const exported = new Map((code.match(/export \{([\s\S]*?)\};/)?.[1] ?? "").split(",").map((s) => s.trim()).filter(Boolean).map((s) => {
       const [local, as] = s.split(/\s+as\s+/);
       return [local, as ?? local];
     }));
     const funcs = [getValue, getWithSource, pinned?.[1]].filter(Boolean);
-    const passThrough = new RegExp(`function ([\\w$]+)\\(e, n2?(?:, [\\w$]+)*\\) \\{\\n  return ${getValue.replaceAll("$", "\\$")}\\(e, n2?\\);\\n\\}`, "g");
+    const passThrough = new RegExp(`function ([\\w$]+)\\(([\\w$]+), ([\\w$]+)(?:, [\\w$]+)*\\) \\{\\n  return ${getValue.replaceAll("$", "\\$")}\\(\\2, \\3\\);\\n\\}`, "g");
     for (const m of code.matchAll(passThrough)) funcs.push(m[1]);
     return { id, funcs: new Map(funcs.filter((f) => exported.has(f)).map((f) => [exported.get(f), f])) };
   }

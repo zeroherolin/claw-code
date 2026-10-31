@@ -53,6 +53,6 @@ export function dispatchEmbeddedTool() {
   if (own) exec(own, args, name);
   const fallback = tool.fallback && which(tool.fallback);
   if (fallback) exec(fallback, fallbackArgs(name, args), tool.fallback);
-  process.stderr.write(`${name}: not found. Install it to use this feature, e.g. \`brew install ${tool.install}\`.\n`);
+  process.stderr.write(`${name}: not found. Install the ${tool.install} package to use this feature (e.g. \`brew install ${tool.install}\` or \`apt install ${tool.install}\`).\n`);
   process.exit(127);
 }
