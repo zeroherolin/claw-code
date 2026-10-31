@@ -11,9 +11,9 @@
 //   print     -p 非交互：输出（text / json / stream-json）以及发往 API 的每一个请求
 //   tui       交互界面：scenarios/*.json 的按键脚本在固定尺寸伪终端中运行，比较最终屏幕的每个格子
 //
-// 场景文件：{ keys: [[秒, 按键文本], ...], cols?, rows?, fresh? }
+// 场景文件：{ keys: [[秒, 按键文本], ...], args?, cols?, rows?, fresh? }
 //   启动输出静止后开始计时发送按键，最后一次按键后输出再次静止时截屏（见 harness.runInPty）；
-//   fresh 为 true 时使用全新的 HOME（首次引导）。默认 100×30。
+//   args 为启动参数；fresh 为 true 时使用全新的 HOME（首次引导）。默认 100×30。
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
@@ -37,6 +37,8 @@ const PRINT_CASES = {
   model: ["-p", "say hi", "--model", "sonnet"],
   sysprompt: ["-p", "say hi", "--append-system-prompt", "EXTRA RULE"],
   findgrep: ["-p", "CALL_FINDGREP please", "--allowedTools", "Bash"], // Bash 中 find/grep/rg 走内嵌工具
+  // 先完成一次会话，再续上它：比较续上那次的输出，以及两次的全部请求（第二次含从磁盘恢复的历史消息）
+  continue: { before: ["-p", "say hi"], args: ["-p", "--continue", "and again"] },
 };
 const SCENARIO_DIR = path.join(import.meta.dir, "scenarios");
 
@@ -75,9 +77,13 @@ for (const args of CLI_CASES) {
 }
 
 console.log("\n非交互模式（-p）");
-for (const [name, args] of Object.entries(PRINT_CASES)) {
+for (const [name, spec] of Object.entries(PRINT_CASES)) {
   if (filter && !filter.test(name)) continue;
-  const [o, n] = await both({}, (bin, c) => runCli([bin], args, { cwd: c.work, env: c.env }));
+  const { before, args } = Array.isArray(spec) ? { args: spec } : spec;
+  const [o, n] = await both({}, async (bin, c) => {
+    if (before) await runCli([bin], before, { cwd: c.work, env: c.env });
+    return runCli([bin], args, { cwd: c.work, env: c.env });
+  });
   const [a, b] = [normalizeText(o.output, o.home), normalizeText(n.output, n.home)];
   const diffs = a === b && o.code === n.code ? [] : [`退出码 ${o.code} / ${n.code}`, ...jsonDiff(a.split("\n"), b.split("\n"), 3)];
   if (o.requests.length !== n.requests.length) diffs.push(`API 请求数 ${o.requests.length} ≠ ${n.requests.length}`);
@@ -94,7 +100,7 @@ for (const file of fs.readdirSync(SCENARIO_DIR).filter((f) => f.endsWith(".json"
   const sc = JSON.parse(fs.readFileSync(path.join(SCENARIO_DIR, file), "utf8"));
   const cols = sc.cols ?? 100, rows = sc.rows ?? 30;
   const [o, n] = await both({ fresh: sc.fresh }, async (bin, c) => {
-    const { bytes, timedOut } = await runInPty([bin], { cwd: c.work, env: c.env, cols, rows, keys: sc.keys });
+    const { bytes, timedOut } = await runInPty([bin, ...(sc.args ?? [])], { cwd: c.work, env: c.env, cols, rows, keys: sc.keys });
     const text = normalizeStream(bytes.toString("latin1"), c.home);
     return { timedOut, screen: await renderScreen(Buffer.from(text, "latin1"), cols, rows) };
   });
