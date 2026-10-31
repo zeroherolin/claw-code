@@ -6,7 +6,7 @@ import { i } from "../shared/environment.9a41.js";
 import { afe, ie, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
 import { Qt } from "../settings/workflow-launch-exec.t4r2.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "./chunk-0c6r1zf7.js";
 import { Ev, Mws } from "./chunk-j8r0n6w8.js";
 import { hE } from "../plugins/entry-refused.bp7z.js";
 import { Ie, t_n } from "../plugins/chunk-hxt89a41.js";

@@ -1,6 +1,6 @@
 // permissions/classified-to-post-turn-summary.sq27.js — Claude Code 2.1.310 模块 chunk-sq276c83.js
 import { Rhi, xbr, iTi, xhi, Phi, Ihi, Ohi, aTi, lTi, dTi } from "../context/classifier-disabled-surfaces.x4d0.js";
-import "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import "../context/projects-thread-reply-lead-killswitch.c5ve.js";
 import "../git/needs-reply.erbp.js";
 import "../telemetry/focus-events.e5dw.js";
 import "../remote/chunk-c1rfegja.js";
@@ -16,7 +16,7 @@ import "../shared/async-hooks.t1gs.js";
 import "../computer-use/chunk-ec42nx0x.js";
 import "../settings/ax-sr-suggestion-nav.8qsa.js";
 import "../shared/chunk-w13tcac4.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "../shared/chunk-ztrzej16.js";
 import "../workflows/chunk-exaq0a52.js";
 import "./turn-abort.yvwf.js";
@@ -61,7 +61,7 @@ import "../terminal/chunk-9vttrktj.js";
 import "../auth/profile-explicit.b7t3.js";
 import "../shared/chunk-nyvhtfb3.js";
 import "../fs/chunk-w461d8x8.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

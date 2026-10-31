@@ -1,6 +1,6 @@
 // shared/delete-start-task-files-here.98fp.js — Claude Code 2.1.310 模块 chunk-98fp04kb.js
 import { QCi, ZCi, eTi, tTi, nTi, rTi, Ebr, Bco, vbr, jco } from "../auth/managed-agents-task-file-upload.6r37.js";
-import "../vendor/ajv/input-schema-not-checked.xf9s.js";
+import "./input-schema-not-checked.xf9s.js";
 import "./egress-blocked.6n8q.js";
 import "./not-regular.kdmc.js";
 import "../mcp/f688f3fc-1d05-5bd1-9c48-9854ec083044.azek.js";
@@ -93,7 +93,7 @@ import "./async-hooks.t1gs.js";
 import "../computer-use/chunk-ec42nx0x.js";
 import "../settings/ax-sr-suggestion-nav.8qsa.js";
 import "./chunk-w13tcac4.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "./chunk-ztrzej16.js";
 import "../workflows/chunk-exaq0a52.js";
 import "../permissions/turn-abort.yvwf.js";
@@ -138,7 +138,7 @@ import "../terminal/chunk-9vttrktj.js";
 import "../auth/profile-explicit.b7t3.js";
 import "./chunk-nyvhtfb3.js";
 import "../fs/chunk-w461d8x8.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "./sk-ant-sid.0hme.js";

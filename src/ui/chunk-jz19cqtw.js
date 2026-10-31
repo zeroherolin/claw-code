@@ -1,6 +1,6 @@
 // ui/chunk-jz19cqtw.js — Claude Code 2.1.310 模块 chunk-jz19cqtw.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { rt, n, Vr } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, n, Vr } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Pc } from "../shared/chunk-h1g05r4t.js";
 import { Tgr, xs, Je } from "./aria-hidden.r9bm.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";

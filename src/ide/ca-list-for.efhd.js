@@ -1,5 +1,5 @@
 // ide/ca-list-for.efhd.js — Claude Code 2.1.310 模块 chunk-efhddm0m.js
-import { GZ, m8r, Kar, Hvn, abe, PQo, YL, lst, IQo, OQo, Dvn } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { GZ, m8r, Kar, Hvn, abe, PQo, YL, lst, IQo, OQo, Dvn } from "../fs/ca-certs-load.ft7b.js";
 import "../telemetry/chunk-wn8xtaqg.js";
 import "../shared/chunk-n07cvysj.js";
 import "../telemetry/chunk-wq923bwc.js";

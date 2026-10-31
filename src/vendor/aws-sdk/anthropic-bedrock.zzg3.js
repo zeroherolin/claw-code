@@ -17,7 +17,7 @@ import { jtt } from "./transfer-encoding.bmpf.js";
 import { Du } from "./cross-region.8w8h.js";
 import "./utf-8.6ta2.js";
 import "../../shared/chunk-5q6vj6jk.js";
-import { fh } from "./ca-certs-load.ft7b.js";
+import { fh } from "../../fs/ca-certs-load.ft7b.js";
 import { LI, Pxe } from "./chunk-yc0hxjyg.js";
 import { ir, Ru } from "../../telemetry/anthropic-workspace-id.36ys.js";
 import { Ae } from "../react/chunk-meds60nn.js";

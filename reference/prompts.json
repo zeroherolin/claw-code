@@ -37,7 +37,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1633025.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 20508,
   "firstLine": " Claude Code gateway protocol"
  },
@@ -115,7 +115,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1675410.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 8158,
   "firstLine": " Customer-routed inference"
  },
@@ -181,7 +181,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@24750.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 5790,
   "firstLine": "This session is a thread in a Claude Code Project, and its user also speaks through the project's ti"
  },
@@ -295,7 +295,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@34712.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 4204,
   "firstLine": "This session is a thread in a Claude Code Project. Its user is the project owner and, on a shared pr"
  },
@@ -385,7 +385,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1294916.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 3640,
   "firstLine": "The subset of Claude Desktop managed configuration an Anthropic-hosted (hybrid) config server may st"
  },
@@ -421,7 +421,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@35272.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 3490,
   "firstLine": "This session is a project member's own session in a shared Claude Code Project: it runs with that me"
  },
@@ -685,7 +685,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1394675.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 2374,
   "firstLine": "Per-user bootstrap configuration response in the nested format (`schemaVersion` 2): a subset of mana"
  },
@@ -721,7 +721,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1395273.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 2266,
   "firstLine": "Per-user bootstrap configuration response in the flat format (`schemaVersion` 1): bootstrapable keys"
  },
@@ -937,37 +937,37 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1033437.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1999,
   "firstLine": "Third-party deployments only. Caps the Claude version your devices run. Update checks take the newes"
  },
  {
   "file": "prompts/start-gateway.ycyj@1186806.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1996,
   "firstLine": "Set through your device management (MDM or machine policy) to the UUID of the organization your user"
  },
  {
   "file": "prompts/start-gateway.ycyj@1208878.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1996,
   "firstLine": "Under device-delivered configuration (device management, a configuration file or a bootstrap URL) th"
  },
  {
   "file": "prompts/start-gateway.ycyj@1102578.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1995,
   "firstLine": "Server-derived: the Claude.ai control plane sets this key, each time it serves the configuration, fr"
  },
  {
   "file": "prompts/start-gateway.ycyj@908752.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1993,
   "firstLine": "Used with `inferenceCredentialKind: external-idp`. The app discovers `issuer/.well-known/openid-conf"
  },
  {
   "file": "prompts/start-gateway.ycyj@1154035.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1993,
   "firstLine": "When `true` and Claude Code's managed settings name a corporate launcher in `processWrapper` or `env"
  },
@@ -979,25 +979,25 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1077576.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1988,
   "firstLine": "When set, the app fetches the catalog document and its signature file (the same URL with `.raw-sig.j"
  },
  {
   "file": "prompts/start-gateway.ycyj@1166940.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1988,
   "firstLine": "The path on the user's computer of the signed package your endpoint security (EDR) vendor supplies f"
  },
  {
   "file": "prompts/start-gateway.ycyj@952240.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1985,
   "firstLine": "Beta. The app sends its session API to this endpoint with the configured credential, and the block's"
  },
  {
   "file": "prompts/start-gateway.ycyj@1095073.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1984,
   "firstLine": "For OAuth-authenticated entries, the app builds the redirect URI as `http://callbackHost:callbackPor"
  },
@@ -1009,7 +1009,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1141223.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1982,
   "firstLine": "When enabled, Cowork, Code, and Chat sessions place only tool names in context up front, and Claude "
  },
@@ -1021,7 +1021,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1007398.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1977,
   "firstLine": "When off, the SSH option is hidden and any connection attempt is refused."
  },
@@ -1063,13 +1063,13 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1018225.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1952,
   "firstLine": "The git repositories Claude Code may work in on this install, in the two git forms a plugin marketpl"
  },
  {
   "file": "prompts/start-gateway.ycyj@916455.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1951,
   "firstLine": "External IdP mode. The app discovers `issuer/.well-known/openid-configuration`, runs an OIDC authori"
  },
@@ -1081,19 +1081,19 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@965560.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1940,
   "firstLine": "For `git` sources, the HTTPS remote the app clones. For `url` sources, the HTTPS address of a `marke"
  },
  {
   "file": "prompts/start-gateway.ycyj@1161920.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1935,
   "firstLine": "Pins the app (sign-in, the connection test, model discovery, MCP servers, plugins), the Claude Code "
  },
  {
   "file": "prompts/start-gateway.ycyj@1159028.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1933,
   "firstLine": "Applies only to tool calls, in Cowork, Code and Chat. In Cowork it covers the sandbox's web fetch, s"
  },
@@ -1111,7 +1111,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1217124.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1921,
   "firstLine": "When enabled, Cowork and Code sessions get a built-in browser pane. Users can open any site in it Cl"
  },
@@ -1147,7 +1147,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1149076.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1883,
   "firstLine": "When set to `true`, Code sessions refuse reads outside their working directories (the session folder"
  },
@@ -1183,7 +1183,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1111097.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1855,
   "firstLine": "Unset (default) or an empty list: nothing is blocked."
  },
@@ -1237,7 +1237,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1063149.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1816,
   "firstLine": "Use the provider's exact model ID: Vertex publisher IDs (`claude-sonnet-5`), Bedrock inference-profi"
  },
@@ -1303,7 +1303,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@886940.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1731,
   "firstLine": "Claude runs the executable with the entries of Helper script arguments as its arguments (none by def"
  },
@@ -1315,25 +1315,25 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1146502.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1720,
   "firstLine": "Paths can reference `` and these environment variables, expanded per user: `OneDrive`, `OneDriveComm"
  },
  {
   "file": "prompts/start-gateway.ycyj@1048788.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1718,
   "firstLine": "How often the running app re-checks its managed configuration for changes: it re-polls your configur"
  },
  {
   "file": "prompts/start-gateway.ycyj@1108422.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1716,
   "firstLine": "Unset (default): with managed servers listed, sessions take MCP servers only from plugins and the de"
  },
  {
   "file": "prompts/start-gateway.ycyj@1135569.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1695,
   "firstLine": "Keys use the same tool names and argument-scoped rule syntax as Disabled built-in tools (`disabledBu"
  },
@@ -1351,7 +1351,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@979332.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1687,
   "firstLine": "When on (default), users can add plugin marketplaces from the plugin browser. Set to `false` to rest"
  },
@@ -1399,7 +1399,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1117733.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1661,
   "firstLine": "Read-only folders can be viewed and searched but not modified in Cowork (by Claude or via the UI). B"
  },
@@ -1483,7 +1483,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1222632.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1614,
   "firstLine": "Used when `builtinBrowserDefaultDomainPolicy` is `block` ignored under `allow`. A site matching an e"
  },
@@ -1507,7 +1507,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1123378.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1608,
   "firstLine": "Each entry is a Claude Code tool name (``) or an argument-scoped permission rule(https://code.claude"
  },
@@ -1543,7 +1543,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1088608.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1585,
   "firstLine": "Server-derived: the Claude.ai control plane sets this key, each time it serves the configuration, fr"
  },
@@ -1561,7 +1561,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1100163.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1560,
   "firstLine": "On a scheduled task, the approval prompt for an MCP tool can offer a lasting approval, so later runs"
  },
@@ -1597,13 +1597,13 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@920233.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1551,
   "firstLine": "Raises how long Cowork, Chat and Code sessions wait for the next model event on an open streaming re"
  },
  {
   "file": "prompts/start-gateway.ycyj@1220201.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1549,
   "firstLine": "Applies when `builtinBrowserEnabled` is on, in both Cowork and Code sessions, and decides which site"
  },
@@ -1657,7 +1657,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1046357.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1536,
   "firstLine": "Set it via MDM (plist, registry, or file) or serve it from your configuration endpoint (remote boots"
  },
@@ -1687,7 +1687,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1171760.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1518,
   "firstLine": "When set to `true`, the Cowork workspace VM on macOS and Windows gets a static IPv6 address (a uniqu"
  },
@@ -1759,7 +1759,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1179250.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1471,
   "firstLine": "Free-text instructions from your organization that Claude Desktop appends, in a clearly delimited bl"
  },
@@ -1771,7 +1771,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1169658.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1464,
   "firstLine": "The ID of the endpoint security (EDR) vendor that signed the package `coworkEDRIntegration` points t"
  },
@@ -1783,7 +1783,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1225122.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1460,
   "firstLine": "Used when `builtinBrowserDefaultDomainPolicy` is `allow` (the default) ignored under `block`. A site"
  },
@@ -1843,7 +1843,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1232580.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1417,
   "firstLine": "Setting this key asks for 3P mode. The app opens in 3P mode unless the user chose to sign in to Clau"
  },
@@ -1867,13 +1867,13 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@799284.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1406,
   "firstLine": "An entry with `transport: policy-only` is not a server: it sets tool permissions for an MCP server t"
  },
  {
   "file": "prompts/start-gateway.ycyj@877645.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1403,
   "firstLine": "Set this only for an IdP that implements RFC 8707 resource indicators. The app then sends `resourcev"
  },
@@ -1891,13 +1891,13 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1685581.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1386,
   "firstLine": "CREATE OR REPLACE FUNCTION caps_by_period(p_principal text, p_groups text, p_mode text)"
  },
  {
   "file": "prompts/start-gateway.ycyj@1072878.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1383,
   "firstLine": "Each row replaces Anthropic list price for one model in the Usage page's estimate, in USD per millio"
  },
@@ -1909,7 +1909,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1164791.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1370,
   "firstLine": "At launch the app downloads the PAC script and asks it which proxy to use for each request, as a bro"
  },
@@ -1951,7 +1951,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1392301.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1348,
   "firstLine": "Each key node's `x-availableInVersion` is the first Claude Desktop release that reads the key the ap"
  },
@@ -1969,7 +1969,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@977259.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1340,
   "firstLine": "When set, Publish to organization appears on a user's own skills and plugins, and each submission is"
  },
@@ -2011,7 +2011,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1144230.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1324,
   "firstLine": "Before fetching a page, Claude Code's WebFetch tool asks `api.anthropic.com` whether the domain is o"
  },
@@ -2053,7 +2053,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1105406.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1297,
   "firstLine": "Server-derived: the Claude.ai control plane sets this key, each time it serves the configuration, fr"
  },
@@ -2113,7 +2113,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1156646.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1280,
   "firstLine": "AD Folder Redirection can point APPDATA at a network (UNC) share, where Cowork tasks fail to start. "
  },
@@ -2125,7 +2125,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1097887.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1277,
   "firstLine": "When enabled (the default), approval prompts for tools without a `toolPolicy` entry offer a persiste"
  },
@@ -2137,7 +2137,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1227150.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1274,
   "firstLine": "The app deletes whole sessions in the background shortly after it fetches this configuration (at lau"
  },
@@ -2179,7 +2179,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@988403.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1248,
   "firstLine": "`inference-credential` adds `Authorization: Bearer token` to every export, using the token the app c"
  },
@@ -2245,7 +2245,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@960463.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1228,
   "firstLine": "`available` (the default) lets users install from the Directory's Organization tab. `auto_install` i"
  },
@@ -2275,7 +2275,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1137933.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1217,
   "firstLine": "Left unset, users can select Auto mode in Code and new Code sessions start in it a mode the user alr"
  },
@@ -2299,7 +2299,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@941152.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1205,
   "firstLine": "- `device-code` (default)  shows a code to enter at microsoft.com/devicelogin. The app registration "
  },
@@ -2335,7 +2335,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@991318.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1180,
   "firstLine": "Absolute path to an executable that prints a single JSON object of HTTP headers on stdout, e.g. `Aut"
  },
@@ -2395,7 +2395,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1012773.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1162,
   "firstLine": "`system-openssh`: the app makes every SSH connection by running an OpenSSH `ssh` program  the one `s"
  },
@@ -2407,7 +2407,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1193690.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1160,
   "firstLine": "`disabled` (default): Connect shows the account picker when no account is connected. `enabled`: on W"
  },
@@ -2437,7 +2437,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1010416.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1146,
   "firstLine": "Pins which OpenSSH client the app runs wherever it starts `ssh`: evaluating the user's SSH configura"
  },
@@ -2467,7 +2467,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1051308.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1140,
   "firstLine": "By default the app keeps on disk, from the last configuration the admin console served, your organiz"
  },
@@ -2563,7 +2563,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1113806.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1118,
   "firstLine": "Sets the per-call timeout the agent applies to every MCP tool call a call that runs longer fails wit"
  },
@@ -2623,13 +2623,13 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1083071.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1100,
   "firstLine": "Essential means the signals Anthropic needs to keep your deployment working: crash stacks, startup f"
  },
  {
   "file": "prompts/start-gateway.ycyj@1151887.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1098,
   "firstLine": "Sessions started inside a WSL distro run Claude Code where Windows host endpoint policy (this manage"
  },
@@ -2695,7 +2695,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1176596.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1074,
   "firstLine": "When on (default), the app resolves the signed-in user's identity from the configured credential sou"
  },
@@ -2803,7 +2803,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1074998.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1044,
   "firstLine": "When on (the default), the app reads the model catalog Anthropic publishes for Claude Code (a signed"
  },
@@ -2965,7 +2965,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1086435.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1016,
   "firstLine": "Nonessential services covers these outbound fetches the app runs without: connector favicons (the ic"
  },
@@ -3019,7 +3019,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@962168.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1005,
   "firstLine": "Prints to stdout one of: a bare token (sent as the git password for username `x-access-token`, which"
  },
@@ -3055,7 +3055,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1190094.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 1001,
   "firstLine": "When true, a claude.ai connector's (remote MCP server's) OAuth sign-in started from Claude Desktop r"
  },
@@ -3253,7 +3253,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@899793.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 948,
   "firstLine": "Each entry reaches the executable as one argument, exactly as written: `--environment, production` r"
  },
@@ -3265,7 +3265,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1207443.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 940,
   "firstLine": "A list of Claude.ai organization IDs (UUIDs). When set, users can import only by signing in to Claud"
  },
@@ -3337,7 +3337,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@811158.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 929,
   "firstLine": "- `browser` (default)  opens the system browser for an authorization-code (PKCE) sign-in on the loop"
  },
@@ -3397,7 +3397,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@802681.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 915,
   "firstLine": "Also governs the same server when an installed plugin provides it. A plugin's MCP server matches an "
  },
@@ -3517,7 +3517,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@31028.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 895,
   "firstLine": "A marker that says next after this session's last delivered reply: the harness checked a, so that ca"
  },
@@ -3535,7 +3535,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@996692.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 892,
   "firstLine": "Enables Claude Code's session tracing (`CLAUDE_CODE_ENHANCED_TELEMETRY_BETA1`  `OTEL_TRACES_EXPORTER"
  },
@@ -3553,7 +3553,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1133121.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 889,
   "firstLine": "When on (default), users can turn on Keep computer awake (Settings  This computer  System, also show"
  },
@@ -3589,7 +3589,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1129870.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 881,
   "firstLine": "When on (default), users can create new skills and upload skill files in the app. Set to `false` to "
  },
@@ -3649,7 +3649,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@944172.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 873,
   "firstLine": "Set this only when the app reaches Foundry through a gateway or proxy you run, such as Azure API Man"
  },
@@ -3661,7 +3661,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@21233.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 872,
   "firstLine": "`mcp__Zc__fetch_`, `This session is a thread in a Claude Code Project. Its user is the project owner"
  },
@@ -3685,7 +3685,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@922578.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 869,
   "firstLine": "Set this to `true` to run Claude Code in its gateway mode (`CLAUDE_CODE_USE_GATEWAY`) in Cowork, Cha"
  },
@@ -3709,7 +3709,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1068629.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 865,
   "firstLine": "Off unless set: the Usage page shows token counts only, since the app cannot know your negotiated pr"
  },
@@ -3739,7 +3739,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@33855.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 862,
   "firstLine": "A user turn opening `Coordinator session's relay` shows what a coordinator session (a Claude session"
  },
@@ -3781,7 +3781,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@807426.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 856,
   "firstLine": "Claude runs the executable with no arguments whenever that server connects and whenever its sign-in "
  },
@@ -3799,7 +3799,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@905380.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 855,
   "firstLine": "- `browser` (default)  opens the system browser for an authorization-code (PKCE) sign-in on a loopba"
  },
@@ -3895,7 +3895,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@843010.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 845,
   "firstLine": "With Continuous Access Evaluation the server declares the `cp1` client capability, so Microsoft Entr"
  },
@@ -4057,7 +4057,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@23908.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 818,
   "firstLine": "A message the person sent in this thread arrives the third way: as its own user turn opening with th"
  },
@@ -4147,7 +4147,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1131533.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 809,
   "firstLine": "When on (default), users can schedule Cowork tasks and Code sessions to run later or on a recurring "
  },
@@ -4291,7 +4291,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1065928.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 796,
   "firstLine": "The effort level the default model (the first `inferenceModels` entry, or the first model your endpo"
  },
@@ -4321,7 +4321,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1043202.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 794,
   "firstLine": "Absolute path to an executable that prints a single JSON object of HTTP headers on stdout, e.g. `Aut"
  },
@@ -4369,7 +4369,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@875570.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 788,
   "firstLine": "In access-token mode the token's audience must be your gateway or proxy. On IdPs where the requested"
  },
@@ -4465,7 +4465,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@32969.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 769,
   "firstLine": "No marker, indented directly under an assistant entry opening Coordinator session's message: the use"
  },
@@ -4543,7 +4543,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1501490.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 760,
   "firstLine": "doctype html"
  },
@@ -4693,7 +4693,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1021627.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 740,
   "firstLine": "Also enables inline data analysis. Of the user's own files, the sandbox can read only those attached"
  },
@@ -4729,7 +4729,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1198708.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 735,
   "firstLine": "When the organization's configuration uses a field that is deprecated  a renamed key, or a legacy va"
  },
@@ -4843,7 +4843,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@981799.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 723,
   "firstLine": "When on (default), users can upload plugin files and create plugins with Claude. Set to `false` to s"
  },
@@ -4879,7 +4879,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@985304.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 720,
   "firstLine": "Code sessions export over the protocol set here. Chats and Cowork tasks export over `http/protobuf` "
  },
@@ -4951,7 +4951,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1041605.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 715,
   "firstLine": "Static headers sent on every request to the bootstrap config URL  for a service-account credential ("
  },
@@ -5041,7 +5041,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1241691.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 704,
   "firstLine": "the session host no longer reads it: a session there gets the tools the person's Claude Desktop serv"
  },
@@ -5119,7 +5119,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@32285.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 695,
   "firstLine": "Any other marker, whether it says answers nothing above it, on the timeline or in another thread of "
  },
@@ -5443,7 +5443,7 @@
  },
  {
   "file": "prompts/projects-thread-reply-lead-killswitch.c5ve@23103.md",
-  "module": "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js",
+  "module": "context/projects-thread-reply-lead-killswitch.c5ve.js",
   "chars": 670,
   "firstLine": "A marked message whose lead says in another thread of this project was written in that thread's conv"
  },
@@ -5485,7 +5485,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@829648.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 666,
   "firstLine": "Absolute path to an executable that prints a single JSON object of environment variables to stdout, "
  },
@@ -5761,7 +5761,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@201438.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 644,
   "firstLine": "const the shared session_present  Ie in input"
  },
@@ -6157,7 +6157,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@995396.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 613,
   "firstLine": "Each category enables a class of raw content in OpenTelemetry events sent to your collector (this da"
  },
@@ -6217,7 +6217,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1061431.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 608,
   "firstLine": "Every model that offers a 1M-token context window shows one option in the model picker, and sessions"
  },
@@ -6313,7 +6313,7 @@
  },
  {
   "file": "prompts/start-gateway.ycyj@1030777.md",
-  "module": "vendor/zod/start-gateway.ycyj.js",
+  "module": "auth/start-gateway.ycyj.js",
   "chars": 602,
   "firstLine": "Has no effect when `disableAutoUpdates` is in place at launch: the updater never starts, so nothing "
  },

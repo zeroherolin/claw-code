@@ -3,7 +3,7 @@ import { i } from "../shared/environment.9a41.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { YI } from "../context/chunk-d05584w8.js";
 import { Zl } from "../telemetry/focus-events.e5dw.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Md } from "../shared/chunk-5zq7df98.js";
 import { LJ, L2 } from "../telemetry/keybinding-customization-release.66sh.js";
 import { qs } from "../shared/action-not-found.hpy9.js";

@@ -1,6 +1,6 @@
 // ui/aria-hidden.by9c.js — Claude Code 2.1.310 模块 chunk-by9cd5fw.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n, hp } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, hp } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Y5 } from "./chunk-deqjb1y1.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 import { Gt, Se, j } from "../vendor/react/chunk-s8vmszp2.js";

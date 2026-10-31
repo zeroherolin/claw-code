@@ -30,7 +30,7 @@ import { DXs } from "../context/tool-result-clearing-after-idle-server-report.ep
 import { ns } from "../shared/chunk-5qjrv5ax.js";
 import { DOo, VDr, BC } from "../tasks/continued-in.f5qq.js";
 import { fde } from "../context/team-memory-sync.0s3j.js";
-import { b1n } from "../vendor/mcp-sdk/unexpected-message.q1az.js";
+import { b1n } from "../shared/unexpected-message.q1az.js";
 import { YP, J2 } from "../context/org-memory-writes-setting-changed.w8x9.js";
 import { J8 } from "../permissions/bot-protected-tengu-atomic-magpie.zc9j.js";
 import { Yvo, txr, Xvo, JOe, vB, Ole } from "../core/conversation-engine.31gx.js";

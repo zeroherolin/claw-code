@@ -10,7 +10,7 @@ import { eM } from "./utf-8.6ta2.js";
 import { U6e } from "../../fs/chunk-xj4gm495.js";
 import { tM } from "../../shared/chunk-ddq4b1hs.js";
 import { rM } from "../../shared/chunk-5q6vj6jk.js";
-import { fh, qL } from "./ca-certs-load.ft7b.js";
+import { fh, qL } from "../../fs/ca-certs-load.ft7b.js";
 import { bA, LI } from "./chunk-yc0hxjyg.js";
 import { x } from "../react/chunk-meds60nn.js";
 var ue = x(function(Ce) {

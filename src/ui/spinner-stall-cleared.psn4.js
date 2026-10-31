@@ -11,7 +11,7 @@ import { kR } from "../shell/invalid-type.qnva.js";
 import { le } from "../shared/chunk-abagh0tt.js";
 import { ft, HTt, un, pv, Ri, SA } from "../fs/async-hooks.2k4e.js";
 import { sQ } from "../api/anthropic-client.7pf8.js";
-import { pn, rt, s, n, Wa } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, rt, s, n, Wa } from "../telemetry/render-glyph-cardinality.7car.js";
 import { FW, pN, cc } from "./truncate-end.8a5j.js";
 import { K, Yo } from "../shared/chunk-p82eferg.js";
 import { Ce } from "../shared/chunk-9vjqn6fm.js";

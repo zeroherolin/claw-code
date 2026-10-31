@@ -6,7 +6,7 @@ import { As } from "./global-config-and-gates.27xj.js";
 import { NM } from "../remote/local-agent.we9a.js";
 import { Qt } from "./workflow-launch-exec.t4r2.js";
 import { fe } from "./settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { GZ, kK, CK, TK, Lvn, Yb } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { GZ, kK, CK, TK, Lvn, Yb } from "../fs/ca-certs-load.ft7b.js";
 import { wbr } from "../shared/chunk-4zrd9788.js";
 import { F4n } from "../fs/chunk-gen8agw1.js";
 import { z7t } from "../shared/chunk-wrns4f69.js";

@@ -6,7 +6,7 @@ import { w } from "./chunk-zqxc4qtb.js";
 import { a } from "../telemetry/chunk-wq923bwc.js";
 import { ko, gEn, txe, CCt, Uw, CR } from "../shell/invalid-type.qnva.js";
 import { le } from "../shared/chunk-abagh0tt.js";
-import { s, n, Wa, Vr } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, Wa, Vr } from "../telemetry/render-glyph-cardinality.7car.js";
 import { qs } from "../shared/action-not-found.hpy9.js";
 import { ne } from "../workflows/workflow-size-guideline-change.1rc0.js";
 import { ve } from "./chunk-kjz7kbmb.js";

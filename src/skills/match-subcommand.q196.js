@@ -1,7 +1,7 @@
 // skills/match-subcommand.q196.js — Claude Code 2.1.310 模块 chunk-q196h8w7.js
 import { ste, RCi } from "./claude-api-retiring-models-detected.z51n.js";
 import "../agents/web-fetch.e88g.js";
-import "../vendor/highlight/chunk-0c6r1zf7.js";
+import "../workflows/chunk-0c6r1zf7.js";
 import "../commands/skill-bundled-extract.zw7p.js";
 import "../context/org-memory-writes-setting-changed.w8x9.js";
 import "../fs/files-directories.md42.js";
@@ -72,7 +72,7 @@ import "../shared/async-hooks.t1gs.js";
 import "../computer-use/chunk-ec42nx0x.js";
 import "../settings/ax-sr-suggestion-nav.8qsa.js";
 import "../shared/chunk-w13tcac4.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "../shared/chunk-ztrzej16.js";
 import "../workflows/chunk-exaq0a52.js";
 import "../permissions/turn-abort.yvwf.js";
@@ -117,7 +117,7 @@ import "../terminal/chunk-9vttrktj.js";
 import "../auth/profile-explicit.b7t3.js";
 import "../shared/chunk-nyvhtfb3.js";
 import "../fs/chunk-w461d8x8.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

@@ -2,7 +2,7 @@
 import { DGt } from "../../shared/chunk-qrdwg3n8.js";
 import { U6e } from "../../fs/chunk-xj4gm495.js";
 import { rM } from "../../shared/chunk-5q6vj6jk.js";
-import { fh, qL } from "./ca-certs-load.ft7b.js";
+import { fh, qL } from "../../fs/ca-certs-load.ft7b.js";
 import { s3t, bA, LI, Pxe } from "./chunk-yc0hxjyg.js";
 import { x, $e } from "../react/chunk-meds60nn.js";
 var me = x(function(Ue) {

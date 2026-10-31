@@ -1,7 +1,7 @@
 // ui/aria-hidden.wzb3.js — Claude Code 2.1.310 模块 chunk-wzb3s7cm.js
 import { Sir, bir } from "../shell/invalid-type.qnva.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { ePt } from "../shared/chunk-7xx4c906.js";
 import { Ilt } from "../shared/chunk-bbmrsakd.js";
 import { qz } from "../shared/chunk-qwh43rvc.js";

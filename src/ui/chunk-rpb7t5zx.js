@@ -3,7 +3,7 @@ import { Ce } from "../shared/chunk-9vjqn6fm.js";
 import { F } from "../context/not-admin-owned.ersa.js";
 import { Zo } from "../fs/utf-8.fmbx.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { xp, nS } from "./chunk-d5gw4nh1.js";
 import { hy } from "../git/remote-workspace-diff-fetch.6qej.js";
 import { LE } from "./chunk-ntt0xt6a.js";

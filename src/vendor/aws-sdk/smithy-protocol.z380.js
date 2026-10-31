@@ -10,7 +10,7 @@ import { eM, tVo, HGt, rEt } from "./utf-8.6ta2.js";
 import { tM } from "../../shared/chunk-ddq4b1hs.js";
 import { lh } from "./chunk-k5hq3azn.js";
 import { rM } from "../../shared/chunk-5q6vj6jk.js";
-import { fh } from "./ca-certs-load.ft7b.js";
+import { fh } from "../../fs/ca-certs-load.ft7b.js";
 import { s3t, bA, LI } from "./chunk-yc0hxjyg.js";
 import { x, $e } from "../react/chunk-meds60nn.js";
 var Jce = x(function(oo) {

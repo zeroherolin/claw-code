@@ -1,6 +1,6 @@
 // fs/chunk-1sqsqtmh.js — Claude Code 2.1.310 模块 chunk-1sqsqtmh.js
 import { t } from "./gitlab-runner-authentication-token.d7b0.js";
-import { Am, oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { Am, oa } from "./ca-certs-load.ft7b.js";
 import { HRe } from "../git/ssh-placeholder.1144.js";
 import { readFile as i } from "fs/promises";
 async function mve(e) {

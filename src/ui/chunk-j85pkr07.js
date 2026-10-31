@@ -1,7 +1,7 @@
 // ui/chunk-j85pkr07.js — Claude Code 2.1.310 模块 chunk-j85pkr07.js
 import { w } from "./chunk-zqxc4qtb.js";
 import { le } from "../shared/chunk-abagh0tt.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lt, an } from "../shared/chunk-vj9gqe2s.js";
 import { Cr } from "../commands/aria-preserve-whitespace.e4g5.js";
 import { ne } from "../workflows/workflow-size-guideline-change.1rc0.js";

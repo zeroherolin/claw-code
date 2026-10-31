@@ -19,7 +19,7 @@ import { ss } from "../shell/chunk-tjkwy3jp.js";
 import { GTt, OR } from "../fs/utf-8.fmbx.js";
 import { jpe, ft, vst, un, mbe, yr } from "../fs/async-hooks.2k4e.js";
 import { Own } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { s, n, Vr } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, Vr } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lt, an } from "../shared/chunk-vj9gqe2s.js";
 import { yce, Jn } from "../context/org-memory-writes-setting-changed.w8x9.js";
 import { Ya } from "../tools/structured-output-tool.j28z.js";

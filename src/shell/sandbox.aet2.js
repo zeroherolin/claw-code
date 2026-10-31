@@ -31,7 +31,7 @@ import { Is, Qt, kp } from "../settings/workflow-launch-exec.t4r2.js";
 import { TI } from "../shared/chunk-s56ftfc1.js";
 import { X4r, Dli, Lli, Nli, ln, UNe, $h, fe, Gwn, Gf, fr, NL, nz, OSe, wa } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
 import { at, Be } from "../mcp/allowed-warning.j2d4.js";
-import { MQo, HQo, vK } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { MQo, HQo, vK } from "../fs/ca-certs-load.ft7b.js";
 import { VRe } from "../auth/claude-code-user.tvhr.js";
 import { Tvn } from "../auth/profile-explicit.b7t3.js";
 import { For, Vii, q3r, rp, ase } from "../git/ssh-placeholder.1144.js";

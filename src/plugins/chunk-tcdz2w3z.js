@@ -1,7 +1,7 @@
 // plugins/chunk-tcdz2w3z.js — Claude Code 2.1.310 模块 chunk-tcdz2w3z.js
 import { J, PA, fP, Mee } from "../context/not-admin-owned.ersa.js";
 import { Mr } from "../models/claude-3-5-sonnet.21mz.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { Oy, zJn, sb, VJn, Ph, cG } from "../settings/built-in.5fzv.js";
 import { Q0, zTe } from "./not-found.2nbd.js";
 class SFo extends Error {

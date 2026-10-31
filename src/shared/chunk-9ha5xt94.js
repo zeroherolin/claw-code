@@ -1,6 +1,6 @@
 // shared/chunk-9ha5xt94.js — Claude Code 2.1.310 模块 chunk-9ha5xt94.js
 import { w } from "../ui/chunk-zqxc4qtb.js";
-import { n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { r } from "../vendor/react/chunk-f790ajz4.js";
 function wb(b) {
   let R = w(7), { children: t, color: o, textColor: x, padded: T, bold: d, wrap: l } = b, e = T ? " " : "";

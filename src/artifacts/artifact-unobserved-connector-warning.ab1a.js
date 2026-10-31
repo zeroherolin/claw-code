@@ -64,7 +64,7 @@ import { eR, uce, OSt, xy, Eo, Cx, Lye, Nye, hV, mE, Py, Mu, Lf, nR, XC, s_, Bye
 import { nj } from "../permissions/frontmatter-grant-withheld.8tyz.js";
 import { Pd, yu, lj, Bv, oo, qa, _f } from "../permissions/bot-protected-tengu-atomic-magpie.zc9j.js";
 import { Bne } from "../git/bridge-child-tool-diff.m7a8.js";
-import { fo } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { fo } from "../context/projects-thread-reply-lead-killswitch.c5ve.js";
 import { ze, HBt } from "../shell/sandbox.aet2.js";
 import { K7e } from "../tools/memory-write-tool.2csa.js";
 import { iBr } from "../telemetry/image-resize-fallback.6bjg.js";

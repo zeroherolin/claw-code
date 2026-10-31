@@ -11,7 +11,7 @@ import { Ki } from "../mcp/allowed-warning.j2d4.js";
 import { fst } from "../git/get-url.pbym.js";
 import { Kje } from "../core/conversation-engine.31gx.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lt } from "../shared/chunk-vj9gqe2s.js";
 import { q } from "../context/chunk-d05584w8.js";
 import { Ce } from "../shared/chunk-9vjqn6fm.js";

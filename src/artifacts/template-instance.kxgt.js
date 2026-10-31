@@ -8,7 +8,7 @@ import { Qi, Ua, uN, Vs } from "../fs/node-modules.gp4v.js";
 import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
 import { _, A5, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { di, Td, Ze } from "../shared/chunk-j79dwkaq.js";
-import { h5, LH } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { h5, LH } from "../fs/ca-certs-load.ft7b.js";
 import { tAt, Hfi, Dfi, Lfi, Nfi, Ffi, $fi, Ufi, Bfi, jfi, Wfi, h3e, wX } from "./cowritten-artifact-html.thm2.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { coe, yj, wAe, kzo, Lwt, Nwt, uoe } from "../shell/content-scan-transient.pxv4.js";

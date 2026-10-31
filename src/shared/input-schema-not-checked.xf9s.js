@@ -1,13 +1,13 @@
-// vendor/ajv/input-schema-not-checked.xf9s.js — Claude Code 2.1.310 模块 chunk-xf9sgh91.js
-import { L } from "../../context/not-admin-owned.ersa.js";
-import { d } from "../../telemetry/anthropic-workspace-id.36ys.js";
-import { _, t } from "../../fs/gitlab-runner-authentication-token.d7b0.js";
-import { p } from "../../telemetry/chunk-wn8xtaqg.js";
-import { _Rs, w7 } from "../../shared/egress-blocked.6n8q.js";
-import { eAe } from "../../tools/structured-output-tool.j28z.js";
-import { Dg, nb, tAe, zmn, oJn, Vmn, sJn, hWo, PWr, yWo, _Wo, IWr, SWo, bWo, wWo, EWo } from "./uri-reference.j4b6.js";
-import { mn } from "../../shared/chunk-1a0taxx3.js";
-import { x } from "../react/chunk-meds60nn.js";
+// shared/input-schema-not-checked.xf9s.js — Claude Code 2.1.310 模块 chunk-xf9sgh91.js
+import { L } from "../context/not-admin-owned.ersa.js";
+import { d } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { _, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { p } from "../telemetry/chunk-wn8xtaqg.js";
+import { _Rs, w7 } from "./egress-blocked.6n8q.js";
+import { eAe } from "../tools/structured-output-tool.j28z.js";
+import { Dg, nb, tAe, zmn, oJn, Vmn, sJn, hWo, PWr, yWo, _Wo, IWr, SWo, bWo, wWo, EWo } from "../vendor/ajv/uri-reference.j4b6.js";
+import { mn } from "./chunk-1a0taxx3.js";
+import { x } from "../vendor/react/chunk-meds60nn.js";
 var T = x(function(z) {
   Object.defineProperty(z, "__esModule", { value: true });
   z.dynamicAnchor = void 0;

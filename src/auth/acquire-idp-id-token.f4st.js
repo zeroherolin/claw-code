@@ -12,7 +12,7 @@ import "./secure-storage-credentials-write.vafw.js";
 import "../shell/find-generic-password.dx7z.js";
 import "./claude-code-user.tvhr.js";
 import "../fs/chunk-w461d8x8.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

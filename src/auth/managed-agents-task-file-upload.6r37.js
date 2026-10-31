@@ -11,7 +11,7 @@ import { St, l } from "../artifacts/cowritten-artifact-html.thm2.js";
 import { Wp } from "../mcp/toolbox-mcp-server-id.fewh.js";
 import { u1 } from "../shared/chunk-cg45s1mf.js";
 import { RJe, w2e, o0o, Kqn } from "../context/team-memory-sync.0s3j.js";
-import { DUn, B0t } from "../vendor/ajv/input-schema-not-checked.xf9s.js";
+import { DUn, B0t } from "../shared/input-schema-not-checked.xf9s.js";
 import { $Ge, IHe, UGe } from "../fs/file-upload.g3fv.js";
 import { nI, rI } from "../shared/session-activity-parked-exceeds-refcount.8mxy.js";
 import { jRs, WRs, Sve, GRs, pYe, Ute } from "../mcp/f688f3fc-1d05-5bd1-9c48-9854ec083044.azek.js";

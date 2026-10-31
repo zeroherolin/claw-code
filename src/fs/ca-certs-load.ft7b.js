@@ -1,23 +1,23 @@
-// vendor/aws-sdk/ca-certs-load.ft7b.js — Claude Code 2.1.310 模块 chunk-ft7bqgaw.js
-import { Nvn, Dt } from "../../fs/content-encoding.v6wj.js";
-import { Ne, as } from "../../fs/async-hooks.9s1z.js";
-import { F, L, U, no, ye, Wr, hos } from "../../context/not-admin-owned.ersa.js";
-import { R } from "../../telemetry/anthropic-workspace-id.36ys.js";
-import { W } from "../../shared/chunk-3y73jbfr.js";
-import { ie, t } from "../../fs/gitlab-runner-authentication-token.d7b0.js";
-import { Qr, l4t } from "../../models/claude-3-5-sonnet.21mz.js";
-import { H } from "../../shared/chunk-nrx8c90j.js";
-import { Cz, i } from "../../shared/environment.9a41.js";
-import { g, m, p } from "../../telemetry/chunk-wn8xtaqg.js";
-import { yd } from "../../remote/self-hosted.qq4m.js";
-import { aP } from "../../context/tool-cgroup-exclude-classes.t1za.js";
-import { dC } from "../../shared/chunk-ezj1r7jn.js";
-import { TFe } from "../../shared/sk-ant-sid.0hme.js";
-import { Npe } from "../../shared/chunk-t6575w3p.js";
-import { LM } from "../../shared/chunk-mzb69x1h.js";
-import { et } from "../../shared/chunk-tftf1nn4.js";
-import { Ae, x, $e } from "../react/chunk-meds60nn.js";
-import { Ee } from "../../shared/chunk-f9xfyhm1.js";
+// fs/ca-certs-load.ft7b.js — Claude Code 2.1.310 模块 chunk-ft7bqgaw.js
+import { Nvn, Dt } from "./content-encoding.v6wj.js";
+import { Ne, as } from "./async-hooks.9s1z.js";
+import { F, L, U, no, ye, Wr, hos } from "../context/not-admin-owned.ersa.js";
+import { R } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { W } from "../shared/chunk-3y73jbfr.js";
+import { ie, t } from "./gitlab-runner-authentication-token.d7b0.js";
+import { Qr, l4t } from "../models/claude-3-5-sonnet.21mz.js";
+import { H } from "../shared/chunk-nrx8c90j.js";
+import { Cz, i } from "../shared/environment.9a41.js";
+import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
+import { yd } from "../remote/self-hosted.qq4m.js";
+import { aP } from "../context/tool-cgroup-exclude-classes.t1za.js";
+import { dC } from "../shared/chunk-ezj1r7jn.js";
+import { TFe } from "../shared/sk-ant-sid.0hme.js";
+import { Npe } from "../shared/chunk-t6575w3p.js";
+import { LM } from "../shared/chunk-mzb69x1h.js";
+import { et } from "../shared/chunk-tftf1nn4.js";
+import { Ae, x, $e } from "../vendor/react/chunk-meds60nn.js";
+import { Ee } from "../shared/chunk-f9xfyhm1.js";
 var CFe = x(function(Cr) {
   Cr.HttpAuthLocation = void 0;
   (function(e) {
@@ -1907,7 +1907,7 @@ function $qe(e) {
 async function Uqe(e) {
   let r = await VZ(e);
   if (!r) return {};
-  let { defaultProvider: n } = await import("../../ide/default-provider.mw3q.js");
+  let { defaultProvider: n } = await import("../ide/default-provider.mw3q.js");
   return { requestHandler: r, credentials: n({ clientConfig: { requestHandler: r }, parentClientConfig: { requestHandler: r, ...e.region !== void 0 && { region: e.region } } }) };
 }
 async function VZ(e) {

@@ -13,7 +13,7 @@ import { I, re, Ze } from "../shared/chunk-j79dwkaq.js";
 import { St } from "../artifacts/cowritten-artifact-html.thm2.js";
 import { DM, Hn } from "../fs/utf-8.7pve.js";
 import { hc, nCn, i } from "../shared/environment.9a41.js";
-import { m8r, Kar, abe, Cqt, Tqt, _ui, Sui, RR, ck, rP, lC, oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { m8r, Kar, abe, Cqt, Tqt, _ui, Sui, RR, ck, rP, lC, oa } from "../fs/ca-certs-load.ft7b.js";
 import { Cd } from "../context/tool-cgroup-exclude-classes.t1za.js";
 import { Er, nes, Dst, UH, yo, zse } from "./chunk-q8vnfcnf.js";
 import { oee, bz, st, ct } from "./utf8-keep-bom.c49x.js";

@@ -783,7 +783,7 @@
   "ui/repl-screen.zq77.js"
  ],
  "tengu_basalt_meadow": [
-  "vendor/yoga/render-glyph-cardinality.7car.js"
+  "telemetry/render-glyph-cardinality.7car.js"
  ],
  "tengu_basalt_scarp": [
   "core/conversation-engine.31gx.js"
@@ -3933,10 +3933,10 @@
   "context/chunk-r1kn7pj5.js"
  ],
  "tengu_hearth_member_relay_rows_enabled": [
-  "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+  "context/projects-thread-reply-lead-killswitch.c5ve.js"
  ],
  "tengu_hearth_resolved_rows": [
-  "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+  "context/projects-thread-reply-lead-killswitch.c5ve.js"
  ],
  "tengu_help_toggled": [
   "ui/repl-screen.zq77.js"
@@ -6357,7 +6357,7 @@
  ],
  "tengu_plugin_remote_fetch": [
   "core/conversation-engine.31gx.js",
-  "vendor/google-auth/plugin-remote-fetch.ntkt.js"
+  "plugins/plugin-remote-fetch.ntkt.js"
  ],
  "tengu_plugin_renamed": [
   "plugins/plugin-enabled-for-session.9xx8.js"
@@ -6655,13 +6655,13 @@
   "context/tool-result-clearing-after-idle-server-report.epan.js"
  ],
  "tengu_projects_compact_thread_rule_enabled": [
-  "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+  "context/projects-thread-reply-lead-killswitch.c5ve.js"
  ],
  "tengu_projects_other_thread_rows_killswitch": [
-  "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+  "context/projects-thread-reply-lead-killswitch.c5ve.js"
  ],
  "tengu_projects_thread_ask_held_killswitch": [
-  "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+  "context/projects-thread-reply-lead-killswitch.c5ve.js"
  ],
  "tengu_projects_thread_recap": [
   "context/classifier-disabled-surfaces.x4d0.js"
@@ -6670,7 +6670,7 @@
   "ui/append-timeline-line.s2sn.js"
  ],
  "tengu_projects_thread_reply_lead_killswitch": [
-  "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+  "context/projects-thread-reply-lead-killswitch.c5ve.js"
  ],
  "tengu_projects_thread_state": [
   "core/conversation-engine.31gx.js"
@@ -7431,7 +7431,7 @@
   "agents/rename-full-session-fork.9pjt.js"
  ],
  "tengu_render_glyph_cardinality": [
-  "vendor/yoga/render-glyph-cardinality.7car.js"
+  "telemetry/render-glyph-cardinality.7car.js"
  ],
  "tengu_reorder_tool_uses_skipped_for_thinking": [
   "core/conversation-engine.31gx.js"
@@ -9980,7 +9980,7 @@
  ],
  "tengu_worker_owner_rows_killswitch": [
   "settings/global-config-and-gates.27xj.js",
-  "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+  "context/projects-thread-reply-lead-killswitch.c5ve.js"
  ],
  "tengu_worker_permission_mode_restore": [
   "permissions/worker-permission-mode-restore.7cp1.js"
@@ -10079,7 +10079,7 @@
   "core/conversation-engine.31gx.js"
  ],
  "tengu_xterm_atlas_reset": [
-  "vendor/yoga/render-glyph-cardinality.7car.js"
+  "telemetry/render-glyph-cardinality.7car.js"
  ],
  "tengu_zany_book": [
   "settings/global-config-and-gates.27xj.js"

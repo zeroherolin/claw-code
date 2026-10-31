@@ -20,7 +20,7 @@
  ],
  "ANTHROPIC_AWS_API_KEY": [
   "api/anthropic-client.7pf8.js",
-  "vendor/zod/start-gateway.ycyj.js"
+  "auth/start-gateway.ycyj.js"
  ],
  "ANTHROPIC_AWS_BASE_URL": [
   "api/anthropic-client.7pf8.js"
@@ -92,7 +92,7 @@
   "auth/profile-explicit.b7t3.js"
  ],
  "API_FORCE_IDLE_TIMEOUT": [
-  "vendor/aws-sdk/ca-certs-load.ft7b.js"
+  "fs/ca-certs-load.ft7b.js"
  ],
  "APPDATA": [
   "auth/credential-source.dkc9.js",
@@ -1074,7 +1074,7 @@
   "shared/proxy-authorization.9yrv.js",
   "auth/credential-source.dkc9.js",
   "fs/content-encoding.v6wj.js",
-  "vendor/zod/start-gateway.ycyj.js"
+  "auth/start-gateway.ycyj.js"
  ],
  "NoDefaultCurrentDirectoryInExePath": [
   "mcp/request-user-dialog-response-ignored.bnzw.js",
@@ -1363,7 +1363,7 @@
   "shared/environment.9a41.js"
  ],
  "WT_SESSION": [
-  "vendor/yoga/render-glyph-cardinality.7car.js",
+  "telemetry/render-glyph-cardinality.7car.js",
   "shared/environment.9a41.js",
   "terminal/ink-renderer.pma0.js"
  ],
@@ -1424,6 +1424,6 @@
   "shared/proxy-authorization.9yrv.js",
   "auth/credential-source.dkc9.js",
   "fs/content-encoding.v6wj.js",
-  "vendor/zod/start-gateway.ycyj.js"
+  "auth/start-gateway.ycyj.js"
  ]
 }

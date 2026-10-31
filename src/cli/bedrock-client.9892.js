@@ -12,7 +12,7 @@ import { HV } from "../shared/chunk-59dm2xqy.js";
 import { Du } from "../vendor/aws-sdk/cross-region.8w8h.js";
 import { eM } from "../vendor/aws-sdk/utf-8.6ta2.js";
 import { rM } from "../shared/chunk-5q6vj6jk.js";
-import { fh, qL } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { fh, qL } from "../fs/ca-certs-load.ft7b.js";
 import { bA, LI } from "../vendor/aws-sdk/chunk-yc0hxjyg.js";
 import { Ae } from "../vendor/react/chunk-meds60nn.js";
 var D = Ae(Jce()), Ee = Ae(Qce()), ye = Ae(Zce()), S = Ae(_oe()), De = Ae(oA()), m = Ae(Hw()), Se = Ae(eM()), Ie = Ae(eue()), Ge = Ae(CG()), I = Ae(wj()), he = Ae(Du());

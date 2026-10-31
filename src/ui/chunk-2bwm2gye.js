@@ -1,5 +1,5 @@
 // ui/chunk-2bwm2gye.js — Claude Code 2.1.310 模块 chunk-2bwm2gye.js
-import { s, GR } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, GR } from "../telemetry/render-glyph-cardinality.7car.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { an, J5 } from "../shared/chunk-vj9gqe2s.js";
 import { qs } from "../shared/action-not-found.hpy9.js";

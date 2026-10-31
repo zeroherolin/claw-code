@@ -1,7 +1,7 @@
 // shared/chunk-tgxmcfkt.js — Claude Code 2.1.310 模块 chunk-tgxmcfkt.js
 import { Dt } from "../fs/content-encoding.v6wj.js";
 import { kRe } from "../mcp/allowed-warning.j2d4.js";
-import { mz } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { mz } from "../fs/ca-certs-load.ft7b.js";
 var i = /^([a-z][a-z\d+\-.]*:)?\/\//i;
 function r(o, e) {
   let s = e?.baseURL, n = i.test(o), t = null;

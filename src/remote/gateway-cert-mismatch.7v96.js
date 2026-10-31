@@ -31,7 +31,7 @@ import { ktt, Fhn } from "../auth/policy-limits-principal-changed.cb7h.js";
 import { Fhe, rre, $he, iyt } from "../telemetry/bg-roster-parse-failed.yhsj.js";
 import { YEr, Kks, SQt, T1e, TNn } from "./managed-settings-security-dialog-accepted.19jv.js";
 import { il } from "../shared/chunk-bezz9j8a.js";
-import { n, GR } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n, GR } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lt } from "../shared/chunk-vj9gqe2s.js";
 import { Gn } from "../shared/chunk-p82eferg.js";
 import { ds } from "../ui/chunk-2bwm2gye.js";

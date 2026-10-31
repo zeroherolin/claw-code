@@ -14,7 +14,7 @@ import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
 import { WWr } from "../context/tool-result-clearing-after-idle-server-report.epan.js";
 import { ySn, k6t, C6t, Jv, aA, Lvt, XVe, mRe, J3o } from "../settings/global-config-and-gates.27xj.js";
 import { Dt } from "../fs/content-encoding.v6wj.js";
-import { oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { oa } from "../fs/ca-certs-load.ft7b.js";
 import { SDe, o_e, s_e } from "../permissions/chunk-v2pqz8sq.js";
 import { ule, GFt } from "../core/conversation-engine.31gx.js";
 import { Qct } from "../permissions/bridge-permission-toolname-check.pbh3.js";

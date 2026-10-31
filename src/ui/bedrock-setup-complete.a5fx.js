@@ -1,5 +1,5 @@
 // ui/bedrock-setup-complete.a5fx.js — Claude Code 2.1.310 模块 chunk-a5fxqv7y.js
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { ce } from "../agents/third-party.ydpb.js";
 import { Nt } from "../shared/chunk-3kevgx4j.js";
 import { I } from "../shared/chunk-j79dwkaq.js";
@@ -12,7 +12,7 @@ import { ss } from "../shell/chunk-tjkwy3jp.js";
 import { ln, Un } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
 import { Fo } from "../models/total-tokens-reminder.psq3.js";
 import { jx, Vb, o1, fM, Krr } from "../mcp/allowed-warning.j2d4.js";
-import { $qe, Uqe, VZ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { $qe, Uqe, VZ } from "../fs/ca-certs-load.ft7b.js";
 import { dce } from "../api/anthropic-client.7pf8.js";
 import { Me } from "../shared/chunk-y6x1q9pp.js";
 import { g5e, Qp, au, C$, Jxt, oIn } from "./chunk-09hekk2k.js";

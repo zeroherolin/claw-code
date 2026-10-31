@@ -1,6 +1,6 @@
 // ui/chunk-wq87gft3.js — Claude Code 2.1.310 模块 chunk-wq87gft3.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { $we, gt } from "./aria-label.99qs.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 function Kc(x) {

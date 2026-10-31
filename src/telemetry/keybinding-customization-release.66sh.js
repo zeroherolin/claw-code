@@ -15,7 +15,7 @@ import { O } from "../fs/chunk-dz0rx1wn.js";
 import { je } from "../plugins/chunk-x0a7sawk.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { wpe } from "../shell/invalid-type.qnva.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { Tj, zei, sVe, AKo, Kei, mzt, lLe, fVr } from "../permissions/caps-lock.d2n5.js";
 import { o, u, me } from "../vendor/zod/string-format.k395.js";
 import { Et } from "./chunk-q6tk46bn.js";

@@ -77,7 +77,7 @@ export function readVersion(binaryPath) {
 // ---------- JS 模块 ----------
 
 // 原版每个模块开头的 Bun 字节码标记与法律声明，由 LICENSE 统一说明，不保留在源码中
-const HEADER_RE = /^\/\/ @bun @bytecode\n(\/\/.*\n|\n)*?\/\/ Version: [^\n]*\n/;
+export const HEADER_RE = /^\/\/ @bun @bytecode\n(\/\/.*\n|\n)*?\/\/ Version: [^\n]*\n/;
 
 /**
  * 格式化一个原版 JS 模块：去掉文件头，esbuild 等价重新打印。

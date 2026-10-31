@@ -33,7 +33,7 @@ import "../fs/utf-8.fmbx.js";
 import "../auth/descriptor-direct.zd2z.js";
 import "../artifacts/chunk-m8t7qekn.js";
 import "../remote/self-hosted.qq4m.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../context/tool-cgroup-exclude-classes.t1za.js";
 import { kr } from "../telemetry/chunk-35h7qwz8.js";
 import "./sk-ant-sid.0hme.js";

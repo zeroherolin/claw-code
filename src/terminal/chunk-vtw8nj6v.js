@@ -1,9 +1,9 @@
-// vendor/ink/chunk-vtw8nj6v.js — Claude Code 2.1.310 模块 chunk-vtw8nj6v.js
-import { He } from "../../fs/async-hooks.9s1z.js";
-import { U, Tu } from "../../context/not-admin-owned.ersa.js";
-import { W } from "../../shared/chunk-3y73jbfr.js";
-import { i } from "../../shared/environment.9a41.js";
-import { N1s } from "../../terminal/wl-copy.gdbt.js";
+// terminal/chunk-vtw8nj6v.js — Claude Code 2.1.310 模块 chunk-vtw8nj6v.js
+import { He } from "../fs/async-hooks.9s1z.js";
+import { U, Tu } from "../context/not-admin-owned.ersa.js";
+import { W } from "../shared/chunk-3y73jbfr.js";
+import { i } from "../shared/environment.9a41.js";
+import { N1s } from "./wl-copy.gdbt.js";
 class s {
   reading;
   settled = He();

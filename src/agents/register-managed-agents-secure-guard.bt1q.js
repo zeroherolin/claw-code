@@ -68,7 +68,7 @@ import "../mcp/init-function-end.wpfb.js";
 import "../shell/spawn-error.7yg0.js";
 import "../fs/content-encoding.v6wj.js";
 import "../auth/descriptor-direct.zd2z.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../git/ssh-placeholder.1144.js";
 import "../telemetry/chunk-8c3dyx0k.js";
 import "../fs/redirected-statement.agpk.js";

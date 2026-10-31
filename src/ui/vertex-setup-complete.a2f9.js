@@ -1,5 +1,5 @@
 // ui/vertex-setup-complete.a2f9.js — Claude Code 2.1.310 模块 chunk-a2f9asrv.js
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { ce } from "../agents/third-party.ydpb.js";
 import { Nt } from "../shared/chunk-3kevgx4j.js";
 import { ee } from "../fs/gitlab-runner-authentication-token.d7b0.js";

@@ -1,5 +1,5 @@
 // shared/chunk-6d9n0jaa.js — Claude Code 2.1.310 模块 chunk-6d9n0jaa.js
-import { Zi } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { Zi } from "../telemetry/render-glyph-cardinality.7car.js";
 import { y, j } from "../vendor/react/chunk-s8vmszp2.js";
 j();
 var cD = 150, Zr = 250, Lfe = 600;

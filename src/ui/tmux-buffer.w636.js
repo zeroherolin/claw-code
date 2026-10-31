@@ -1,7 +1,7 @@
 // ui/tmux-buffer.w636.js — Claude Code 2.1.310 模块 chunk-w6360x24.js
 import { c8, fhe, WKn, UC } from "../terminal/wl-copy.gdbt.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { pn, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { q } from "../context/chunk-d05584w8.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";
 import { de, P, A, y, j } from "../vendor/react/chunk-s8vmszp2.js";

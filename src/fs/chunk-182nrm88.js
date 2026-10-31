@@ -1,5 +1,5 @@
 // fs/chunk-182nrm88.js — Claude Code 2.1.310 模块 chunk-182nrm88.js
-import { CFe } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { CFe } from "./ca-certs-load.ft7b.js";
 import { x, $e } from "../vendor/react/chunk-meds60nn.js";
 var m = x(function(D) {
   Object.defineProperty(D, "__esModule", { value: true });

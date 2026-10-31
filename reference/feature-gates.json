@@ -235,7 +235,7 @@
    false
   ],
   "modules": [
-   "vendor/yoga/render-glyph-cardinality.7car.js"
+   "telemetry/render-glyph-cardinality.7car.js"
   ]
  },
  "tengu_basalt_scarp": {
@@ -2307,7 +2307,7 @@
    false
   ],
   "modules": [
-   "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+   "context/projects-thread-reply-lead-killswitch.c5ve.js"
   ]
  },
  "tengu_hearth_resolved_rows": {
@@ -2315,7 +2315,7 @@
    "off"
   ],
   "modules": [
-   "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+   "context/projects-thread-reply-lead-killswitch.c5ve.js"
   ]
  },
  "tengu_heron_brook": {
@@ -3962,7 +3962,7 @@
    false
   ],
   "modules": [
-   "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+   "context/projects-thread-reply-lead-killswitch.c5ve.js"
   ]
  },
  "tengu_projects_thread_recap": {
@@ -3986,7 +3986,7 @@
    false
   ],
   "modules": [
-   "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+   "context/projects-thread-reply-lead-killswitch.c5ve.js"
   ]
  },
  "tengu_prompt_cache_1h_config": {
@@ -5864,7 +5864,7 @@
    false
   ],
   "modules": [
-   "vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js"
+   "context/projects-thread-reply-lead-killswitch.c5ve.js"
   ]
  },
  "tengu_workflow_schema_lint_enforce": {
@@ -5888,7 +5888,7 @@
    true
   ],
   "modules": [
-   "vendor/yoga/render-glyph-cardinality.7car.js"
+   "telemetry/render-glyph-cardinality.7car.js"
   ]
  },
  "tengu_zany_flask": {

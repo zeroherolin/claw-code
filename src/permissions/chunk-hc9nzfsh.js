@@ -1,6 +1,6 @@
 // permissions/chunk-hc9nzfsh.js — Claude Code 2.1.310 模块 chunk-hc9nzfsh.js
 import { w } from "../ui/chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { d } from "../telemetry/anthropic-workspace-id.36ys.js";
 import { Gu } from "../fs/node-modules.gp4v.js";
 import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";

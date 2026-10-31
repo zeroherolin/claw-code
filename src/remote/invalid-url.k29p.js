@@ -4,7 +4,7 @@ import { An, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { i } from "../shared/environment.9a41.js";
 import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
 import { wr, Te, op } from "../models/total-tokens-reminder.psq3.js";
-import { mz } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { mz } from "../fs/ca-certs-load.ft7b.js";
 import { gti, hti, yti, d_n, pH, $_e, it, t1, eZ } from "../settings/global-config-and-gates.27xj.js";
 import { on } from "../auth/env-quad.nmae.js";
 import { I6e } from "../auth/policy-limits-principal-changed.cb7h.js";

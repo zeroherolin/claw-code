@@ -1,6 +1,6 @@
 // ui/chunk-xd3535fr.js — Claude Code 2.1.310 模块 chunk-xd3535fr.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 function NW(p) {
   let l = w(7), { children: i, subtitle: t } = p, o;

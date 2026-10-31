@@ -2,7 +2,7 @@
 import { ee } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { Ri } from "../fs/async-hooks.2k4e.js";
-import { s, n, ts } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, ts } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ge } from "./aria-hidden.by9c.js";
 import { KI } from "../shared/chunk-n09mzn69.js";
 import { JWn } from "../core/conversation-engine.31gx.js";

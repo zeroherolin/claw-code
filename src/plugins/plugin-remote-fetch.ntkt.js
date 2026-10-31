@@ -1,8 +1,8 @@
-// vendor/google-auth/plugin-remote-fetch.ntkt.js — Claude Code 2.1.310 模块 chunk-ntktc942.js
-import { c } from "../../agents/third-party.ydpb.js";
-import { a } from "../../telemetry/chunk-wq923bwc.js";
-import { Er } from "../../git/chunk-q8vnfcnf.js";
-import { lp } from "../../shared/claude-plugins-official.6xj4.js";
+// plugins/plugin-remote-fetch.ntkt.js — Claude Code 2.1.310 模块 chunk-ntktc942.js
+import { c } from "../agents/third-party.ydpb.js";
+import { a } from "../telemetry/chunk-wq923bwc.js";
+import { Er } from "../git/chunk-q8vnfcnf.js";
+import { lp } from "../shared/claude-plugins-official.6xj4.js";
 var s = [Er, "raw.githubusercontent.com", "objects.githubusercontent.com", "gist.githubusercontent.com", "gitlab.com", "bitbucket.org", "codeberg.org", "dev.azure.com", "ssh.dev.azure.com", "storage.googleapis.com"];
 function l(t) {
   let e, n = /^[^@/]+@([^:/]+):/.exec(t);

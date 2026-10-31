@@ -1,5 +1,5 @@
 // vendor/aws-sdk/chunk-yc0hxjyg.js — Claude Code 2.1.310 模块 chunk-yc0hxjyg.js
-import { fh, xQo } from "./ca-certs-load.ft7b.js";
+import { fh, xQo } from "../../fs/ca-certs-load.ft7b.js";
 import { x, $e } from "../react/chunk-meds60nn.js";
 var bes = x(function(N) {
   var G = (e) => typeof ArrayBuffer === "function" && e instanceof ArrayBuffer || Object.prototype.toString.call(e) === "[object ArrayBuffer]";

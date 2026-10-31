@@ -25,7 +25,7 @@ import { Kcn } from "./claudeai-plugins-sync-enabled.61rf.js";
 import { zre, Sp } from "./not-found.2nbd.js";
 import { ne } from "../workflows/workflow-size-guideline-change.1rc0.js";
 import { w } from "../ui/chunk-zqxc4qtb.js";
-import { n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { $f, fn, Fp, hj, Oo, rs } from "../shared/cli-error.bk7h.js";
 import { O4e, $ie, u9t, p9t, veo, nxt } from "./plugin-marketplace-resolve.ses6.js";
 import { dAn, nJr, Oie, rJr, owe, His, oJr, t4e, Lis, Nis, Fis, x4t, $is, Uis, Bis, jis, Wis, P4t, Gis, zis, Vis } from "./plugin-disabled-all-cli.0md0.js";

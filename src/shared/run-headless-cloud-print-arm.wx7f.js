@@ -19,7 +19,7 @@ import "./chunk-j79dwkaq.js";
 import "../artifacts/cowritten-artifact-html.thm2.js";
 import "../fs/chunk-dz0rx1wn.js";
 import "./chunk-4kxy1036.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "./chunk-w13tcac4.js";
 import { fn } from "./cli-error.bk7h.js";
 async function i(r, s) {

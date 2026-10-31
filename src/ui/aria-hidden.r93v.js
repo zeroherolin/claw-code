@@ -2,13 +2,13 @@
 import { Bxe } from "../context/not-admin-owned.ersa.js";
 import { Pr, BIn } from "../shared/chunk-y6x1q9pp.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { le } from "../shared/chunk-abagh0tt.js";
 import { jpe } from "../fs/async-hooks.2k4e.js";
-import { _i, rt, e6, s, n, hp, vUe } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { _i, rt, e6, s, n, hp, vUe } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ip } from "../terminal/ink-renderer.pma0.js";
 import { sKo } from "../shared/chunk-n23x7w17.js";
-import { Mlt, _5e, Eps } from "../vendor/highlight/built-in.qsb4.js";
+import { Mlt, _5e, Eps } from "../shell/built-in.qsb4.js";
 import { Wd } from "../shared/chunk-vx3s7x6j.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 import { th, te, j } from "../vendor/react/chunk-s8vmszp2.js";

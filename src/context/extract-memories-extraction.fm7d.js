@@ -33,7 +33,7 @@ import { Of, Wje, fWe, WNt, Y9, nx, qNt, HD, Oe, Bt, $Vn } from "../core/convers
 import { Pd, yu, Bv, oo, qa } from "../permissions/bot-protected-tengu-atomic-magpie.zc9j.js";
 import { li } from "../core/system-prompt-blocks.dpjp.js";
 import { eU } from "../tasks/continued-in.f5qq.js";
-import { fo, ks } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { fo, ks } from "./projects-thread-reply-lead-killswitch.c5ve.js";
 import { S_e } from "../shared/session-activity-parked-exceeds-refcount.8mxy.js";
 import { Q_r } from "../shared/chunk-3fdmwcat.js";
 import { Shs } from "../shell/run-in-background.swds.js";

@@ -15,7 +15,7 @@ import { St, l } from "../artifacts/cowritten-artifact-html.thm2.js";
 import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
 import { yL, GAe, $nt, mrr, Eqr, v6t, vqr } from "../settings/global-config-and-gates.27xj.js";
 import { GPs } from "../shared/downstream-unreachable.bart.js";
-import { oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { oa } from "../fs/ca-certs-load.ft7b.js";
 import { y3s, _3s, G$o, T3s, vpn, A3s, P3s, O3s } from "../remote/bridge-outcome-branch-dropped.9kms.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { Dt } from "../fs/content-encoding.v6wj.js";

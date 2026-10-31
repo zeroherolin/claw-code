@@ -1,6 +1,6 @@
 // vendor/aws-sdk/cross-region.8w8h.js — Claude Code 2.1.310 模块 chunk-8w8hb6jg.js
 import { eM, HGt, rEt } from "./utf-8.6ta2.js";
-import { CFe } from "./ca-certs-load.ft7b.js";
+import { CFe } from "../../fs/ca-certs-load.ft7b.js";
 import { x } from "../react/chunk-meds60nn.js";
 var q = x(function(J) {
   var C = (e, t) => {

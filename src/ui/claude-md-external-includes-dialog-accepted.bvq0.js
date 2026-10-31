@@ -5,7 +5,7 @@ import { I } from "../shared/chunk-j79dwkaq.js";
 import { ch } from "../settings/global-config-and-gates.27xj.js";
 import { Me } from "../shared/chunk-y6x1q9pp.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n, Yt } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, Yt } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ma, tS, xc, Go } from "./aria-hidden.r9bm.js";
 import { Jn } from "../context/org-memory-writes-setting-changed.w8x9.js";
 import { cr } from "./chunk-jz19cqtw.js";

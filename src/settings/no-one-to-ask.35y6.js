@@ -12,7 +12,7 @@ import { TQ, Ph } from "./built-in.5fzv.js";
 import { EDt, FA, oOs, sOs, wvo, IWn, Xf, T2n, ble, yOr, fAo, gAo, Yon, f0r, m0r, xFs, _0r, S0r, Ysn, F6n, b0r, Xsn, pi, xPo, PPo, el, D_ } from "../core/conversation-engine.31gx.js";
 import { Uv } from "../fs/files-directories.md42.js";
 import { Kre, tG } from "../plugins/entry-refused.bp7z.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { Zf } from "../plugins/plugin-command-source-refresh.bf5t.js";
 import { A4n, Ade, p1t, v8, O2 } from "../mcp/copy-failed.e8vn.js";
 import { Ob } from "../telemetry/chunk-yxhpkq6g.js";

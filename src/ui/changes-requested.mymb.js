@@ -5,7 +5,7 @@ import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { i } from "../shared/environment.9a41.js";
 import { qi } from "../shared/async-hooks.t1gs.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { n, Yt } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n, Yt } from "../telemetry/render-glyph-cardinality.7car.js";
 import { K } from "../shared/chunk-p82eferg.js";
 import { CJ } from "../context/team-memory-sync.0s3j.js";
 import { Q, e, r } from "../vendor/react/chunk-f790ajz4.js";

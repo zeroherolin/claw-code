@@ -18,7 +18,7 @@ import { f } from "../shared/chunk-nyvhtfb3.js";
 import { El, hui } from "../fs/chunk-w461d8x8.js";
 import { oy, Sl } from "../mcp/allowed-warning.j2d4.js";
 import { Fa, Yd } from "../fs/content-encoding.v6wj.js";
-import { mz } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { mz } from "../fs/ca-certs-load.ft7b.js";
 import { p1, aK, Ym } from "../auth/secure-storage-credentials-write.vafw.js";
 import { m9o } from "../fs/chunk-tzqhxyjb.js";
 import { J$t, uJe } from "../context/team-memory-sync.0s3j.js";

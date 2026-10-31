@@ -1,7 +1,7 @@
 // permissions/light-daltonized.tkrm.js — Claude Code 2.1.310 模块 chunk-tkrm3286.js
 import { i } from "../shared/environment.9a41.js";
 import { Ze } from "../shared/chunk-j79dwkaq.js";
-import { D3r, Xoe, he, pNe } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { D3r, Xoe, he, pNe } from "../terminal/xterm-ghostty.qrwz.js";
 import { cJo, fFe } from "./quota-auto-resume-disabled.gt6d.js";
 import { rl } from "../shared/chunk-daaayw23.js";
 var E = { black: true, red: true, green: true, yellow: true, blue: true, magenta: true, cyan: true, white: true, blackBright: true, redBright: true, greenBright: true, yellowBright: true, blueBright: true, magentaBright: true, cyanBright: true, whiteBright: true }, c = new Set(Object.keys(E));

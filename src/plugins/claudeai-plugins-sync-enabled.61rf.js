@@ -24,7 +24,7 @@ import { ua, Ln, pa, Wt, k } from "../settings/global-config-and-gates.27xj.js";
 import { mb, ER } from "../shared/chunk-cg45s1mf.js";
 import { Xjr, vce, Uet, yf, sj, sL, u8s } from "./entry-refused.bp7z.js";
 import { XCe } from "./plugin-command-source-refresh.bf5t.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { Ec, JCe } from "../shared/aarch64-unknown-linux-musl.2d37.js";
 import { Ra } from "../shared/chunk-r0nkfxqh.js";
 import { iG, zet } from "../context/tool-result-clearing-after-idle-server-report.epan.js";

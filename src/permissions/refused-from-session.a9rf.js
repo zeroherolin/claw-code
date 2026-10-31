@@ -2,7 +2,7 @@
 import { p5e, Vno } from "../cli/drop-worktree-registrations.kkd4.js";
 import "../shared/cli-error.bk7h.js";
 import "../shared/chunk-w13tcac4.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "../fs/chunk-gzs70jxe.js";
 import "../shared/chunk-bhdett2m.js";
 import "../shared/async-hooks.m2fg.js";

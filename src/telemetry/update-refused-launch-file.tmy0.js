@@ -7,7 +7,7 @@ import { hc, i } from "../shared/environment.9a41.js";
 import { V, u$, vee, D1 } from "../context/not-admin-owned.ersa.js";
 import { SW, ie } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { Ap, Vw, Rz, Xl, l } from "../artifacts/cowritten-artifact-html.thm2.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { eo } from "../remote/chunk-7nwr416d.js";
 import { a } from "./chunk-wq923bwc.js";
 import { Ut, nSe, fa } from "../settings/global-config-and-gates.27xj.js";

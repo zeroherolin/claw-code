@@ -10,7 +10,7 @@ import { HV } from "../shared/chunk-59dm2xqy.js";
 import { Du } from "../vendor/aws-sdk/cross-region.8w8h.js";
 import { eM } from "../vendor/aws-sdk/utf-8.6ta2.js";
 import { rM } from "../shared/chunk-5q6vj6jk.js";
-import { fh, qL } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { fh, qL } from "../fs/ca-certs-load.ft7b.js";
 import { bA, LI } from "../vendor/aws-sdk/chunk-yc0hxjyg.js";
 import { Ae } from "../vendor/react/chunk-meds60nn.js";
 var P = Ae(Jce()), We = Ae(Qce()), Oe = Ae(Zce()), v = Ae(_oe()), Me = Ae(oA()), h = Ae(Hw()), He = Ae(eM()), Fe = Ae(eue()), Ne = Ae(CG()), D = Ae(wj()), Le = Ae(Du());

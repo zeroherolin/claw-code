@@ -29,7 +29,7 @@ import { oTe } from "../fs/file-upload.g3fv.js";
 import { rU, aJe } from "./team-memory-sync.0s3j.js";
 import { Sj, A_e, kG } from "../telemetry/flag-off.7h9d.js";
 import { YIe } from "../permissions/auto-mode-config.nbjc.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { z6e } from "../agents/tool-use-id.maye.js";
 import { Tje, Wrn, R2n, w0s, eHs, Son, BGn, wne, q7, oE, ID, Ab, iS, Uge, $le, xP, Y7, V$, i7e, Czn, Tzn, Pke, hOr, SOr, L6, ggt, AFs } from "../core/conversation-engine.31gx.js";
 import { ig, FCe } from "../mcp/copy-failed.e8vn.js";

@@ -1,7 +1,7 @@
 // agents/agent-proxy-standalone-proxy-url.sgvd.js — Claude Code 2.1.310 模块 chunk-sgvdmcnd.js
 import { kIt, v_r, gao, kCi, k_r, C_r, T_r, hao, CIt, yao } from "../git/agent-proxy-standalone.tm99.js";
 import "../workflows/chunk-01k87c6b.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

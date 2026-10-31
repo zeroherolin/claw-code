@@ -162,7 +162,7 @@
 |---|---|
 | `ANTHROPIC_API_KEY` | [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js), [cli/bg-claim-env-dropped.j00y.js](../../src/cli/bg-claim-env-dropped.j00y.js), [auth/auth-login.msxz.js](../../src/auth/auth-login.msxz.js) |
 | `ANTHROPIC_AUTH_TOKEN` | [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js), [cli/bg-claim-env-dropped.j00y.js](../../src/cli/bg-claim-env-dropped.j00y.js) |
-| `ANTHROPIC_AWS_API_KEY` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js), [vendor/zod/start-gateway.ycyj.js](../../src/vendor/zod/start-gateway.ycyj.js) |
+| `ANTHROPIC_AWS_API_KEY` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js), [auth/start-gateway.ycyj.js](../../src/auth/start-gateway.ycyj.js) |
 | `ANTHROPIC_AWS_BASE_URL` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
 | `ANTHROPIC_BASE_URL` | [context/team-memory-sync.0s3j.js](../../src/context/team-memory-sync.0s3j.js), [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) 等 8 处 |
 | `ANTHROPIC_BEDROCK_BASE_URL` | [api/anthropic-client.7pf8.js](../../src/api/anthropic-client.7pf8.js) |
@@ -238,7 +238,7 @@
 | `AI_AGENT` | [remote/claude-code-remote.yeyj.js](../../src/remote/claude-code-remote.yeyj.js) |
 | `ALACRITTY_LOG` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
 | `ALL_PROXY` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [git/rev-parse.m8nf.js](../../src/git/rev-parse.m8nf.js) |
-| `API_FORCE_IDLE_TIMEOUT` | [vendor/aws-sdk/ca-certs-load.ft7b.js](../../src/vendor/aws-sdk/ca-certs-load.ft7b.js) |
+| `API_FORCE_IDLE_TIMEOUT` | [fs/ca-certs-load.ft7b.js](../../src/fs/ca-certs-load.ft7b.js) |
 | `APPDATA` | [auth/credential-source.dkc9.js](../../src/auth/credential-source.dkc9.js), [plugins/plugin-eval-handler.jvea.js](../../src/plugins/plugin-eval-handler.jvea.js) |
 | `APP_URL` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
 | `AUTOMODE_DECISION_LOG` | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
@@ -430,7 +430,7 @@
 | `WEBSITE_SKU` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
 | `WINDIR` | [computer-use/bad-args.dcp0.js](../../src/computer-use/bad-args.dcp0.js) |
 | `WSL_DISTRO_NAME` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |
-| `WT_SESSION` | [vendor/yoga/render-glyph-cardinality.7car.js](../../src/vendor/yoga/render-glyph-cardinality.7car.js), [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [terminal/ink-renderer.pma0.js](../../src/terminal/ink-renderer.pma0.js) |
+| `WT_SESSION` | [telemetry/render-glyph-cardinality.7car.js](../../src/telemetry/render-glyph-cardinality.7car.js), [shared/environment.9a41.js](../../src/shared/environment.9a41.js), [terminal/ink-renderer.pma0.js](../../src/terminal/ink-renderer.pma0.js) |
 | `XDG_CONFIG_HOME` | [remote/self-hosted-runner-main.b1t6.js](../../src/remote/self-hosted-runner-main.b1t6.js), [plugins/plugin-eval-handler.jvea.js](../../src/plugins/plugin-eval-handler.jvea.js) |
 | `XDG_RUNTIME_DIR` | [ide/create-lsp-client.6fqf.js](../../src/ide/create-lsp-client.6fqf.js), [plugins/plugin-eval-handler.jvea.js](../../src/plugins/plugin-eval-handler.jvea.js) |
 | `XTERM_VERSION` | [shared/environment.9a41.js](../../src/shared/environment.9a41.js) |

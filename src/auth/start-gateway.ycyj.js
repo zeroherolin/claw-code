@@ -1,137 +1,137 @@
-// vendor/zod/start-gateway.ycyj.js — Claude Code 2.1.310 模块 chunk-ycyjf5d3.js
-import { __asset_src } from "../../runtime/assets.js";
-import "../../shared/chunk-9sbknd2z.js";
-import { Ne } from "../../fs/async-hooks.9s1z.js";
-import { L } from "../../context/not-admin-owned.ersa.js";
-import "../../fs/chunk-kqpf5fh3.js";
-import "../../agents/third-party.ydpb.js";
-import { Ht, yk, R, d, v, G } from "../../telemetry/anthropic-workspace-id.36ys.js";
-import { X, Nt } from "../../shared/chunk-3kevgx4j.js";
-import "../../fs/node-modules.gp4v.js";
-import "../../shared/chunk-3y73jbfr.js";
-import "../../models/claude-3-5-sonnet.21mz.js";
-import { Bu } from "../../auth/oauth-2025-04-20.ke15.js";
-import { $w, uK, ACt, vEn, VSe, QY, zKt, Rot, HEn, ear, O7o, X5r, M7o, Q5r, Z5r, Hot } from "../../shell/invalid-type.qnva.js";
-import { _, ee } from "../../fs/gitlab-runner-authentication-token.d7b0.js";
-import "../../shared/chunk-x6r6k81p.js";
-import "../../fs/backed-up.p1qn.js";
-import { re, qp, Or, zH } from "../../shared/chunk-j79dwkaq.js";
-import "../../shared/chunk-abagh0tt.js";
-import "../../artifacts/cowritten-artifact-html.thm2.js";
-import "../../fs/chunk-dz0rx1wn.js";
-import "../../fs/utf-8.7pve.js";
-import { f } from "../../shared/chunk-nyvhtfb3.js";
-import "../../fs/chunk-w461d8x8.js";
-import "../../plugins/chunk-x0a7sawk.js";
-import "../../shared/chunk-nrx8c90j.js";
-import { i } from "../../shared/environment.9a41.js";
-import "../../shared/chunk-4kxy1036.js";
-import { Qkn } from "../../remote/local-agent.we9a.js";
-import "../../shared/chunk-z6efcye4.js";
-import "../../permissions/classifier-transcript-too-long.8zvz.js";
-import "../../permissions/quota-auto-resume-disabled.gt6d.js";
-import "../../shared/chunk-xz73gv4f.js";
-import "../../terminal/chunk-9vttrktj.js";
-import "../../mcp/chunk-ykcv164t.js";
-import "../../mcp/always-allow.9m89.js";
-import { Hse } from "../../plugins/skills-dir.cemw.js";
-import "../../git/chunk-q8vnfcnf.js";
-import "../../fs/chunk-gzs70jxe.js";
-import "../../remote/moved-directory.z3m0.js";
-import "../../telemetry/chunk-wq923bwc.js";
-import "../../telemetry/chunk-wn8xtaqg.js";
-import "../../shared/async-hooks.m2fg.js";
-import "../../shell/chunk-gx93fya1.js";
-import "../../shell/chunk-tjkwy3jp.js";
-import "../../context/utf-8.yzy3.js";
-import "../../fs/utf-8.fmbx.js";
-import "../../auth/descriptor-direct.zd2z.js";
-import "../../artifacts/chunk-m8t7qekn.js";
-import "../../remote/self-hosted.qq4m.js";
-import { qL, PQo, YL, g8r, DQo, cst, _Tt, Am, K_, oa, VZ } from "../aws-sdk/ca-certs-load.ft7b.js";
-import { vtr, s_n, UKo, _zt, mVe, VEt, KKo, Fzt, qQ, ovt, Uzt, EVe, gKr, Pqo, lI, qAe, SS, o6t, tRe, iRe, nZ, FVe } from "../../settings/global-config-and-gates.27xj.js";
-import "../../fs/content-encoding.v6wj.js";
-import "../../context/tool-cgroup-exclude-classes.t1za.js";
-import "../../auth/secure-storage-credentials-write.vafw.js";
-import "../../auth/claude-code-user.tvhr.js";
-import "../../git/utf8-keep-bom.c49x.js";
-import "../../shell/find-generic-password.dx7z.js";
-import { xl, HSe, Fo, RH } from "../../models/total-tokens-reminder.psq3.js";
-import "../../git/utf-8.vh7e.js";
-import "../../shared/async-hooks.923e.js";
-import "../../shared/chunk-daaayw23.js";
-import "../../fs/tempdir-owner-mismatch.5xe1.js";
-import "../../fs/async-hooks.2k4e.js";
-import { er } from "../../settings/workflow-launch-exec.t4r2.js";
-import "../../shared/chunk-s56ftfc1.js";
-import { XRe, $Ne } from "../../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import "../../cli/chunk-33ax6j5s.js";
-import "../../mcp/init-function-end.wpfb.js";
-import "../../shell/spawn-error.7yg0.js";
-import "../chalk/xterm-ghostty.qrwz.js";
-import { ekt, rbn, nVt, jx, Vb, dSe, fM, ERe, vRe } from "../../mcp/allowed-warning.j2d4.js";
-import "../../shared/chunk-cg45s1mf.js";
-import { qi } from "../../shared/async-hooks.t1gs.js";
-import "../../settings/ax-sr-suggestion-nav.8qsa.js";
-import "../../auth/profile-explicit.b7t3.js";
-import "../../fs/chunk-tzqhxyjb.js";
-import "../../fs/chunk-q5g832za.js";
-import "../../context/fetch-project-timeline.g27d.js";
-import "../../mcp/toolbox-mcp-server-id.fewh.js";
-import "../../mcp/claude-browser.hdf6.js";
-import "../../fs/reply-across-default-dirs.esvz.js";
-import "../../telemetry/chunk-8c3dyx0k.js";
-import "../../telemetry/chunk-w9t64bcr.js";
-import "../../agents/chunk-j350yvzv.js";
-import "../../git/get-url.pbym.js";
-import "../../shared/chunk-nfgwaxf2.js";
-import "../../shared/chunk-vf2gp3w9.js";
-import "../../artifacts/cobalt-plinth-lovage.hxm5.js";
-import "../../computer-use/chunk-ec42nx0x.js";
-import "../../workflows/chunk-exaq0a52.js";
-import "../../agents/session-stable-address.6kf8.js";
-import "../../agents/in-process-teammate.5te1.js";
-import "../../shared/chunk-5x6nmyvf.js";
-import "../../git/ssh-placeholder.1144.js";
-import { v1o } from "../../api/anthropic-client.7pf8.js";
-import "../../shared/chunk-w13tcac4.js";
-import "../../auth/auth-launcher-host-login.9f3m.js";
-import "../../permissions/turn-abort.yvwf.js";
-import { Kv } from "../../settings/non-string-value.58dq.js";
-import "../../shared/chunk-pg9vp681.js";
-import { Nq, PAr, ynn, _nn, IAr, GYe, hjn, yjn } from "../jose/check-failed.z5nb.js";
-import { EOe, QSo, dTr, ZSo } from "../../shared/anthropic-serif.wte0.js";
-import { pMo, rLr, DJe } from "../../context/team-memory-sync.0s3j.js";
-import { kr, LX, Cas } from "../../telemetry/chunk-35h7qwz8.js";
-import { X0 } from "../../context/org-memory-writes-setting-changed.w8x9.js";
-import "../../shared/chunk-ppcjex8g.js";
-import "../../shared/chunk-fc5zxj6s.js";
-import "../../agents/chunk-a331t11a.js";
-import "../../shared/chunk-9m922vm4.js";
-import "../../auth/none-at-claim.x354.js";
-import "../../shared/chunk-jyhkt2nk.js";
-import "../../shared/chunk-7bt27r62.js";
-import { lh } from "../aws-sdk/chunk-k5hq3azn.js";
-import "../../shared/chunk-ztrzej16.js";
-import "../../shared/chunk-zmrs49f3.js";
-import { pr, ge, Sn, zo, x8o, fc, dr, Ct, sc, SM, Ssr, uh, kf, qd, ML } from "./invalid-return-type.ezsz.js";
-import "../../shared/chunk-dpjnt83j.js";
-import { G_, Ot, Fn, g_, Cc } from "../../models/claude-mythos-preview.rw6s.js";
-import { tX } from "../../shared/chunk-1a0taxx3.js";
-import { D } from "../../shared/chunk-6rnejvk7.js";
-import "../../shared/sk-ant-sid.0hme.js";
-import "../../shared/chunk-s06z5etx.js";
-import "../../shared/chunk-81mpzfkq.js";
-import "../../fs/not-utf8.sqq6.js";
-import "../../context/tool-result.evq2.js";
-import "../../shared/chunk-bhdett2m.js";
-import { et } from "../../shared/chunk-tftf1nn4.js";
-import "../aws-sdk/chunk-yc0hxjyg.js";
-import "../../shared/chunk-n07cvysj.js";
-import "../../shared/chunk-19a02m7w.js";
-import { Ae, x, $e } from "../react/chunk-meds60nn.js";
-import "../../remote/chunk-t0kv6pst.js";
-import { Ee } from "../../shared/chunk-f9xfyhm1.js";
+// auth/start-gateway.ycyj.js — Claude Code 2.1.310 模块 chunk-ycyjf5d3.js
+import { __asset_src } from "../runtime/assets.js";
+import "../shared/chunk-9sbknd2z.js";
+import { Ne } from "../fs/async-hooks.9s1z.js";
+import { L } from "../context/not-admin-owned.ersa.js";
+import "../fs/chunk-kqpf5fh3.js";
+import "../agents/third-party.ydpb.js";
+import { Ht, yk, R, d, v, G } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { X, Nt } from "../shared/chunk-3kevgx4j.js";
+import "../fs/node-modules.gp4v.js";
+import "../shared/chunk-3y73jbfr.js";
+import "../models/claude-3-5-sonnet.21mz.js";
+import { Bu } from "./oauth-2025-04-20.ke15.js";
+import { $w, uK, ACt, vEn, VSe, QY, zKt, Rot, HEn, ear, O7o, X5r, M7o, Q5r, Z5r, Hot } from "../shell/invalid-type.qnva.js";
+import { _, ee } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import "../shared/chunk-x6r6k81p.js";
+import "../fs/backed-up.p1qn.js";
+import { re, qp, Or, zH } from "../shared/chunk-j79dwkaq.js";
+import "../shared/chunk-abagh0tt.js";
+import "../artifacts/cowritten-artifact-html.thm2.js";
+import "../fs/chunk-dz0rx1wn.js";
+import "../fs/utf-8.7pve.js";
+import { f } from "../shared/chunk-nyvhtfb3.js";
+import "../fs/chunk-w461d8x8.js";
+import "../plugins/chunk-x0a7sawk.js";
+import "../shared/chunk-nrx8c90j.js";
+import { i } from "../shared/environment.9a41.js";
+import "../shared/chunk-4kxy1036.js";
+import { Qkn } from "../remote/local-agent.we9a.js";
+import "../shared/chunk-z6efcye4.js";
+import "../permissions/classifier-transcript-too-long.8zvz.js";
+import "../permissions/quota-auto-resume-disabled.gt6d.js";
+import "../shared/chunk-xz73gv4f.js";
+import "../terminal/chunk-9vttrktj.js";
+import "../mcp/chunk-ykcv164t.js";
+import "../mcp/always-allow.9m89.js";
+import { Hse } from "../plugins/skills-dir.cemw.js";
+import "../git/chunk-q8vnfcnf.js";
+import "../fs/chunk-gzs70jxe.js";
+import "../remote/moved-directory.z3m0.js";
+import "../telemetry/chunk-wq923bwc.js";
+import "../telemetry/chunk-wn8xtaqg.js";
+import "../shared/async-hooks.m2fg.js";
+import "../shell/chunk-gx93fya1.js";
+import "../shell/chunk-tjkwy3jp.js";
+import "../context/utf-8.yzy3.js";
+import "../fs/utf-8.fmbx.js";
+import "./descriptor-direct.zd2z.js";
+import "../artifacts/chunk-m8t7qekn.js";
+import "../remote/self-hosted.qq4m.js";
+import { qL, PQo, YL, g8r, DQo, cst, _Tt, Am, K_, oa, VZ } from "../fs/ca-certs-load.ft7b.js";
+import { vtr, s_n, UKo, _zt, mVe, VEt, KKo, Fzt, qQ, ovt, Uzt, EVe, gKr, Pqo, lI, qAe, SS, o6t, tRe, iRe, nZ, FVe } from "../settings/global-config-and-gates.27xj.js";
+import "../fs/content-encoding.v6wj.js";
+import "../context/tool-cgroup-exclude-classes.t1za.js";
+import "./secure-storage-credentials-write.vafw.js";
+import "./claude-code-user.tvhr.js";
+import "../git/utf8-keep-bom.c49x.js";
+import "../shell/find-generic-password.dx7z.js";
+import { xl, HSe, Fo, RH } from "../models/total-tokens-reminder.psq3.js";
+import "../git/utf-8.vh7e.js";
+import "../shared/async-hooks.923e.js";
+import "../shared/chunk-daaayw23.js";
+import "../fs/tempdir-owner-mismatch.5xe1.js";
+import "../fs/async-hooks.2k4e.js";
+import { er } from "../settings/workflow-launch-exec.t4r2.js";
+import "../shared/chunk-s56ftfc1.js";
+import { XRe, $Ne } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
+import "../cli/chunk-33ax6j5s.js";
+import "../mcp/init-function-end.wpfb.js";
+import "../shell/spawn-error.7yg0.js";
+import "../terminal/xterm-ghostty.qrwz.js";
+import { ekt, rbn, nVt, jx, Vb, dSe, fM, ERe, vRe } from "../mcp/allowed-warning.j2d4.js";
+import "../shared/chunk-cg45s1mf.js";
+import { qi } from "../shared/async-hooks.t1gs.js";
+import "../settings/ax-sr-suggestion-nav.8qsa.js";
+import "./profile-explicit.b7t3.js";
+import "../fs/chunk-tzqhxyjb.js";
+import "../fs/chunk-q5g832za.js";
+import "../context/fetch-project-timeline.g27d.js";
+import "../mcp/toolbox-mcp-server-id.fewh.js";
+import "../mcp/claude-browser.hdf6.js";
+import "../fs/reply-across-default-dirs.esvz.js";
+import "../telemetry/chunk-8c3dyx0k.js";
+import "../telemetry/chunk-w9t64bcr.js";
+import "../agents/chunk-j350yvzv.js";
+import "../git/get-url.pbym.js";
+import "../shared/chunk-nfgwaxf2.js";
+import "../shared/chunk-vf2gp3w9.js";
+import "../artifacts/cobalt-plinth-lovage.hxm5.js";
+import "../computer-use/chunk-ec42nx0x.js";
+import "../workflows/chunk-exaq0a52.js";
+import "../agents/session-stable-address.6kf8.js";
+import "../agents/in-process-teammate.5te1.js";
+import "../shared/chunk-5x6nmyvf.js";
+import "../git/ssh-placeholder.1144.js";
+import { v1o } from "../api/anthropic-client.7pf8.js";
+import "../shared/chunk-w13tcac4.js";
+import "./auth-launcher-host-login.9f3m.js";
+import "../permissions/turn-abort.yvwf.js";
+import { Kv } from "../settings/non-string-value.58dq.js";
+import "../shared/chunk-pg9vp681.js";
+import { Nq, PAr, ynn, _nn, IAr, GYe, hjn, yjn } from "../vendor/jose/check-failed.z5nb.js";
+import { EOe, QSo, dTr, ZSo } from "../shared/anthropic-serif.wte0.js";
+import { pMo, rLr, DJe } from "../context/team-memory-sync.0s3j.js";
+import { kr, LX, Cas } from "../telemetry/chunk-35h7qwz8.js";
+import { X0 } from "../context/org-memory-writes-setting-changed.w8x9.js";
+import "../shared/chunk-ppcjex8g.js";
+import "../shared/chunk-fc5zxj6s.js";
+import "../agents/chunk-a331t11a.js";
+import "../shared/chunk-9m922vm4.js";
+import "./none-at-claim.x354.js";
+import "../shared/chunk-jyhkt2nk.js";
+import "../shared/chunk-7bt27r62.js";
+import { lh } from "../vendor/aws-sdk/chunk-k5hq3azn.js";
+import "../shared/chunk-ztrzej16.js";
+import "../shared/chunk-zmrs49f3.js";
+import { pr, ge, Sn, zo, x8o, fc, dr, Ct, sc, SM, Ssr, uh, kf, qd, ML } from "../vendor/zod/invalid-return-type.ezsz.js";
+import "../shared/chunk-dpjnt83j.js";
+import { G_, Ot, Fn, g_, Cc } from "../models/claude-mythos-preview.rw6s.js";
+import { tX } from "../shared/chunk-1a0taxx3.js";
+import { D } from "../shared/chunk-6rnejvk7.js";
+import "../shared/sk-ant-sid.0hme.js";
+import "../shared/chunk-s06z5etx.js";
+import "../shared/chunk-81mpzfkq.js";
+import "../fs/not-utf8.sqq6.js";
+import "../context/tool-result.evq2.js";
+import "../shared/chunk-bhdett2m.js";
+import { et } from "../shared/chunk-tftf1nn4.js";
+import "../vendor/aws-sdk/chunk-yc0hxjyg.js";
+import "../shared/chunk-n07cvysj.js";
+import "../shared/chunk-19a02m7w.js";
+import { Ae, x, $e } from "../vendor/react/chunk-meds60nn.js";
+import "../remote/chunk-t0kv6pst.js";
+import { Ee } from "../shared/chunk-f9xfyhm1.js";
 var Fi = x(function(Lbe, K0) {
   var { format: F0 } = $e("util");
   class B0 extends Error {
@@ -797,7 +797,7 @@ var Ou = x(function(rve, UO) {
   UO.exports = globalThis.structuredClone || ((e) => JSON.parse(JSON.stringify(e)));
 });
 var Jg = x(function(ive, HO) {
-  var _l = import.meta.require("../../context/calculate-jwk-thumbprint.ed3h.js"), V1 = Ou(), zO = yu(), FO = Symbol(), BO = (e, { alg: t, use: n }) => {
+  var _l = import.meta.require("../context/calculate-jwk-thumbprint.ed3h.js"), V1 = Ou(), zO = yu(), FO = Symbol(), BO = (e, { alg: t, use: n }) => {
     let o = 0;
     if (t && e.alg) o++;
     if (n && e.use) o++;
@@ -978,7 +978,7 @@ var VO = x(function(ove, ZO) {
   ZO.exports = KO;
 });
 var ey = x(function(sve, YO) {
-  var sf = import.meta.require("../../context/calculate-jwk-thumbprint.ed3h.js"), { RPError: Qg } = Fi(), { assertIssuerConfiguration: W1 } = Vd(), { random: Y1 } = bu(), J1 = _u(), GO = yl(), { keystores: X1 } = of(), Q1 = VO(), qO = (e) => encodeURIComponent(e).replace(/%20/g, "+");
+  var sf = import.meta.require("../context/calculate-jwk-thumbprint.ed3h.js"), { RPError: Qg } = Fi(), { assertIssuerConfiguration: W1 } = Vd(), { random: Y1 } = bu(), J1 = _u(), GO = yl(), { keystores: X1 } = of(), Q1 = VO(), qO = (e) => encodeURIComponent(e).replace(/%20/g, "+");
   async function eF(e, t) {
     let n = this[`${e}_endpoint_auth_signing_alg`];
     if (!n) W1(this.issuer, `${e}_endpoint_auth_signing_alg_values_supported`);
@@ -1350,7 +1350,7 @@ var pS = x(function(ave, fS) {
   fS.exports = dS;
 });
 var _y = x(function(lve, yy) {
-  var { inspect: hS } = $e("util"), IS = $e("http"), vl = $e("crypto"), { strict: sy } = $e("assert"), Sl = $e("querystring"), kl = $e("url"), { URL: mS, URLSearchParams: gS } = $e("url"), nn = import.meta.require("../../context/calculate-jwk-thumbprint.ed3h.js"), wl = Q0(), CS = rO(), hF = oO(), Fs = gu(), yS = Hg(), mF = Kg(), { assertSigningAlgValuesSupport: _S, assertIssuerConfiguration: fi } = Vd(), hy = Gd(), zs = yu(), Ns = Yd(), Ur = Vg(), { OPError: ay, RPError: Ge } = Fi(), ly = _u(), { random: bS } = bu(), Ol = yl(), { CLOCK_TOLERANCE: ji } = tf(), { keystores: cy } = of(), TS = Jg(), vS = Ou(), { authenticatedPost: Eu, resolveResponseType: gF, resolveRedirectUri: yF } = ey(), { queryKeyStore: wS } = oy(), _F = pS(), [OS, bF] = process.version.slice(1).split(".").map((e) => parseInt(e, 10)), vF = OS >= 17 || OS === 16 && bF >= 9, uy = Symbol(), kS = Symbol(), ES = Symbol();
+  var { inspect: hS } = $e("util"), IS = $e("http"), vl = $e("crypto"), { strict: sy } = $e("assert"), Sl = $e("querystring"), kl = $e("url"), { URL: mS, URLSearchParams: gS } = $e("url"), nn = import.meta.require("../context/calculate-jwk-thumbprint.ed3h.js"), wl = Q0(), CS = rO(), hF = oO(), Fs = gu(), yS = Hg(), mF = Kg(), { assertSigningAlgValuesSupport: _S, assertIssuerConfiguration: fi } = Vd(), hy = Gd(), zs = yu(), Ns = Yd(), Ur = Vg(), { OPError: ay, RPError: Ge } = Fi(), ly = _u(), { random: bS } = bu(), Ol = yl(), { CLOCK_TOLERANCE: ji } = tf(), { keystores: cy } = of(), TS = Jg(), vS = Ou(), { authenticatedPost: Eu, resolveResponseType: gF, resolveRedirectUri: yF } = ey(), { queryKeyStore: wS } = oy(), _F = pS(), [OS, bF] = process.version.slice(1).split(".").map((e) => parseInt(e, 10)), vF = OS >= 17 || OS === 16 && bF >= 9, uy = Symbol(), kS = Symbol(), ES = Symbol();
   function Us(e) {
     return hy(e, "access_token", "code", "error_description", "error_uri", "error", "expires_in", "id_token", "iss", "response", "session_state", "state", "token_type");
   }
@@ -24213,7 +24213,7 @@ function Of(e) {
 async function Dk(e) {
   let { upstreamName: t, region: n, roleArn: o } = e, r = e.maxUsers ?? NB;
   if (!/^[a-z0-9-]+$/.test(n)) throw Error("region is not a plain AWS region name");
-  let s = i.AWS_USE_FIPS_ENDPOINT === "true" && !e.stsEndpoint, a = s && !n.startsWith("us-gov-") ? "sts-fips" : "sts", l = e.stsEndpoint ?? `https://${a}.${n}.amazonaws.com`, c = { region: n, ...s ? { useFipsEndpoint: true } : { endpoint: l }, requestHandler: await VZ({ url: l, requestTimeoutMs: Tk }) ?? new $k.NodeHttpHandler({ httpsAgent: cst(), requestTimeout: Tk, throwOnRequestTimeout: true }), maxAttempts: 2 }, u = e.sourceCredentials ?? (i.CLAUDE_CODE_SKIP_AWS_CRED_CACHE ? void 0 : async (j) => (await iRe(n))(j)), { fromTemporaryCredentials: p } = await import("../../ide/create-credential-chain.vghf.js");
+  let s = i.AWS_USE_FIPS_ENDPOINT === "true" && !e.stsEndpoint, a = s && !n.startsWith("us-gov-") ? "sts-fips" : "sts", l = e.stsEndpoint ?? `https://${a}.${n}.amazonaws.com`, c = { region: n, ...s ? { useFipsEndpoint: true } : { endpoint: l }, requestHandler: await VZ({ url: l, requestTimeoutMs: Tk }) ?? new $k.NodeHttpHandler({ httpsAgent: cst(), requestTimeout: Tk, throwOnRequestTimeout: true }), maxAttempts: 2 }, u = e.sourceCredentials ?? (i.CLAUDE_CODE_SKIP_AWS_CRED_CACHE ? void 0 : async (j) => (await iRe(n))(j)), { fromTemporaryCredentials: p } = await import("../ide/create-credential-chain.vghf.js");
   function h(j) {
     return Rk.memoize(p({ ...u && { masterCredentials: u }, params: { RoleArn: o, RoleSessionName: j, ...e.externalId && { ExternalId: e.externalId } }, clientConfig: c }), (K) => (K.expiration?.getTime() ?? 0) - Date.now() < xB);
   }
@@ -24431,7 +24431,7 @@ async function Hk(e, t) {
             n(p), p.set("Authorization", `Bearer ${u}`), p.append("anthropic-beta", Bu);
           }, forwardUserIdentity: r.forward_user_identity === true, headers: r.headers };
         }
-        let { resolveCredentialsFromConfig: s, TokenCache: a } = await import("../../auth/get-resolved-wif-base-url-snapshot.jgyy.js"), l = s({ organization_id: r.auth.organization_id, workspace_id: r.auth.workspace_id, base_url: r.base_url, authentication: { type: "oidc_federation", federation_rule_id: r.auth.federation_rule_id, service_account_id: r.auth.service_account_id, identity_token: { source: "file", path: r.auth.identity_token_file } } }, { baseURL: r.base_url, fetch: (u, p) => Ha(String(u), { ...p, ...oa({ url: String(u) }), signal: AbortSignal.timeout(1e4) }) }), c = new a(l.provider, (u) => kr("warn", `WIF advisory refresh (${r.name}): ${d(u)}`));
+        let { resolveCredentialsFromConfig: s, TokenCache: a } = await import("./get-resolved-wif-base-url-snapshot.jgyy.js"), l = s({ organization_id: r.auth.organization_id, workspace_id: r.auth.workspace_id, base_url: r.base_url, authentication: { type: "oidc_federation", federation_rule_id: r.auth.federation_rule_id, service_account_id: r.auth.service_account_id, identity_token: { source: "file", path: r.auth.identity_token_file } } }, { baseURL: r.base_url, fetch: (u, p) => Ha(String(u), { ...p, ...oa({ url: String(u) }), signal: AbortSignal.timeout(1e4) }) }), c = new a(l.provider, (u) => kr("warn", `WIF advisory refresh (${r.name}): ${d(u)}`));
         return { kind: "raw", name: r.name, provider: "anthropic", baseUrl: r.base_url, ...t && { fetch: t }, applyAuth: async (u) => {
           n(u), u.set("Authorization", `Bearer ${await c.getToken()}`);
           for (let [p, h] of Object.entries(l.extraHeaders)) u.set(p, h);
@@ -24439,11 +24439,11 @@ async function Hk(e, t) {
         }, invalidateAuth: () => c.invalidate(), forwardUserIdentity: r.forward_user_identity === true, headers: r.headers };
       }
       case "bedrock": {
-        let { AnthropicBedrock: s } = await import("../aws-sdk/anthropic-bedrock.zzg3.js"), a = r.guardrail && { "X-Amzn-Bedrock-GuardrailIdentifier": r.guardrail.id, "X-Amzn-Bedrock-GuardrailVersion": r.guardrail.version }, l = { awsRegion: r.region, ...r.base_url && { baseURL: r.base_url }, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } };
+        let { AnthropicBedrock: s } = await import("../vendor/aws-sdk/anthropic-bedrock.zzg3.js"), a = r.guardrail && { "X-Amzn-Bedrock-GuardrailIdentifier": r.guardrail.id, "X-Amzn-Bedrock-GuardrailVersion": r.guardrail.version }, l = { awsRegion: r.region, ...r.base_url && { baseURL: r.base_url }, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } };
         if (!r.auth.aws_access_key_id !== !r.auth.aws_secret_access_key || r.auth.aws_session_token && !r.auth.aws_access_key_id) throw Error("bedrock upstream: aws_access_key_id and aws_secret_access_key must be set together (and are required with aws_session_token)");
         if (r.assume_role && r.auth.aws_bearer_token) throw Error("bedrock upstream: assume_role needs SigV4 source credentials (access keys or the ambient AWS chain); aws_bearer_token cannot call sts:AssumeRole");
         let c = !r.auth.aws_bearer_token && !(r.auth.aws_access_key_id && r.auth.aws_secret_access_key), u = jx(), p = { authToken: null, defaultHeaders: { ...r.headers, ...Vb(), Authorization: null, ...!u && { "X-Api-Key": null }, ...a }, ...fM }, h = r.assume_role && await Dk({ upstreamName: r.name, region: r.region, roleArn: r.assume_role.role_arn, externalId: r.assume_role.external_id, sessionNameClaim: r.assume_role.session_name, sourceCredentials: r.auth.aws_access_key_id && r.auth.aws_secret_access_key ? { accessKeyId: r.auth.aws_access_key_id, secretAccessKey: r.auth.aws_secret_access_key, sessionToken: r.auth.aws_session_token } : void 0, buildClient: (j) => new s({ ...l, ...p, providerChainResolver: async () => j }) }), m = h ? h.sharedClient : r.auth.aws_bearer_token ? new s({ ...l, apiKey: r.auth.aws_bearer_token, defaultHeaders: { ...r.headers, ...Vb(), Authorization: `Bearer ${r.auth.aws_bearer_token}`, ...!u && { "X-Api-Key": null }, ...a } }) : r.auth.aws_access_key_id && r.auth.aws_secret_access_key ? new s({ ...l, ...p, awsAccessKey: r.auth.aws_access_key_id, awsSecretKey: r.auth.aws_secret_access_key, awsSessionToken: r.auth.aws_session_token }) : new s({ ...l, ...p, providerChainResolver: nZ(r.region) }), y, b, O = /* @__PURE__ */ new Map(), k = /* @__PURE__ */ new Set(), M = /* @__PURE__ */ new Map(), U = () => y ??= (async () => {
-          let { BedrockRuntimeClient: j } = await import("../../cli/bedrock-runtime-client.3g0d.js");
+          let { BedrockRuntimeClient: j } = await import("../cli/bedrock-runtime-client.3g0d.js");
           if (!r.base_url && !/^[a-z0-9-]+$/.test(r.region)) throw Error("region is not a plain AWS region name");
           let K = r.base_url || `https://bedrock-runtime.${r.region}.amazonaws.com`;
           b ??= await VZ({ url: K }) ?? new Lk.NodeHttpHandler({ httpsAgent: cst() });
@@ -24485,7 +24485,7 @@ async function Hk(e, t) {
         } };
       }
       case "mantle": {
-        let { AnthropicBedrockMantle: s } = await import("../aws-sdk/anthropic-bedrock.zzg3.js");
+        let { AnthropicBedrockMantle: s } = await import("../vendor/aws-sdk/anthropic-bedrock.zzg3.js");
         if (!r.auth.aws_access_key_id !== !r.auth.aws_secret_access_key || r.auth.aws_session_token && !r.auth.aws_access_key_id) throw Error("mantle upstream: aws_access_key_id and aws_secret_access_key must be set together (and are required with aws_session_token)");
         let a = jx(), l = { awsRegion: r.region, baseURL: r.base_url ?? `https://bedrock-mantle.${r.region}.api.aws/anthropic`, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } }, c = { authToken: null, defaultHeaders: { ...r.headers, ...Vb(), Authorization: null, ...!a && { "X-Api-Key": null } }, ...fM }, u = !r.auth.aws_bearer_token && !r.auth.aws_access_key_id, p;
         if (r.auth.aws_bearer_token) p = new s({ ...l, apiKey: r.auth.aws_bearer_token, defaultHeaders: { ...r.headers, ...Vb(), Authorization: `Bearer ${r.auth.aws_bearer_token}`, ...!a && { "X-Api-Key": null } } });
@@ -24502,7 +24502,7 @@ async function Hk(e, t) {
         return { kind: "sdk", name: r.name, provider: "mantle", client: p, ...u && { invalidateAuth: () => FVe(r.region) } };
       }
       case "anthropicAws": {
-        let { AnthropicAws: s } = await import("../aws-sdk/anthropic-aws.b293.js"), a = { awsRegion: r.region, workspaceId: r.workspace_id, baseURL: r.base_url ?? `https://aws-external-anthropic.${r.region}.api.aws`, authToken: null, defaultHeaders: { ...r.headers, ...Vb(), Authorization: null }, ...fM, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } }, l;
+        let { AnthropicAws: s } = await import("../vendor/aws-sdk/anthropic-aws.b293.js"), a = { awsRegion: r.region, workspaceId: r.workspace_id, baseURL: r.base_url ?? `https://aws-external-anthropic.${r.region}.api.aws`, authToken: null, defaultHeaders: { ...r.headers, ...Vb(), Authorization: null }, ...fM, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } }, l;
         if (r.auth.api_key) l = new s({ ...a, apiKey: r.auth.api_key });
         else if (r.auth.aws_access_key_id || r.auth.aws_secret_access_key) l = new s({ ...a, awsAccessKey: r.auth.aws_access_key_id, awsSecretAccessKey: r.auth.aws_secret_access_key, awsSessionToken: r.auth.aws_session_token });
         else {
@@ -24518,33 +24518,33 @@ async function Hk(e, t) {
         return { kind: "sdk", name: r.name, provider: "anthropicAws", client: l, ...c && { invalidateAuth: () => FVe(r.region) } };
       }
       case "anthropicGoogleCloud": {
-        let { AnthropicGoogleCloud: s } = await import("../../fs/anthropic-google-cloud.361h.js"), a = r.auth.access_token, l = {};
+        let { AnthropicGoogleCloud: s } = await import("../fs/anthropic-google-cloud.361h.js"), a = r.auth.access_token, l = {};
         for (let [u, p] of Object.entries(r.headers ?? {})) if (u.toLowerCase() !== "authorization") l[u] = p;
         let c = { project: r.project_id, location: r.location, workspaceId: r.workspace_id, baseURL: r.base_url ?? `https://claude.googleapis.com/v1/projects/${r.project_id}/locations/${r.location}/workspaces/${r.workspace_id}/invoke`, defaultHeaders: { ...l, ...Vb() }, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } };
         if (a) c.bearerTokenProvider = async () => a;
         else {
-          let { GoogleAuth: u } = await import("../../shared/chunk-trm8yts8.js").then((m) => Ae(m.default, 1));
+          let { GoogleAuth: u } = await import("../shared/chunk-trm8yts8.js").then((m) => Ae(m.default, 1));
           c.googleAuth = new u({ scopes: ["https://www.googleapis.com/auth/cloud-platform"], projectId: r.project_id, ...r.auth.service_account_json && { keyFilename: r.auth.service_account_json }, clientOptions: Iu() });
         }
         return { kind: "sdk", name: r.name, provider: "anthropicGoogleCloud", client: new s(c) };
       }
       case "vertex": {
-        let { AnthropicVertex: s } = await import("../google-auth/anthropic-vertex.f520.js"), a = { region: r.region, projectId: r.project_id, ...r.base_url && { baseURL: r.base_url }, defaultHeaders: { ...r.headers, ...vRe() }, ...fM, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } };
+        let { AnthropicVertex: s } = await import("../vendor/google-auth/anthropic-vertex.f520.js"), a = { region: r.region, projectId: r.project_id, ...r.base_url && { baseURL: r.base_url }, defaultHeaders: { ...r.headers, ...vRe() }, ...fM, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } };
         if (r.auth.access_token) {
           let l = r.auth.access_token;
           a.authClient = { projectId: r.project_id, getRequestHeaders: async () => ({ Authorization: `Bearer ${l}` }) };
         } else {
-          let { GoogleAuth: l } = await import("../../shared/chunk-trm8yts8.js").then((m) => Ae(m.default, 1));
+          let { GoogleAuth: l } = await import("../shared/chunk-trm8yts8.js").then((m) => Ae(m.default, 1));
           a.googleAuth = new l({ scopes: ["https://www.googleapis.com/auth/cloud-platform"], projectId: r.project_id, ...r.auth.service_account_json && { keyFilename: r.auth.service_account_json }, clientOptions: Iu() });
         }
         return { kind: "sdk", name: r.name, provider: "vertex", client: ERe(new s(a)) };
       }
       case "foundry": {
-        let { AnthropicFoundry: s } = await import("../../fs/anthropic-foundry.r8vc.js"), a = { ...r.base_url ? { baseURL: r.base_url } : { resource: r.resource }, defaultHeaders: "api_key" in r.auth ? { ...r.headers, ...Vb(), Authorization: null } : { ...r.headers, ...Vb() }, ...fM, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } };
+        let { AnthropicFoundry: s } = await import("../fs/anthropic-foundry.r8vc.js"), a = { ...r.base_url ? { baseURL: r.base_url } : { resource: r.resource }, defaultHeaders: "api_key" in r.auth ? { ...r.headers, ...Vb(), Authorization: null } : { ...r.headers, ...Vb() }, ...fM, timeout: Za, fetchOptions: { ...oa({ url: void 0 }), timeout: false }, maxRetries: 0, ...t && { fetch: t } };
         if ("api_key" in r.auth) a.apiKey = r.auth.api_key;
         else {
           a.apiKey = null;
-          let { DefaultAzureCredential: l } = await import("../../auth/get-bearer-token-provider.hrvv.js"), c = new l();
+          let { DefaultAzureCredential: l } = await import("./get-bearer-token-provider.hrvv.js"), c = new l();
           a.azureADTokenProvider = async () => {
             let u = await c.getToken("https://cognitiveservices.azure.com/.default");
             if (!u) throw Error("Azure AD token unavailable");
@@ -25019,7 +25019,7 @@ var oz = 10;
 function az(e) {
   let t;
   return async () => {
-    let { GoogleAuth: n, gcpMetadata: o } = await import("../../shared/chunk-trm8yts8.js").then((m) => Ae(m.default, 1));
+    let { GoogleAuth: n, gcpMetadata: o } = await import("../shared/chunk-trm8yts8.js").then((m) => Ae(m.default, 1));
     t ??= new n({ scopes: c_e, projectId: "unused", ...e.service_account_json && { keyFilename: e.service_account_json }, clientOptions: Iu() });
     try {
       let r = await Nt(t.getRequestHeaders(), oz * 1e3, `no Google credentials or token within ${oz} s`), s = r.get("authorization");
@@ -27298,7 +27298,7 @@ async function NPe(e) {
     if (l1.test(Be)) throw kr("error", `could not connect to Postgres at boot: ${Be}. Check store.postgres_url. If the database needs longer to become reachable, raise store.connect_timeout_seconds (now ${n.store.connect_timeout_seconds}s)`), Error(`could not connect to Postgres: ${Be}. Check store.postgres_url in ${e}`);
     if (v(ye) === "ERR_INVALID_URL" || ye instanceof URIError) throw Error(`store.postgres_url in ${e} is not a URL the gateway can read. It takes one host, as postgres://host:port/database; a comma-separated list of hosts is not supported. A password containing / ? # or % goes in store.password, not in the URL`);
     throw ye;
-  }), K = { readKeys: n.admin?.read_keys ?? [], writeKeys: n.admin?.write_keys ?? [] }, H = n.load_test_mode?.enabled ? await (await import("../../api/start-load-test.gmaw.js")).startLoadTest(n.load_test_mode, j.sql).catch((ye) => {
+  }), K = { readKeys: n.admin?.read_keys ?? [], writeKeys: n.admin?.write_keys ?? [] }, H = n.load_test_mode?.enabled ? await (await import("../api/start-load-test.gmaw.js")).startLoadTest(n.load_test_mode, j.sql).catch((ye) => {
     throw j.close(), ye;
   }) : void 0, te = Fz(j.sql, n, H?.spendFault), Ie = [...n.oidc ? ["new sign-ins fail"] : [], !te ? "inference is not affected" : n.enforcement.fail_closed_on_error ? "signed-in developers' inference is refused with 429 'spend limit unavailable' (enforcement.fail_closed_on_error is true)" : "spend limits are not enforced, signed-in developers' requests pass unchecked (enforcement.fail_closed_on_error is false)"].join("; "), qe = n.cri?.enabled === true, Q = qe && n.cri ? hk({ audience: n.cri.audience, orgAllowlist: n.cri.org_allowlist, jwksUrl: n.cri.jwks_url, issuer: n.cri.issuer }) : null;
   if (Q !== null) await Q.prime();

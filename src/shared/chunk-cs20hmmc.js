@@ -1,6 +1,6 @@
 // shared/chunk-cs20hmmc.js — Claude Code 2.1.310 模块 chunk-cs20hmmc.js
 import { un } from "../fs/async-hooks.2k4e.js";
-import { pn } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn } from "../telemetry/render-glyph-cardinality.7car.js";
 import { an } from "./chunk-vj9gqe2s.js";
 import { de, kt, j } from "../vendor/react/chunk-s8vmszp2.js";
 j();

@@ -1,6 +1,6 @@
 // ui/yes-remember.dhrg.js — Claude Code 2.1.310 模块 chunk-dhrg25tp.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n, X1 } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, X1 } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lt } from "../shared/chunk-vj9gqe2s.js";
 import { Cr } from "../commands/aria-preserve-whitespace.e4g5.js";
 import { ne } from "../workflows/workflow-size-guideline-change.1rc0.js";

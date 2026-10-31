@@ -10,7 +10,7 @@ import { LF, Ut, vf } from "../settings/global-config-and-gates.27xj.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { il } from "../shared/chunk-bezz9j8a.js";
 import { Pr } from "../shared/chunk-y6x1q9pp.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { oB } from "../plugins/allow-channels.h6ad.js";
 import { ya } from "../telemetry/harbor-kite-win.r4w6.js";
 import { Lct } from "../plugins/chunk-x4bvxrq4.js";

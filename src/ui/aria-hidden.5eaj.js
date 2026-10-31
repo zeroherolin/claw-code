@@ -1,7 +1,7 @@
 // ui/aria-hidden.5eaj.js — Claude Code 2.1.310 模块 chunk-5eaj74ns.js
 import { AS } from "../shell/invalid-type.qnva.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n, hp } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, hp } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 import { Jh, Gt, Og, Se, j } from "../vendor/react/chunk-s8vmszp2.js";
 import { b } from "../vendor/react/chunk-meds60nn.js";

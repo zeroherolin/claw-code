@@ -1,6 +1,6 @@
 // ui/chunk-5w9rmqs6.js — Claude Code 2.1.310 模块 chunk-5w9rmqs6.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { rt, s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 function uf(u) {
   let h = w(10), { children: i, color: o, title: t } = u, f = rt();

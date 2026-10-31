@@ -6,7 +6,7 @@ import { a } from "../telemetry/chunk-wq923bwc.js";
 import { Sr } from "../models/claude-3-5-sonnet.21mz.js";
 import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { nu, z_ } from "../shell/invalid-type.qnva.js";
 import { ali } from "../auth/claude-code-user.tvhr.js";
 import { aDe } from "../plugins/entry-refused.bp7z.js";

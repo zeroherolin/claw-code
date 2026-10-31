@@ -1,5 +1,5 @@
 // ui/chunk-09hekk2k.js — Claude Code 2.1.310 模块 chunk-09hekk2k.js
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { i } from "../shared/environment.9a41.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { ZQ } from "../settings/global-config-and-gates.27xj.js";

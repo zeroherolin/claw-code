@@ -64,7 +64,7 @@ import { zi } from "../remote/chunk-bqkq3e7y.js";
 import { z7n, kWr, JE, oWo, Hbt, Ya, rJn } from "../tools/structured-output-tool.j28z.js";
 import { Gv } from "../mcp/chunk-eak4pf5v.js";
 import { D5n } from "../plugins/claudeai-plugins-sync-enabled.61rf.js";
-import { fo, ks, q1s } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { fo, ks, q1s } from "../context/projects-thread-reply-lead-killswitch.c5ve.js";
 import { Li } from "./system-prompt-blocks.dpjp.js";
 import { TZe, AZe, O8n } from "../remote/bridge-outcome-branch-dropped.9kms.js";
 import { rqs, oqs, _Ur, NGe } from "../permissions/subagent-output-flagged.c14m.js";

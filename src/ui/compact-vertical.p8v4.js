@@ -2,7 +2,7 @@
 import { x_ } from "../terminal/left-arrow-blocked.q730.js";
 import { wee, AX } from "../shared/chunk-j79dwkaq.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { rt, s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { vC, LPe, NPe, Cgr, rae, FPe, lu, Agr, j8t, _Ue } from "./aria-hidden.r9bm.js";
 import { ka } from "../shared/above-prompt-select.rh5v.js";
 import { ne } from "../workflows/workflow-size-guideline-change.1rc0.js";

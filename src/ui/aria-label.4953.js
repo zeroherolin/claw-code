@@ -2,7 +2,7 @@
 import { WC } from "../permissions/light-daltonized.tkrm.js";
 import { Ji } from "../shared/chunk-j79dwkaq.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 import { En } from "../vendor/react/chunk-meds60nn.js";
 var s = [" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"], I = { fill: "▰", empty: "▱" }, E = { fill: "█", empty: "░" }, _ = () => WC.hasGeometricShapesInkBleedBug() ? E : I, g = (a) => Math.min(1, Math.max(0, a)), k = (a, t) => {

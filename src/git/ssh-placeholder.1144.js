@@ -15,7 +15,7 @@ import { Ko } from "../shared/chunk-z6efcye4.js";
 import { _xe } from "../fs/tempdir-owner-mismatch.5xe1.js";
 import { QNe, uEn, pot, S1 } from "../shell/invalid-type.qnva.js";
 import { KQo } from "../remote/moved-directory.z3m0.js";
-import { _8r } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { _8r } from "../fs/ca-certs-load.ft7b.js";
 import { Ee } from "../shared/chunk-f9xfyhm1.js";
 var vkt = ["CLAUDE_BG_DISPATCHER_SUBSCRIPTION_TYPE", "CLAUDE_BG_DISPATCHER_RATE_LIMIT_TIER"];
 function Gii(e) {

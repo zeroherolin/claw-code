@@ -14,7 +14,7 @@ import { Ii, oz, aa, Fu, wdi, CKt, fir, x5r, $Se, cEn, mir, QNe, oW, ype, pEn, E
 import { Te, Ai } from "../models/total-tokens-reminder.psq3.js";
 import { er, Ro, Qt } from "./workflow-launch-exec.t4r2.js";
 import { Rsr, EI, Mwn, oCt, sYo, iYo, _li, Sli, Uli, i5r, ln, RYo, fe, zwn, jYo } from "./settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { GZ, Dvn, kK, LQo, h8r, Yb, KZ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { GZ, Dvn, kK, LQo, h8r, Yb, KZ } from "../fs/ca-certs-load.ft7b.js";
 import { EFe } from "../auth/profile-explicit.b7t3.js";
 import { vkt, S9o, J3r, Z4, CKe } from "../git/ssh-placeholder.1144.js";
 import { rA } from "../shared/chunk-pg9vp681.js";

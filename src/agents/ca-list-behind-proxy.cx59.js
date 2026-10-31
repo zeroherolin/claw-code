@@ -1,5 +1,5 @@
 // agents/ca-list-behind-proxy.cx59.js — Claude Code 2.1.310 模块 chunk-cx59vqjy.js
-import { RR, kK, LQo, _T, dst, cst, NQo, ck, rP, FQo, h8r, $Qo } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { RR, kK, LQo, _T, dst, cst, NQo, ck, rP, FQo, h8r, $Qo } from "../fs/ca-certs-load.ft7b.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";
 import "../auth/descriptor-direct.zd2z.js";

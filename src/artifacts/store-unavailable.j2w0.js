@@ -11,7 +11,7 @@ import { Dx, Wt } from "../settings/global-config-and-gates.27xj.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { Sl } from "../mcp/allowed-warning.j2d4.js";
 import { Fa } from "../fs/content-encoding.v6wj.js";
-import { h5, LH } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { h5, LH } from "../fs/ca-certs-load.ft7b.js";
 import { Bg, lr } from "./cobalt-plinth-lovage.hxm5.js";
 import { Z } from "./same-account.bxg8.js";
 import { Qpt, Zpt, k6, E0, Yte, BYe, njn, ZHt, bB, Xte, sle, jYe, qwo, eft, HOe, vAr, Xwo, dnn } from "./cobalt-plinth-comfrey.n2h2.js";

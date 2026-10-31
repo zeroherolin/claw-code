@@ -2,7 +2,7 @@
 import { Rj, Re, UF } from "../settings/global-config-and-gates.27xj.js";
 import { Me } from "../shared/chunk-y6x1q9pp.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { cr } from "./chunk-jz19cqtw.js";
 import { hUe, DPe, we } from "./keybinding-auto-hints.yb17.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";

@@ -44,7 +44,7 @@ import { M8e } from "../agents/built-in.ha9a.js";
 import { Edt } from "../shared/chunk-eaaaqh8e.js";
 import { zgs, nEe } from "../shared/chunk-k00kepx1.js";
 import { MLn, Jct } from "../hooks/chunk-tgyd8q4b.js";
-import { zEe } from "../vendor/aws-sdk/denied-by-server.6c7g.js";
+import { zEe } from "../permissions/denied-by-server.6c7g.js";
 import { Lho, Nho } from "../fs/chunk-rb032ed2.js";
 import { pLe } from "../shared/chunk-s0p49rh9.js";
 import { Ot, rk, Fn } from "../models/claude-mythos-preview.rw6s.js";

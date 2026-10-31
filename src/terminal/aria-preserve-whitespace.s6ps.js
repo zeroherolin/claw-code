@@ -4,7 +4,7 @@ import { W } from "../shared/chunk-3y73jbfr.js";
 import { rfe, i } from "../shared/environment.9a41.js";
 import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { WC } from "../permissions/light-daltonized.tkrm.js";
-import { TC, A7t, yy } from "../vendor/ink/chunk-vtw8nj6v.js";
+import { TC, A7t, yy } from "./chunk-vtw8nj6v.js";
 import { _E } from "../settings/global-config-and-gates.27xj.js";
 import { c8, n_, M0, gm, wht, x$t, P$t, POo, L1s } from "./wl-copy.gdbt.js";
 import { ST, rl, YZo, Jqe, zw, ree, Wpe, wT, zqt, Vqt, mpi, gpi, JZo, hpi, ypi } from "../shared/chunk-daaayw23.js";

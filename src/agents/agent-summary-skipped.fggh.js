@@ -51,7 +51,7 @@ import { Bmn, J7n, OU, nJn, Gmn, z8s } from "../tools/structured-output-tool.j28
 import { k4n } from "./agent-retry-status.rgvg.js";
 import { Onn, sge, ple, B$, NT, Gve, jnn, XIs, CRr, QIs, AP, cXe, Knn, nOs, Ynn, bvo, cge, kWn, JRr, Qve, arn, pje, zvo, Vvo, Kvo, UWn, ODt, MDt, urn, AD, N9, Gq, rke, _rn, xMs, ake, Dxr, Prn, nMe, bge, dke, e0s, l0s, d0s, jxr, f0s, ePr, iPr, Ele, k0, C0, aMe, gLt, xD, kPr, Oje, _Co, hne, J0s, J2n, Jrn, PPr, Al, Lje, uMe, sHs, gmt, ymt, gHs, hHs, xCo, Ske, $Xe, fMe, BXe, Amt, Mge, QPr, uon, Wje, ZPr, B9, n3, R0, pDs, YLt, wTo, XXe, tzn, RDs, YIr, szn, XIr, izn, azn, Gmt, eNt, PDs, Ake, Vmt, z7, dzn, tNt, jT, SO, LDs, FTo, NDs, $To, FDs, ZIr, oLs, Xon, Oke, wLs, a3, jge, o_i, tgt, EAo, vAo, kAo, s_i, a_i, CAo, TAo, Wge, d_i, ELs, SNt, bNt, wNt, d7e, J7, IMe, POr, xLs, OD, D6, dsn, WOr, rgt, TNt, $Ls, ANt, csn, GLs, psn, Gzn, qLs, cWe, VOr, q$, nRo, Cne, OP, DMe, dMr, cMr, nx, Nke, Fsn, CRo, rFs, TRo, ARo, w6n, E6n, nn, UMr, Kge, wgt, d3, ox, _Fs, NP, uu, f3, wy, rJ, A7e, KMe, t8, NC, Za, qke, Ok, DWe, rPo, JMe, aE, G6, she, zWe, I0, Ey, Ld, Xs, Oe, FC, zFt, t0e, uJ, fm, qin, Yh, n0e, Yin, $o, lIo, Bl, v$s, Bt, XFt, UVn, fIo, nCe, o0e, Xin, fJ, $7e, JWe } from "../core/conversation-engine.31gx.js";
 import { Li } from "../core/system-prompt-blocks.dpjp.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { ty } from "../plugins/entry-refused.bp7z.js";
 import { pjo, xjr, Lze, Fm } from "./in-process-teammate.040f.js";
 import { YT, WBr, uE, xy, pE, pce, F_, Gjt, GSt, YP, J2 } from "../context/org-memory-writes-setting-changed.w8x9.js";
@@ -60,7 +60,7 @@ import { Fb, Bk, G8 } from "../artifacts/utf-8.vzjz.js";
 import { J8, N7n, oG } from "../permissions/bot-protected-tengu-atomic-magpie.zc9j.js";
 import { lE, KNr, kdn } from "./web-fetch.e88g.js";
 import { Gd, Ah, sLr, K$t, ZBs, ejs, tjs, njs, rjs, ojs, tF, Dht, v2e, Bs, Oln } from "../context/team-memory-sync.0s3j.js";
-import { ks } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { ks } from "../context/projects-thread-reply-lead-killswitch.c5ve.js";
 import { Ss } from "../telemetry/chunk-ky8866zn.js";
 import { bi } from "../context/account-memory-text-not-identified.y6np.js";
 import { Ccn, BCe, Ide } from "../vendor/zod/tool-use.03fs.js";

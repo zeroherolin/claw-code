@@ -22,7 +22,7 @@ import { pu } from "../shared/chunk-a9jqgh3e.js";
 import { $A, Q7, K$, vne, f7e, uNs, MD, Ch, zge, r6n, pNs, Vge, tMr, Bt } from "../core/conversation-engine.31gx.js";
 import { w } from "../ui/chunk-zqxc4qtb.js";
 import { i0, x5e, vk } from "../shared/chunk-h1g05r4t.js";
-import { n, Yt, Ta } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n, Yt, Ta } from "./render-glyph-cardinality.7car.js";
 import { Co } from "../shared/chunk-q3z3d485.js";
 import { pD } from "../terminal/aria-preserve-whitespace.s6ps.js";
 import { Me } from "../shared/chunk-y6x1q9pp.js";

@@ -6,7 +6,7 @@ import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { pe } from "../shared/async-hooks.m2fg.js";
 import { Zo } from "../fs/utf-8.fmbx.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { tYt, nYt } from "../terminal/ink-renderer.pma0.js";
 import { Ce } from "../shared/chunk-9vjqn6fm.js";
 import { Ge } from "./aria-hidden.by9c.js";

@@ -2,7 +2,7 @@
 import { S } from "../agents/third-party.ydpb.js";
 import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { a } from "./chunk-wq923bwc.js";
-import { pn } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn } from "./render-glyph-cardinality.7car.js";
 import { A5e } from "../terminal/ink-renderer.pma0.js";
 import { de, y, j } from "../vendor/react/chunk-s8vmszp2.js";
 j();

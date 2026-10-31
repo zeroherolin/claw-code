@@ -4,7 +4,7 @@ import { Vs } from "../fs/node-modules.gp4v.js";
 import { ke, ci, xX } from "../context/not-admin-owned.ersa.js";
 import { _, Hxe } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { Kse, ut } from "../shell/chunk-tjkwy3jp.js";
 import { mE, OXn, Mu } from "../context/org-memory-writes-setting-changed.w8x9.js";
 import { stat as c } from "fs/promises";

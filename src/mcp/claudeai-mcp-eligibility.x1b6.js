@@ -9,7 +9,7 @@ import { Bi } from "../context/not-admin-owned.ersa.js";
 import { rn } from "../auth/oauth-2025-04-20.ke15.js";
 import { _, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { St, dAt } from "../artifacts/cowritten-artifact-html.thm2.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { ebn } from "./allowed-warning.j2d4.js";
 import { a } from "../telemetry/chunk-wq923bwc.js";
 import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
@@ -20,7 +20,7 @@ import { Ln, pa, vt, gn, wE, k, Re, ue } from "../settings/global-config-and-gat
 import { p1 } from "../auth/secure-storage-credentials-write.vafw.js";
 import { xt, wNe } from "./toolbox-mcp-server-id.fewh.js";
 import { NKe } from "./claude-browser.hdf6.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { jO } from "../telemetry/mcp-sdk-generation.2z48.js";
 import { zC } from "./mcp-task-worker-wake.a5kr.js";
 import { mUr } from "../shared/chunk-17f2zfzf.js";

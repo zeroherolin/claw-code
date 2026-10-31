@@ -2,7 +2,7 @@
 import { VD, aV } from "../shared/general-purpose.t0jz.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { gkt, Pbn } from "../fs/reply-across-default-dirs.esvz.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ca } from "../shared/action-not-found.ek51.js";
 import { q } from "../context/chunk-d05584w8.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";

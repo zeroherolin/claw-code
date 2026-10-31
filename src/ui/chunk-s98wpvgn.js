@@ -1,5 +1,5 @@
 // ui/chunk-s98wpvgn.js — Claude Code 2.1.310 模块 chunk-s98wpvgn.js
-import { n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { ds } from "./chunk-2bwm2gye.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";

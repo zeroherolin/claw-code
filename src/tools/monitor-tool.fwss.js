@@ -10,7 +10,7 @@ import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
 import { OI } from "../git/utf-8.vh7e.js";
 import { ys, un } from "../fs/async-hooks.2k4e.js";
 import { qrr } from "../mcp/allowed-warning.j2d4.js";
-import { ck, lC } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { ck, lC } from "../fs/ca-certs-load.ft7b.js";
 import { PL, bR } from "../artifacts/cobalt-plinth-lovage.hxm5.js";
 import { Sf } from "../auth/env-quad.nmae.js";
 import { ae } from "../permissions/max-thinking-tokens.hx3h.js";

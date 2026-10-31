@@ -4,7 +4,7 @@ import { Pe } from "../shared/chunk-3kevgx4j.js";
 import { i } from "../shared/environment.9a41.js";
 import { cy, Fbe, ITn } from "../context/not-admin-owned.ersa.js";
 import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
 import { gT } from "../shell/invalid-type.qnva.js";
 import { ss } from "../shell/chunk-tjkwy3jp.js";
@@ -15,7 +15,7 @@ import { ed } from "../models/ccr-unsupported-default-mode-ignored.fdkh.js";
 import { Zme } from "../auth/client-data-cache-key.bpey.js";
 import { nWe, wne, Kon, qon, Tv, dAo, oE, iS, Uge, $le, uOr } from "../core/conversation-engine.31gx.js";
 import { XCs, sZt, QIe, kte, m7 } from "../auth/api-key.1s9q.js";
-import { Vgo, iZt, Kgo, zEe } from "../vendor/aws-sdk/denied-by-server.6c7g.js";
+import { Vgo, iZt, Kgo, zEe } from "../permissions/denied-by-server.6c7g.js";
 import { nc, Vhn, Sa } from "../shared/chunk-wwfwgwca.js";
 import { Ot, Fn } from "../models/claude-mythos-preview.rw6s.js";
 function y(e, o, s) {

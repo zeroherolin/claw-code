@@ -5,7 +5,7 @@ import { ee, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { Td, Ze } from "../shared/chunk-j79dwkaq.js";
 import { i } from "../shared/environment.9a41.js";
 import { nr } from "../remote/moved-directory.z3m0.js";
-import { h5, LH } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { h5, LH } from "../fs/ca-certs-load.ft7b.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { coe, yj, Dwt, Lwt, Nwt, uoe } from "../shell/content-scan-transient.pxv4.js";
 import { Fa } from "../fs/content-encoding.v6wj.js";

@@ -2,7 +2,7 @@
 import { w } from "./chunk-zqxc4qtb.js";
 import { il, cs } from "../shared/chunk-bezz9j8a.js";
 import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { le } from "../shared/chunk-abagh0tt.js";
 import { X5 } from "../shared/chunk-zkmyjht8.js";
 import { Mm } from "../terminal/aria-preserve-whitespace.s6ps.js";

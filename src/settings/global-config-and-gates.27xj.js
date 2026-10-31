@@ -52,11 +52,11 @@ import { lK, V4r, K4r, wM, nC, EI, t5r, mse, ln, fe, gse, xYo, PYo, ISe, Bsr, zK
 import { nr, zg, xM, xFe, PM } from "../remote/moved-directory.z3m0.js";
 import { go } from "../mcp/init-function-end.wpfb.js";
 import { m5r, FL, zNe, rz, KY, xl, mXo, Jli, gb, tEn, hXo, HSe, Fo, mCt, Zli, nEn, Yx, RH, _Kt, Zsr, tdi, wr, nk, rot, g5r, rEn, Te, $n, VNe, Od, bu, Xx, tir, cK, Qs, Ai, hpe, op, oot, Nu, y5r } from "../models/total-tokens-reminder.psq3.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { ES, gI, cKe, Q6t, bRe, JSn, rv, Wue, Gue, b3r, r5o, zrr, lSe, uKe, ZSn, gZ, Uj, hI, pKe, VG, G4, zb, pb, KG, dA, zue, qG, ekt, c5o, BF, tVt, rbn, Vue, jj, Wj, E3r, c_, wRe, Dsi, p5o, Lsi, Nsi, v3r, oy, kRe, Sl, Tn, g5o, h5o, $si, Ls, abn, qoe, Gj, fl, gKe, Km, okt, at, qt, M3r, EVt, Ki, Be, Tt } from "../mcp/allowed-warning.j2d4.js";
 import { Dt, pst, Yd } from "../fs/content-encoding.v6wj.js";
 import { RFe, Eui, Xar, YZ, cv, k8r, wTt, cW } from "../auth/descriptor-direct.zd2z.js";
-import { yui, Var, kqt, qL, Lpe, Fse, YL, lst, vK, RR, _T, dst, NQo, rP, qar, h5, LH, Lqe, Am, K_, S8r, zZ, Fqe, ust, oa, $qe, Uqe, VZ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { yui, Var, kqt, qL, Lpe, Fse, YL, lst, vK, RR, _T, dst, NQo, rP, qar, h5, LH, Lqe, Am, K_, S8r, zZ, Fqe, ust, oa, $qe, Uqe, VZ } from "../fs/ca-certs-load.ft7b.js";
 import { zs, ez, Xai } from "../shared/chunk-cg45s1mf.js";
 import { ma, MNe, tKt, Vn, Kl, HNe } from "../auth/secure-storage-credentials-write.vafw.js";
 import { DL, VRe, Jj, bI, sKt, Qj, LL, dli } from "../auth/claude-code-user.tvhr.js";

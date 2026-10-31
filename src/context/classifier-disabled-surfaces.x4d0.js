@@ -9,7 +9,7 @@ import { ET } from "../shared/async-hooks.m2fg.js";
 import { Nr } from "../mcp/always-allow.9m89.js";
 import { wS, Ut, PSn, ISn, k } from "../settings/global-config-and-gates.27xj.js";
 import { pze } from "../remote/chunk-c1rfegja.js";
-import { hhe, yhe } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { hhe, yhe } from "./projects-thread-reply-lead-killswitch.c5ve.js";
 import { Zl } from "../telemetry/focus-events.e5dw.js";
 import { u8, aqn } from "../git/needs-reply.erbp.js";
 import { r_e } from "../shared/chunk-m4gj9wzd.js";

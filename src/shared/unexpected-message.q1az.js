@@ -1,5 +1,5 @@
-// vendor/mcp-sdk/unexpected-message.q1az.js — Claude Code 2.1.310 模块 chunk-q1azmzmz.js
-import { D } from "../../shared/chunk-6rnejvk7.js";
+// shared/unexpected-message.q1az.js — Claude Code 2.1.310 模块 chunk-q1azmzmz.js
+import { D } from "./chunk-6rnejvk7.js";
 function b1n(e) {
   return "method" in e && "id" in e && e.id !== null;
 }

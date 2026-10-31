@@ -1,10 +1,11 @@
 #!/usr/bin/env bun
 // 从官方 Claude Code 原生可执行程序重新生成本项目的 src/ assets/ reference/ docs/reference/ LICENSE。
 //
-//   bun extract/index.js [--binary <claude>] [--sdk-types <sdk-tools.d.ts>]
+//   bun extract/index.js [--binary <claude>] [--sdk-types <sdk-tools.d.ts>] [--license <LICENSE.md>]
 //
 // 默认读取 extract/upstream/ 下的官方发布内容（获取方式见 extract/README.md）。
 // 流水线：读取模块图 → 资源 → 格式化与分析 → 组装源码 → 参考资料 → LICENSE。
+// 读取与分析全部完成后才开始写入项目目录，中途出错不会留下新旧混杂的结果。
 // src/main.js 与 src/runtime/ 为手写代码，不会被覆盖。
 import fs from "node:fs";
 import path from "node:path";
@@ -22,15 +23,16 @@ const { values: args } = parseArgs({
   options: {
     binary: { type: "string", default: path.join(HERE, "upstream/claude-code-darwin-arm64/claude") },
     "sdk-types": { type: "string", default: path.join(HERE, "upstream/claude-code/sdk-tools.d.ts") },
+    license: { type: "string", default: path.join(HERE, "upstream/claude-code/LICENSE.md") },
   },
 });
 
 const t0 = performance.now();
 const step = (msg) => console.log(`[${((performance.now() - t0) / 1000).toFixed(1).padStart(5)}s] ${msg}`);
 
-for (const file of [args.binary, args["sdk-types"]]) {
+for (const [flag, file] of [["--binary", args.binary], ["--sdk-types", args["sdk-types"]], ["--license", args.license]]) {
   if (!fs.existsSync(file)) {
-    console.error(`找不到 ${file}。请先获取官方发布内容（见 extract/README.md），或用 --binary / --sdk-types 指定位置。`);
+    console.error(`找不到 ${file}。请先获取官方发布内容（见 extract/README.md），或用 ${flag} 指定位置。`);
     process.exit(2);
   }
 }
@@ -44,21 +46,15 @@ step(`Claude Code ${version}`);
 const { modules } = readBunModules(args.binary);
 step(`模块图：${modules.length} 个模块`);
 
-// 2. 资源（先写到临时目录，成功后再替换 assets/）
+// 2. 资源：先写到临时目录，第 4 步开始写入时再替换 assets/
 const refs = scanAssetRefs(modules);
 const tmpAssets = fs.mkdtempSync(path.join(ROOT, ".assets-"));
-let assetIndex;
-try {
-  assetIndex = writeAssets(modules, refs, layout.assets, tmpAssets);
-  fs.mkdirSync(path.join(tmpAssets, "sdk"), { recursive: true });
-  fs.copyFileSync(args["sdk-types"], path.join(tmpAssets, "sdk/sdk-tools.d.ts"));
-  writeJson(path.join(tmpAssets, "INDEX.json"), assetIndex);
-  fs.chmodSync(tmpAssets, 0o755); // mkdtemp 建出的目录是 0700
-  fs.rmSync(path.join(ROOT, "assets"), { recursive: true, force: true });
-  fs.renameSync(tmpAssets, path.join(ROOT, "assets"));
-} finally {
-  fs.rmSync(tmpAssets, { recursive: true, force: true });
-}
+process.on("exit", () => fs.rmSync(tmpAssets, { recursive: true, force: true }));
+const assetIndex = writeAssets(modules, refs, layout.assets, tmpAssets);
+fs.mkdirSync(path.join(tmpAssets, "sdk"), { recursive: true });
+fs.copyFileSync(args["sdk-types"], path.join(tmpAssets, "sdk/sdk-tools.d.ts"));
+writeJson(path.join(tmpAssets, "INDEX.json"), assetIndex);
+fs.chmodSync(tmpAssets, 0o755); // mkdtemp 建出的目录是 0700
 step(`资源：${assetIndex.length} 个`);
 
 // 3. 格式化与静态分析
@@ -70,7 +66,7 @@ const js = modules.filter((m) => m.loader === "js").map((m) => {
 const analysis = { strings: analyzeStrings(js), tools: analyzeTools(js), gates: analyzeGates(js), cli: analyzeCli(js) };
 step(`分析：${analysis.tools.length} 个工具、${analysis.strings.commands.length} 个命令定义、${Object.keys(analysis.gates.gates).length} 个特性开关、${analysis.cli.options.length} 个 CLI 选项`);
 
-// 4. 组装源码
+// 4. 组装源码（从这里开始写入项目目录）
 const owners = { tool: new Map(), command: new Map(), skill: new Map() };
 const own = (m, id, name) => (m.get(id) ?? m.set(id, new Set()).get(id)).add(name);
 for (const t of analysis.tools) if (!t.name.startsWith("(")) own(owners.tool, t.chunk, t.name);
@@ -84,6 +80,8 @@ const loaderOf = Object.fromEntries(modules.map((m) => [m.name, m.loader]));
 const assetPath = Object.fromEntries(assetIndex.map((a) => [a.bunfs, a.path]));
 const srcDir = path.join(ROOT, "src");
 const { legal, stat } = writeSources(js, plan, loaderOf, assetPath, srcDir, version);
+fs.rmSync(path.join(ROOT, "assets"), { recursive: true, force: true });
+fs.renameSync(tmpAssets, path.join(ROOT, "assets"));
 const named = Object.values(plan).filter((p) => !/\/chunk-[a-z0-9]{8}\.js$/.test(p)).length;
 step(`源码：${js.length} 个模块（${named} 个语义命名）；改写 ${stat.module} 处模块引用、${stat.text + stat.file + stat.napi} 处资源引用`);
 
@@ -105,7 +103,7 @@ step("参考资料：reference/、docs/reference/");
 // 6. LICENSE
 writeLicense(path.join(ROOT, "LICENSE"), {
   version,
-  upstreamLicense: fs.readFileSync(path.join(path.dirname(args.binary), "LICENSE.md"), "utf8").trim(),
+  upstreamLicense: fs.readFileSync(args.license, "utf8").trim(),
   upstreamHeader: js.find((m) => m.id === "cli").raw.match(/^\/\/ @bun @bytecode\n((?:\/\/.*\n|\n)*?)\/\/ Version:/)?.[1] ?? "",
   legal,
 });

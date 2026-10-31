@@ -3,7 +3,7 @@ import { Da } from "../context/chunk-ce3zw0qt.js";
 import { w } from "../ui/chunk-zqxc4qtb.js";
 import { xe } from "./chunk-fdmmynxd.js";
 import { Gn, xr } from "./chunk-p82eferg.js";
-import { Q8t, qgr, pn, rt } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { Q8t, qgr, pn, rt } from "../telemetry/render-glyph-cardinality.7car.js";
 import { dw } from "./chunk-tpt8sqdk.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";
 import { Gt, de, Se, P, Xt, y, j } from "../vendor/react/chunk-s8vmszp2.js";

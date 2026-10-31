@@ -4,7 +4,7 @@ import { w } from "./chunk-zqxc4qtb.js";
 import { K1 } from "../shared/chunk-7xx4c906.js";
 import { vA } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { W_, Pbn, f_ } from "../fs/reply-across-default-dirs.esvz.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { sl } from "./truncate-end.8a5j.js";
 import { ne } from "../workflows/workflow-size-guideline-change.1rc0.js";
 import { JM, Yie } from "./aria-hidden.pbff.js";

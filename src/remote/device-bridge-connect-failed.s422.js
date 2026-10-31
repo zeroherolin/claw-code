@@ -15,7 +15,7 @@ import { Yl, rr } from "../artifacts/chunk-m8t7qekn.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { o4r } from "../mcp/toolbox-mcp-server-id.fewh.js";
 import { Be, Tt } from "../mcp/allowed-warning.j2d4.js";
-import { ck, lC } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { ck, lC } from "../fs/ca-certs-load.ft7b.js";
 import { o5 } from "../shared/chunk-cg45s1mf.js";
 import { tCt } from "../auth/auth-launcher-host-login.9f3m.js";
 import { T6o } from "./sessions-elevated-auth-disable-proactive-enrollment.q95y.js";

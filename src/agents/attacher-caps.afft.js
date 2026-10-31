@@ -12,7 +12,7 @@ import { zw, wT } from "../shared/chunk-daaayw23.js";
 import { bl } from "../fs/reply-across-default-dirs.esvz.js";
 import { wkt, xL } from "../fs/chunk-q5g832za.js";
 import { wS } from "../settings/global-config-and-gates.27xj.js";
-import { lii } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { lii } from "../terminal/xterm-ghostty.qrwz.js";
 import { zd } from "../remote/chunk-c1rfegja.js";
 import { m0, A1e } from "../shared/deep-link.aet8.js";
 import { vHs, dGn, sE, Mk } from "../core/conversation-engine.31gx.js";

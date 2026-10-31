@@ -2,9 +2,9 @@
 import { w } from "./chunk-zqxc4qtb.js";
 import { cs } from "../shared/chunk-bezz9j8a.js";
 import { $t } from "../shared/chunk-j79dwkaq.js";
-import { Xoe } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { Xoe } from "../terminal/xterm-ghostty.qrwz.js";
 import { le } from "../shared/chunk-abagh0tt.js";
-import { rt, s, n, ts, sae, Ml, Ys } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, s, n, ts, sae, Ml, Ys } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ip, vg, R$ } from "../terminal/ink-renderer.pma0.js";
 import { Pc } from "../shared/chunk-h1g05r4t.js";
 import { xi } from "../terminal/left-arrow-blocked.q730.js";

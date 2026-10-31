@@ -1,7 +1,7 @@
 // cli/cli-error.194y.js — Claude Code 2.1.310 模块 chunk-194yzxrq.js
 import { $f, fn, $U, X2t, Fp, gj, hj, Oo, rs, nT } from "../shared/cli-error.bk7h.js";
 import "../shared/chunk-w13tcac4.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "../shared/chunk-4kxy1036.js";
 import "../shared/environment.9a41.js";
 import "../fs/chunk-dz0rx1wn.js";

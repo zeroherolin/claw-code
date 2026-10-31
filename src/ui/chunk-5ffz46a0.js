@@ -1,7 +1,7 @@
 // ui/chunk-5ffz46a0.js — Claude Code 2.1.310 模块 chunk-5ffz46a0.js
 import { w } from "./chunk-zqxc4qtb.js";
 import { il } from "../shared/chunk-bezz9j8a.js";
-import { s } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ql } from "./chunk-awzn8y5e.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 var aw = 2, HA = 1, rq = 2;

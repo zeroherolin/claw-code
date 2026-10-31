@@ -1,7 +1,7 @@
 // ui/feedback-queue-opened.761d.js — Claude Code 2.1.310 模块 chunk-761d4tjg.js
 import { lu } from "./aria-hidden.r9bm.js";
 import { Ce } from "../shared/chunk-9vjqn6fm.js";
-import { pn, rt, s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, rt, s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { F } from "../context/not-admin-owned.ersa.js";
 import { Kr } from "../agents/third-party.ydpb.js";
 import { w } from "./chunk-zqxc4qtb.js";

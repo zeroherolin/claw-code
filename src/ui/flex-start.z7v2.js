@@ -4,7 +4,7 @@ import { mss } from "../context/not-admin-owned.ersa.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { le } from "../shared/chunk-abagh0tt.js";
 import { Jst } from "../shared/async-hooks.m2fg.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { qc } from "../terminal/ink-renderer.pma0.js";
 import { r0 } from "../shared/chunk-wnqh3675.js";
 import { Q, e, r } from "../vendor/react/chunk-f790ajz4.js";

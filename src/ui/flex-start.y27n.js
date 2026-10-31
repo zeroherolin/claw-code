@@ -3,7 +3,7 @@ import { I } from "../shared/chunk-j79dwkaq.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { ft } from "../fs/async-hooks.2k4e.js";
 import { zx } from "../agents/in-process-teammate.5te1.js";
-import { _i, rt, s, n, Ta } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { _i, rt, s, n, Ta } from "../telemetry/render-glyph-cardinality.7car.js";
 import { VD, XS } from "../shared/general-purpose.t0jz.js";
 import { QM } from "../shared/chunk-3mz4bt3m.js";
 import { Ss } from "../telemetry/chunk-ky8866zn.js";

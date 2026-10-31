@@ -4,7 +4,7 @@ import { Rf, ye, xf, RA } from "../context/not-admin-owned.ersa.js";
 import { c } from "../agents/third-party.ydpb.js";
 import { d } from "../telemetry/anthropic-workspace-id.36ys.js";
 import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { Ese } from "../shell/invalid-type.qnva.js";
 import { pnt, IG, jV, B_e, Hh, WV, tvt, rvt, TLe, it, Wb, Xe, Ft } from "./global-config-and-gates.27xj.js";
 import { a } from "../telemetry/chunk-wq923bwc.js";

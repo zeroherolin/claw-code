@@ -1,5 +1,5 @@
 // context/is-claude-md-loading-disabled.yxtz.js — Claude Code 2.1.310 模块 chunk-yxtzshp2.js
-import { mr, QA } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr, QA } from "../workflows/chunk-0c6r1zf7.js";
 import "../shared/chunk-4kxy1036.js";
 import "../shared/environment.9a41.js";
 import "../fs/chunk-dz0rx1wn.js";

@@ -1,7 +1,7 @@
 // ui/aria-hidden.kytf.js — Claude Code 2.1.310 模块 chunk-kytfex5e.js
 import { eE } from "../shared/chunk-y6x1q9pp.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { wUe, WR, EUe, P_, Yg, cw } from "../shared/xterm-ghostty.n6f6.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";
 import { b, En } from "../vendor/react/chunk-meds60nn.js";

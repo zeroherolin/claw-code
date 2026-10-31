@@ -4,7 +4,7 @@ import "../shared/chunk-r11rh2z0.js";
 import "../mcp/spawn-to-exec-ms.vdbg.js";
 import "../shared/cli-error.bk7h.js";
 import "../shared/chunk-w13tcac4.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "../shared/chunk-s56ftfc1.js";
 import "./workflow-launch-exec.t4r2.js";
 import "../models/claude-mythos-preview.rw6s.js";

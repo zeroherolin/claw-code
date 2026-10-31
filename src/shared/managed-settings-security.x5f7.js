@@ -1,5 +1,5 @@
 // shared/managed-settings-security.x5f7.js — Claude Code 2.1.310 模块 chunk-x5f727b9.js
-import { Zi, J1 } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { Zi, J1 } from "../telemetry/render-glyph-cardinality.7car.js";
 import { ha } from "./chunk-6d9n0jaa.js";
 import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
 import { w } from "../ui/chunk-zqxc4qtb.js";

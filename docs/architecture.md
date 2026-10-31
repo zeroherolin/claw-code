@@ -152,31 +152,31 @@
 | `core/` | 3 | 对话引擎（流式请求、工具执行、压缩、hooks、权限、内置核心工具）、回合循环、系统提示词分块 |
 | `cli/` | 48 | 进程入口之后的命令行层：commander 程序、会话准备、无头模式、快速路径 |
 | `ui/` | ≈178 | React 组件：REPL 主界面、对话框、消息渲染、引导 |
-| `terminal/` | ≈14 | 终端能力：Ink 渲染器、CellSegmenter 工厂、图片协议、剪贴板 |
+| `terminal/` | ≈17 | 终端能力：Ink 渲染器、CellSegmenter 工厂、图片协议、剪贴板 |
 | `tools/` | ≈50 | 内置工具（Agent、AskUserQuestion、Cron*、Monitor、WebFetch……） |
 | `commands/` | ≈17 | 斜杠命令实现（列表见 [COMMANDS.md](reference/COMMANDS.md)） |
 | `skills/` | ≈61 | 内置 skill 的加载与执行（文档在 `assets/skills/`） |
 | `api/` | ≈9 | Anthropic SDK 客户端，以及 Bedrock / Vertex / Foundry 适配 |
-| `auth/` | ≈95 | OAuth、API key、Keychain、凭据刷新、云厂商凭据 |
+| `auth/` | ≈96 | OAuth、API key、Keychain、凭据刷新、云厂商凭据 |
 | `models/` | ≈17 | 模型目录、别名、能力判定 |
-| `permissions/` | ≈103 | 权限规则、auto mode 分类器、拒绝与询问 |
-| `settings/` | ≈87 | 分层设置、全局配置、特性开关、托管策略 |
+| `permissions/` | ≈104 | 权限规则、auto mode 分类器、拒绝与询问 |
+| `settings/` | ≈88 | 分层设置、全局配置、特性开关、托管策略 |
 | `hooks/` | ≈34 | hooks 系统与内置 hooks 模块（含 hooks worker） |
 | `mcp/` | ≈121 | MCP 客户端与服务器、OAuth、注册表 |
-| `plugins/` | ≈66 | 插件与市场 |
+| `plugins/` | ≈67 | 插件与市场 |
 | `agents/` | ≈101 | 子代理、团队与 fleet 视图 |
-| `tasks/` `workflows/` | ≈53 | 后台任务、daemon、workflow 编排 |
-| `remote/` | ≈126 | 远程会话、bridge、teleport、self-hosted runner |
-| `context/` | ≈106 | 上下文构造：CLAUDE.md、记忆、团队记忆同步、附件 |
-| `shell/` | ≈74 | shell 进程、快照、沙箱、PTY |
-| `fs/` `git/` | ≈144 | 文件系统、ripgrep、git、worktree |
+| `tasks/` `workflows/` | ≈54 | 后台任务、daemon、workflow 编排 |
+| `remote/` | ≈128 | 远程会话、bridge、teleport、self-hosted runner |
+| `context/` | ≈107 | 上下文构造：CLAUDE.md、记忆、团队记忆同步、附件 |
+| `shell/` | ≈75 | shell 进程、快照、沙箱、PTY |
+| `fs/` `git/` | ≈145 | 文件系统、ripgrep、git、worktree |
 | `ide/` `chrome/` `web/` | ≈53 | IDE 集成与 LSP、Chrome 扩展、WebFetch 和 WebSearch 辅助 |
 | `artifacts/` `design/` | ≈78 | Artifact、Claude Design |
 | `computer-use/` `native/` | ≈25 | 计算机操作、语音；原生模块 JS 包装（`.node` 文件在 `assets/native/`） |
-| `telemetry/` | ≈140 | 事件上报、OpenTelemetry、诊断 |
+| `telemetry/` | ≈141 | 事件上报、OpenTelemetry、诊断 |
 | `onboarding/` | 6 | 首次引导与信任 |
-| `shared/` | ≈668 | 被多个功能区共用、无法归入单一区域的模块（含大量小型工具函数） |
-| `vendor/` | ≈90 | 第三方库：react、ink、yoga、zod、commander、chalk、marked、highlight、ajv、jose、semver、parse5、acorn、grpc、opentelemetry、aws-sdk、google-auth、mcp-sdk、anthropic-sdk |
+| `shared/` | ≈670 | 被多个功能区共用、无法归入单一区域的模块（含大量小型工具函数） |
+| `vendor/` | ≈74 | 第三方库（含 Claude Code 自身代码的模块不归入此处）：react、ink、yoga、zod、commander、chalk、marked、highlight、ajv、jose、semver、parse5、acorn、grpc、opentelemetry、aws-sdk、google-auth、mcp-sdk、anthropic-sdk |
 | `runtime/` | 4 | **本项目手写**：assets、bun-ant、cell-segmenter、embedded-tools |
 
 表中带 ≈ 的数字会随重新生成略有变化。

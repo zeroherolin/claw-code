@@ -6,7 +6,7 @@ import { i } from "../shared/environment.9a41.js";
 import { ee, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { St, I1 } from "../artifacts/cowritten-artifact-html.thm2.js";
 import { qrr } from "../mcp/allowed-warning.j2d4.js";
-import { ck, lC } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { ck, lC } from "../fs/ca-certs-load.ft7b.js";
 import { nl, Ln, al, pa, NF, k } from "../settings/global-config-and-gates.27xj.js";
 import { Kv } from "../settings/non-string-value.58dq.js";
 import { dC } from "../shared/chunk-ezj1r7jn.js";

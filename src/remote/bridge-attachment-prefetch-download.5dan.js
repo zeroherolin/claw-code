@@ -15,7 +15,7 @@ import { lP } from "../shell/chunk-tjkwy3jp.js";
 import { cP, DM, Hn } from "../fs/utf-8.7pve.js";
 import { _r, je } from "../plugins/chunk-x0a7sawk.js";
 import { pA } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { oa } from "../fs/ca-certs-load.ft7b.js";
 import { bYn, B3, b4s } from "../shared/chunk-dt3nc68w.js";
 import { g4s } from "../telemetry/image-resize-fallback.6bjg.js";
 import { dle, Qte } from "../telemetry/chunk-d2xe79w0.js";

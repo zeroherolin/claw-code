@@ -6,7 +6,7 @@ import { w } from "./chunk-zqxc4qtb.js";
 import { yS, bm } from "../settings/global-config-and-gates.27xj.js";
 import { le } from "../shared/chunk-abagh0tt.js";
 import { ft, un, mbe, yr } from "../fs/async-hooks.2k4e.js";
-import { s, n, Ta } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, Ta } from "../telemetry/render-glyph-cardinality.7car.js";
 import { H0 } from "../telemetry/focus-events.e5dw.js";
 import { gt } from "./aria-label.99qs.js";
 import { il, cs } from "../shared/chunk-bezz9j8a.js";

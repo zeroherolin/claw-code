@@ -32,7 +32,7 @@
 | `tengu_attempt_decision_shadow` | false | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
 | `tengu_auto_mode_config` | "<object>" / "<f>" | [settings/global-config-and-gates.27xj.js](../../src/settings/global-config-and-gates.27xj.js), [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) … |
 | `tengu_auto_mode_worktree_fast_path` | false | [context/org-memory-writes-setting-changed.w8x9.js](../../src/context/org-memory-writes-setting-changed.w8x9.js) |
-| `tengu_basalt_meadow` | false | [vendor/yoga/render-glyph-cardinality.7car.js](../../src/vendor/yoga/render-glyph-cardinality.7car.js) |
+| `tengu_basalt_meadow` | false | [telemetry/render-glyph-cardinality.7car.js](../../src/telemetry/render-glyph-cardinality.7car.js) |
 | `tengu_basalt_scarp` | false | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
 | `tengu_basalt_spur` | false | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
 | `tengu_bg_attach_stall_ms` | "<Rn>" | [telemetry/bg-daemon-spawn-reinstall-wait.vspy.js](../../src/telemetry/bg-daemon-spawn-reinstall-wait.vspy.js) |
@@ -289,8 +289,8 @@
 | `tengu_hazel_osprey_floor` | "<b>" | [context/create-context-hint-controller.mpdt.js](../../src/context/create-context-hint-controller.mpdt.js) |
 | `tengu_hazy_cosmos` | true | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
 | `tengu_hazy_nova` | false | [cli/headless-print-mode.tt02.js](../../src/cli/headless-print-mode.tt02.js) |
-| `tengu_hearth_member_relay_rows_enabled` | false | [vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js](../../src/vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js) |
-| `tengu_hearth_resolved_rows` | "off" | [vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js](../../src/vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js) |
+| `tengu_hearth_member_relay_rows_enabled` | false | [context/projects-thread-reply-lead-killswitch.c5ve.js](../../src/context/projects-thread-reply-lead-killswitch.c5ve.js) |
+| `tengu_hearth_resolved_rows` | "off" | [context/projects-thread-reply-lead-killswitch.c5ve.js](../../src/context/projects-thread-reply-lead-killswitch.c5ve.js) |
 | `tengu_heron_brook` | "" | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
 | `tengu_hidden_frog` | true | [telemetry/reactive-compact-remote.67cw.js](../../src/telemetry/reactive-compact-remote.67cw.js) |
 | `tengu_hidden_volcano` | null | [ui/repl-screen.zq77.js](../../src/ui/repl-screen.zq77.js) |
@@ -494,10 +494,10 @@
 | `tengu_precious_koala` | "off" | [mcp/tool-search-unsupported-models.9b5s.js](../../src/mcp/tool-search-unsupported-models.9b5s.js) |
 | `tengu_print_ceiling_stop_agents` | true | [cli/headless-print-mode.tt02.js](../../src/cli/headless-print-mode.tt02.js) |
 | `tengu_proactivity_selector` | true | [cli/session-setup.jbe4.js](../../src/cli/session-setup.jbe4.js) |
-| `tengu_projects_compact_thread_rule_enabled` | false | [vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js](../../src/vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js) |
+| `tengu_projects_compact_thread_rule_enabled` | false | [context/projects-thread-reply-lead-killswitch.c5ve.js](../../src/context/projects-thread-reply-lead-killswitch.c5ve.js) |
 | `tengu_projects_thread_recap` | false | [context/classifier-disabled-surfaces.x4d0.js](../../src/context/classifier-disabled-surfaces.x4d0.js) |
 | `tengu_projects_thread_recap_prompt` | "" | [ui/append-timeline-line.s2sn.js](../../src/ui/append-timeline-line.s2sn.js) |
-| `tengu_projects_thread_reply_lead_killswitch` | false | [vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js](../../src/vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js) |
+| `tengu_projects_thread_reply_lead_killswitch` | false | [context/projects-thread-reply-lead-killswitch.c5ve.js](../../src/context/projects-thread-reply-lead-killswitch.c5ve.js) |
 | `tengu_prompt_cache_1h_config` | "<object>" | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
 | `tengu_propose_goal` | false | [telemetry/chunk-z2f7n7b6.js](../../src/telemetry/chunk-z2f7n7b6.js) |
 | `tengu_proud_clover` | false | [models/ccr-unsupported-default-mode-ignored.fdkh.js](../../src/models/ccr-unsupported-default-mode-ignored.fdkh.js) |
@@ -731,10 +731,10 @@
 | `tengu_wondrous_acorn` | null | [core/conversation-engine.31gx.js](../../src/core/conversation-engine.31gx.js) |
 | `tengu_wondrous_island` | false | [remote/turn-handoff-flag-wait.bej0.js](../../src/remote/turn-handoff-flag-wait.bej0.js) |
 | `tengu_woolly_forest` | true | [telemetry/reactive-compact-remote.67cw.js](../../src/telemetry/reactive-compact-remote.67cw.js) |
-| `tengu_worker_owner_rows_killswitch` | false | [vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js](../../src/vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js) |
+| `tengu_worker_owner_rows_killswitch` | false | [context/projects-thread-reply-lead-killswitch.c5ve.js](../../src/context/projects-thread-reply-lead-killswitch.c5ve.js) |
 | `tengu_workflow_schema_lint_enforce` | true | [workflows/workflow-journal-started-hit-respawn.6tba.js](../../src/workflows/workflow-journal-started-hit-respawn.6tba.js) |
 | `tengu_workflows_enabled` | true | [workflows/managed-settings.qezs.js](../../src/workflows/managed-settings.qezs.js) |
-| `tengu_xterm_atlas_reset` | true | [vendor/yoga/render-glyph-cardinality.7car.js](../../src/vendor/yoga/render-glyph-cardinality.7car.js) |
+| `tengu_xterm_atlas_reset` | true | [telemetry/render-glyph-cardinality.7car.js](../../src/telemetry/render-glyph-cardinality.7car.js) |
 | `tengu_zany_flask` | 2 | [telemetry/sdk-hosted-disabled.n8b9.js](../../src/telemetry/sdk-hosted-disabled.n8b9.js) |
 | `tengu_zany_melody` | true | [telemetry/bridge-resume-respects-local-owner.8dk3.js](../../src/telemetry/bridge-resume-respects-local-owner.8dk3.js) |
 | `tengu_zesty_pearl` | false | [context/org-memory-writes-setting-changed.w8x9.js](../../src/context/org-memory-writes-setting-changed.w8x9.js) |

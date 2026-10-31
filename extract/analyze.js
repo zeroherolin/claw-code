@@ -163,7 +163,7 @@ function retLiteral(fn) {
 }
 
 export function analyzeTools(mods) {
-  const relevant = mods.filter((m) => /\btn\(\{/.test(m.code) || /inputSchema/.test(m.code));
+  const relevant = mods.filter((m) => /inputSchema/.test(m.code));
   // 工具名可能是从别的模块导入的字符串常量：先建"导出名 → 常量值"表
   const exportConst = {}, localConst = {}, imports = {};
   for (const mod of relevant) {
@@ -268,7 +268,7 @@ function locateGateModule(mods) {
       return [local, as ?? local];
     }));
     const funcs = [getValue, getWithSource, pinned?.[1]].filter(Boolean);
-    const passThrough = new RegExp(`function ([\\w$]+)\\(e, n2?(?:, [\\w$]+)*\\) \\{\\n  return ${getValue.replace("$", "\\$")}\\(e, n2?\\);\\n\\}`, "g");
+    const passThrough = new RegExp(`function ([\\w$]+)\\(e, n2?(?:, [\\w$]+)*\\) \\{\\n  return ${getValue.replaceAll("$", "\\$")}\\(e, n2?\\);\\n\\}`, "g");
     for (const m of code.matchAll(passThrough)) funcs.push(m[1]);
     return { id, funcs: new Map(funcs.filter((f) => exported.has(f)).map((f) => [exported.get(f), f])) };
   }

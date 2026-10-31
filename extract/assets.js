@@ -118,7 +118,7 @@ export function writeAssets(modules, refs, layout, outDir) {
     index.push({ bunfs: mod.name, path: rel, bytes: data.length, logical_keys: r.keys, referenced_by: r.chunks });
   }
   if (unplaced.length) {
-    throw new Error(`${unplaced.length} 个资源没有归档规则，请补进 layout 文件（见 docs/maintenance.md）:\n  ${unplaced.join("\n  ")}`);
+    throw new Error(`${unplaced.length} 个资源没有归档规则，请补进 layout 文件（见 extract/README.md#升级到新版本）:\n  ${unplaced.join("\n  ")}`);
   }
   return index.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 }

@@ -1,6 +1,6 @@
 // auth/get-bearer-token-provider.hrvv.js — Claude Code 2.1.310 模块 chunk-hrvvx2sn.js
 import { MGt, q6o, $Zs } from "../shared/chunk-y06cm2z2.js";
-import { UQo, y8r } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { UQo, y8r } from "../fs/ca-certs-load.ft7b.js";
 import { CGt } from "../shared/chunk-967bck0p.js";
 import { oy } from "../mcp/allowed-warning.j2d4.js";
 import { WQo, Nvn } from "../fs/content-encoding.v6wj.js";

@@ -1,9 +1,9 @@
-// vendor/opentelemetry/chunk-6rkmrewr.js — Claude Code 2.1.310 模块 chunk-6rkmrewr.js
-import { J } from "../../context/not-admin-owned.ersa.js";
-import { Wp } from "../../mcp/toolbox-mcp-server-id.fewh.js";
-import { yd } from "../../remote/self-hosted.qq4m.js";
-import { i } from "../../shared/environment.9a41.js";
-import { LAe } from "../../settings/global-config-and-gates.27xj.js";
+// remote/chunk-6rkmrewr.js — Claude Code 2.1.310 模块 chunk-6rkmrewr.js
+import { J } from "../context/not-admin-owned.ersa.js";
+import { Wp } from "../mcp/toolbox-mcp-server-id.fewh.js";
+import { yd } from "./self-hosted.qq4m.js";
+import { i } from "../shared/environment.9a41.js";
+import { LAe } from "../settings/global-config-and-gates.27xj.js";
 var d = /^\/v1\/code\/sessions\/[A-Za-z0-9_-]+\/worker\/otlp\/((?:customer\/)?[a-z]+)$/;
 function o(r, e) {
   let t = d.exec(r);

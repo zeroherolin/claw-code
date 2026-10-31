@@ -21,7 +21,7 @@ import { qC, rWt } from "./org-memory-writes-setting-changed.w8x9.js";
 import { eG } from "../plugins/entry-refused.bp7z.js";
 import { EGn, hIr, yon, Nmt, vMe, jRo, WRo, JMr, E2, qge, Vke } from "../core/conversation-engine.31gx.js";
 import { zA } from "./team-memory-sync.0s3j.js";
-import { mr, QA } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr, QA } from "../workflows/chunk-0c6r1zf7.js";
 import { DJ } from "../plugins/chunk-3qffpjgv.js";
 import { WTs, GTs, QMt, JEe, p$n, Xho } from "../permissions/keep-covers-device-tools.azbs.js";
 import { g6, Eme } from "../remote/ccr-synced-file-push.cp86.js";

@@ -17,7 +17,7 @@ import { gu } from "../shared/chunk-85b0dqn6.js";
 import { mVr } from "../hooks/tool-name.v56n.js";
 import { Dde } from "../plugins/chunk-3qffpjgv.js";
 import { k2t, Xgn, sY, gwt, C2t, u_e, PDe, T2t, OQn, dAe, fGo, mGo, Y2r, bi } from "../context/account-memory-text-not-identified.y6np.js";
-import { itt } from "../vendor/opentelemetry/chunk-6rkmrewr.js";
+import { itt } from "../remote/chunk-6rkmrewr.js";
 import { Db } from "../shared/chunk-b6n7b0tm.js";
 import { Fn } from "../models/claude-mythos-preview.rw6s.js";
 import { Ae } from "../vendor/react/chunk-meds60nn.js";

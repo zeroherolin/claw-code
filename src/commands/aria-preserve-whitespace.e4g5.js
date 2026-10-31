@@ -2,8 +2,8 @@
 import { w } from "../ui/chunk-zqxc4qtb.js";
 import { Vh } from "../computer-use/chunk-b7pvmcry.js";
 import { Pc } from "../shared/chunk-h1g05r4t.js";
-import { Xoe, he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
-import { pn, rt, s, n, ts, sae, Wa } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { Xoe, he } from "../terminal/xterm-ghostty.qrwz.js";
+import { pn, rt, s, n, ts, sae, Wa } from "../telemetry/render-glyph-cardinality.7car.js";
 import { R$ } from "../terminal/ink-renderer.pma0.js";
 import { Co } from "../shared/chunk-q3z3d485.js";
 import { Pr } from "../shared/chunk-y6x1q9pp.js";

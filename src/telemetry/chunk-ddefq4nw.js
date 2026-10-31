@@ -7,7 +7,7 @@ import { FNe, uKt, mse, NL, nz, a5 } from "../settings/settings-auto-mode-rules-
 import { B8o, xwn } from "../shell/find-generic-password.dx7z.js";
 import { NNe } from "../auth/auth-launcher-host-login.9f3m.js";
 import { doe } from "../settings/non-string-value.58dq.js";
-import { oQs } from "../vendor/semver/chunk-8jjp6ksr.js";
+import { oQs } from "../settings/chunk-8jjp6ksr.js";
 import { kGr } from "../cli/apply-project-settings.g90t.js";
 import { z } from "../shared/chunk-mxa4mwnj.js";
 class s {

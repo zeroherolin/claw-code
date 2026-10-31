@@ -1,6 +1,6 @@
 // ui/chunk-pa7t20es.js — Claude Code 2.1.310 模块 chunk-pa7t20es.js
 import { Ip } from "../terminal/ink-renderer.pma0.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Zr } from "../shared/chunk-6d9n0jaa.js";
 import { gv } from "../shared/chunk-4v37zz27.js";
 import { I, $t } from "../shared/chunk-j79dwkaq.js";

@@ -1,5 +1,5 @@
 // shared/action-not-found.3j3w.js — Claude Code 2.1.310 模块 chunk-3j3we9qs.js
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { le } from "./chunk-abagh0tt.js";
 import { Bse } from "../fs/async-hooks.2k4e.js";
 import { XA, h5n, DQe, zyt } from "../telemetry/keybinding-customization-release.66sh.js";

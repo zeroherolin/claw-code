@@ -4,7 +4,7 @@ import { _, ee } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { Tro } from "../terminal/ink-renderer.pma0.js";
 import { Pr } from "./chunk-y6x1q9pp.js";
 import { w } from "../ui/chunk-zqxc4qtb.js";
-import { n, ts } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n, ts } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ge } from "../ui/aria-hidden.by9c.js";
 import { oq } from "./chunk-sf99v8se.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";

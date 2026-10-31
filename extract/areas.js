@@ -4,9 +4,11 @@
 //   1. 已识别出的工具 / 斜杠命令 / skill 模块 → tools/ commands/ skills/
 //   2. 导出名命中 EXPORT_NAME_HINTS → 对应区域
 //   3. 对源码（大模块取首尾采样）按 VENDOR_RULES 与 APP_RULES 计分：
-//      第三方库得分须明显领先（≥ 1.5 倍）才归入 vendor/<库名>，否则取应用区域最高分
+//      第三方库得分须明显领先（≥ 1.5 倍）才归入 vendor/<库名>，否则取应用区域最高分；
+//      含 APP_MARKERS 的模块不参与 vendor 计分
 //   4. 都不匹配 → shared/
 // 每条计分规则为 [区域, 正则, 权重]；区域名即目录名。
+import { HEADER_RE } from "./lib.js";
 import { exportNames, isGoodName } from "./naming.js";
 
 const VENDOR_RULES = [
@@ -35,6 +37,11 @@ const VENDOR_RULES = [
   ["vendor/chalk", /chalk|ansi256|ansi16m/g, 2],
   ["vendor/commander", /commander|helpOption|allowExcessArguments/g, 1],
 ];
+
+// Claude Code 自身代码的标志：遥测事件、CLAUDE_CODE_* 环境变量、构建宏、产品名。第三方库不会出现这些；
+// 打包时应用代码可能与库代码合进同一个 chunk，这样的模块不归入 vendor/。
+// 检查时跳过每个模块开头的法律声明（其中也有 "Claude Code"）
+const APP_MARKERS = /\btengu_[a-z0-9_]+|\bCLAUDE_CODE_[A-Z0-9_]+|\bHOOKS_WORKER_URL\b|Claude Code/;
 
 const APP_RULES = [
   ["tools", /checkPermissions|renderToolUseMessage|renderToolResultMessage|mapToolResultToToolResultBlockParam|isConcurrencySafe|maxResultSizeChars/g, 3],
@@ -109,7 +116,7 @@ export function classify(id, src, owners) {
   const text = src.length > SAMPLE * 2 ? src.slice(0, SAMPLE) + src.slice(-SAMPLE) : src;
   for (const e of exportNames(src).filter(isGoodName)) for (const [re, area] of EXPORT_NAME_HINTS) if (re.test(e)) return area;
   const score = (rules) => rules.map(([a, re, w]) => [a, (text.match(re) || []).length * w]).filter((x) => x[1] > 0).sort((a, b) => b[1] - a[1]);
-  const v = score(VENDOR_RULES), a = score(APP_RULES);
+  const v = APP_MARKERS.test(src.replace(HEADER_RE, "")) ? [] : score(VENDOR_RULES), a = score(APP_RULES);
   if (v[0] && (!a[0] || v[0][1] >= a[0][1] * 1.5)) return v[0][0];
   if (a[0]) return a[0][0];
   return "shared";

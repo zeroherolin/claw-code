@@ -14,7 +14,7 @@ import { xo, aa, HKt, Bw, ni, zSe, Ks, sr } from "../shell/invalid-type.qnva.js"
 import { Wg, $Jo, $Z, eTt, nTt } from "../plugins/skills-dir.cemw.js";
 import { er } from "../settings/workflow-launch-exec.t4r2.js";
 import { wf } from "../commands/claude-code.vy1w.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { Zk } from "../fs/reply-across-default-dirs.esvz.js";
 import { Ff, oL, yf, X8 } from "../plugins/entry-refused.bp7z.js";
 import { r_, nf, pNo, jVs, WVs, GVs, gGe, bre, DO } from "../plugins/claudeai-plugins-sync-enabled.61rf.js";

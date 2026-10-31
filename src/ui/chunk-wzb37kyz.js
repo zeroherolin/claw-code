@@ -1,7 +1,7 @@
 // ui/chunk-wzb37kyz.js — Claude Code 2.1.310 模块 chunk-wzb37kyz.js
 import { Mm } from "../terminal/aria-preserve-whitespace.s6ps.js";
 import { un } from "../fs/async-hooks.2k4e.js";
-import { s, n, qX } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, qX } from "../telemetry/render-glyph-cardinality.7car.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { oq } from "../shared/chunk-sf99v8se.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";

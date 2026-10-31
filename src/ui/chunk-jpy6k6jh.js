@@ -1,6 +1,6 @@
 // ui/chunk-jpy6k6jh.js — Claude Code 2.1.310 模块 chunk-jpy6k6jh.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ge } from "./aria-hidden.by9c.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 import { en } from "../shared/chunk-qf4h7pyg.js";

@@ -52,7 +52,7 @@ import { ws, Qwn, Is, Ro, Qt, TS, AI, Sse } from "../settings/workflow-launch-ex
 import { nr } from "../remote/moved-directory.z3m0.js";
 import { xl, Fo, Te, $n, Od, Xx, Qs, sot } from "../models/total-tokens-reminder.psq3.js";
 import { Dt } from "../fs/content-encoding.v6wj.js";
-import { oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { oa } from "../fs/ca-certs-load.ft7b.js";
 import { rp, Mo } from "../git/ssh-placeholder.1144.js";
 import { tp } from "../shared/chunk-zqbbe0sy.js";
 import { De } from "../telemetry/chunk-20qqn614.js";
@@ -100,7 +100,7 @@ import { YB, jun } from "../telemetry/chunk-zbtej1v8.js";
 import { V7e, Q$, WUs, rDr, GUs, lCe, mKn } from "../tools/memory-write-tool.2csa.js";
 import { h_t, oFo, IKs, sFo, b9n, kHe, lUr, OKs, iFo, Oun, aFo, Mun, lBt, lFo, CHe, y_t, THe, MKs, Hun, w9n, nTe, Mg, RGe, dFo, Dun, E9n, uFo, Vde } from "../settings/shared-if-writable.m1rj.js";
 import { L5n } from "../plugins/claudeai-plugins-sync-enabled.61rf.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { nHe } from "../agents/api-system.j9gt.js";
 import { ns } from "../shared/chunk-5qjrv5ax.js";
 import { KJ, DGe, aZe } from "../fs/chunk-tcpay5ps.js";

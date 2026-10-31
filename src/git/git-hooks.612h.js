@@ -4,7 +4,7 @@ import { v, G } from "../telemetry/anthropic-workspace-id.36ys.js";
 import { i } from "../shared/environment.9a41.js";
 import { _ } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { st } from "./utf8-keep-bom.c49x.js";
-import { rP, oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { rP, oa } from "../fs/ca-certs-load.ft7b.js";
 import { execFile as Q } from "child_process";
 import { constants as A } from "fs";
 import { access as x, chmod as E, lstat as I, mkdir as H, readdir as Z, readFile as ee, readlink as ne, writeFile as k } from "fs/promises";

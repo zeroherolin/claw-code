@@ -29,7 +29,7 @@ import "../terminal/chunk-9vttrktj.js";
 import "../auth/profile-explicit.b7t3.js";
 import "../shared/chunk-nyvhtfb3.js";
 import "../fs/chunk-w461d8x8.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

@@ -1,6 +1,6 @@
 // shared/chunk-re15k666.js — Claude Code 2.1.310 模块 chunk-re15k666.js
 import { Tf } from "./environment.9a41.js";
-import { FQo } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { FQo } from "../fs/ca-certs-load.ft7b.js";
 function tBo(s, e, o) {
   let n = Tf() ? FQo(s, o) : void 0;
   if (!n) return;

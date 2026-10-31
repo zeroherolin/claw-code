@@ -1,6 +1,6 @@
 // ui/chunk-rj0pm0aj.js — Claude Code 2.1.310 模块 chunk-rj0pm0aj.js
 import { S6e } from "../cli/chunk-nrbn573b.js";
-import { rt, Vr } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, Vr } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Zr, Lfe } from "../shared/chunk-6d9n0jaa.js";
 import { Ma, Go } from "./aria-hidden.r9bm.js";
 import { Xn, ai } from "../core/conversation-engine.31gx.js";

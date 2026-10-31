@@ -4,7 +4,7 @@ import { yst } from "../git/utf-8.vh7e.js";
 import { W2 } from "../chrome/chrome-open-url.r2dv.js";
 import { cne } from "../core/conversation-engine.31gx.js";
 import { D } from "../shared/chunk-6rnejvk7.js";
-import { Cqt, Tqt } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { Cqt, Tqt } from "../fs/ca-certs-load.ft7b.js";
 function f(r) {
   return r.replace(/^www\./i, "");
 }

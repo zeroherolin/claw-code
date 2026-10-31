@@ -5,7 +5,7 @@ import { w4t } from "../telemetry/anthropic-workspace-id.36ys.js";
 import { Qr } from "../models/claude-3-5-sonnet.21mz.js";
 import { lmi, _t, UM, _, ie, Ms, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { fdr, sAt, tts, cit, nts } from "../artifacts/cowritten-artifact-html.thm2.js";
-import { g2e } from "../vendor/anthropic-sdk/claude-code-error-tracking.ba0h.js";
+import { g2e } from "../remote/claude-code-error-tracking.ba0h.js";
 import { wJs } from "../context/account-memory-text-not-identified.y6np.js";
 import { Wh } from "./chunk-mzb69x1h.js";
 import { dirname as p, join as g } from "path";

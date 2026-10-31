@@ -15,7 +15,7 @@ import { tr, Pt } from "../shared/async-hooks.m2fg.js";
 import { FH, W8r } from "../git/utf-8.vh7e.js";
 import { Hre, OYn } from "../api/anthropic-client.7pf8.js";
 import { ur } from "../permissions/turn-abort.yvwf.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lt } from "../shared/chunk-vj9gqe2s.js";
 import { gne, GN } from "../core/conversation-engine.31gx.js";
 import { Li } from "../core/system-prompt-blocks.dpjp.js";

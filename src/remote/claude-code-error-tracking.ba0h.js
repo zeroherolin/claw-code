@@ -1,16 +1,16 @@
-// vendor/anthropic-sdk/claude-code-error-tracking.ba0h.js — Claude Code 2.1.310 模块 chunk-ba0hdvwh.js
-import { __asset_src } from "../../runtime/assets.js";
-import { Tu, qCn } from "../../context/not-admin-owned.ersa.js";
-import { ir, Ht, zu, Ru, yk, WTn, m4t, q3e, g4t, Y3e, h4t, y4t, _4t, S4t, P$e, MW, N, vr, uis, GI, mis, $s } from "../../telemetry/anthropic-workspace-id.36ys.js";
-import { i } from "../../shared/environment.9a41.js";
-import { O } from "../../fs/chunk-dz0rx1wn.js";
-import { Uu, kz } from "../../remote/local-agent.we9a.js";
-import { Tp } from "../../auth/profile-explicit.b7t3.js";
-import { Spi, flr, bpi, wpi, kkn, Epi } from "../../git/utf8-keep-bom.c49x.js";
-import { Uni, Bni, it, Xe, bqr, w6t, jG, GG, E4o, EH, Jvt } from "../../settings/global-config-and-gates.27xj.js";
-import { ZQs } from "../../auth/allowed-taints-clean.v8z4.js";
-import { Thn, wzo, Ezo } from "../../telemetry/dd-evp-origin-version.230v.js";
-import { DSe, Ot } from "../../models/claude-mythos-preview.rw6s.js";
+// remote/claude-code-error-tracking.ba0h.js — Claude Code 2.1.310 模块 chunk-ba0hdvwh.js
+import { __asset_src } from "../runtime/assets.js";
+import { Tu, qCn } from "../context/not-admin-owned.ersa.js";
+import { ir, Ht, zu, Ru, yk, WTn, m4t, q3e, g4t, Y3e, h4t, y4t, _4t, S4t, P$e, MW, N, vr, uis, GI, mis, $s } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { i } from "../shared/environment.9a41.js";
+import { O } from "../fs/chunk-dz0rx1wn.js";
+import { Uu, kz } from "./local-agent.we9a.js";
+import { Tp } from "../auth/profile-explicit.b7t3.js";
+import { Spi, flr, bpi, wpi, kkn, Epi } from "../git/utf8-keep-bom.c49x.js";
+import { Uni, Bni, it, Xe, bqr, w6t, jG, GG, E4o, EH, Jvt } from "../settings/global-config-and-gates.27xj.js";
+import { ZQs } from "../auth/allowed-taints-clean.v8z4.js";
+import { Thn, wzo, Ezo } from "../telemetry/dd-evp-origin-version.230v.js";
+import { DSe, Ot } from "../models/claude-mythos-preview.rw6s.js";
 import { createHash as R } from "crypto";
 import { release as F } from "os";
 var I = "claude-code-error-tracking";

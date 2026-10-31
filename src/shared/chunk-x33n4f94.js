@@ -2,7 +2,7 @@
 import { yn } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { JIn } from "../terminal/aria-preserve-whitespace.s6ps.js";
 import { w } from "../ui/chunk-zqxc4qtb.js";
-import { GR, J1 } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { GR, J1 } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Q, e } from "../vendor/react/chunk-f790ajz4.js";
 import { Gt, Xt, j } from "../vendor/react/chunk-s8vmszp2.js";
 j();

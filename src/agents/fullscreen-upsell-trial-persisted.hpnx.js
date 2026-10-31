@@ -11,7 +11,7 @@ import { jG, k, Re, ue } from "../settings/global-config-and-gates.27xj.js";
 import { hz, aX } from "../git/utf-8.vh7e.js";
 import { Ri, h_ } from "../fs/async-hooks.2k4e.js";
 import { mt, wa } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { yM } from "./in-process-teammate.5te1.js";
 import { lqn, F$t, $$t, Zl } from "../telemetry/focus-events.e5dw.js";
 import { wGe, Hb } from "./swarm-team-file-update.vdzy.js";

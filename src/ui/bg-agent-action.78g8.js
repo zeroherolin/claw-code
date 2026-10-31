@@ -35,14 +35,14 @@ import { aa, ZNe, $u, Qx, sW, got, qF, rd } from "../shell/invalid-type.qnva.js"
 import { er } from "../settings/workflow-launch-exec.t4r2.js";
 import { fe, mt, qx, l5 } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
 import { wr, Te } from "../models/total-tokens-reminder.psq3.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { Tn, up } from "../mcp/allowed-warning.j2d4.js";
 import { Nse } from "../auth/profile-explicit.b7t3.js";
 import { iQ } from "../api/anthropic-client.7pf8.js";
 import { Wf, SZ } from "../settings/ax-sr-suggestion-nav.8qsa.js";
 import { Fpe } from "../git/get-url.pbym.js";
 import { m2e } from "../telemetry/focus-events.e5dw.js";
-import { pn, rt, s, n, Yt, Wa, X1, Zi, Ta, jPe, zR, WPe, Vr, CUe } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, rt, s, n, Yt, Wa, X1, Zi, Ta, jPe, zR, WPe, Vr, CUe } from "../telemetry/render-glyph-cardinality.7car.js";
 import { qc, vg, Ffe, KIn } from "../terminal/ink-renderer.pma0.js";
 import { Co } from "../shared/chunk-q3z3d485.js";
 import { Me, uD } from "../shared/chunk-y6x1q9pp.js";

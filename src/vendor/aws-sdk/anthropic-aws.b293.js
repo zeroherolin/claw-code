@@ -9,7 +9,7 @@ import { dR } from "../../auth/wif-user-oauth-refresh-race-resolved.yrc7.js";
 import { jtt } from "./transfer-encoding.bmpf.js";
 import "../../fs/chunk-182nrm88.js";
 import "../../shared/chunk-5q6vj6jk.js";
-import { fh } from "./ca-certs-load.ft7b.js";
+import { fh } from "../../fs/ca-certs-load.ft7b.js";
 import { Pxe } from "./chunk-yc0hxjyg.js";
 import { ir, Ru } from "../../telemetry/anthropic-workspace-id.36ys.js";
 import { Ae } from "../react/chunk-meds60nn.js";

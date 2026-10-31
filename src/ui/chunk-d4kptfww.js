@@ -10,7 +10,7 @@ import { cd } from "../git/config-unreadable.hb66.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { il } from "../shared/chunk-bezz9j8a.js";
 import { Me } from "../shared/chunk-y6x1q9pp.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lt } from "../shared/chunk-vj9gqe2s.js";
 import { mlt } from "../shared/chunk-gz1gj1mt.js";
 import { sPt } from "./chunk-2bwm2gye.js";

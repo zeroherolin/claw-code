@@ -3,7 +3,7 @@ import { c } from "../agents/third-party.ydpb.js";
 import { a } from "../telemetry/chunk-wq923bwc.js";
 import { Me } from "../shared/chunk-y6x1q9pp.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n, Yt } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, Yt } from "../telemetry/render-glyph-cardinality.7car.js";
 import { bte, WEr, cMt, LEe, GEr } from "../auth/grove-print-viewed.zy09.js";
 import { Je } from "./aria-hidden.r9bm.js";
 import { q } from "../context/chunk-d05584w8.js";

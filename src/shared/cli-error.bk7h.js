@@ -2,7 +2,7 @@
 import { cm } from "../context/not-admin-owned.ersa.js";
 import { Pe } from "./chunk-3kevgx4j.js";
 import { Kw } from "../fs/backed-up.p1qn.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { bor } from "./chunk-w13tcac4.js";
 import { CM, rd } from "../shell/invalid-type.qnva.js";
 function $f(r) {

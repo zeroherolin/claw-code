@@ -7,7 +7,7 @@ import { d, v, G, Kt } from "../telemetry/anthropic-workspace-id.36ys.js";
 import { W } from "../shared/chunk-3y73jbfr.js";
 import { Le } from "../models/claude-3-5-sonnet.21mz.js";
 import { _, ee, t } from "./gitlab-runner-authentication-token.d7b0.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { _4n, I2, b8 } from "../permissions/light-daltonized.tkrm.js";
 import { Rde } from "./chunk-6tvcm7a7.js";

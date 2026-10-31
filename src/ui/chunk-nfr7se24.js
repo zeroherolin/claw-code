@@ -1,6 +1,6 @@
 // ui/chunk-nfr7se24.js — Claude Code 2.1.310 模块 chunk-nfr7se24.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { rt, s } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, s } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";
 function Cl(f) {
   let b = w(6), { children: r, paddingX: a, marginTop: o, marginBottom: n } = f, d = a === void 0 ? 1 : a;

@@ -1,7 +1,7 @@
 // api/api-retry.1z94.js — Claude Code 2.1.310 模块 chunk-1z94kwdm.js
 import { ur } from "../permissions/turn-abort.yvwf.js";
 import { P0 } from "../core/conversation-engine.31gx.js";
-import { ks } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { ks } from "../context/projects-thread-reply-lead-killswitch.c5ve.js";
 import { Kxt } from "../ide/side-question.89cg.js";
 function lno(s, o = true) {
   let r = s.at(-1), a = o && r?.type === "assistant" && r.message.stop_reason === null;

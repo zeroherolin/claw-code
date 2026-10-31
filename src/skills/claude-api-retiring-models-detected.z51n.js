@@ -9,7 +9,7 @@ import { pe } from "../shared/async-hooks.m2fg.js";
 import { Er } from "../git/chunk-q8vnfcnf.js";
 import { Ii } from "../shell/invalid-type.qnva.js";
 import { ae } from "../permissions/max-thinking-tokens.hx3h.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { Iv } from "../agents/web-fetch.e88g.js";
 import { ht } from "../agents/chunk-zwvcbrvr.js";
 import { Zpn, Wi } from "../commands/skill-bundled-extract.zw7p.js";

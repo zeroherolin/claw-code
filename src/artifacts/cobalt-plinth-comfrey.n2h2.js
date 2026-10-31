@@ -11,7 +11,7 @@ import { i } from "../shared/environment.9a41.js";
 import { Ko } from "../shared/chunk-z6efcye4.js";
 import { nr, zg, xM } from "../remote/moved-directory.z3m0.js";
 import { Fa } from "../fs/content-encoding.v6wj.js";
-import { LH, STt, Am } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { LH, STt, Am } from "../fs/ca-certs-load.ft7b.js";
 import { TSe } from "../auth/secure-storage-credentials-write.vafw.js";
 import { Z } from "./same-account.bxg8.js";
 import { Sjn, gEo, hEo } from "../mcp/artifact-mcp-wire-tools-list.2wmg.js";

@@ -11,7 +11,7 @@ import { a } from "../telemetry/chunk-wq923bwc.js";
 import { Te } from "../models/total-tokens-reminder.psq3.js";
 import { cKe, Tn } from "../mcp/allowed-warning.j2d4.js";
 import { SZ } from "../settings/ax-sr-suggestion-nav.8qsa.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lt } from "../shared/chunk-vj9gqe2s.js";
 import { ae, oAe } from "../permissions/max-thinking-tokens.hx3h.js";
 import { $D, hCe } from "../context/team-memory-sync.0s3j.js";

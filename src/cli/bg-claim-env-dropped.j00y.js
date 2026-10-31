@@ -16,7 +16,7 @@ import { er } from "../settings/workflow-launch-exec.t4r2.js";
 import { hKt, Vli } from "../shared/chunk-s56ftfc1.js";
 import { XRe, $Ne } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
 import { tN } from "../mcp/init-function-end.wpfb.js";
-import { Dvn, Yb, KZ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { Dvn, Yb, KZ } from "../fs/ca-certs-load.ft7b.js";
 import { Cvn } from "../auth/profile-explicit.b7t3.js";
 import { xL } from "../fs/chunk-q5g832za.js";
 import { V8o } from "../auth/auth-launcher-host-login.9f3m.js";

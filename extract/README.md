@@ -10,10 +10,13 @@
 
 ```sh
 npm run extract                  # 默认读取 extract/upstream/
-npm run extract -- --binary <claude> --sdk-types <sdk-tools.d.ts>
+npm run extract -- --binary <claude> --sdk-types <sdk-tools.d.ts> --license <LICENSE.md>
 ```
 
-整个流程只依赖 Bun 和项目的 devDependencies（esbuild、acorn），约 15 秒完成。输出是确定的：对同一份输入运行两次，结果逐字节相同。
+整个流程只依赖 Bun 和项目的 devDependencies（esbuild、acorn），约 15 秒完成。
+
+- 输出是确定的：对同一份输入运行两次，结果逐字节相同。
+- 读取与分析全部成功后才写入项目目录；输入缺失或分析出错时，项目保持原样。
 
 ## 目录
 
@@ -85,6 +88,7 @@ rm *.tgz
 - 工具、命令、skill 模块直接进入对应目录；
 - 其余模块先看导出名，再按特征正则计分，取得分最高的区域；
 - 第三方库的得分须达到应用区域最高分的 1.5 倍，才会被归入 `vendor/<库名>`；
+- 含 Claude Code 自身代码标志（`tengu_` 遥测事件、`CLAUDE_CODE_*` 环境变量、构建宏、产品名）的模块不归入 `vendor/`：打包时应用代码可能和库代码合进同一个 chunk；
 - 都不匹配时进入 `shared/`。
 
 ## 升级到新版本

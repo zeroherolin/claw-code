@@ -1,7 +1,7 @@
 // ui/light-daltonized.vs82.js — Claude Code 2.1.310 模块 chunk-vs82hccr.js
 import { w } from "./chunk-zqxc4qtb.js";
 import { Qw } from "../shared/chunk-bezz9j8a.js";
-import { s, n, Ml, YX } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, Ml, YX } from "../telemetry/render-glyph-cardinality.7car.js";
 import { i } from "../shared/environment.9a41.js";
 import { A$ } from "../shared/chunk-5zq7df98.js";
 import { lt } from "../shared/chunk-vj9gqe2s.js";
@@ -18,7 +18,7 @@ import { ve } from "./chunk-kjz7kbmb.js";
 import { q } from "../context/chunk-d05584w8.js";
 import { sn } from "./truncate-end.bmh7.js";
 import { Glt, gt } from "./aria-label.99qs.js";
-import { H8t, rro } from "../vendor/highlight/built-in.qsb4.js";
+import { H8t, rro } from "../shell/built-in.qsb4.js";
 import { KX } from "./aria-hidden.r93v.js";
 import { Cl } from "./chunk-nfr7se24.js";
 import { Q, e, r } from "../vendor/react/chunk-f790ajz4.js";

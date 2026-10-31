@@ -10,7 +10,7 @@ import { i } from "../shared/environment.9a41.js";
 import { Hse, yqe, Tpe } from "../plugins/skills-dir.cemw.js";
 import { tk } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
 import { j3 } from "../shared/chunk-tgxmcfkt.js";
-import { Lpe, mz } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { Lpe, mz } from "./ca-certs-load.ft7b.js";
 import { createHash as K } from "crypto";
 import { fileURLToPath as O } from "url";
 import { createPublicKey as w } from "crypto";

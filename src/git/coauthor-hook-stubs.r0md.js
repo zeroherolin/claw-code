@@ -1,6 +1,6 @@
 // git/coauthor-hook-stubs.r0md.js — Claude Code 2.1.310 模块 chunk-r0md7fvt.js
 import { eAn, jEi, WEi, z7r, tAn, Gcr, zcr, tgi, ngi, GEi, zEi, VEi, KEi, Pie, qEi, YEi } from "./git-hooks.612h.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

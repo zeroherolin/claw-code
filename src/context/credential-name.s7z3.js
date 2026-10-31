@@ -12,7 +12,7 @@ import { _De, g2r } from "../shared/project-docs.pfj1.js";
 import { Pa, Lf } from "./org-memory-writes-setting-changed.w8x9.js";
 import { Pd, yu, oo, qa } from "../permissions/bot-protected-tengu-atomic-magpie.zc9j.js";
 import { bBt, cZe, T_t, B9n, Kun } from "../fs/file-upload.g3fv.js";
-import { uBe } from "../vendor/ajv/input-schema-not-checked.xf9s.js";
+import { uBe } from "../shared/input-schema-not-checked.xf9s.js";
 import { Ebr, Bco, vbr, jco } from "../auth/managed-agents-task-file-upload.6r37.js";
 import { bfe } from "../mcp/repo-rules-read-failed.nm96.js";
 import { b7 } from "../shared/egress-blocked.6n8q.js";

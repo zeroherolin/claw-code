@@ -1,7 +1,7 @@
 // vendor/aws-sdk/chunk-12jj09fn.js — Claude Code 2.1.310 模块 chunk-12jj09fn.js
 import { rEt } from "./utf-8.6ta2.js";
 import { rM } from "../../shared/chunk-5q6vj6jk.js";
-import { CFe, fh } from "./ca-certs-load.ft7b.js";
+import { CFe, fh } from "../../fs/ca-certs-load.ft7b.js";
 import { x } from "../react/chunk-meds60nn.js";
 var Z6o = x(function(B) {
   var N = fh(), g = (e, r) => (t, i) => async (n) => {

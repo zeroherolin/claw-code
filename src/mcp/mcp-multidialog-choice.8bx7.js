@@ -10,7 +10,7 @@ import { Ut, fI } from "../settings/global-config-and-gates.27xj.js";
 import { i } from "../shared/environment.9a41.js";
 import { $w, fK } from "../shell/invalid-type.qnva.js";
 import { Un, wa } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { rt, s, n, Yt } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, s, n, Yt } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Zr } from "../shared/chunk-6d9n0jaa.js";
 import { Ma, xc, Go, xs, Je } from "../ui/aria-hidden.r9bm.js";
 import { q } from "../context/chunk-d05584w8.js";

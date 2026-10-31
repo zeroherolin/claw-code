@@ -7,7 +7,7 @@ import { ft } from "../fs/async-hooks.2k4e.js";
 import { LO } from "../context/envelope-pinned-id.a4yh.js";
 import { Ofe } from "../fs/chunk-f47yy7ak.js";
 import { Ce } from "../shared/chunk-9vjqn6fm.js";
-import { pn, s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { VD } from "../shared/general-purpose.t0jz.js";
 import { Ss } from "../telemetry/chunk-ky8866zn.js";
 import { ozn } from "../core/conversation-engine.31gx.js";

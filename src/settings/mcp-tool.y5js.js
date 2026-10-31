@@ -1,7 +1,7 @@
 // settings/mcp-tool.y5js.js — Claude Code 2.1.310 模块 chunk-y5js5hc5.js
 import { VH, Gc } from "../shared/chunk-j79dwkaq.js";
 import { Sr, Mr, uy, zAt } from "../models/claude-3-5-sonnet.21mz.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { Qt } from "./workflow-launch-exec.t4r2.js";
 import { fe, fr, Xm } from "./settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
 import { ud, Oy, sb, Ph, oY } from "./built-in.5fzv.js";

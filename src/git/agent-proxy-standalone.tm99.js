@@ -8,7 +8,7 @@ import { _, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { re } from "../shared/chunk-j79dwkaq.js";
 import { i } from "../shared/environment.9a41.js";
 import { O } from "../fs/chunk-dz0rx1wn.js";
-import { GZ, YL, kK, _T, TK, Am, Yb, KZ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { GZ, YL, kK, _T, TK, Am, Yb, KZ } from "../fs/ca-certs-load.ft7b.js";
 import { aP } from "../context/tool-cgroup-exclude-classes.t1za.js";
 import { Qd } from "../workflows/chunk-01k87c6b.js";
 import { Tl } from "../shared/chunk-z2znfmtr.js";

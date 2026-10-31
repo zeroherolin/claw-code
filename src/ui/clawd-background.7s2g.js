@@ -14,7 +14,7 @@ import { ss } from "../shell/chunk-tjkwy3jp.js";
 import { Zo } from "../fs/utf-8.fmbx.js";
 import { lc, ft, $H, v1, ys } from "../fs/async-hooks.2k4e.js";
 import { mt } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { _i, rt, s, n, Yt, Ek } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { _i, rt, s, n, Yt, Ek } from "../telemetry/render-glyph-cardinality.7car.js";
 import { lw } from "../telemetry/select-stray-click-dropped.n2v5.js";
 import { K } from "../shared/chunk-p82eferg.js";
 import { K8t, q1, Dfe, $Pe, Fwe, Wgr } from "../shared/chunk-q3z3d485.js";

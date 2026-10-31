@@ -1,19 +1,19 @@
-// vendor/aws-sdk/denied-by-server.6c7g.js — Claude Code 2.1.310 模块 chunk-6c7gs074.js
-import { Ht, Ru, q3e, Y3e, d, v } from "../../telemetry/anthropic-workspace-id.36ys.js";
-import { Pe } from "../../shared/chunk-3kevgx4j.js";
-import { i } from "../../shared/environment.9a41.js";
-import { m3e } from "../../auth/oauth-2025-04-20.ke15.js";
-import { t } from "../../fs/gitlab-runner-authentication-token.d7b0.js";
-import { l } from "../../artifacts/cowritten-artifact-html.thm2.js";
-import { _Kt, wr, Te, $n, Ai } from "../../models/total-tokens-reminder.psq3.js";
-import { dSe } from "../../mcp/allowed-warning.j2d4.js";
-import { zZ } from "./ca-certs-load.ft7b.js";
-import { x4, yS, ALe, A_n, Xr, O_n, QAe, Ft, B_, tZ, oRe, Re } from "../../settings/global-config-and-gates.27xj.js";
-import { i5, qrt, DNe, rKt, ASe } from "../../auth/secure-storage-credentials-write.vafw.js";
-import { TYn, gze, P1o } from "../../api/anthropic-client.7pf8.js";
-import { F2n, HD } from "../../core/conversation-engine.31gx.js";
-import { Zme } from "../../auth/client-data-cache-key.bpey.js";
-import { d5, LSe } from "../../models/claude-mythos-preview.rw6s.js";
+// permissions/denied-by-server.6c7g.js — Claude Code 2.1.310 模块 chunk-6c7gs074.js
+import { Ht, Ru, q3e, Y3e, d, v } from "../telemetry/anthropic-workspace-id.36ys.js";
+import { Pe } from "../shared/chunk-3kevgx4j.js";
+import { i } from "../shared/environment.9a41.js";
+import { m3e } from "../auth/oauth-2025-04-20.ke15.js";
+import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { _Kt, wr, Te, $n, Ai } from "../models/total-tokens-reminder.psq3.js";
+import { dSe } from "../mcp/allowed-warning.j2d4.js";
+import { zZ } from "../fs/ca-certs-load.ft7b.js";
+import { x4, yS, ALe, A_n, Xr, O_n, QAe, Ft, B_, tZ, oRe, Re } from "../settings/global-config-and-gates.27xj.js";
+import { i5, qrt, DNe, rKt, ASe } from "../auth/secure-storage-credentials-write.vafw.js";
+import { TYn, gze, P1o } from "../api/anthropic-client.7pf8.js";
+import { F2n, HD } from "../core/conversation-engine.31gx.js";
+import { Zme } from "../auth/client-data-cache-key.bpey.js";
+import { d5, LSe } from "../models/claude-mythos-preview.rw6s.js";
 var _ = /* @__PURE__ */ new Set(["fetch_error", "unknown", "org_level_disabled_until"]);
 function g() {
   return wr().providerCache.validatedModels;

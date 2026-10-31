@@ -5,7 +5,7 @@ import { Mm } from "../terminal/aria-preserve-whitespace.s6ps.js";
 import { zr } from "../shared/chunk-j79dwkaq.js";
 import { Ir, h1, kM, FXo, AS } from "../shell/invalid-type.qnva.js";
 import { le } from "../shared/chunk-abagh0tt.js";
-import { pn, rt, s, n, Y1, hp, BPe, Jee, Ml, Ys } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, rt, s, n, Y1, hp, BPe, Jee, Ml, Ys } from "../telemetry/render-glyph-cardinality.7car.js";
 import { qc, vg } from "../terminal/ink-renderer.pma0.js";
 import { r0 } from "../shared/chunk-wnqh3675.js";
 import { x_ } from "../terminal/left-arrow-blocked.q730.js";

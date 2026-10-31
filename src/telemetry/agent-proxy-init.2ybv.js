@@ -20,7 +20,7 @@ import { Y } from "../shared/async-hooks.923e.js";
 import { ws } from "../settings/workflow-launch-exec.t4r2.js";
 import { qRe, YRe, Ili, Oli, fe, NL, nz, a5 } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
 import { Bqe } from "../auth/descriptor-direct.zd2z.js";
-import { GZ, kK, $Qo, CK, TK, Aqt, Yb, KZ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { GZ, kK, $Qo, CK, TK, Aqt, Yb, KZ } from "../fs/ca-certs-load.ft7b.js";
 import { D8o } from "../auth/secure-storage-credentials-write.vafw.js";
 import { gQo } from "../auth/profile-explicit.b7t3.js";
 import { lce } from "../api/anthropic-client.7pf8.js";

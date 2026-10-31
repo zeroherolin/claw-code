@@ -2,7 +2,7 @@
 import { w } from "./chunk-zqxc4qtb.js";
 import { K } from "../shared/chunk-p82eferg.js";
 import { ed } from "../models/ccr-unsupported-default-mode-ignored.fdkh.js";
-import { rt, s, Wa } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, s, Wa } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Dwe } from "./aria-hidden.wzb3.js";
 import { Pp } from "../telemetry/chunk-eewnxw2v.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";

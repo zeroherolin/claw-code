@@ -39,7 +39,7 @@ import { To, ae, i_, ih } from "./max-thinking-tokens.hx3h.js";
 import { Nbt } from "../tools/structured-output-tool.j28z.js";
 import { Uo, Gd, uqn, yCe, tF, bCe, Bs, hde, CCe, yde, Mln, w3n } from "../context/team-memory-sync.0s3j.js";
 import { YA, l1t, Ghe, w8, xJ, qdn, zhe } from "../plugins/plugin-enabled-for-session.9xx8.js";
-import { fo } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { fo } from "../context/projects-thread-reply-lead-killswitch.c5ve.js";
 import { gx } from "../agents/api-system.j9gt.js";
 import { x3 } from "../mcp/copy-failed.e8vn.js";
 import { cUr, uUr } from "../shared/too-long.hrff.js";

@@ -7,7 +7,7 @@ import { O } from "../fs/chunk-dz0rx1wn.js";
 import { po } from "../telemetry/chunk-wn8xtaqg.js";
 import { Vn } from "../auth/secure-storage-credentials-write.vafw.js";
 import { ho, HN } from "./user-agent.05by.js";
-import { oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { oa } from "../fs/ca-certs-load.ft7b.js";
 import { PN } from "../shared/anthropic-serif.wte0.js";
 import { vOe } from "../auth/chunk-d0r1mktd.js";
 import { Js } from "../ide/opener-missing.16f4.js";

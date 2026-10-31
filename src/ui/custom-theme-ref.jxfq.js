@@ -2,10 +2,10 @@
 import { Ngo, Yvr, Fgo, wut, vte, g0, Xvr, NMt, nZt, $go, Jvr } from "../fs/chunk-7pm5bpdr.js";
 import "../permissions/light-daltonized.tkrm.js";
 import "../fs/chunk-6tvcm7a7.js";
-import "../vendor/highlight/chunk-0c6r1zf7.js";
+import "../workflows/chunk-0c6r1zf7.js";
 import "../fs/files-directories.md42.js";
 import "../shared/chunk-bkvejkkf.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "../permissions/quota-auto-resume-disabled.gt6d.js";
 import "../shared/chunk-nyvhtfb3.js";
 import "../shared/chunk-daaayw23.js";

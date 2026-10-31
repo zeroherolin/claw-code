@@ -1,6 +1,6 @@
 // vendor/aws-sdk/use-dualstack-endpoint.4pcv.js — Claude Code 2.1.310 模块 chunk-4pcvchd0.js
 import { rM } from "../../shared/chunk-5q6vj6jk.js";
-import { CFe } from "./ca-certs-load.ft7b.js";
+import { CFe } from "../../fs/ca-certs-load.ft7b.js";
 import { x } from "../react/chunk-meds60nn.js";
 var v = x(function(re) {
   var ne = (e, n, t) => {

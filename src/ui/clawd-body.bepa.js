@@ -3,7 +3,7 @@ import { __asset_src } from "../runtime/assets.js";
 import { i } from "../shared/environment.9a41.js";
 import { Pr } from "../shared/chunk-y6x1q9pp.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { rt, s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { rt, s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ce } from "../shared/chunk-9vjqn6fm.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 import { b } from "../vendor/react/chunk-meds60nn.js";

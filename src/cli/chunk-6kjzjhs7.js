@@ -1,6 +1,6 @@
 // cli/chunk-6kjzjhs7.js — Claude Code 2.1.310 模块 chunk-6kjzjhs7.js
 import { yn } from "../fs/gitlab-runner-authentication-token.d7b0.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { QUe, pw } from "../terminal/no-hyperlinks.md9p.js";
 import { cQe } from "../permissions/light-daltonized.tkrm.js";
 var DHn = "\x1B]8;;", LHn = "\x07";

@@ -24,7 +24,7 @@ import { f } from "../shared/chunk-nyvhtfb3.js";
 import { bl } from "../fs/reply-across-default-dirs.esvz.js";
 import { QF, zw, wT, jse } from "../shared/chunk-daaayw23.js";
 import { Oc, BP, nyt, ere, Q3n, vHo, oyt, CHo, FUt, $Ut, BUt, U2e, zJe, jUt, VJe, WUt, KJe, GUt, sF, tre, n4n, sdn, jD, _o, ad, Rl, Hf, lo, cdn, px, KA, Ga, xv, uyt } from "./bg-roster-parse-failed.yhsj.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { Rm, RK, hr, pkn, It } from "../git/utf-8.vh7e.js";
 import { ZF } from "../fs/utf-8.fmbx.js";
 import { gd } from "../terminal/chunk-9vttrktj.js";

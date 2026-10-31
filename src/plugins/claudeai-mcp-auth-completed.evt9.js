@@ -30,7 +30,7 @@ import { co, jl, bw, MO, uU } from "../mcp/declared-tools-dropped-at-compaction.
 import { $r, PC, E7 } from "../mcp/mcp-discovery-cache.zf96.js";
 import { Me, Pr } from "../shared/chunk-y6x1q9pp.js";
 import { w } from "../ui/chunk-zqxc4qtb.js";
-import { pn, rt, s, n, Yt, Zi } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, rt, s, n, Yt, Zi } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Pc } from "../shared/chunk-h1g05r4t.js";
 import { Pfe, zX, VX } from "../ui/tmux-buffer.w636.js";
 import { lt, an } from "../shared/chunk-vj9gqe2s.js";

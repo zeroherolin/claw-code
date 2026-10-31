@@ -1,6 +1,6 @@
 // ui/chunk-31c7bzna.js — Claude Code 2.1.310 模块 chunk-31c7bzna.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 function Ho(R) {
   let c = w(9), { children: t, hint: i } = R;

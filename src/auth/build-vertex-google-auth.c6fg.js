@@ -4,7 +4,7 @@ import "../shared/chunk-cg45s1mf.js";
 import "../models/total-tokens-reminder.psq3.js";
 import "../models/claude-mythos-preview.rw6s.js";
 import "../shared/chunk-nyvhtfb3.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

@@ -8,7 +8,7 @@ import { g, p } from "./chunk-wn8xtaqg.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { nr } from "../remote/moved-directory.z3m0.js";
 import { Nu } from "../models/total-tokens-reminder.psq3.js";
-import { _T, Am, K_ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { _T, Am, K_ } from "../fs/ca-certs-load.ft7b.js";
 import { tm } from "../settings/non-string-value.58dq.js";
 import { Ci } from "../context/stream-no-events-fallback-warning.gy4w.js";
 import { o, E, u, T } from "../vendor/zod/string-format.k395.js";

@@ -26,7 +26,7 @@ import { w } from "./chunk-zqxc4qtb.js";
 import { il } from "../shared/chunk-bezz9j8a.js";
 import { pD } from "../terminal/aria-preserve-whitespace.s6ps.js";
 import { Me } from "../shared/chunk-y6x1q9pp.js";
-import { pn, rt, s, n, Yt, GR, Vr } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, rt, s, n, Yt, GR, Vr } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Pfe, zX, VX } from "./tmux-buffer.w636.js";
 import { Ce } from "../shared/chunk-9vjqn6fm.js";
 import { lt, um } from "../shared/chunk-vj9gqe2s.js";

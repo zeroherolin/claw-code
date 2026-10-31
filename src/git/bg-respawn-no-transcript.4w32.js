@@ -13,7 +13,7 @@ import { _, yn, Ms, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { P3t, Mbe, wCn } from "../fs/backed-up.p1qn.js";
 import { I, zr, WM, qg } from "../shared/chunk-j79dwkaq.js";
 import { O } from "../fs/chunk-dz0rx1wn.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { _r, je } from "../plugins/chunk-x0a7sawk.js";
 import { pe } from "../shared/async-hooks.m2fg.js";
 import { a, Zs } from "../telemetry/chunk-wq923bwc.js";

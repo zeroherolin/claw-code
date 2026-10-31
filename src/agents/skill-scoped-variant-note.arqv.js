@@ -15,7 +15,7 @@ import { hr } from "../git/utf-8.vh7e.js";
 import { Y_ } from "../shared/chunk-z6efcye4.js";
 import { Qt } from "../settings/workflow-launch-exec.t4r2.js";
 import { iWn, LDt, FN, mge, m2, Al, FXe, qje, j9, zmt, Dle, jTo, x0, mf, Oe, Bl, AIo, W7e, G7e } from "../core/conversation-engine.31gx.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { ud } from "../settings/built-in.5fzv.js";
 import { ur, fNe, $i } from "../permissions/turn-abort.yvwf.js";
 import { Rt } from "../context/tool-result-clearing-after-idle-server-report.epan.js";

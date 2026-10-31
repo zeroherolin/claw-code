@@ -1,7 +1,7 @@
 // ui/chunk-x922q9mr.js — Claude Code 2.1.310 模块 chunk-x922q9mr.js
 import { R4 } from "../settings/global-config-and-gates.27xj.js";
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n, Yt } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n, Yt } from "../telemetry/render-glyph-cardinality.7car.js";
 import { ji } from "./spinner-stall-cleared.psn4.js";
 import { uf } from "./chunk-5w9rmqs6.js";
 import { vs } from "../shared/chunk-0pfps1v6.js";

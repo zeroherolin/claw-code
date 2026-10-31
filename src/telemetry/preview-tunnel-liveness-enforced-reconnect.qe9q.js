@@ -2,7 +2,7 @@
 import { d } from "./anthropic-workspace-id.36ys.js";
 import { a } from "./chunk-wq923bwc.js";
 import { _, ee, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
-import { ck, lC } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { ck, lC } from "../fs/ca-certs-load.ft7b.js";
 import { JU } from "../settings/global-config-and-gates.27xj.js";
 import Pe from "net";
 import { request as ve } from "http";

@@ -7,7 +7,7 @@ import { _t, UM, t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { XI, Ggr, zgr, Vgr } from "../shared/chunk-p82eferg.js";
 import { ch, X6t } from "../settings/global-config-and-gates.27xj.js";
 import { fr } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { pn, Zi } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { pn, Zi } from "../telemetry/render-glyph-cardinality.7car.js";
 import { GPe, jW, WIn, QI, Z5, XX } from "../terminal/ink-renderer.pma0.js";
 import { jgr, Co } from "../shared/chunk-q3z3d485.js";
 import { hPt, Me } from "../shared/chunk-y6x1q9pp.js";

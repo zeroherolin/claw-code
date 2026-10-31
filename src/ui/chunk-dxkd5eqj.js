@@ -1,6 +1,6 @@
 // ui/chunk-dxkd5eqj.js — Claude Code 2.1.310 模块 chunk-dxkd5eqj.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Zr } from "../shared/chunk-6d9n0jaa.js";
 import { Ma, tS, Go, xs, Je } from "./aria-hidden.r9bm.js";
 import { MD, Ch } from "../core/conversation-engine.31gx.js";

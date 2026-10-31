@@ -1,16 +1,16 @@
-// vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js — Claude Code 2.1.310 模块 chunk-c5ve7bjc.js
-import { c1 } from "../../shared/chunk-nfgwaxf2.js";
-import { S3t } from "../../artifacts/cowritten-artifact-html.thm2.js";
-import { Zn } from "../../shared/environment.9a41.js";
-import { eg } from "../../context/not-admin-owned.ersa.js";
-import { E3o, WVe, Znr, BLe, jLe, Yk, kn, k, Wn } from "../../settings/global-config-and-gates.27xj.js";
-import { ot } from "../../fs/chunk-gzs70jxe.js";
-import { f } from "../../shared/chunk-nyvhtfb3.js";
-import { Zc, s4r, xKe, ENe, e5, O9o, l4r, esr } from "../../context/fetch-project-timeline.g27d.js";
-import { io } from "../../mcp/always-allow.9m89.js";
-import { nr, zg } from "../../remote/moved-directory.z3m0.js";
-import { o, E, oe, u, yt, Fe, RE, me, T } from "../zod/string-format.k395.js";
-import { TFe } from "../../shared/sk-ant-sid.0hme.js";
+// context/projects-thread-reply-lead-killswitch.c5ve.js — Claude Code 2.1.310 模块 chunk-c5ve7bjc.js
+import { c1 } from "../shared/chunk-nfgwaxf2.js";
+import { S3t } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { Zn } from "../shared/environment.9a41.js";
+import { eg } from "./not-admin-owned.ersa.js";
+import { E3o, WVe, Znr, BLe, jLe, Yk, kn, k, Wn } from "../settings/global-config-and-gates.27xj.js";
+import { ot } from "../fs/chunk-gzs70jxe.js";
+import { f } from "../shared/chunk-nyvhtfb3.js";
+import { Zc, s4r, xKe, ENe, e5, O9o, l4r, esr } from "./fetch-project-timeline.g27d.js";
+import { io } from "../mcp/always-allow.9m89.js";
+import { nr, zg } from "../remote/moved-directory.z3m0.js";
+import { o, E, oe, u, yt, Fe, RE, me, T } from "../vendor/zod/string-format.k395.js";
+import { TFe } from "../shared/sk-ant-sid.0hme.js";
 var B = 'A message from this project’s coordinator session — a Claude session working for the members of this project. Inside, <cited author="user"> entries are messages from members of this project, copied by the server, and name is that member’s own display name; <cited author="coordinator"> entries and the note are the coordinator session’s words, not a member’s.', U = (e, ...t) => `(?: (?:${e})="[^"<>\\n]*"${t.map((n) => `| ${n}`).join("")})*`, ge = U("from|session|current-time|reason|id"), ye = U("id|author|name|author-id|session|at|where|thread|in_reply_to|writer|edited_at|truncated|attachments", 'attached_by="server"'), P = "(?: {2}| {4})", W = "<note>", F = "</note>|</note></relay>", we = new RegExp(`^(?:<relay${ge}>|</relay>|${P}(?:<cited${ye}>|</cited>|${W}|${F}))$`), z = new RegExp(`^${P}${W}$`), K = new RegExp(`^${P}(?:${F})$`), _e = / ([a-z][a-z0-9_-]*)="/g;
 function be(e) {
   let t = /* @__PURE__ */ new Set();

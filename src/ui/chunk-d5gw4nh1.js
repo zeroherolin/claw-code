@@ -1,7 +1,7 @@
 // ui/chunk-d5gw4nh1.js — Claude Code 2.1.310 模块 chunk-d5gw4nh1.js
 import { w } from "./chunk-zqxc4qtb.js";
 import { Bse, Xqe } from "../fs/async-hooks.2k4e.js";
-import { n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Ca } from "../shared/action-not-found.ek51.js";
 import { q } from "../context/chunk-d05584w8.js";
 import { oq } from "../shared/chunk-sf99v8se.js";

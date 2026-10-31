@@ -19,7 +19,7 @@ import { Rar } from "../mcp/always-allow.9m89.js";
 import { Pt } from "../shared/async-hooks.m2fg.js";
 import { B8r, ZZ } from "../git/utf-8.vh7e.js";
 import { jt } from "../shared/chunk-nfgwaxf2.js";
-import { stt, itt } from "../vendor/opentelemetry/chunk-6rkmrewr.js";
+import { stt, itt } from "../remote/chunk-6rkmrewr.js";
 import { HQn, OQ } from "./other-server.kvdt.js";
 import { ge, dr, Ct } from "../vendor/zod/invalid-return-type.ezsz.js";
 import { od } from "../shared/sk-ant-sid.0hme.js";

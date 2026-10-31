@@ -4,7 +4,7 @@ import { eVo } from "./utf-8.6ta2.js";
 import { tM } from "../../shared/chunk-ddq4b1hs.js";
 import { lh } from "./chunk-k5hq3azn.js";
 import "../../shared/chunk-5q6vj6jk.js";
-import { fh, qL } from "./ca-certs-load.ft7b.js";
+import { fh, qL } from "../../fs/ca-certs-load.ft7b.js";
 import "./chunk-yc0hxjyg.js";
 import { Ae } from "../react/chunk-meds60nn.js";
 var E = Ae(tM()), N = Ae(qL()), m = Ae(lh());

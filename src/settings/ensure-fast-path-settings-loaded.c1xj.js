@@ -1,6 +1,6 @@
 // settings/ensure-fast-path-settings-loaded.c1xj.js — Claude Code 2.1.310 模块 chunk-c1xjxr7v.js
 import { Y2t, rZn, bhn } from "../telemetry/chunk-ddefq4nw.js";
-import "../vendor/semver/chunk-8jjp6ksr.js";
+import "./chunk-8jjp6ksr.js";
 import "../cli/apply-project-settings.g90t.js";
 import "../shared/chunk-r11rh2z0.js";
 import "../mcp/spawn-to-exec-ms.vdbg.js";
@@ -20,7 +20,7 @@ import "../shared/async-hooks.t1gs.js";
 import "../computer-use/chunk-ec42nx0x.js";
 import "./ax-sr-suggestion-nav.8qsa.js";
 import "../shared/chunk-w13tcac4.js";
-import "../vendor/chalk/xterm-ghostty.qrwz.js";
+import "../terminal/xterm-ghostty.qrwz.js";
 import "../shared/chunk-ztrzej16.js";
 import "../workflows/chunk-exaq0a52.js";
 import "../permissions/turn-abort.yvwf.js";
@@ -65,7 +65,7 @@ import "../terminal/chunk-9vttrktj.js";
 import "../auth/profile-explicit.b7t3.js";
 import "../shared/chunk-nyvhtfb3.js";
 import "../fs/chunk-w461d8x8.js";
-import "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

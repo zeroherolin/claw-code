@@ -28,7 +28,7 @@ import { nr } from "../remote/moved-directory.z3m0.js";
 import { a3t } from "../mcp/init-function-end.wpfb.js";
 import { zNe, rz, xl, gb, Fo, mCt, Qsr, Yx, RH, wr, Te, pT, Od, bu, Xx, Qs, oEn, Ai, hpe, op, Nu } from "../models/total-tokens-reminder.psq3.js";
 import { Qvt, gI, Wj, wRe, rVt, u5o, Vb, o1, fM, ERe, vRe, sVt, f5o, m5o, Yrr, jp } from "../mcp/allowed-warning.j2d4.js";
-import { kqt, IQo, OQo, rP, Fqe, oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { kqt, IQo, OQo, rP, Fqe, oa } from "../fs/ca-certs-load.ft7b.js";
 import { CZ } from "../shared/chunk-cg45s1mf.js";
 import { Zai, F4r, nKt, tz } from "../auth/secure-storage-credentials-write.vafw.js";
 import { rbe, mTt, EFe } from "../auth/profile-explicit.b7t3.js";

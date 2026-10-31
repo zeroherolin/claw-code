@@ -3,7 +3,7 @@ import { d } from "../telemetry/anthropic-workspace-id.36ys.js";
 import { L } from "../context/not-admin-owned.ersa.js";
 import { I } from "../shared/chunk-j79dwkaq.js";
 import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
-import { he } from "../vendor/chalk/xterm-ghostty.qrwz.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
 import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
 import { eo } from "../remote/chunk-7nwr416d.js";
 import { Bh } from "../shell/invalid-type.qnva.js";

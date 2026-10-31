@@ -14,7 +14,7 @@ import { zs } from "../shared/chunk-cg45s1mf.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
 import { Te, Xx } from "../models/total-tokens-reminder.psq3.js";
 import { Dt, Yd } from "../fs/content-encoding.v6wj.js";
-import { Lpe, rP, $qe, Uqe, VZ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { Lpe, rP, $qe, Uqe, VZ } from "../fs/ca-certs-load.ft7b.js";
 import { $y, XKt, jEn, jCt, yar } from "../permissions/classifier-transcript-too-long.8zvz.js";
 import { AR, OH } from "../permissions/quota-auto-resume-disabled.gt6d.js";
 import { hM } from "../fs/reply-across-default-dirs.esvz.js";

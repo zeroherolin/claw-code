@@ -1,6 +1,6 @@
 // telemetry/chunk-35h7qwz8.js — Claude Code 2.1.310 模块 chunk-35h7qwz8.js
 import { i } from "../shared/environment.9a41.js";
-import { Am, K_ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { Am, K_ } from "../fs/ca-certs-load.ft7b.js";
 import { isIP as m } from "net";
 var s = { debug: 0, info: 1, warn: 2, error: 3 };
 function c() {

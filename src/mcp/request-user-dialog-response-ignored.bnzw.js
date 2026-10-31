@@ -54,7 +54,7 @@ import "../settings/workflow-launch-exec.t4r2.js";
 import "../shared/chunk-s56ftfc1.js";
 import "../shell/spawn-error.7yg0.js";
 import { ur } from "../permissions/turn-abort.yvwf.js";
-import { b1n, hpt, ypt, KSo } from "../vendor/mcp-sdk/unexpected-message.q1az.js";
+import { b1n, hpt, ypt, KSo } from "../shared/unexpected-message.q1az.js";
 import { zRe, Jj, bI } from "../auth/claude-code-user.tvhr.js";
 import { YOn } from "../shared/chunk-k5cvg7ge.js";
 import "../agents/chunk-ysyvkqg1.js";

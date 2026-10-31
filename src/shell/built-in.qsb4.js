@@ -1,17 +1,17 @@
-// vendor/highlight/built-in.qsb4.js — Claude Code 2.1.310 模块 chunk-qsb442d4.js
-import { Ji, re, Ze } from "../../shared/chunk-j79dwkaq.js";
-import { as } from "../../fs/async-hooks.9s1z.js";
-import { i } from "../../shared/environment.9a41.js";
-import { l } from "../../artifacts/cowritten-artifact-html.thm2.js";
-import { he } from "../chalk/xterm-ghostty.qrwz.js";
-import { iKo } from "../../shared/chunk-n23x7w17.js";
-import { Aan, CKn, oOo, iOo } from "./plugin-hljs-languages.5eqx.js";
-import { wIn, nae } from "./built-in.1q40.js";
-import { nVe, CEt } from "../../shared/chunk-fhjvpxth.js";
-import { zIn } from "../../terminal/ink-renderer.pma0.js";
-import { qi } from "../../shared/async-hooks.t1gs.js";
-import { $a, ulr } from "../../shared/chunk-380qngfk.js";
-import { le } from "../../shared/chunk-abagh0tt.js";
+// shell/built-in.qsb4.js — Claude Code 2.1.310 模块 chunk-qsb442d4.js
+import { Ji, re, Ze } from "../shared/chunk-j79dwkaq.js";
+import { as } from "../fs/async-hooks.9s1z.js";
+import { i } from "../shared/environment.9a41.js";
+import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { he } from "../terminal/xterm-ghostty.qrwz.js";
+import { iKo } from "../shared/chunk-n23x7w17.js";
+import { Aan, CKn, oOo, iOo } from "../vendor/highlight/plugin-hljs-languages.5eqx.js";
+import { wIn, nae } from "../vendor/highlight/built-in.1q40.js";
+import { nVe, CEt } from "../shared/chunk-fhjvpxth.js";
+import { zIn } from "../terminal/ink-renderer.pma0.js";
+import { qi } from "../shared/async-hooks.t1gs.js";
+import { $a, ulr } from "../shared/chunk-380qngfk.js";
+import { le } from "../shared/chunk-abagh0tt.js";
 var hIn = 2e3;
 function Mlt(e, n = 0) {
   if (e.length - n <= hIn) return { code: e.slice(n), truncatedChars: 0 };

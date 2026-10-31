@@ -4,7 +4,7 @@ import { q_e, xnr, i6t, $G } from "../settings/global-config-and-gates.27xj.js";
 import { nbe } from "../mcp/always-allow.9m89.js";
 import { Xqe } from "../fs/async-hooks.2k4e.js";
 import { ti } from "../agents/tool-use-id.maye.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { w } from "./chunk-zqxc4qtb.js";
 import { sl, FW, pN } from "./truncate-end.8a5j.js";
 import { Qxr } from "../core/conversation-engine.31gx.js";

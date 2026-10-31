@@ -4,7 +4,7 @@ import { yr, yz } from "../fs/async-hooks.2k4e.js";
 import { Zwn } from "../settings/workflow-launch-exec.t4r2.js";
 import { Izn } from "../core/conversation-engine.31gx.js";
 import { lcn, eo } from "../remote/chunk-7nwr416d.js";
-import { ks } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { ks } from "./projects-thread-reply-lead-killswitch.c5ve.js";
 function MNn(o) {
   let a = C(o);
   if (a === null) return null;

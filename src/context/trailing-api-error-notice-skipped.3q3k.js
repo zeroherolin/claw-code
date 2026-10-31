@@ -45,7 +45,7 @@ import { Ya, Nbt } from "../tools/structured-output-tool.j28z.js";
 import { rYn } from "../tasks/bridge-ingress-demoted.dnpp.js";
 import { De } from "../telemetry/chunk-20qqn614.js";
 import { Hr } from "../mcp/spawn-to-exec-ms.vdbg.js";
-import { fo, b0e } from "../vendor/marked/projects-thread-reply-lead-killswitch.c5ve.js";
+import { fo, b0e } from "./projects-thread-reply-lead-killswitch.c5ve.js";
 import { pu } from "../shared/chunk-a9jqgh3e.js";
 import { X6, ky, fCe } from "../git/bridge-child-tool-diff.m7a8.js";
 import { BC } from "../tasks/continued-in.f5qq.js";

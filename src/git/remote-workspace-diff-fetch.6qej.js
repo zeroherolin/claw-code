@@ -18,7 +18,7 @@ import { i0, vk } from "../shared/chunk-h1g05r4t.js";
 import { K } from "../shared/chunk-p82eferg.js";
 import { W0e } from "../shared/chunk-rmqyvpf6.js";
 import { Es } from "../shared/chunk-y284hsxm.js";
-import { n, Yt } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n, Yt } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Wd } from "../shared/chunk-vx3s7x6j.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";
 import { are, Eyt } from "../shared/cc-plugin-diff.rahj.js";

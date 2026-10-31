@@ -14,7 +14,7 @@ import { wYr, mW, dP, Os, gW } from "../fs/utf-8.7pve.js";
 import { ut } from "../shell/chunk-tjkwy3jp.js";
 import { Qqt, aYr, y_, Alr, lYr, kxe, Cxe, OR } from "../fs/utf-8.fmbx.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";
-import { Jgn } from "../vendor/opentelemetry/chunk-6rkmrewr.js";
+import { Jgn } from "../remote/chunk-6rkmrewr.js";
 import { uv } from "../git/utf-8.vh7e.js";
 import { hn } from "../fs/async-hooks.2k4e.js";
 import { Ixe, Sfi } from "../remote/local-agent.we9a.js";

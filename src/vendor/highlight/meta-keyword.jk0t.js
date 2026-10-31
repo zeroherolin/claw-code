@@ -1,6 +1,6 @@
 // vendor/highlight/meta-keyword.jk0t.js — Claude Code 2.1.310 模块 chunk-jk0txhqk.js
 import { CA } from "../../shared/chunk-j79dwkaq.js";
-import { he } from "../chalk/xterm-ghostty.qrwz.js";
+import { he } from "../../terminal/xterm-ghostty.qrwz.js";
 import { wIn, nae } from "./built-in.1q40.js";
 import { ulr } from "../../shared/chunk-380qngfk.js";
 var s = "\x1B[0m";

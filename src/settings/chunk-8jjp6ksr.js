@@ -1,11 +1,11 @@
-// vendor/semver/chunk-8jjp6ksr.js — Claude Code 2.1.310 模块 chunk-8jjp6ksr.js
-import { __asset_src } from "../../runtime/assets.js";
-import { t } from "../../fs/gitlab-runner-authentication-token.d7b0.js";
-import { l } from "../../artifacts/cowritten-artifact-html.thm2.js";
-import { _E, SLe } from "../../settings/global-config-and-gates.27xj.js";
-import { fe } from "../../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
-import { oy } from "../../mcp/allowed-warning.j2d4.js";
-import { Ae } from "../react/chunk-meds60nn.js";
+// settings/chunk-8jjp6ksr.js — Claude Code 2.1.310 模块 chunk-8jjp6ksr.js
+import { __asset_src } from "../runtime/assets.js";
+import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
+import { l } from "../artifacts/cowritten-artifact-html.thm2.js";
+import { _E, SLe } from "./global-config-and-gates.27xj.js";
+import { fe } from "./settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
+import { oy } from "../mcp/allowed-warning.j2d4.js";
+import { Ae } from "../vendor/react/chunk-meds60nn.js";
 var o = Ae(oy(), 1);
 var s = /* @__PURE__ */ new Set(["update", "install", "doctor"]);
 function u({ currentVersion: e, requiredMinimumVersion: r, requiredMaximumVersion: n, topLevelCommand: a }) {

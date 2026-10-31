@@ -33,7 +33,7 @@ import "../fs/utf-8.fmbx.js";
 import "../auth/descriptor-direct.zd2z.js";
 import "../artifacts/chunk-m8t7qekn.js";
 import "../remote/self-hosted.qq4m.js";
-import { CK, TK, Aqt, Yb } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { CK, TK, Aqt, Yb } from "../fs/ca-certs-load.ft7b.js";
 import "../context/tool-cgroup-exclude-classes.t1za.js";
 import "../shared/sk-ant-sid.0hme.js";
 import "../fs/not-utf8.sqq6.js";

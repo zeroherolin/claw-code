@@ -1,5 +1,5 @@
 // auth/clear-proxy-auth-helper-cache.02cg.js — Claude Code 2.1.310 模块 chunk-02cgqafv.js
-import { BQo, CK, Lqe, TK, Aqt, Am, _8r, Nqe, K_, S8r, lC, Lvn, zZ, Fqe, ust, jQo, oa, Yb, $qe, Uqe, VZ, KZ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { BQo, CK, Lqe, TK, Aqt, Am, _8r, Nqe, K_, S8r, lC, Lvn, zZ, Fqe, ust, jQo, oa, Yb, $qe, Uqe, VZ, KZ } from "../fs/ca-certs-load.ft7b.js";
 import "../fs/content-encoding.v6wj.js";
 import "../remote/self-hosted.qq4m.js";
 import "../shared/sk-ant-sid.0hme.js";

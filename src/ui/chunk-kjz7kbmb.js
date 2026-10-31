@@ -1,6 +1,6 @@
 // ui/chunk-kjz7kbmb.js — Claude Code 2.1.310 模块 chunk-kjz7kbmb.js
 import { w } from "./chunk-zqxc4qtb.js";
-import { n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { Q, e, r } from "../vendor/react/chunk-f790ajz4.js";
 import { Jh, bc, Og, j } from "../vendor/react/chunk-s8vmszp2.js";
 import { En } from "../vendor/react/chunk-meds60nn.js";

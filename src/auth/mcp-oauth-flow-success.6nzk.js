@@ -13,7 +13,7 @@ import { O } from "../fs/chunk-dz0rx1wn.js";
 import { a } from "../telemetry/chunk-wq923bwc.js";
 import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
 import { El } from "../fs/chunk-w461d8x8.js";
-import { oa } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { oa } from "../fs/ca-certs-load.ft7b.js";
 import { ma, Vn, p1, aK, Ym } from "./secure-storage-credentials-write.vafw.js";
 import { DL, LL } from "./claude-code-user.tvhr.js";
 import { eNe, Knt, Dj, joe, Goe, td, lA, k } from "../settings/global-config-and-gates.27xj.js";

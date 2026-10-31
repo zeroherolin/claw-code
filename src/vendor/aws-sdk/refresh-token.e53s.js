@@ -2,7 +2,7 @@
 import { OF } from "../../fs/chunk-182nrm88.js";
 import { tM } from "../../shared/chunk-ddq4b1hs.js";
 import { lh } from "./chunk-k5hq3azn.js";
-import { fh } from "./ca-certs-load.ft7b.js";
+import { fh } from "../../fs/ca-certs-load.ft7b.js";
 import { Ae } from "../react/chunk-meds60nn.js";
 var k = Ae(OF());
 var ne = Ae(lh());

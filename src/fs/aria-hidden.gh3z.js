@@ -1,6 +1,6 @@
 // fs/aria-hidden.gh3z.js — Claude Code 2.1.310 模块 chunk-gh3zv4bj.js
 import { w } from "../ui/chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";
 import { ne } from "../workflows/workflow-size-guideline-change.1rc0.js";
 import { b } from "../vendor/react/chunk-meds60nn.js";

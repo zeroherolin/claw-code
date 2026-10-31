@@ -1,7 +1,7 @@
 // shell/content-scan-transient.pxv4.js — Claude Code 2.1.310 模块 chunk-pxv4pskb.js
 import { t } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { re } from "../shared/chunk-j79dwkaq.js";
-import { LH } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { LH } from "../fs/ca-certs-load.ft7b.js";
 import { Mt } from "../terminal/chunk-9vttrktj.js";
 import { ot } from "../fs/chunk-gzs70jxe.js";
 import { f } from "../shared/chunk-nyvhtfb3.js";

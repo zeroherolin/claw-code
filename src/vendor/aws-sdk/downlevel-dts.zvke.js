@@ -12,7 +12,7 @@ import { Du } from "./cross-region.8w8h.js";
 import { eM } from "./utf-8.6ta2.js";
 import { DGt } from "../../shared/chunk-qrdwg3n8.js";
 import { rM } from "../../shared/chunk-5q6vj6jk.js";
-import { fh, qL } from "./ca-certs-load.ft7b.js";
+import { fh, qL } from "../../fs/ca-certs-load.ft7b.js";
 import { bA, LI } from "./chunk-yc0hxjyg.js";
 import { Ae } from "../react/chunk-meds60nn.js";
 function ae(e) {

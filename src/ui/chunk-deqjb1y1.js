@@ -1,7 +1,7 @@
 // ui/chunk-deqjb1y1.js — Claude Code 2.1.310 模块 chunk-deqjb1y1.js
 import { BW } from "../shared/chunk-cqwramf7.js";
 import { Ce } from "../shared/chunk-9vjqn6fm.js";
-import { s, qX, Ys } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, qX, Ys } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";
 import { Se, Xt, A, y, j } from "../vendor/react/chunk-s8vmszp2.js";
 j();

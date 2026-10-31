@@ -2,7 +2,7 @@
 import { $t } from "../shared/chunk-j79dwkaq.js";
 import { uP } from "../fs/gitlab-runner-authentication-token.d7b0.js";
 import { w } from "../ui/chunk-zqxc4qtb.js";
-import { s, n } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.7car.js";
 import { nS } from "../ui/chunk-d5gw4nh1.js";
 import { Ge } from "../ui/aria-hidden.by9c.js";
 import { e, r } from "../vendor/react/chunk-f790ajz4.js";

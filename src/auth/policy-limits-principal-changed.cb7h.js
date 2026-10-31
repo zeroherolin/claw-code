@@ -15,7 +15,7 @@ import { g, m, p } from "../telemetry/chunk-wn8xtaqg.js";
 import { Te, op, sEn } from "../models/total-tokens-reminder.psq3.js";
 import { EXo, oz, idi, wKt, uK, vXo, aot, EKt, kXo, hCt, iir, lEn, air, mdi, gdi, hdi, yCt, vKt, ZKe, CXo, YNe, Fu } from "../shell/invalid-type.qnva.js";
 import { Dt } from "../fs/content-encoding.v6wj.js";
-import { TK, Am, K_ } from "../vendor/aws-sdk/ca-certs-load.ft7b.js";
+import { TK, Am, K_ } from "../fs/ca-certs-load.ft7b.js";
 import { xzt, Pzt, Wti, VVr, fd, a6t, kc, B_, ua, q_n, oT, o3o, Ng, Ln, rZ, pR, Lh, eSn, tSn, Ant, p6t, al, f6t, Pue, vt, cp, Pj, $Le, ULe, wE, F4, mSn, drr, crr, k } from "../settings/global-config-and-gates.27xj.js";
 import { zai, zs, Vai } from "../shared/chunk-cg45s1mf.js";
 import { zF } from "./secure-storage-credentials-write.vafw.js";

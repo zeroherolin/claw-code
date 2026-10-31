@@ -1,7 +1,7 @@
 // shared/chunk-qwh43rvc.js — Claude Code 2.1.310 模块 chunk-qwh43rvc.js
 import { w } from "../ui/chunk-zqxc4qtb.js";
 import { gqt, Nse } from "../auth/profile-explicit.b7t3.js";
-import { n, Yt } from "../vendor/yoga/render-glyph-cardinality.7car.js";
+import { n, Yt } from "../telemetry/render-glyph-cardinality.7car.js";
 import { e } from "../vendor/react/chunk-f790ajz4.js";
 function qz(H) {
   let y = w(10), { children: r, color: u, bold: m, linkHref: a } = H, o;

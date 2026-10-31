@@ -9,7 +9,7 @@ import { O } from "../fs/chunk-dz0rx1wn.js";
 import { fr } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.32v5.js";
 import { ma, Cwn, I8o, O8o, Qai, Vn } from "../auth/secure-storage-credentials-write.vafw.js";
 import { ost } from "../auth/profile-explicit.b7t3.js";
-import { mr } from "../vendor/highlight/chunk-0c6r1zf7.js";
+import { mr } from "../workflows/chunk-0c6r1zf7.js";
 import { Oy, Ph } from "../settings/built-in.5fzv.js";
 import { mn } from "../shared/chunk-1a0taxx3.js";
 import { sd } from "../remote/chunk-t0kv6pst.js";
