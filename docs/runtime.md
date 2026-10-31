@@ -96,12 +96,14 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 | argv0 | 首选 | 回退 | 回退时去掉的参数 |
 |---|---|---|---|
 | `rg` | 系统 `rg` | — | — |
-| `bfs` | 系统 `bfs` | `find` | `-S <策略>`；BSD find（macOS）还会去掉 `-regextype <类型>` |
+| `bfs` | 系统 `bfs`（3.3 或更新） | `find` | `-S <策略>`、`-regextype findutils-default`；BSD find（macOS）去掉全部 `-regextype <类型>` |
 | `ugrep` | 系统 `ugrep` | `grep` | `--ignore-files`、`--hidden`、`-I`、`-G` |
 
+- find 函数固定传入 `-S dfs -regextype findutils-default`。bfs 3.3 起才支持 `findutils-default`，发行版自带的往往更旧（如 Ubuntu 24.04 为 3.1，Debian 12 为 2.6）。因此先用这组选项探测系统 bfs，不接受时视同没有安装，改用 find。
+- `findutils-default` 就是 GNU find 的默认正则类型，回退时去掉它不改变行为；GNU find 也不接受它出现在路径之前。
 - 找工具时会排除自身（`process.execPath`），避免递归调用。
-- 都找不到时，打印安装提示，以 127 退出。
-- 安装 ripgrep、bfs、ugrep 后（`brew install ripgrep bfs ugrep` 或 `apt install ripgrep bfs ugrep`），Bash 中 find、grep、rg 的输出与原版一致，已由对比测试中的 `findgrep` 用例在每个平台上验证。
+- 都不可用时，打印安装提示，以 127 退出。
+- Bash 中 find、grep、rg 的输出与原版一致，已由对比测试中的 `findgrep` 用例在每个平台上验证：macOS 上使用 Homebrew 的 bfs 4.x，Ubuntu 24.04 上自带的 bfs 3.1 过旧，走 GNU find 回退。
 
 ## 资源定位
 

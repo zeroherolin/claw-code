@@ -4,14 +4,17 @@
 // 启动时不运行 JS，直接作为对应工具执行。Claude Code 依赖这一点（Bash 工具 shell 快照中的
 // find / grep / rg 函数、ripgrep 的 embedded 模式，见 docs/runtime.md）。
 //
-// 公开版 Bun 没有这些工具，这里在入口最前面按 argv0 转交给系统里的同名工具；bfs、ugrep 不存在时
-// 按原版自己的回退语义改用 find、grep，并去掉它们不认识的参数。
+// 公开版 Bun 没有这些工具，这里在入口最前面按 argv0 转交给系统里的同名工具；bfs、ugrep 不存在或
+// 版本过旧时按原版自己的回退语义改用 find、grep，并去掉它们不认识的参数。
 import { spawnSync } from "node:child_process";
 import { basename } from "node:path";
 
+// probe：系统里的工具须能接受的参数，不能接受时视同没有安装。
+// Bash 快照中的 find 函数固定传入 -S dfs -regextype findutils-default，bfs 3.3 起才支持；
+// 发行版自带的往往更旧（如 Ubuntu 24.04 的 3.1、Debian 12 的 2.6）
 const TOOLS = {
   rg: { install: "ripgrep" },
-  bfs: { install: "bfs", fallback: "find" },
+  bfs: { install: "bfs", minimum: "3.3", fallback: "find", probe: ["-S", "dfs", "-regextype", "findutils-default", "/", "-quit"] },
   ugrep: { install: "ugrep", fallback: "grep" },
 };
 
@@ -21,11 +24,17 @@ function fallbackArgs(tool, args) {
   for (let i = 0; i < args.length; i++) {
     const a = args[i];
     if (tool === "bfs" && a === "-S") { i++; continue; } // 搜索策略，带一个值
-    if (tool === "bfs" && a === "-regextype" && process.platform === "darwin") { i++; continue; } // BSD find 无此选项
+    // findutils-default 即 GNU find 的默认值，去掉后行为相同（GNU find 也不接受它出现在路径之前）；BSD find 没有 -regextype
+    if (tool === "bfs" && a === "-regextype" && (args[i + 1] === "findutils-default" || process.platform === "darwin")) { i++; continue; }
     if (tool === "ugrep" && ["--ignore-files", "--hidden", "-I", "-G"].includes(a)) continue;
     out.push(a);
   }
   return out;
+}
+
+/** 工具能否接受 probe 中的参数（不需要探测时为 true） */
+function accepts(file, probe) {
+  return !probe || spawnSync(file, probe, { stdio: "ignore" }).status === 0;
 }
 
 /** PATH 中的命令，排除自身（避免回调自己形成递归） */
@@ -50,9 +59,10 @@ export function dispatchEmbeddedTool() {
   if (!tool) return;
   const args = process.argv.slice(2); // [bun, 入口脚本, ...参数]
   const own = which(name);
-  if (own) exec(own, args, name);
+  if (own && accepts(own, tool.probe)) exec(own, args, name);
   const fallback = tool.fallback && which(tool.fallback);
   if (fallback) exec(fallback, fallbackArgs(name, args), tool.fallback);
-  process.stderr.write(`${name}: not found. Install the ${tool.install} package to use this feature (e.g. \`brew install ${tool.install}\` or \`apt install ${tool.install}\`).\n`);
+  const problem = own ? `${own} is too old (${tool.install} ${tool.minimum} or later is required)` : "not found";
+  process.stderr.write(`${name}: ${problem}. Install ${tool.install} to use this feature.\n`);
   process.exit(127);
 }

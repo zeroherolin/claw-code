@@ -22,16 +22,21 @@ console.log("NOT_DISPATCHED");\n`);
   }
 }
 
-// 造一个只含指定工具的 PATH 目录（用 shell 脚本冒充，打印收到的参数）
-function fakePath(tools) {
+// 造一个只含指定工具的 PATH 目录（用 shell 脚本冒充，打印收到的参数）；scripts 可替换某个工具的脚本体
+function fakePath(tools, scripts = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "claw-path-"));
   for (const t of tools) {
     const p = path.join(dir, t);
-    fs.writeFileSync(p, `#!/bin/sh\necho "${t}:$*"\n`);
+    fs.writeFileSync(p, `#!/bin/sh\n${scripts[t] ?? ""}\necho "${t}:$*"\n`);
     fs.chmodSync(p, 0o755);
   }
   return dir;
 }
+
+// Bash 快照中的 find 函数固定传入的选项，以及一段典型的用户参数
+const FIND_ARGS = ["-S", "dfs", "-regextype", "findutils-default", ".", "-name", "*.txt"];
+// 旧版 bfs（3.3 之前）：不认识 -regextype findutils-default
+const OLD_BFS = 'case "$*" in *findutils-default*) echo "bfs: error: unknown regex type" >&2; exit 1;; esac';
 
 describe("embedded-tools", () => {
   test("argv0 不是内嵌工具名时不做任何事", () => {
@@ -46,10 +51,25 @@ describe("embedded-tools", () => {
     expect(r.status).toBe(0);
   });
 
-  test("bfs 不存在时回退 find，并去掉 bfs 专有参数", () => {
-    const bin = fakePath(["find"]);
-    const r = dispatch("bfs", [".", "-S", "dfs", "-name", "*.txt"], { PATH: bin });
+  test("系统 bfs 接受固定选项时使用它，参数原样透传", () => {
+    const r = dispatch("bfs", FIND_ARGS, { PATH: fakePath(["bfs", "find"]) });
+    expect(r.stdout.trim()).toBe(`bfs:${FIND_ARGS.join(" ")}`);
+  });
+
+  test("bfs 不存在时回退 find，并去掉 -S 与 -regextype findutils-default（GNU find 的默认值）", () => {
+    const r = dispatch("bfs", FIND_ARGS, { PATH: fakePath(["find"]) });
     expect(r.stdout.trim()).toBe("find:. -name *.txt");
+  });
+
+  test("系统 bfs 版本过旧时同样回退 find", () => {
+    const r = dispatch("bfs", FIND_ARGS, { PATH: fakePath(["bfs", "find"], { bfs: OLD_BFS }) });
+    expect(r.stdout.trim()).toBe("find:. -name *.txt");
+  });
+
+  test("系统 bfs 版本过旧且没有 find 时，提示需要的版本并以 127 退出", () => {
+    const r = dispatch("bfs", FIND_ARGS, { PATH: fakePath(["bfs"], { bfs: OLD_BFS }) });
+    expect(r.status).toBe(127);
+    expect(r.stderr).toContain("is too old (bfs 3.3 or later is required)");
   });
 
   test("ugrep 不存在时回退 grep，并去掉 ugrep 专有参数", () => {

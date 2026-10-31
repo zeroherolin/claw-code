@@ -31,7 +31,7 @@ npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 
 - `dist/claude` 是自包含的单文件可执行程序，可以拷到别处，也可以链接到 PATH 中的目录以便随处使用，例如 `ln -s "$PWD/dist/claude" ~/.local/bin/claude`。
 - 为其他平台编译：`npm run build -- --target linux-arm64`。
-- 建议安装 ripgrep、bfs、ugrep（`brew install ripgrep bfs ugrep` 或 `apt install ripgrep bfs ugrep`）。原版把这三个工具内嵌在可执行文件里，本项目改为调用系统里的同名工具，详见 [docs/runtime.md](docs/runtime.md#内嵌命令行工具)。
+- 建议安装 ripgrep、bfs（3.3 或更新）、ugrep，例如 `brew install ripgrep bfs ugrep` 或 `apt install ripgrep bfs ugrep`。原版把这三个工具内嵌在可执行文件里，本项目改为调用系统里的同名工具；bfs 缺失或过旧时改用系统的 find，详见 [docs/runtime.md](docs/runtime.md#内嵌命令行工具)。
 
 不构建也能直接运行，即开发模式：`bin/claude -p "hello"`。它直接运行 `src/`，在你当前所在的目录工作，可用于任意项目（`npm start` 也行，但 npm 总是在本项目根目录里运行）。开发模式有两处与原版不同：内置 hooks 模块不加载，Bash 工具里的 `find`、`grep`、`rg` 函数不可用，原因见 [docs/runtime.md](docs/runtime.md#开发模式与构建产物的差异)。
 
