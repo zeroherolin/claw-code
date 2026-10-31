@@ -1,0 +1,64 @@
+// linux/telemetry/chunk-a27d4004.js — Claude Code 2.1.310（linux）模块 chunk-dsrz10z8.js
+function El(e, t) {
+  return { code: "InvalidArgument", argument: e, ...t !== void 0 && { reason: t } };
+}
+function Qkn(e = "unknown", t) {
+  return { code: "Unavailable", failureClass: e, ...t?.key !== void 0 && { key: t.key }, ...t?.retryAfterMs !== void 0 && { retryAfterMs: t.retryAfterMs }, ...t?.telemetryCode !== void 0 && { telemetryCode: t.telemetryCode } };
+}
+var Zkn = "OtherNames";
+var eTn = "LeafMoved", Mpi = "HardeningUnavailable", Jes = "RemoteLink", Dpi = "AsideStranded";
+var A9r = "Unsupported";
+function aCt(e) {
+  return Oxe(e) && e.code === "Failed" && e.telemetryCode === A9r;
+}
+var n = "ByteViewUnsupported";
+function mYt(e) {
+  return e.code === "Failed" && "telemetryCode" in e && e.telemetryCode === n;
+}
+var r = "StoreFenced";
+function Qes(e) {
+  return e.code === "Failed" && "telemetryCode" in e && e.telemetryCode === r;
+}
+var Hpi = "SourceNotRegular", Lpi = "SourceTooLarge", Npi = "SourceShared", $pi = "SourceOutside";
+var o = /* @__PURE__ */ new Set(["InvalidArgument", "NotFound", "AlreadyExists", "PreconditionFailed", "LeaseHeld", "Unavailable", "Failed", "ScopeNotFound"]);
+function Oxe(e) {
+  return typeof e === "object" && e !== null && "code" in e && typeof e.code === "string" && o.has(e.code);
+}
+var Zes = "AbsentParent";
+function cit(e) {
+  return e.code === "Failed" && "telemetryCode" in e && e.telemetryCode === Zes;
+}
+function Zm(e) {
+  if (cit(e)) return "ENOENT";
+  return "telemetryCode" in e ? e.telemetryCode : void 0;
+}
+var Fpi = "TooLarge";
+function vt(e) {
+  return e.code + ("failureClass" in e ? ` ${e.failureClass}` : "") + ("telemetryCode" in e && e.telemetryCode ? ` ${e.telemetryCode}` : "") + ("cause" in e && e.cause ? `: ${i(e.cause)}` : "");
+}
+function i(e) {
+  return e instanceof Error ? e.message : String(e);
+}
+export {
+  $pi,
+  A9r,
+  Dpi,
+  El,
+  Fpi,
+  Hpi,
+  Jes,
+  Lpi,
+  Mpi,
+  Npi,
+  Oxe,
+  Qes,
+  Qkn,
+  Zes,
+  Zkn,
+  Zm,
+  aCt,
+  cit,
+  eTn,
+  mYt,
+  vt
+};

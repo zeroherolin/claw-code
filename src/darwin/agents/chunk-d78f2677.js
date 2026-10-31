@@ -1,0 +1,38 @@
+// darwin/agents/chunk-d78f2677.js — Claude Code 2.1.310（darwin）模块 chunk-pbx2evhh.js
+import { H7, u2, lWe } from "../core/conversation-engine.js";
+import { hm } from "../context/team-memory-sync.js";
+function s(i, r, d) {
+  let { plugin: n } = i, e = n !== void 0 && H7();
+  if (e) hm(() => lWe(n));
+  if (e && !i.recurring) u2(r, void 0, i.agentId ? "stays" : d);
+  return e;
+}
+var Tpr = (i) => (r, d) => {
+  let n = () => {
+    if (d !== void 0) hm(d);
+  }, e = () => {
+    if (s(r, e, n)) return;
+    i(r, n);
+  }, o = s(r, e, n);
+  if (!o) i(r, () => {
+  });
+  return o && !r.recurring;
+}, Apr = (i) => (r, d) => {
+  let n = /* @__PURE__ */ new Map();
+  return r.forEach((e) => {
+    n.set(e.plugin, [...n.get(e.plugin) ?? [], e]);
+  }), [...n].flatMap(([e, o]) => {
+    let l = e === void 0 ? {} : { plugin: e }, t = () => hm(() => d(o)), u = () => {
+      if (s(l, u, t)) return;
+      i(o, e, t);
+    }, a = s(l, u, t), f = false, g = false;
+    if (!a) i(o, e, () => {
+      if (f = true, g) t();
+    });
+    return g = true, a || !f ? o.map((c) => c.id) : [];
+  });
+};
+export {
+  Apr,
+  Tpr
+};

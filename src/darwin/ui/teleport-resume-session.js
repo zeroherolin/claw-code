@@ -1,0 +1,205 @@
+// darwin/ui/teleport-resume-session.js — Claude Code 2.1.310（darwin）模块 chunk-yany49ka.js
+import { s4t } from "../context/not-admin-owned.js";
+import { c } from "../agents/third-party.js";
+import { Xp, d } from "../telemetry/anthropic-workspace-id.js";
+import { a } from "../telemetry/chunk-9097a12b.js";
+import { po } from "../telemetry/chunk-9d6962d2.js";
+import { t } from "../fs/gitlab-runner-authentication-token.js";
+import { q3o } from "../settings/global-config-and-gates.js";
+import { ft, _z } from "../fs/async-hooks.7959.js";
+import { Ki } from "../mcp/allowed-warning.js";
+import { fst } from "../git/get-url.js";
+import { Kje } from "../core/conversation-engine.js";
+import { w } from "./chunk-0ed4c357.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.js";
+import { lt } from "../shared/chunk-76877d92.js";
+import { q } from "../context/chunk-e2302e3b.js";
+import { Ce } from "../shared/chunk-bdaaea45.js";
+import { cs } from "../shared/chunk-9bbd1b38.js";
+import { qs } from "../shared/action-not-found.c239.js";
+import { Je } from "./aria-hidden.aa9d.js";
+import { ve } from "./chunk-067d565d.js";
+import { ji } from "./spinner-stall-cleared.js";
+import { qr } from "./chunk-03aae52e.js";
+import { xxn } from "./chunk-6a10765a.js";
+import { RT } from "../shared/chunk-9faca596.js";
+import { pt } from "../shared/chunk-c602eee2.js";
+import { Q, e, r } from "../vendor/react/chunk-40234545.js";
+import { de, P, y, j } from "../vendor/react/chunk-9a0b1ced.js";
+import { _e } from "../shared/chunk-86ecf3aa.js";
+import { b } from "../vendor/react/chunk-0b0bf45d.js";
+j();
+j();
+function J(h) {
+  let C = w(8), [i, E] = y(false), [p, I] = y(null), [u, N] = y(null), K;
+  if (C[0] !== h) K = async (l) => {
+    E(true), I(null), N(l), a("tengu_teleport_resume_session", { source: c(h), session_id: _e(l.id) });
+    ;
+    try {
+      let m = await po("teleport_resume", () => Kje(l.id));
+      return s4t({ sessionId: l.id }), E(false), m;
+    } catch (T2) {
+      let x = T2;
+      let G = { message: x instanceof Xp ? x.message : d(x), formattedMessage: x instanceof Xp ? x.formattedMessage : void 0, isOperationError: x instanceof Xp };
+      return I(G), E(false), null;
+    }
+  }, C[0] = h, C[1] = K;
+  else K = C[1];
+  let _ = K, T;
+  if (C[2] === b) T = () => {
+    I(null);
+  }, C[2] = T;
+  else T = C[2];
+  let X = T, k;
+  if (C[3] !== p || C[4] !== i || C[5] !== _ || C[6] !== u) k = { resumeSession: _, isResuming: i, error: p, selectedSession: u, clearError: X }, C[3] = p, C[4] = i, C[5] = _, C[6] = u, C[7] = k;
+  else k = C[7];
+  return k;
+}
+j();
+var fe = "Updated", ge = "Origin", xe = "Remote Control", le = Math.max(ge.length, xe.length), F = "  ";
+function ce({ onSelect: h, onCancel: i, isEmbedded: E = false }) {
+  let { rows: p, columns: I } = cs(Ce()), [u, N] = y([]), [C, K] = y(null), [l, T] = y(true), [m, x] = y(null), [G, _] = y(null), [X, k] = y(false), [H, W] = y(false), [L, Y] = y(1), z = qs("confirm:no", "Confirmation", "Esc"), D = de(async () => {
+    try {
+      T(true), x(null);
+      let o = await fst();
+      K(o), t(`Current repository: ${o || "not detected"}`);
+      let f = await q3o(), S = f;
+      if (o) S = f.filter((v) => {
+        if (!v.repo) return false;
+        return `${v.repo.owner.login}/${v.repo.name}` === o;
+      }), t(`Filtered ${S.length} sessions for repo ${o} from ${f.length} total`);
+      let te = [...S].sort((v, ne) => {
+        let be = new Date(v.updated_at);
+        return new Date(ne.updated_at).getTime() - be.getTime();
+      });
+      N(te);
+    } catch (o) {
+      let f = o instanceof Error ? o.message : String(o);
+      if (t(`Error loading code sessions: ${f}`), o instanceof Error && o.name === "CloudSessionAccessError") _(o.message), x("refused");
+      else x(Oe(f));
+    } finally {
+      T(false), k(false);
+    }
+  }, []), Z = () => {
+    k(true), D();
+  };
+  lt("confirm:no", i, { context: "Confirmation" });
+  function g(o) {
+    if (o.ctrl && o.key === "c") {
+      o.preventDefault(), i();
+      return;
+    }
+    if (o.ctrl && o.key === "r" && m) {
+      o.preventDefault(), Z();
+      return;
+    }
+    if (m !== null && o.key === "return") {
+      o.preventDefault(), i();
+      return;
+    }
+  }
+  let R = de(() => {
+    W(true), D();
+  }, [W, D]);
+  if (!H) return e(xxn, { onComplete: R, onCancel: E ? i : void 0 });
+  if (l) return e(s, { flexDirection: "column", padding: 1, tabIndex: 0, autoFocus: true, onKeyDown: g, children: e(qr, { message: "Loading Claude Code sessions…", bold: true, subtitle: X ? "Retrying…" : "Fetching your Claude Code sessions…" }) });
+  if (m) return r(s, { flexDirection: "column", padding: 1, tabIndex: 0, autoFocus: true, onKeyDown: g, children: [e(n, { bold: true, color: "error", children: "Error loading Claude Code sessions" }), Pe(m, G), r(n, { dimColor: true, children: ["Press ", e(n, { bold: true, children: "Ctrl+R" }), " to retry · Press", " ", e(n, { bold: true, children: z }), " to cancel"] })] });
+  if (u.length === 0) return r(s, { flexDirection: "column", padding: 1, tabIndex: 0, autoFocus: true, onKeyDown: g, children: [r(n, { bold: true, children: ["No Claude Code sessions found", C && r(n, { children: [" for ", C] })] }), e(s, { marginTop: 1, children: r(n, { dimColor: true, children: ["Press ", e(n, { bold: true, children: z }), " to cancel"] }) })] });
+  let U = u.map((o) => ({ ...o, timeString: _z(new Date(o.updated_at)) })), O = Math.max(fe.length, ...U.map((o) => o.timeString.length)), ee = u.some((o) => o.environment_kind === "bridge"), Se = ee ? le + F.length : 0, ue = String(u.length).length + 2, ye = I - 4 - ue - O - F.length - Se, pe = U.map(({ timeString: o, title: f, id: S, environment_kind: te }) => {
+    let v = o.padEnd(O, " ");
+    return { label: r(Q, { children: [v, F, ee && r(Q, { children: [e(n, { dimColor: true, children: (te === "bridge" ? xe : "").padEnd(le, " ") }), F] }), ft(Ki(f).replace(/\s+/g, " ").trim(), ye)] }), value: S };
+  }), oe = 7, re = Math.max(1, E ? Math.min(u.length, 5, p - 6 - oe) : Math.min(u.length, p - 1 - oe)), Ee = re + oe, Re = u.length > re;
+  return r(s, { flexDirection: "column", padding: 1, height: Ee, tabIndex: 0, autoFocus: true, onKeyDown: g, children: [r(n, { bold: true, children: ["Select a session to resume", Re && r(n, { dimColor: true, children: [" ", "(", L, " of ", u.length, ")"] }), C && r(n, { dimColor: true, children: [" (", C, ")"] }), ":"] }), r(s, { flexDirection: "column", marginTop: 1, flexGrow: 1, children: [e(s, { marginLeft: 2 + ue, children: r(n, { bold: true, children: [fe.padEnd(O, " "), F, ee && ge.padEnd(le, " ") + F, "Session Title"] }) }), e(Je, { visibleOptionCount: re, options: pe, onChange: (o) => {
+    let f = u.find((S) => S.id === o);
+    if (f) h(f);
+  }, onFocus: (o) => {
+    let f = pe.findIndex((S) => S.value === o);
+    if (f >= 0) Y(f + 1);
+  } })] }), e(s, { flexDirection: "row", children: e(n, { dimColor: true, children: r(ve, { children: [e(q, { chord: ["up", "down"], action: "select" }), e(q, { chord: "enter", action: "confirm" }), e(pt, { action: "confirm:no", context: "Confirmation", fallback: "Esc", description: "cancel" })] }) }) })] });
+}
+function Oe(h) {
+  let i = h.toLowerCase();
+  if (i.includes("fetch") || i.includes("network") || i.includes("timeout")) return "network";
+  if (i.includes("auth") || i.includes("token") || i.includes("permission") || i.includes("oauth") || i.includes("not authenticated") || i.includes("/login") || i.includes("console account") || i.includes("403")) return "auth";
+  if (i.includes("api") || i.includes("rate limit") || i.includes("500") || i.includes("529")) return "api";
+  return "other";
+}
+function Pe(h, i) {
+  switch (h) {
+    case "refused":
+      return e(s, { marginY: 1, flexDirection: "column", children: e(n, { dimColor: true, children: i }) });
+    case "network":
+      return e(s, { marginY: 1, flexDirection: "column", children: e(n, { dimColor: true, children: "Check your internet connection" }) });
+    case "auth":
+      return r(s, { marginY: 1, flexDirection: "column", children: [e(n, { dimColor: true, children: "Teleport requires a Claude account" }), r(n, { dimColor: true, children: ["Run ", e(n, { bold: true, children: "/login" }), ' and select "Claude account with subscription"'] })] });
+    case "api":
+      return e(s, { marginY: 1, flexDirection: "column", children: e(n, { dimColor: true, children: "Sorry, Claude encountered an error" }) });
+    case "other":
+      return e(s, { marginY: 1, flexDirection: "row", children: e(n, { dimColor: true, children: "Sorry, Claude Code encountered an error" }) });
+  }
+}
+function Oat(h) {
+  let m = w(30), { onComplete: i, onCancel: E, onError: p, isEmbedded: I, source: u } = h, N = I === void 0 ? false : I, { resumeSession: C, isResuming: K, error: l, selectedSession: T } = J(u), x, G;
+  if (m[0] !== u) x = () => {
+    a("tengu_teleport_started", { source: c(u) });
+  }, G = [u], m[0] = u, m[1] = x, m[2] = G;
+  else x = m[1], G = m[2];
+  P(x, G);
+  let _;
+  if (m[3] !== l || m[4] !== i || m[5] !== p || m[6] !== C) _ = async (X) => {
+    let k = await C(X);
+    if (k) i(k);
+    else if (l) {
+      if (p) p(l.message, l.formattedMessage);
+    }
+  }, m[3] = l, m[4] = i, m[5] = p, m[6] = C, m[7] = _;
+  else _ = m[7];
+  let H = _, W;
+  if (m[8] !== E) W = () => {
+    a("tengu_teleport_cancelled", {}), E();
+  }, m[8] = E, m[9] = W;
+  else W = m[9];
+  let L = W;
+  const Y = !!l && !p;
+  let z;
+  if (m[10] !== Y) z = { context: "Global", isActive: Y }, m[10] = Y, m[11] = z;
+  else z = m[11];
+  lt("app:interrupt", L, z);
+  let D;
+  if (m[12] !== l || m[13] !== p) D = !!l && !p && RT(), m[12] = l, m[13] = p, m[14] = D;
+  else D = m[14];
+  let Z;
+  if (m[15] !== D) Z = { context: "Confirmation", isActive: D }, m[15] = D, m[16] = Z;
+  else Z = m[16];
+  if (lt("confirm:no", L, Z), K && T) {
+    let g2;
+    if (m[17] === b) g2 = r(s, { flexDirection: "row", children: [e(ji, {}), e(n, { bold: true, children: "Resuming session…" })] }), m[17] = g2;
+    else g2 = m[17];
+    let R;
+    if (m[18] !== T.title) R = r(s, { flexDirection: "column", padding: 1, children: [g2, r(n, { dimColor: true, children: ['Loading "', T.title, '"…'] })] }), m[18] = T.title, m[19] = R;
+    else R = m[19];
+    return R;
+  }
+  if (l && !p) {
+    let g2;
+    if (m[20] === b) g2 = e(n, { bold: true, color: "error", children: "Failed to resume session" }), m[20] = g2;
+    else g2 = m[20];
+    let R;
+    if (m[21] !== l.message) R = e(n, { dimColor: true, children: l.message }), m[21] = l.message, m[22] = R;
+    else R = m[22];
+    let U;
+    if (m[23] === b) U = e(s, { marginTop: 1, children: e(n, { dimColor: true, italic: true, children: e(q, { chord: "escape", action: "cancel" }) }) }), m[23] = U;
+    else U = m[23];
+    let O;
+    if (m[24] !== R) O = r(s, { flexDirection: "column", padding: 1, children: [g2, R, U] }), m[24] = R, m[25] = O;
+    else O = m[25];
+    return O;
+  }
+  let g;
+  if (m[26] !== L || m[27] !== H || m[28] !== N) g = e(ce, { onSelect: H, onCancel: L, isEmbedded: N }), m[26] = L, m[27] = H, m[28] = N, m[29] = g;
+  else g = m[29];
+  return g;
+}
+export {
+  Oat
+};

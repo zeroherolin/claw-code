@@ -1,0 +1,498 @@
+// darwin/tools/observer-report-tool.js — Claude Code 2.1.310（darwin）模块 chunk-jfd6pgr5.js
+import { Br } from "../shared/chunk-3b9c376b.js";
+import { L, tt, ke, ou, ye, $be, J, yie, Oee } from "../context/not-admin-owned.js";
+import { c, ce } from "../agents/third-party.js";
+import { Ye, Ve, d, v, rw, Us, Kt, TT, AT } from "../telemetry/anthropic-workspace-id.js";
+import { Nt } from "../shared/chunk-57ff8cc1.js";
+import { py, hl, Xw, Vs } from "../fs/node-modules.js";
+import { a } from "../telemetry/chunk-9097a12b.js";
+import { g, m, p } from "../telemetry/chunk-9d6962d2.js";
+import { Gkn, A1, pe } from "../shared/async-hooks.5238.js";
+import { BM, Im, DS, t } from "../fs/gitlab-runner-authentication-token.js";
+import { l } from "../artifacts/cowritten-artifact-html.js";
+import { tF, bCe } from "../context/team-memory-sync.js";
+import { y1, mc } from "../shell/invalid-type.js";
+import { f } from "../shared/chunk-2fe3b2b7.js";
+import { wu } from "../mcp/chunk-0e2a1db6.js";
+import { zn, _6t, hoi, orr, _oi, Nw, cI, af, Hj, _l, u4o, osi } from "../settings/global-config-and-gates.js";
+import { L9o, Vx, Em, rpe } from "../artifacts/cobalt-plinth-lovage.js";
+import { RRe, gM } from "../agents/session-stable-address.js";
+import { Gx } from "../agents/in-process-teammate.32be.js";
+import { Qyt } from "../plugins/claudeai-plugins-sync-enabled.js";
+import { lXe, Gve, EB, sje, TP, AP, cXe, eOs, FN, NDt, j$, Gq, oMe, Xq, hO, m2, Kxr, tPr, CB, Tle, O6, hke, Rge, hne, xge, CLt, ALt, M6, pmt, Ale, Al, yke, Nje, gMe, _ne, VXe, KXe, zGn, fDs, Umt, VGn, j9, LTo, Ake, Vmt, z7, Mon, Hon, nNt, HDs, jT, SO, Dle, qmt, Yje, PP, s3, egt, bLs, TOr, x0, mf, t8, Gxo, hin, zxo, NC, eHr, ePo, dVn, Pu, P7e, Mne, Nne, Oe, VFt, N7e, vy, sde, rCe, Mk } from "../core/conversation-engine.js";
+import { zv, ht, dp } from "../agents/chunk-5531d42a.js";
+import { dg, Rt, tn } from "../context/tool-result-clearing-after-idle-server-report.js";
+import { xet } from "../permissions/frontmatter-grant-withheld.js";
+import { Aw } from "../models/ccr-unsupported-default-mode-ignored.js";
+import { KJn, ae, Hc } from "../permissions/max-thinking-tokens.js";
+import { Ou } from "../fs/unadoptable-session-id.js";
+import { Zde, CZe } from "../shared/chunk-7a8599f4.js";
+import { vdn, lE } from "../agents/web-fetch.js";
+import { Av, Cn, jDr, A$t, dx, FD, AOo } from "../git/bridge-child-tool-diff.js";
+import { tl, Fd } from "../agents/chunk-25f20db5.js";
+import { Yde } from "../permissions/subagent-output-flagged.js";
+import { tU } from "../tasks/continued-in.js";
+import { M4n } from "./tool-result-persisted.js";
+import { mu } from "../workflows/workflow-subagent.js";
+import { Qhe } from "../telemetry/binary-content-persisted.js";
+import { g8 } from "../telemetry/bg-roster-parse-failed.js";
+import { Df } from "../context/kairos-cron-durable.js";
+import { FQe } from "../git/coordinator-mode-switched.js";
+import { RMt, rFn } from "../api/tool-result.js";
+import { XEs } from "../shared/chunk-6daf3db7.js";
+import { hLn, afo, lfo, Iwr, yLn, qEs } from "./subagent-handback-tool.js";
+import { MIe } from "../shared/chunk-fb108757.js";
+import { qR, bP, pte } from "../agents/agent-summary-skipped.js";
+import { dfo } from "../agents/chunk-1bb96c12.js";
+import { gLn } from "../shared/chunk-18d5ee88.js";
+import { HIe } from "../shared/chunk-cd359435.js";
+import { ZEs, evs } from "../vendor/marked/absent-but-marked.js";
+import { Pae } from "../shared/repl-main-thread.js";
+import { DIe } from "../shared/chunk-389154fe.js";
+import { _Ts, wTs } from "../agents/observer-subagent-fanout.js";
+import { us } from "../agents/in-process-teammate.b77f.js";
+import { Pv } from "../shared/chunk-2c491c49.js";
+import { Zh } from "../mcp/chunk-a5cd39f7.js";
+import { qD } from "../shared/chunk-9d4f4f95.js";
+import { Gs } from "../shared/chunk-22d55e0c.js";
+import { eEt, hoe } from "../shared/chunk-e9fc3352.js";
+import { Mn } from "../shared/ccd-session-mgmt.js";
+import { D } from "../shared/chunk-7027e6d5.js";
+import { o, Ue } from "../vendor/zod/string-format.js";
+import { promises as nt } from "fs";
+var Me = "ObserverReport";
+var Jt = "Send a report to your report target — the agent you observe, or the coordinating agent that spawned the worker you observe. The target is resolved from your observer pairing — there is no recipient to name. Use this only when you have something genuinely useful: a mistake about to compound, a missed constraint, prior art the observed agent should see. The expected steady state is silence — if nothing warrants action, end your turn without calling this.", Xt = "Send a report to your report target — the agent you observe, or the coordinating agent that spawned the worker you observe. The target is resolved from your observer pairing — there is no recipient to name. Use this only when you have something genuinely useful: a mistake about to compound, a missed constraint, prior art the observed agent should see. The expected steady state is silence — if nothing warrants action, end your turn without calling this.";
+var Wn = f(() => Ue({ report: o().min(1).describe("The report to deliver to your report target. Be concise and specific.") })), Zt = tn({ name: Me, backgrounding: "never", maxResultSizeChars: 1e3, async description() {
+  return Jt;
+}, async prompt() {
+  return Xt;
+}, get inputSchema() {
+  return Wn();
+}, isReadOnly() {
+  return false;
+}, isEnabled() {
+  return true;
+}, create(e) {
+  return { async checkPermissions(k) {
+    return { behavior: "allow", updatedInput: k };
+  }, async call(k) {
+    let h = e.agentId;
+    if (h === void 0) return { data: { success: false, message: "ObserverReport is only available to an observer agent; the main session does not have an observed pairing." } };
+    let b = _Ts(e.session, h);
+    if (!b) return { data: { success: false, message: "Your observer pairing is not armed (stopped, retired, or never installed). The report was not delivered." } };
+    let { reportTargetTaskId: _, reportTargetName: T, viaWorkerName: E } = b;
+    if (_ !== void 0) {
+      let V = e.taskRegistry.get(_);
+      if (!(Cn(V) && (V.status === "running" || V.status === "completed" && [...dx(V)].some((Pe) => Pe !== CB)))) return { data: { success: false, message: `The report target (${T}) is not running. The report was not delivered.` } };
+    }
+    let S = `observer:${b.observerAgentType}`, at = b.observedTaskId === void 0 ? `"${E}"` : `"${E}" [${b.observedTaskId}]`, r = RRe(S, E === void 0 ? k.report : `(observing worker ${at})
+${k.report}`), ee = { kind: "observer", from: S, senderTaskId: h };
+    if (b.reportOrigins.add(ee), _ === void 0) Mk({ mode: "prompt", agentId: tt(), value: r, priority: "next", origin: ee, skipSlashCommands: true, isMeta: true, skipAttachments: true });
+    else Mon(_, r, e.taskRegistry, { origin: ee, isMeta: true });
+    return { data: { success: true, message: `Report queued for ${_ === void 0 ? "the main conversation" : T}.` } };
+  } };
+}, mapToolResultToToolResultBlockParam(e, k) {
+  return { type: "tool_result", tool_use_id: k, content: e.message, is_error: !e.success };
+}, renderToolUseMessage(e) {
+  return `report: ${e.report}`;
+} });
+var jn = [Mn, zv, Me, ht, mu, tl, Gs, Df, dg];
+function kwr(e) {
+  return [...e.filter((k) => jn.every((h) => !Rt(k, h))), Zt];
+}
+function ofo(e) {
+  return (e.name === ht || e.name === dp) && typeof e.input === "object" && e.input !== null && "subagent_type" in e.input && vdn(e.input.subagent_type);
+}
+function en(e, k) {
+  let h = /* @__PURE__ */ new Set();
+  for (let b of e) if (b.type === "assistant") {
+    let _ = b.message.content;
+    if (!Array.isArray(_)) continue;
+    for (let T of _) if (T.type === "tool_use" && ofo(T)) h.add(T.id);
+  } else if (b.type === "user" && h.size > 0) {
+    let _ = b.toolUseResult, T = b.message.content;
+    if (typeof _ !== "object" || _ === null || !("agentId" in _) || _.agentId !== k || !Array.isArray(T)) continue;
+    if (T.some((E) => E.type === "tool_result" && h.has(E.tool_use_id))) return true;
+  }
+  return false;
+}
+async function Cwr(e, { origin: k, ...h }) {
+  let b = zGn(e)?.hookOrigin, _ = await Iwr({ ...h, agents: [], resume: Object.freeze({ agentId: e }), origin: b === void 0 ? k : [...b, ...k ?? []] });
+  if (_.starting !== dfo && tPr(h.signal, h.background)) throw _.starting?.[Symbol.dispose](), new Ye();
+  return _;
+}
+function Twr(e) {
+  return `a plugin declined the resume: ${e}`;
+}
+function sn(e, k) {
+  let h = e.filter(D), b = new Map(h.flatMap((S) => S.uuid === void 0 ? [] : [[S.uuid, S.parentUuid]])), _ = new Set(k), T = (S) => b.has(S) || _.has(S), E = new Set(h.flatMap(Vn));
+  return k.length > 0 && nn(b.get(k[0])) && [...E].every(T) && h.every((S) => nn(S.parentUuid) || T(S.parentUuid) || E.has(S.uuid));
+}
+function nn(e) {
+  return e === void 0 || e === null;
+}
+function Vn({ compactMetadata: e }) {
+  let k = D(e) ? e.preservedMessages : void 0;
+  return D(k) && Array.isArray(k.uuids) ? k.uuids : [];
+}
+var qn = 2e3;
+function rt(e, k) {
+  return `its saved state cannot be read (${v(e) ?? AT(e) ?? "storage error"}), so it cannot be told whether the user stopped it. ${k ? "Send the message again in a moment, or the user" : "The user"} can resume it themselves.`;
+}
+function Dhi(e) {
+  if (e instanceof Ku) return e;
+  let k = e instanceof Mne || g8(v(e) ?? AT(e)), h = Kt(e) ? rt(e, k) : d(e);
+  return k ? new hD(h) : new Ku(h);
+}
+function I$(e) {
+  return typeof e === "object" && e !== null && "deniedByPlugin" in e && typeof e.deniedByPlugin === "string";
+}
+var ot = "resumedInline", Gn = "Background agents cannot be started in this session right now. Send the message again if you still need this agent: it should then run while you wait, and its report will be that call's result.", on = "This agent cannot be resumed in the background in this session. Start a new agent instead.", Kn = /[<>\p{Cc}]|(?![\u200c\u200d])\p{Cf}/u;
+function Awr(e) {
+  return e instanceof Error && ot in e && e[ot] === true;
+}
+class Ku extends Error {
+  transcriptMissing;
+  constructor(e, k) {
+    super(e);
+    this.name = "ResumeAgentStateError", this.transcriptMissing = k?.transcriptMissing === true;
+  }
+}
+var st = "git_worktree_create";
+class hD extends Ku {
+  constructor(e) {
+    super(e);
+    this.name = "AgentResumeTransientError";
+  }
+}
+class l6 extends Ku {
+  constructor(e) {
+    super(e);
+    this.name = "AgentResumePermanentlyRefusedError";
+  }
+}
+class d6 extends Ku {
+  constructor(e) {
+    super(e);
+    this.name = "AgentStoppedByUserError";
+  }
+}
+class cte extends Ku {
+  constructor(e) {
+    super(e);
+    this.name = "AgentResumeInProgressError";
+  }
+}
+class CEe extends Ku {
+  constructor(e) {
+    super(e);
+    this.name = "AgentStillStoppingError";
+  }
+}
+function d7(e) {
+  return it(e, "notification");
+}
+function sfo(e) {
+  return it(e, "inline");
+}
+function an(e, k = DS) {
+  return typeof e === "string" && e !== "" && !py(e) && !Vs(e) && !hl(e) && !Xw(e) && !Kn.test(e) && Im(k, e, { surfaceNetworkRaw: true, unreadableAncestry: "unverified" }) === void 0 ? e : void 0;
+}
+function Rwr(e) {
+  return it(e, "reply");
+}
+async function it(e, k) {
+  let { agentId: h } = e, { resumesInFlight: b } = zn();
+  if (b.has(h)) throw new cte(`Agent ${h} is already running or being resumed`);
+  b.add(h);
+  let _ = true, T = () => {
+    if (_) _ = false, b.delete(h);
+  };
+  try {
+    return await Qn(e, k, T);
+  } finally {
+    T();
+  }
+}
+async function Qn({ agentId: e, prompt: k, promptOrigin: h, promptNoticeLengths: b, promptNoticeOwn: _, promptNoticeRunIds: T, promptIsMeta: E, continueInterruptedTurn: S, resultsOnly: at, toolUseContext: r, liveTranscript: ee, canUseTool: V, invokingRequestId: dt, parentPromptId: Pe, userInitiated: x, suppressOwnerNotification: dn, workerPermissionMode: un, onDeliveryCommitted: ln, isWebFetchLaunch: cn }, X, mn) {
+  let fn = Date.now(), xn = false, Ne = r.getAppState(), de = ae(r), { taskRegistry: y } = r, ue = de.mode, te = r.agentId;
+  if (te !== void 0 && EB(te)) throw new CEe("This agent has been stopped and its stop is still completing; it cannot resume other agents.");
+  if (EB(e) || !Av(e) && us(y.get(e)?.status ?? "running")) throw new CEe(`Agent ${e} is still stopping — its previous run was stopped but has not exited. Re-run ${Fd} on it or wait for it to exit before resuming.`);
+  let P = y.get(e), le = 0, pn = Date.now();
+  if (Cn(P)) {
+    let n = false;
+    if (y.update(e, (u) => {
+      if (u.status === "running" || u.resuming) return u;
+      return n = true, le = u.userStopCount ?? 0, { ...u, resuming: true };
+    }), !n) throw new cte(`Agent ${e} is already running or being resumed`);
+  }
+  let ut = () => {
+    y.update(e, (n) => n.resuming ? { ...n, resuming: false } : n);
+  }, lt = false, w = () => {
+    if (ut(), lt) t8(Br(e), { finished: true }, r.storageV5).catch(l);
+    z7(e, y), A$t(e, y);
+  }, Fe = () => (m("subagent_launch", "subagent_resume_transcript_over_bound"), w(), new l6(`Agent ${e}'s earlier transcript is too large to load, or has a row with a malformed timestamp. Sending the message again will not help. Start a new agent if the work is still needed.`));
+  if (dVn(e)) throw Fe();
+  let ct = (n) => {
+    let u = rw(v(n) ?? AT(n));
+    return u && { errno: u };
+  }, gn = (n) => (m("subagent_launch", "subagent_resume_stop_probe_failed", ct(n)), w(), eOs(n) ? new hD(rt(n, true)) : new Ku(rt(n, false))), Ee = h?.kind === "observer-activity" ? { found: false } : await hin(Br(e), "stoppedByUser", r.storageV5).then((n) => ({ found: n }), (n) => ({ found: false, err: n })), mt = x || h?.kind === "observer-activity" ? void 0 : Us, ft = NC(Br(e), r.storageV5, mt), pt = async () => (await Nt(Pu(), qn, "agent resume: transcript flush wait").catch(() => {
+  }), Nne(Br(e), r.storageV5, { signal: r.abortController.signal })), G = Umt(), gt = J() && !Cn(P) && G === void 0, wt = J() ? ft.then((n) => n === null || gt ? null : pt()) : pt(), [hn, s] = await Promise.all([wt, ft.then((n) => n === null && !J() && P7e() ? wt.then(() => NC(Br(e), r.storageV5, mt)) : n)]).catch((n) => {
+    if (Ve(n)) throw w(), n;
+    if (dVn(e)) throw Fe();
+    if (n instanceof Mne && n.outcome === "body_encoded") throw m("subagent_launch", "subagent_resume_transcript_body_encoded"), w(), new hD(`Agent ${e}'s earlier transcript arrived in an encoding that was not asked for, so it was not read. Send the message again, or start a new agent if that fails too.`);
+    throw m("subagent_launch", "subagent_resume_setup_read_failed", ct(n)), w(), Dhi(n);
+  });
+  if (r.abortController.signal.aborted) throw w(), new Ye();
+  a("tengu_subagent_resume_sidecar_read", { metadata_found: s !== null, prompt_origin_kind: ce(h?.kind), has_task_record: Cn(P), continue_interrupted_turn: S === true, resumer_is_subagent: te !== void 0, storage_v5: r.storageV5 !== void 0 });
+  let kt = X === "notification" && G !== void 0;
+  if (s === null && J()) throw m("subagent_launch", "subagent_resume_sidecar_missing_diskless"), w(), new l6(`This session has no saved settings for agent ${e}: it never ran here, or they did not survive a restart of the server that runs the session. Start a new agent if the work is still needed.`);
+  let me = lfo(s?.cwd), yt = J() && ((s?.worktreePath ?? void 0) !== void 0 || (s?.inheritedWorktreePath ?? void 0) !== void 0 || s?.spawnedWithWorktree === true) ? afo : void 0;
+  if (me !== void 0 || yt !== void 0) throw m("subagent_launch", me !== void 0 ? "subagent_resume_cwd_refused" : "subagent_resume_worktree_refused"), w(), new l6(me !== void 0 ? `Cannot resume this agent in the directory its record names: ${me}. Start a new agent instead.` : `Cannot resume this agent, which was started in a worktree: ${yt}. Start a new agent instead.`);
+  let bt = qD(s?.toolUseId), De = TP(s?.description), Ce = typeof s?.worktreeBranch === "string" && gLn(s.worktreeBranch) ? s.worktreeBranch : void 0, K = typeof s?.name === "string" && sje.test(s.name) && !gM(s.name) ? s.name : void 0;
+  if ("err" in Ee && !x && !s?.stoppedByUser) throw gn(Ee.err);
+  let _t = Ee.found;
+  if ((s?.stoppedByUser || _t) && h?.kind !== "observer-activity") {
+    if (!x) throw w(), new d6(`Agent ${e} was stopped by the user and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks.`);
+  }
+  if (gt) throw m("subagent_launch", "subagent_resume_no_rule_diskless"), w(), new l6(`Background agents are switched off in this session, and it no longer tracks agent ${e}, so the agent cannot be resumed. Start a new agent if the work is still needed.`);
+  let N = await ZEs(Br(e), r.storageV5), Be = "transientRead" in N && N.transientRead ? hD : Ku;
+  if (N.status === "malformed") throw m("subagent_launch", "forked_skill_resume_scoping_invalid"), w(), new Be(`Agent ${e} has a malformed forked-skill scoping record; refusing to resume it without the skill's permission scoping.`);
+  if (N.status === "diskless") throw m("subagent_launch", "forked_skill_resume_scoping_diskless"), w(), new Ku(`Agent ${e} cannot be checked for a forked-skill scoping record: this diskless session has no storage backend or key for it. Refusing to resume it.`);
+  if ((N.status === "absent" || N.status === "absent-but-marked") && Cn(P) && P.forkedSkillName !== void 0) throw m("subagent_launch", "forked_skill_resume_scoping_missing"), w(), new Be(`Agent ${e} ran as a forked skill but its scoping record is missing; refusing to resume it without the skill's permission scoping.`);
+  if (N.status === "absent-but-marked") throw m("subagent_launch", "forked_skill_resume_scoping_missing_cold"), w(), new Be(`Agent ${e} carries a forked-skill provenance marker but its scoping record is missing; refusing to resume it without the skill's permission scoping.`);
+  if (N.status === "valid" && Cn(P)) {
+    if (P.forkedSkillName !== N.scoping.skillName) throw m("subagent_launch", "forked_skill_resume_scoping_mismatch"), w(), new Ku(`Agent ${e} has a forked-skill scoping record that does not match its task record; refusing to resume it.`);
+  } else if (N.status === "valid") {
+    if (await evs(Br(e), r.storageV5) !== N.scoping.skillName) throw m("subagent_launch", "forked_skill_resume_cold_witness_mismatch"), w(), new Ku(`Agent ${e} has a forked-skill scoping record with no matching provenance-marker witness; refusing to resume it on a cold path without a corroborated fork identity.`);
+  }
+  if (N.status !== "valid") ;
+  let O = N.status === "valid" ? N.scoping : void 0, fe = [], ge = [], $e, Le, St;
+  if (O) {
+    let n = await mf(ou(), r.storageV5).catch(() => []), u = r.getAppState().mcp.commands.filter((M) => M.type === "prompt" && M.loadedFrom === "mcp"), i = [...Gq(n, r.getAppState().mcp.commands), ...u].find((M) => M.name === O.skillName && M.type === "prompt");
+    if (i?.type === "prompt" && i.isKeptUnread === true) throw i.loadDefinition?.().catch(() => {
+    }), m("subagent_launch", "forked_skill_resume_skill_unread"), w(), new hD(`Agent ${e} ran as forked skill ${O.skillName}, whose file has not been read since a reload kept it; refusing to resume it before it is. Try again shortly.`);
+    if (i?.type !== "prompt" || i.context !== "fork" && i.getContext === void 0) throw m("subagent_launch", "forked_skill_resume_skill_unresolved"), w(), new Ku(`Agent ${e} ran as forked skill ${O.skillName}, which no longer resolves to a fork-capable skill; refusing to resume it without its permission scoping.`);
+    let ie = ALt(i);
+    if (ie !== void 0) throw m("subagent_launch", "forked_skill_resume_hidden_behind_plugin"), w(), new Ku(`Agent ${e} ran as forked skill ${O.skillName}; refusing to resume it: ${ie}`);
+    let Y = await Rge(i).catch((M) => {
+      throw w(), M instanceof Ku ? M : new Ku(d(M));
+    });
+    if (hke(i)) {
+      let M = j$(i);
+      throw m("subagent_launch", M ? "forked_skill_resume_host_catalog_withheld" : "forked_skill_resume_sync_vetoed"), w(), new Ku(M ? `Agent ${e} ran as forked skill ${O.skillName}, which your organization's Skills setting currently turns off; refusing to resume it.` : `Agent ${e} ran as forked skill ${O.skillName}, an account-synced skill that is currently disabled (skills sync turned off or denied by policy); refusing to resume it.`);
+    }
+    if (xge(Y)) throw hne(i, Y), m("subagent_launch", "forked_skill_resume_synced_plugin_refused", { reason: c(Y) }), w(), new Ku(`Agent ${e} ran as forked skill ${O.skillName}; refusing to resume it: ${Qyt(Y)}.`);
+    fe = wu(await xet(i).catch((M) => {
+      throw m("subagent_launch", "forked_skill_resume_allowed_tools_failed"), w(), M instanceof Ku ? M : new Ku(d(M));
+    })), ge = wu(i.disallowedTools ?? []), $e = FN(i), Le = NDt(i), St = bCe(Le) === null ? void 0 : await CLt(i, null);
+  }
+  let wn = O ? O.frozenCommandDenies ?? r.getAppState().toolPermissionContext.alwaysDenyRules.command ?? [] : void 0, At = O ? [...fe.length === 0 ? [] : [{ kind: "allowed_tools", allowedTools: fe }], ...ge.length === 0 ? [] : [{ kind: "disallowed_tools", disallowedTools: ge }]] : [], Tt = TOr(e, s, r), Ie = { ...r, ...Tt.marks }, he = O ? { ...Ie, getAppState: KJn(r.getAppState, fe, ge, { replaceCommandRules: true, frozenCommandDenies: wn }), permissionLayers: At.length > 0 ? [...r.permissionLayers ?? [], ...At] : r.permissionLayers } : Ie, F = y.get(e), ne = Cn(F) ? F.result : void 0, kn = ne?.modelsUsed ?? (ne?.resolvedModel ? [ne.resolvedModel] : void 0), se = (Cn(F) ? F.spawnDepth : s?.spawnDepth) ?? af(r.agentContext) + 1, yn = Cn(F) ? F.startTime : fn, W = hn;
+  if (!W) {
+    let n = y.getTranscript(e)?.messages;
+    if (n && n.length > 0) t(`[resumeAgentBackground ${e}] disk transcript missing; using ${n.length} in-memory messages mirrored during the run`), W = { messages: n, contentReplacements: [] };
+  }
+  if (!W) throw m("subagent_launch", "subagent_resume_transcript_missing"), w(), new Ku(`No transcript found for agent ID: ${e}`, { transcriptMissing: true });
+  if (J() && !Cn(P) && !kt) {
+    let { signal: n } = r.abortController, u = await eHr(e, n).catch((i) => {
+      if (!n.aborted) l(i);
+      return null;
+    }) ?? null;
+    if (n.aborted) throw w(), new Ye();
+    if (dVn(e)) throw Fe();
+    if (u === null || u.length === 0 && !ePo(e)) throw m("subagent_launch", u === null ? "subagent_resume_transcript_read_failed" : "subagent_resume_transcript_stored_empty"), w(), new hD(`Agent ${e}'s stored transcript could not be read, or is empty. Send the message again, or start a new agent if that fails too.`);
+    if (!sn(u, W.messages.map((i) => i.uuid))) throw m("subagent_launch", "subagent_resume_transcript_gap"), w(), new l6(`Part of agent ${e}'s transcript is missing, so it cannot go on from where it stopped. Start a new agent if the work is still needed.`);
+  }
+  Nje(W.messages);
+  let bn = S ? [...RMt(W.messages)] : W.messages.map((n) => Un(n, e)), q = sde(N7e(VFt(gMe(_ne(bn), { site: "agent_resume" }))));
+  if (S && q.length > 0 && !rFn(q)) return y.update(e, (n) => ({ ...n, resuming: false, notified: true, evictAfter: AOo(n) })), g("subagent_launch"), { agentId: e, description: De ?? "(resumed)", outputFile: J() ? void 0 : Ou(e), alreadyCompleted: true };
+  let _n = M4n(r.contentReplacementState, q, W.contentReplacements), We = (!s || s.fromStream === true) && (Cn(F) && (F.agentType === pmt.agentType || F.webFetchSavedFiles !== void 0) || cn === true || en(r.messages, e)), we = We ? pmt.agentType : s?.agentType, B = s?.isFork === true ? void 0 : we ? r.options.agentDefinitions.activeAgents.find((n) => n.agentType === we) : void 0, R = s?.isFork === true || !B && s?.isFork === void 0 && s?.agentType === O6.agentType, vt = we === pmt.agentType && (We || s?.isBuiltIn !== false);
+  if ((J() || XEs(e)) && (!B || s?.isBuiltIn !== void 0 && s.isBuiltIn !== Al(B)) && s?.isFork !== true && !vt && !kt) {
+    if (w(), s === null) throw m("subagent_launch", "subagent_resume_sidecar_missing_held"), new l6(`This session no longer has the saved settings of agent ${e}, so it cannot be resumed as the type it ran as. Start a new agent if the work is still needed.`);
+    throw m("subagent_launch", J() ? "subagent_resume_type_unmatched_diskless" : "subagent_resume_type_unmatched_held"), new hD(`The agent type that agent ${e} ran as is not on this session's list right now, or its name now belongs to a different type. Try once more; if that fails too, start a new agent.`);
+  }
+  let Ot = vt ? B && Al(B) ? B : pmt : s?.isBuiltIn === false && we === pmt.agentType ? B && !Al(B) ? B : M6 : B ?? (R ? O6 : M6), I = await Ale(Ot).catch((n) => {
+    if (w(), Ve(n)) throw n;
+    throw m("subagent_launch", "subagent_resume_plugin_load_threw"), new hD(d(n));
+  });
+  if (I === void 0) throw m("subagent_launch", "subagent_resume_plugin_load_failed"), w(), new Ku(`Agent type '${Ot.agentType}' could not be loaded from its plugin, so the agent was not resumed.`);
+  if (VXe(I, de)) throw m("subagent_launch", "subagent_resume_tools_denied"), w(), new Ku(KXe(I.agentType));
+  if ((await Kxr([I])).length !== 1) throw m("subagent_launch", "subagent_resume_not_offered"), w(), new Ku(`Agent type '${I.agentType}' is not offered in this session.`);
+  let re = G !== void 0 && X === "reply" && r.toolUseId !== void 0 && !eEt() && !lE(I) && s?.requestShape !== "foreground" ? VGn(G, { toolUseId: r.toolUseId, callerAgentId: r.agentId, signal: r.abortController.signal, resumedAgentId: e }) : void 0, j = X === "inline" || X === "reply" && (hoe() && re === void 0 || lE(I)), je = G !== void 0 && j && X === "reply" && te === void 0 && r.innerCall !== true;
+  if (!j && G !== void 0 && re === void 0) throw m("subagent_launch", "subagent_resume_background_rule"), w(), new l6(on);
+  let z = De ?? "(resumed)", He = h?.kind === "observer-activity" ? void 0 : await Cwr(e, { tool_use_id: r.toolUseId ?? "", parentModel: Hc(r), parentAgentId: te, signal: r.abortController.signal, origin: r.hookOrigin, agent: I, prompt: S ? "" : k, description: z, model: !R && !s?.isObserver && typeof s?.model === "string" ? s.model : void 0, permissionMode: ue, background: !j, fork: R, name: K, cwd: s?.cwd && !BM(s.cwd) ? s.cwd : void 0 }).catch((n) => {
+    if (w(), !Ve(n)) m("subagent_launch", "subagent_resume_spawn_chain_failed");
+    throw n;
+  });
+  using Sn = He?.starting;
+  if (He?.deny !== void 0) return m("subagent_launch", "subagent_resume_denied_by_hook"), ut(), { agentId: e, description: z, deniedByPlugin: Twr(He.deny) };
+  let be = (n, u) => {
+    let i = _l(), ie = s?.cwd && !BM(s.cwd) ? s.cwd : pe(), Y = hO(ie), M = i !== null && Y.length > 0 && (() => {
+      let $n = [i.worktreePath, ...hO(i.originalCwd), ...i.liveLaunchAnchor ? [i.liveLaunchAnchor, ...hO(i.liveLaunchAnchor)] : [], MIe, ...hO(MIe)];
+      return Y.every((Ln) => $n.some((In) => Xq(Ln, In) === "same"));
+    })(), xt = u?.telemetryCode ?? "git_worktree_resume_worktree_gone", Bn = s?.worktreePath ?? `agent ${e}`;
+    if (M) {
+      p(st, xt), t(`Resumed worktree ${Bn} ${n}; falling back to ${ie} under the session worktree's fences`, { level: "error" });
+      return;
+    }
+    if (u?.terminalOnUncovered === false) throw w(), new hD(`Cannot resume this agent right now: its worktree ${n}, and the fallback directory is not covered by the session's isolation fences. Re-run from a session whose fences cover the agent's directory.`);
+    throw m(st, xt), w(), new l6(`This agent cannot be resumed: its worktree ${n}, and the fallback directory is not covered by the session's isolation fences.`);
+  }, An = an(s?.worktreePath), Tn = an(s?.inheritedWorktreePath), _e = An ?? Tn, oe = _e ? await nt.stat(_e).then((n) => n.isDirectory() ? _e : be("exists but is not a directory"), (n) => {
+    let u = v(n);
+    if (u === "ENOENT" || u === "ENOTDIR") return be("no longer exists");
+    throw w(), new hD(`Cannot resume this agent: its worktree could not be examined (${String(u ?? "unknown error")}). Re-run once the directory is accessible.`);
+  }) : void 0;
+  if (_e === void 0 && !osi(e) && (s !== null && s.spawnedWithWorktree === true && s.worktreeCleanlyRemoved !== true && !(s.inheritedWorktreePath !== void 0 && s.parentAgentId !== void 0 && (await NC(Br(s.parentAgentId), r.storageV5).catch(cXe("resumeAgentBackground (parent)")))?.worktreeCleanlyRemoved === true) || u4o(e))) be("is not recorded for this isolated agent", { telemetryCode: "git_worktree_resume_binding_missing", terminalOnUncovered: u4o(e) });
+  let Q = oe;
+  if (oe) {
+    let n = ke(), u = await nt.realpath(n).catch(() => n), i = await oMe(oe, hO(n), L([u, MIe, ...hO(MIe)]), { requireWitnessForSelfOwningPins: true, declineSelfOwningPinUnderLiveRoot: true });
+    if (!i.ok) {
+      if (w(), i.reason !== "unverifiable" && i.reason !== "pin-is-own-launch-tree") throw m(st, "git_worktree_create_root_rejected"), t(`[worktree] refusing to resume parked agent into ${oe} (${i.reason}): ${i.message}`, { level: "error" }), new l6(`This agent cannot be resumed: its worktree was refused (${i.reason}). ${i.message}`);
+      throw t(`[worktree] could not verify parked agent worktree ${oe} this attempt; the resume will retry: ${i.message}`), new hD(`Cannot resume this agent right now: its worktree could not be verified (${i.reason}). Re-run once git can answer.`);
+    }
+  }
+  if (Q) {
+    let n = /* @__PURE__ */ new Date();
+    try {
+      await nt.utimes(Q, n, n);
+    } catch (u) {
+      let i = v(u);
+      if (i === "ENOENT" || i === "ENOTDIR") Q = be("vanished between verification and the resume");
+      else throw w(), new hD(`Cannot resume this agent: its worktree could not be touched (${String(i ?? "unknown error")}). Re-run once the directory is accessible.`);
+    }
+  }
+  let Mt = s?.cwd && !BM(s.cwd) ? s.cwd : Q, qe = r.session.withProject({ cwd: Mt ?? (r.session.project === null ? void 0 : pe()) });
+  if (qe.project === null && A1()) throw m("subagent_launch", "subagent_resume_no_directory_in_cwd_scope"), w(), new l6("This agent cannot be resumed from here in this session. Do the rest of the task without it.");
+  let vn = s?.effort !== void 0 && Aw(s.effort) ? s.effort : void 0, Pt = s?.isObserver || R ? void 0 : vn, Ft = O?.effort ?? Pt, A = Ft !== void 0 ? { ...I, effort: Ft } : I, Se;
+  if (R) {
+    if (r.renderedSystemPrompt) Se = r.renderedSystemPrompt;
+    else try {
+      let n = Ne.agent ? Ne.agentDefinitions.activeAgents.find((i) => i.agentType === Ne.agent) : void 0, u = await PP(r.options.tools, r.options.mainLoopModel);
+      Se = s3({ mainThreadAgentDefinition: n, toolUseContext: r, customSystemPrompt: r.options.customSystemPrompt, defaultSystemPrompt: u, appendSystemPrompt: r.options.appendSystemPrompt });
+    } catch (n) {
+      throw m("subagent_launch", "subagent_resume_fork_prompt_reconstruct_failed"), w(), n instanceof Ku ? n : new Ku(d(n));
+    }
+    if (!Se) throw m("subagent_launch", "subagent_resume_fork_prompt_missing"), w(), new Ku("Cannot resume fork agent: unable to reconstruct parent system prompt");
+  }
+  let Et = Hc(r), Ae = m2(Gve(A, Et), Et, s?.isObserver ? void 0 : R ? "inherit" : s?.model, ue), Ge = lXe(q, he.options)?.systemPrompt, Z = s?.isObserver || O !== void 0 ? void 0 : yLn({ agentDefinition: A, isFork: R, model: Ae, effortState: he.getAppState(), inheritedLayers: he.permissionLayers, recordedBudgetText: R ? qEs(q) : Ge });
+  A = Z?.agentDefinition ?? A;
+  let Dt = Z === void 0 && Ge ? qmt(void 0, Ge) : void 0;
+  if (h?.kind === "observer-activity" && s?.isObserver !== true) throw m("subagent_launch", "observer_resume_sidecar_unconfirmed"), w(), new Ku(`Observer sidecar for ${e} missing or did not confirm isObserver; refusing delivery`);
+  let On = s?.isObserver ? y1(un, ue) ?? ue : void 0, Ct = r.options.tools.filter(Zh);
+  if (!R && !s?.isObserver) await CZe(() => r.getAppState().mcp);
+  let Bt = HIe(r), Rn = r.getAppState(), { assembleToolPool: $t } = r.options.toolCatalog, Pn = R ? Zde(r.options.tools) : $t(de, Zde(Rn.mcp.tools.concat(Ct)), { skipReplFilter: true, machineMcpTools: Bt }), Ke = s?.isObserver ? kwr(bP(A, $t(de, Zde(Ct), { skipReplFilter: true, machineMcpTools: Bt }), true, false, false, se, tF(r).mode).resolvedTools) : Pn, Nn = h?.kind === "peer" && !Pv(R || s?.isObserver ? Ke : bP(A, Ke, true, false, false, se).resolvedTools), Te = h ? Yn(b, _, T, Oe({ content: rCe(k, h, { sendMessageToolAbsent: Nn }), origin: h, isMeta: true })) : Oe({ content: E ? rCe(k, void 0, { isMeta: true }) : k, ...E && { isMeta: true } }), ze = Cn(F) ? F.webFetchSavedFiles : void 0, Lt = lE(A) ? ze ? { dirs: [...ze.dirs], paths: [...ze.paths] } : Qhe() : void 0, It = { agentId: e, deliveringLoop: r.agentId }, Qe = s?.isObserver === true && (h?.kind === "observer-activity" || Cn(F) && F.isObserver === true);
+  if (s?.isObserver === true && !Qe && _6t()) m("agent_intent_forward", "unconfirmed_observer");
+  let Wt = x && (s?.stoppedByUser === true || _t || Cn(P) && P.stoppedByUser === true), jt = Wt || x && Cn(P) && (P.status === "killed" || P.status === "completed" || P.status === "failed"), Ht = s?.finished === true || Cn(P) && (P.status === "completed" || P.status === "failed");
+  if (jt && jDr(y.get(e)) === le) try {
+    await t8(Br(e), { revivedAt: pn, ...Ht && { finished: void 0 } }, r.storageV5), lt = Ht;
+  } catch (n) {
+    if (Kt(n) || TT(AT(n))) t(`failed to record the revival of ${e}: ${AP(n)}`, { level: "warn" });
+    else l(n);
+  }
+  if (!S) orr(e, Te, "user");
+  let xe;
+  if (!S && !Qe) try {
+    xe = ee?.();
+  } catch (n) {
+    l(n), p("agent_intent_forward", "live_check_failed");
+  }
+  let Je = S || Qe ? void 0 : _oi(It, xe ?? r.messages, xe === void 0 ? "snapshot" : "live"), Vt = Je?.copies ?? [], Xe = zn().canUseToolNarrowings.get(e), qt = R ? { systemPrompt: Se, parentSystemPrompt: true } : s?.isObserver ? { agentToolScope: A } : void 0, Gt = s?.launchedWithDefaults === true && !Nw(Ie), zt = { agentDefinition: A, promptMessages: S ? q : [...q, ...Vt, Te], turnPrompt: S ? void 0 : vy(Te.message.content) ?? void 0, toolUseContext: he, canUseTool: Xe ? Xe(V) : V, handbackOptIn: !(R || s?.isObserver), handbackTool: hLn, isAsync: true, requestShape: !s?.isObserver && (s?.requestShape === "foreground" || s?.requestShape === "background") ? s.requestShape : void 0, requestNonInteractive: !s?.isObserver && typeof s?.requestNonInteractive === "boolean" ? s.requestNonInteractive || ye() : void 0, preserveToolUseResults: !ye(), persistedToolResultFiles: Lt, querySource: Pae(A.agentType, Al(A)), spawnedBySkill: $e, ...O !== void 0 && { spawnedByForkedSkill: true }, model: s?.isObserver ? void 0 : R ? "inherit" : s?.model, effort: Pt, onModelRestricted: s?.isObserver ? void 0 : DIe($e ?? A.agentType, r.appendSystemMessage), override: Xe ? { ...qt, requireCanUseTool: true } : qt, availableTools: Ke, forkContextMessages: void 0, recordedUuids: new Set(q.map((n) => n.uuid)), compactTranscriptUnavailable: R, ...(R || s?.isObserver) && { useExactTools: true }, totalTokensReminderBudget: Z ? Z.totalTokensBudget : Dt, isTotalTokensReminderBudgetOnTopOfStart: Z ? Z.isBudgetOnTopOfStart : Dt !== void 0 && (R ? Yje() !== "none" : Yje() === "all"), worktreePath: Q, worktreeBranch: Ce, cwd: s?.cwd, launchedWithDefaults: Gt, typeFromStream: s?.fromStream === true && !We, spawnMode: On ?? s?.spawnMode, description: De, name: K, toolUseId: bt, contentReplacementState: _n }, U = y.get(e);
+  if (Cn(U) && U.stoppedByUser && (!x || (U.userStopCount ?? 0) !== le)) throw w(), new d6(`Agent ${e} was stopped by the user and won't be resumed. Treat its work as cancelled; only launch a new agent if the user explicitly asks.`);
+  let ve = re?.confirm(r.abortController.signal);
+  if (ve !== void 0) {
+    if (w(), ve.kind === "aborted") throw new Ye();
+    if (ve.kind === "refused") throw m("subagent_launch", "subagent_resume_refused_by_rule"), new l6(ve.message);
+    throw m("subagent_launch", "subagent_resume_background_closed"), new Ku(Gn);
+  }
+  for (let n of Vt) Hon(e, n, y);
+  if (!E && !S) Hon(e, tU(h) ? Te : Oe({ content: k, origin: h }), y);
+  ln?.();
+  let C = Dle({ outputFileReadable: x0(r.options.tools), agentId: e, ownerAgentId: tt(), parentAgentId: s?.parentAgentId, parentAbortController: j ? r.abortController : void 0, awaitedByCaller: j, awaitedByMainTurn: je, spawnDepth: se, launchedWithDefaults: Gt, description: z, prompt: k, model: Ae, selectedAgent: A, taskRegistry: y, toolUseId: r.toolUseId ?? qD(U?.toolUseId) ?? bt, cwd: Mt, forkedSkillName: O?.skillName, ...h?.kind === "observer-activity" && { isObserver: true }, sessionScratch: r.session.sessionScratch });
+  if (re !== void 0 && !re.handOver({ agentId: C.agentId, abortController: C.abortController })) throw jT(C.agentId, y, "system", void 0, { lifecycleNotStarted: true }), SO(C.agentId, y), m("subagent_launch", "subagent_resume_background_not_taken"), new l6(on);
+  Tt.admit(), mn(), Sn?.started({ agentId: e, model: Ae });
+  let H = h?.kind === "observer-activity" ? void 0 : j9(r.agentId, y), Fn = !Cn(U) || U.notified && U.quietlyParked !== true, Qt = false;
+  if (H !== void 0) {
+    let n = /* @__PURE__ */ new Set(), u = H;
+    while (u !== void 0 && !n.has(u)) {
+      n.add(u);
+      let i = y.get(u);
+      if (u = Cn(i) ? i.ownerAgentId : void 0, u === e) {
+        Qt = true;
+        break;
+      }
+    }
+  }
+  if (H !== void 0 && H !== e && Fn && !Qt) {
+    let n, u = !ye();
+    if (y.update(e, (i) => {
+      if (i.ownerAgentId !== H) n = i.ownerAgentId;
+      else if (!u || i.handbackRecipient === H) return i;
+      return { ...i, ownerAgentId: H, ...u && { handbackRecipient: H } };
+    }), u) FD(H, `agent:${e}`, y);
+    if (n !== void 0) HDs(e, n, y);
+  }
+  let Re = y.get(e), Ut = Cn(Re) && LTo(r.agentId, Re.ownerAgentId, y), Ze = Ut ? Pv(r.options.tools) : Cn(Re) ? Re.ownerCanContinueAgents : void 0;
+  if (Ut) y.update(e, (n) => n.ownerCanContinueAgents === Ze ? n : { ...n, ownerCanContinueAgents: Ze });
+  if (jt) {
+    let n = y.get(e);
+    r.messageQueue.enqueuePendingNotification(fDs({ agentId: e, description: z, to: nNt({ ownerAgentId: Cn(n) ? n.ownerAgentId : void 0, keepaliveReason: `agent:${e}`, delivering: true, taskRegistry: y }) }));
+  }
+  if (Wt) {
+    let n = (i) => {
+      if (Kt(i) || TT(AT(i))) t(`failed to clear stop marker for ${e}: ${AP(i)}`, { level: "warn" });
+      else l(i);
+    }, u = () => jDr(y.get(e)) !== le;
+    if (!u()) {
+      if (await zxo(Br(e), "stoppedByUser", r.storageV5).catch(n), await t8(Br(e), { stoppedByUser: false }, r.storageV5).catch(n), u()) await Gxo(Br(e), A.agentType, r.storageV5);
+    }
+  }
+  if (dn) SO(C.agentId, y);
+  if (await wTs({ observedTaskId: e, observedDefinition: A, observedName: K ?? A.agentType, observedMeta: s ? { observerTaskId: s.observerTaskId, armingPermissionMode: s.armingPermissionMode } : null, toolUseContext: r, canUseTool: V }), z7(e, y), K !== void 0 && r.getAppState().agentNameRegistry.get(K) === void 0) r.agentLifecycle.registerName(K, Br(e));
+  let En = { prompt: k, resolvedAgentModel: Ae, modelsUsed: kn, isBuiltInAgent: Al(A), startTime: yn, agentType: A.agentType, isAsync: true, agentDepth: se, callerCanContinueAgents: Ze, source: A.source, pluginId: yke(A) ? mc(A.plugin) : void 0, persistedToolResultFiles: Lt, spawnedSubagent: Cn(F) ? F.spawnedSubagent : void 0, priorForeignArtifactContent: ne !== void 0 && bLs(ne) || egt(W.messages) }, et = { agentId: e, parentAgentId: r.agentId, depth: se, ...zn().spawnedByMainThread.has(e) && { spawnedByMainThread: true }, parentSessionId: Gx(), agentType: "subagent", subagentName: A.agentType, displayName: K, isAsync: true, isBuiltIn: Al(A), invokingRequestId: dt, invocationKind: "resume", invocationEmitted: false, parentPromptId: Pe, isBackgroundAgent: !je, ...Hj(r.agentContext) }, Dn = h?.kind === "observer-activity" ? () => {
+  } : y.takeConcurrencySlot(), Yt = cI(et, () => Gkn(qe.project, () => pte({ taskId: C.agentId, abortController: C.abortController, makeStream: (n, u, i) => qR({ ...zt, session: qe, override: { ...zt.override, agentId: Br(C.agentId), agentContext: et, abortController: C.abortController }, onCacheSafeParams: n, onQueryProgress: u, onStreamTokenEstimate: i, ...G !== void 0 && j && !je && { canShowPermissionPrompts: false } }), metadata: { ...En, agentContext: et }, description: z, toolUseContext: r, taskRegistry: y, agentIdForCleanup: e, enableSummarization: $be() || (FQe() || R || Tle()) && !ye(), getWorktreeResult: async () => Q ? { worktreePath: Q, ...Ce !== void 0 && { worktreeBranch: Ce } } : {}, shouldNotifyOwner: j ? () => false : void 0, reviewInlineHandoff: X === "reply" && j, onTerminalSuccess: O ? () => {
+    let n = O.skillName, u = `:${n}`;
+    if (Oee().has(u)) return;
+    yie(n, n, "", null);
+    let i = bCe(Le ?? n);
+    if (i) r.applyAttributionOp({ kind: "recordVerification", method: i, checkout: St });
+  } : void 0, onRunSettled: Dn })));
+  if (Je !== void 0) hoi(It, Je);
+  if (g("subagent_launch"), j) try {
+    await Yt;
+    let n = y.get(e), u = Cn(n) ? n.result : void 0;
+    return { agentId: e, description: z, outputFile: C.outputFile, inlineHandback: { content: u?.content ?? [], harnessNoteCount: u?.harnessNoteCount, harnessTailCount: u?.harnessTailCount, harnessSectionHash: u?.harnessSectionHash } };
+  } catch (n) {
+    if (n instanceof Error) Object.defineProperty(n, ot, { value: true });
+    throw n;
+  } finally {
+    if (!Ake(e, y) && !Vmt(e, y)) Yde(e);
+    y.update(e, (n) => ({ ...n, notified: true, evictAfter: AOo(n) }));
+  }
+  return { agentId: e, description: z, outputFile: C.outputFile };
+}
+function Un(e, k) {
+  if (e.type !== "user" || !("agentId" in e && e.agentId === k) || e.interruptedByShutdown !== true || !Array.isArray(e.message.content)) return e;
+  if (!rpe(e)) return Em(e) ? { ...e, message: { ...e.message, content: [{ type: "text", text: L9o }] } } : e;
+  return { ...e, toolUseResult: Vx, toolDenialKind: void 0, message: { ...e.message, content: e.message.content.map((h) => h.type === "tool_result" ? { ...h, content: Vx } : h) } };
+}
+function Yn(e, k, h, b) {
+  return e === void 0 ? b : { ...b, joinedNoticeLengths: e, joinedNoticeOwn: k, joinedNoticeRunIds: h };
+}
+export {
+  Awr,
+  CEe,
+  Cwr,
+  Dhi,
+  I$,
+  Ku,
+  Rwr,
+  Twr,
+  cte,
+  d6,
+  d7,
+  hD,
+  kwr,
+  l6,
+  ofo,
+  sfo
+};

@@ -1,0 +1,212 @@
+// darwin/workflows/plugin-load-workflows.js — Claude Code 2.1.310（darwin）模块 chunk-897a7c5m.js
+import { $s } from "../telemetry/anthropic-workspace-id.js";
+import { Qoe, Zoe, br } from "./chunk-a1595c7e.js";
+import { Le } from "../models/claude-3-5-sonnet.js";
+import { i } from "../shared/environment.js";
+import { afe, ie, t } from "../fs/gitlab-runner-authentication-token.js";
+import { g, m, p } from "../telemetry/chunk-9d6962d2.js";
+import { Qt } from "../settings/workflow-launch-exec.js";
+import { mr } from "./chunk-5e65bb82.js";
+import { Ev, Mws } from "./chunk-d9a07e26.js";
+import { hE } from "../plugins/entry-refused.js";
+import { Ie, t_n } from "../plugins/chunk-c198f87f.js";
+import { Zte, pi } from "../core/conversation-engine.js";
+import { Zk } from "../fs/reply-across-default-dirs.js";
+import { tR, LTe } from "../context/org-memory-writes-setting-changed.js";
+import { pJt } from "./built-in.js";
+import { wtr } from "../shared/allow-bundled-skills.js";
+import { hg, la } from "../shared/first-truncation.js";
+import { join as E } from "path";
+async function _(o, a, r, n, d) {
+  let w = ie(), e;
+  try {
+    e = await w.readdir(o);
+  } catch {
+    return [];
+  }
+  return (await Promise.all(e.map(async (l) => {
+    if (!(l.isFile() || l.isSymbolicLink())) return null;
+    if (!l.name.endsWith(".js")) return null;
+    return v(E(o, l.name), a, r, n, d);
+  }))).filter((l) => l !== null);
+}
+async function v(o, a, r, n, d) {
+  let w = ie();
+  if (afe(w, o, d)) return null;
+  try {
+    let e = await Zk(w, o, tR);
+    if (e === null) return t(`Plugin workflow ${o}: not a regular file or exceeds ${tR} bytes — skipping`, { level: "warn" }), null;
+    let s = LTe(e), l = Ev(s, { validateBody: false });
+    if ("error" in l) return t(`Plugin workflow ${o} has invalid meta: ${l.error} — skipping`, { level: "warn" }), null;
+    let f = `${a}:${l.meta.name}`;
+    return { source: "plugin", plugin: r, pluginManifest: n, name: f, description: l.meta.description, whenToUse: l.meta.whenToUse, phases: l.meta.phases, script: s, filePath: o };
+  } catch (e) {
+    return t(`Failed to load workflow from ${o}: ${e}`, { level: "error" }), null;
+  }
+}
+function P(o) {
+  let a = Ie();
+  return a.workflows ??= (async () => {
+    let { enabled: r, errors: n } = await pi(o), d = [];
+    if (n.length > 0) t(`Plugin loading errors: ${n.map((e) => hE(e)).join(", ")}`);
+    let w = null;
+    for (let e of r) {
+      let s = /* @__PURE__ */ new Set(), l = d.length;
+      if (e.workflowsPath) try {
+        let f = await _(e.workflowsPath, e.name, e.source, e.manifest, s);
+        if (d.push(...f), f.length > 0) t(`Loaded ${f.length} workflows from plugin ${e.name} default directory`);
+      } catch (f) {
+        w = "plugin_load_workflows_dir_failed", t(`Failed to load workflows from plugin ${e.name} default directory: ${f}`, { level: "error" });
+      }
+      if (e.workflowsPaths) for (let f of e.workflowsPaths) try {
+        let c = await ie().stat(f);
+        if (c.isDirectory()) {
+          let k = await _(f, e.name, e.source, e.manifest, s);
+          if (d.push(...k), k.length > 0) t(`Loaded ${k.length} workflows from plugin ${e.name} custom path: ${f}`);
+        } else if (c.isFile() && f.endsWith(".js")) {
+          let k = await v(f, e.name, e.source, e.manifest, s);
+          if (k) d.push(k), t(`Loaded workflow from plugin ${e.name} custom file: ${f}`);
+        }
+      } catch (u) {
+        w = "plugin_load_workflows_path_failed", t(`Failed to load workflows from plugin ${e.name} custom path ${f}: ${u}`, { level: "error" });
+      }
+      if (e.serverPluginId !== void 0) for (let f of d.slice(l)) f.serverPluginId = e.serverPluginId;
+    }
+    if (t(`Total plugin workflows loaded: ${d.length}`), w) m("plugin_load_workflows", w);
+    else g("plugin_load_workflows");
+    return d;
+  })(), a.workflows;
+}
+import { join as h } from "path";
+function W(o, a) {
+  if (!a || Mws(o.script)) return true;
+  return t(`Workflow ${o.filePath ?? o.name} (${o.source}) would override ${o.name} but does not parse — keeping the ${a.source} copy`, { level: "warn" }), false;
+}
+function S(o) {
+  let a = /* @__PURE__ */ new Map();
+  for (let r of o) {
+    if (!W(r, a.get(r.name))) continue;
+    a.set(r.name, r);
+  }
+  return [...a.values()];
+}
+import { join as F } from "path";
+function SOt() {
+  return F(Le(), "workflows");
+}
+async function T(o, a) {
+  try {
+    return await Zte("workflows", o);
+  } catch (r) {
+    if ($s(r)) return t(`loadWorkflowsDir: project-dir walk failed: ${r.code}`, { level: "error" }), a.walkFailed = true, [];
+    throw r;
+  }
+}
+async function D(o, a, r, n) {
+  if (n !== void 0 && a === "userSettings") return L(n, o, r);
+  let d = ie(), w;
+  try {
+    w = await d.readdir(o);
+  } catch {
+    return [];
+  }
+  return (await Promise.all(w.map(async (s) => {
+    if (!(s.isFile() || s.isSymbolicLink())) return null;
+    if (!s.name.endsWith(".js")) {
+      if (/\.(mjs|cjs|ts)$/.test(s.name)) r.nearMissExt++;
+      return null;
+    }
+    let l = h(o, s.name), f;
+    try {
+      f = await d.readFileBytes(l, tR + 1);
+    } catch {
+      return r.skippedUnreadable++, null;
+    }
+    if (f.byteLength > tR) return t(`Workflow ${l} exceeds ${tR} bytes — skipping`, { level: "warn" }), r.skippedOversize++, null;
+    let u = LTe(f.toString("utf-8")), c = Ev(u, { validateBody: false });
+    if ("error" in c) return t(`Workflow ${l} has invalid meta: ${c.error} — skipping`, { level: "warn" }), r.skippedInvalidMeta++, null;
+    return { source: a, name: c.meta.name, description: c.meta.description, whenToUse: c.meta.whenToUse, phases: c.meta.phases, script: u, filePath: l };
+  }))).filter((s) => s !== null);
+}
+async function L(o, a, r) {
+  let n = [];
+  switch ((await la((e) => o.listEntries({ namespace: "userConfigDir", dir: "workflows" }, e === void 0 ? void 0 : { cursor: e }), (e) => {
+    for (let s of e) {
+      if (s.kind !== "key" || s.key.namespace !== "userConfigDir") continue;
+      let l = s.key.relPath.at(-1);
+      if (l === void 0 || s.key.relPath.length !== 1) continue;
+      if (!l.endsWith(".js")) {
+        if (/\.(mjs|cjs|ts)$/.test(l)) r.nearMissExt++;
+        continue;
+      }
+      n.push({ key: s.key, name: l });
+    }
+  })).status) {
+    case "done":
+      break;
+    case "error":
+      return [];
+    case "capped":
+      t(`User workflows listing of ${a} truncated at ${hg} pages — loading the ${n.length} workflow files seen`, { level: "warn" }), r.userListingTruncated = true;
+      break;
+  }
+  return (await Promise.all(n.map(async ({ key: e, name: s }) => {
+    let l = await o.read([{ key: e, offset: 0, length: tR + 1 }]);
+    if (!l.ok) return t(`Workflow ${h(a, s)} could not be read through the storage backend (${l.error.code}) — skipping`, { level: "warn" }), r.skippedUnreadable++, null;
+    let f = l.value.items[0];
+    if (f === void 0 || !f.found) return r.skippedUnreadable++, null;
+    let u = h(a, s);
+    if (f.value.byteLength > tR) return t(`Workflow ${u} exceeds ${tR} bytes — skipping`, { level: "warn" }), r.skippedOversize++, null;
+    let c = LTe(Buffer.from(f.value).toString("utf-8")), k = Ev(c, { validateBody: false });
+    if ("error" in k) return t(`Workflow ${u} has invalid meta: ${k.error} — skipping`, { level: "warn" }), r.skippedInvalidMeta++, null;
+    return { source: "userSettings", name: k.meta.name, description: k.meta.description, whenToUse: k.meta.whenToUse, phases: k.meta.phases, script: c, filePath: u };
+  }))).filter((e) => e !== null);
+}
+async function b(o, a) {
+  let r = SOt(), n = { skippedInvalidMeta: 0, skippedOversize: 0, skippedUnreadable: 0, nearMissExt: 0, walkFailed: false, userListingTruncated: false }, d = await T(o, n), [w, ...e] = await Promise.all([Qt("userSettings") ? D(r, "userSettings", n, a) : Promise.resolve([]), ...Qt("projectSettings") ? d.map((u) => D(u, "projectSettings", n)) : []]), s = /* @__PURE__ */ new Map();
+  for (let u of w) {
+    if (!W(u, s.get(u.name))) continue;
+    s.set(u.name, u);
+  }
+  for (let u = e.length - 1; u >= 0; u--) for (let c of e[u]) {
+    if (!W(c, s.get(c.name))) continue;
+    s.set(c.name, c);
+  }
+  let l = n.walkFailed && Qt("projectSettings"), f = n.skippedInvalidMeta + n.skippedOversize + n.skippedUnreadable;
+  if (l || n.userListingTruncated || f > 0 || n.nearMissExt > 0) p("workflow_discover", l ? "project_dir_walk_failed" : n.userListingTruncated ? "user_listing_truncated" : n.skippedInvalidMeta > 0 ? "invalid_meta" : n.skippedOversize > 0 ? "oversize" : n.skippedUnreadable > 0 ? "unreadable" : "near_miss_extension", { found: s.size, skipped_invalid_meta: n.skippedInvalidMeta, skipped_oversize: n.skippedOversize, skipped_unreadable: n.skippedUnreadable, near_miss_ext: n.nearMissExt, ...n.userListingTruncated && { user_listing_truncated: true } });
+  else g("workflow_discover", { found: s.size });
+  return [...s.values()].sort((u, c) => u.name.localeCompare(c.name));
+}
+var Iws = "CLAUDE_REMOTE_WORKFLOW_SCRIPT", Buo = "CLAUDE_REMOTE_WORKFLOW_ARGS", Ows = "CLAUDE_WORKFLOW_NAME_ONLY";
+function Dct() {
+  return i.CLAUDE_WORKFLOW_NAME_ONLY;
+}
+function l1e(o, a) {
+  return Qoe(br().allWorkflows, `${wtr()}:${Dct()}:${Zoe(o)}`, () => M(o, a));
+}
+async function M(o, a) {
+  if (mr("workflows") || Dct()) return [...pJt()];
+  let [r, n] = await Promise.all([b(o, a), P(a)]), d = S(n), w = pJt(), e = new Map(w.map((y) => [y.name, y])), s = O(d, e);
+  for (let y of s) e.set(y.name, y);
+  let l = O(r, e), f = new Set(l.map((y) => y.name)), u = s.filter((y) => !f.has(y.name)), c = /* @__PURE__ */ new Set([...f, ...u.map((y) => y.name)]);
+  return [...w.filter((y) => !c.has(y.name)), ...u, ...l];
+}
+function O(o, a) {
+  return o.filter((r) => W(r, a.get(r.name)));
+}
+async function uJt(o, a, r) {
+  return (await l1e(a, r)).find((d) => d.name === o);
+}
+function Gbr() {
+  br().allWorkflows.clear(), t_n();
+}
+export {
+  Buo,
+  Dct,
+  Gbr,
+  Iws,
+  Ows,
+  SOt,
+  l1e,
+  uJt
+};

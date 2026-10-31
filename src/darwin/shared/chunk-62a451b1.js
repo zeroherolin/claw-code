@@ -1,0 +1,11 @@
+// darwin/shared/chunk-62a451b1.js — Claude Code 2.1.310（darwin）模块 chunk-e76vd23z.js
+function Ubn(e) {
+  return e;
+}
+function Yi(e) {
+  return e;
+}
+export {
+  Ubn,
+  Yi
+};

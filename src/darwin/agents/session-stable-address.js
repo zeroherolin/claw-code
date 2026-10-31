@@ -1,0 +1,635 @@
+// darwin/agents/session-stable-address.js — Claude Code 2.1.310（darwin）模块 chunk-6kf8v7k4.js
+import { Sg } from "../shared/chunk-3b9c376b.js";
+import { L, V, tt } from "../context/not-admin-owned.js";
+import { d, G } from "../telemetry/anthropic-workspace-id.js";
+import { py } from "../fs/node-modules.js";
+import { rr } from "../artifacts/chunk-a6c9d164.js";
+import { Le } from "../models/claude-3-5-sonnet.js";
+import { wA } from "../shared/environment.js";
+import { _, qo, t } from "../fs/gitlab-runner-authentication-token.js";
+import { xz, a$, T5, iCn, _3e, wX } from "../artifacts/cowritten-artifact-html.js";
+import { O } from "../fs/chunk-ce5d00cd.js";
+import { gi, QG, A8o, Ewn } from "../shared/chunk-dda594a8.js";
+import { oc } from "./in-process-teammate.32be.js";
+import { f } from "../shared/chunk-2fe3b2b7.js";
+import { Hn } from "../fs/utf-8.8f8e.js";
+import { un } from "../fs/async-hooks.7959.js";
+import { je } from "../plugins/chunk-0a4c51cf.js";
+import { bl, hM, zj, Xa, hNe, ykt, s9o, f_, jF, Zue, V3r, IRe } from "../fs/reply-across-default-dirs.js";
+import { qm, MRe, vS, RL, ise, vd } from "../fs/chunk-b6c2193e.js";
+import { SR, xL } from "../fs/chunk-21654dda.js";
+import { cn } from "../shared/chunk-6ae01e90.js";
+import { o, u } from "../vendor/zod/string-format.js";
+import { hg, la } from "../shared/first-truncation.js";
+import { Et } from "../telemetry/chunk-a27d4004.js";
+import { z } from "../shared/chunk-be29de51.js";
+import { basename as Ie } from "path";
+var oe = [T5, xz, iCn], Pe = [..._3e, "system-reminder"], D;
+function H() {
+  return D ??= Ewn([{ tags: oe }]), D;
+}
+function dkt(e) {
+  return H().neutralize(e);
+}
+function F3r(e) {
+  return H().openerOffsets(e);
+}
+var K;
+function j() {
+  return K ??= Ewn([{ tags: wX.filter((e) => e !== a$) }, { tags: [a$], tail: A8o }, { tags: ["antml"], tail: ({ colon: e }) => `[${e}]` }]), K;
+}
+function Y4(e) {
+  return j().neutralize(e);
+}
+function yii(e) {
+  return j().openerOffsets(e);
+}
+var ae = new RegExp(`[${QG.open}]`, "u");
+function U(e) {
+  return ae.test(e) || e.includes("\\u");
+}
+var de = /^\s*(?:\{\s*["}]|\[\s*(?:["{[\]\d-]|true\b|false\b|null\b))/, ue = /* @__PURE__ */ new Map([['"', '"'], ["\\", "\\"], ["/", "/"], ["b", "\b"], ["f", "\f"], ["n", `
+`], ["r", "\r"], ["t", "	"]]);
+function q(e, n) {
+  let r = n, i = 1;
+  while (i % 2 === 1) {
+    if (r = e.indexOf('"', r + 1), r === -1) return -1;
+    i = 0;
+    while (e.charCodeAt(r - i - 1) === 92) i++;
+  }
+  return r;
+}
+function ce(e) {
+  let n = [], r = e.indexOf('"');
+  while (r !== -1) {
+    let i = q(e, r);
+    if (i === -1) {
+      n.push([r + 1, e.length]);
+      break;
+    }
+    n.push([r + 1, i]), r = e.indexOf('"', i + 1);
+  }
+  return n;
+}
+function fe(e) {
+  if (de.test(e)) return true;
+  let n = e.search(/\S/), r = e[n] === '"' ? q(e, n) : -1;
+  return r !== -1 && e.slice(r + 1).trim() === "";
+}
+function le(e, n, r) {
+  let i = "", c = [], a = [];
+  for (let l = n; l < r; ) {
+    let p = e[l], k = 1;
+    if (p === "\\" && l + 1 < r) {
+      let S = ue.get(e[l + 1]), g = e.slice(l + 2, l + 6);
+      if (S !== void 0) p = S, k = 2;
+      else if (e[l + 1] === "u" && l + 6 <= r && /^[0-9a-fA-F]{4}$/.test(g)) p = String.fromCharCode(parseInt(g, 16)), k = 6;
+    }
+    i += p, c.push(l), a.push(l + k), l += k;
+  }
+  return { value: i, starts: c, ends: a };
+}
+function me(e) {
+  let n = /* @__PURE__ */ new Map();
+  for (let c of F3r(e)) n.set(c, { end: c + 1, keepsOpener: e[c] === "<" });
+  for (let [c, a] of ce(e)) {
+    if (!U(e.slice(c, a))) continue;
+    let { value: l, starts: p, ends: k } = le(e, c, a);
+    for (let S of F3r(l)) n.set(p[S], { end: k[S], keepsOpener: l[S] === "<" });
+  }
+  let r = "", i = 0;
+  for (let c of [...n.keys()].sort((a, l) => a - l)) {
+    let { end: a, keepsOpener: l } = n.get(c);
+    r += e.slice(i, l ? a : c) + (l ? "\\\\" : "<\\\\"), i = a;
+  }
+  return r + e.slice(i);
+}
+function ckt(e) {
+  if (!U(e)) return e;
+  return fe(e) ? me(e) : dkt(e);
+}
+var sy = "main";
+function RRe(e, n) {
+  return `<${iCn} from="${gi(e)}">
+${ukt(n)}
+</${iCn}>`;
+}
+function ukt(e) {
+  return ckt(e);
+}
+import { createHash as ge, randomBytes as X } from "crypto";
+import { mkdir as pe, readdir as Y, unlink as v } from "fs/promises";
+import { basename as Se, join as A, resolve as ke } from "path";
+async function $3r(e, n) {
+  let r = [], i;
+  try {
+    i = await la((c) => e.listEntries({ namespace: "session" }, { cursor: c, skipKeyStats: true }), (c) => {
+      for (let a of c) if (a.kind === "key" && a.key.namespace === "session") r.push(a.key.file);
+    });
+  } catch (c) {
+    n.onIssue?.(`failed: ${d(c)}`);
+    return;
+  }
+  switch (i.status) {
+    case "done":
+      return r;
+    case "error":
+      n.onIssue?.(`failed: ${Et(i.error)}`);
+      return;
+    case "capped":
+      return n.onIssue?.(`truncated at ${hg} pages; ${r.length} names seen`, "warn"), n.partialOnCap ? r : void 0;
+  }
+}
+var W = "auth", vor = /^(\d+)\.[0-9a-f]{64}\.key$/, he = /^(\d+)\.[0-9a-f]{64}\.key\.tmp\.[0-9a-f]+$/, C = 16, be = /^[0-9a-f]{32}$/, x = 4096, J = f(() => u({ peerToken: o().regex(be), procStart: o().optional(), procStartFt: o().optional(), pidDomain: o().optional() }));
+function kor() {
+  return O() === "windows";
+}
+function _ii() {
+  return { peerToken: X(C).toString("hex"), childToken: X(C).toString("hex") };
+}
+var Cor = 25;
+function ose() {
+  return A(Le(), "sessions");
+}
+function _R(e) {
+  let n = IRe(e);
+  if (n !== void 0) return `\\\\.\\pipe\\${V3r(n)}`;
+  if (py(e)) return;
+  return ke(e);
+}
+function Q(e) {
+  let n = _R(e);
+  return n === void 0 ? void 0 : ge("sha256").update(n).digest("hex");
+}
+function Z(e, n) {
+  let r = Q(n);
+  if (r === void 0) throw Error("refusing to derive a messaging key name for a non-canonical socket path");
+  return `${e}.${r}.key`;
+}
+async function Sii(e, n, r, { sweepPermitted: i }) {
+  if (z() && r !== void 0) return ye(r, e, n);
+  let c = ose();
+  await pe(c, { recursive: true, mode: 448 }), await Ee(c, i);
+  let a = A(c, Z(process.pid, e));
+  try {
+    await v(a);
+  } catch {
+  }
+  return await Hn(a, _({ peerToken: n, ...ise(await vS()), pidDomain: await SR() }), 384), a;
+}
+async function ye(e, n, r) {
+  let i = Z(process.pid, n), c = await e.ensureScope({ namespace: "session" });
+  if (!c.ok) throw t(`[uds-auth] sessions scope unavailable: ${Et(c.error)}`), Error("messaging key folder could not be made through storage");
+  try {
+    await e.delete(je.session(i));
+  } catch {
+  }
+  let a = await e.write(je.session(i), _({ peerToken: r, ...ise(await vS()), pidDomain: await SR() }), { publishDiscipline: "atomic", mode: 384, exactMode: 384 });
+  if (!a.ok) throw t(`[uds-auth] key publish failed: ${Et(a.error)}`), Error("messaging key could not be published through storage");
+  return A(ose(), i);
+}
+async function Tor(e) {
+  try {
+    let n = await bl(e, x);
+    if (n === null) return;
+    let r = J().safeParse(qo(n));
+    return r.success ? r.data.pidDomain : void 0;
+  } catch {
+    return;
+  }
+}
+async function Ee(e, n) {
+  if (!n) return;
+  let r;
+  try {
+    r = await Y(e);
+  } catch {
+    return;
+  }
+  let i = await SR();
+  await Promise.all(r.map(async (c) => {
+    let a = he.exec(c);
+    if (!a || !qm(parseInt(a[1], 10))) return;
+    let l = await Tor(A(e, c));
+    if (l !== void 0 && l !== i) return;
+    try {
+      await v(A(e, c));
+    } catch {
+    }
+  }));
+}
+async function bii(e, n) {
+  if (z() && n !== void 0) {
+    try {
+      await n.delete(je.session(Se(e)));
+    } catch {
+    }
+    return;
+  }
+  try {
+    await v(e);
+  } catch {
+  }
+}
+async function wii(e, n, r) {
+  let i = ose(), c;
+  if (z() && n !== void 0) {
+    let g = await $3r(n, { partialOnCap: false });
+    if (g === void 0) return { kind: "unusable" };
+    c = g;
+  } else try {
+    c = await Y(i);
+  } catch (g) {
+    return G(g) ? { kind: "no-key" } : { kind: "unusable" };
+  }
+  let a = Q(e);
+  if (a === void 0) return { kind: "no-key" };
+  let l = `.${a}.key`, p = c.filter((g) => g.endsWith(l)).map((g) => {
+    let h = vor.exec(g);
+    return h ? { file: g, pid: parseInt(h[1], 10) } : void 0;
+  }).filter((g) => g !== void 0);
+  if (p.length === 0) return { kind: "no-key" };
+  let k = async (g) => {
+    let h = z() && n !== void 0 ? await we(n, g) : await bl(A(i, g), x);
+    if (h === null) return;
+    try {
+      let y = J().safeParse(qo(h));
+      return y.success ? y.data : void 0;
+    } catch {
+      return;
+    }
+  };
+  if (p.length === 1) {
+    let g = p[0];
+    if (r?.requireLiveOwner && qm(g.pid)) return { kind: "dead-owner" };
+    let h = await k(g.file);
+    if (h === void 0) return { kind: "unusable" };
+    if (r?.requireLiveOwner) {
+      let y = RL(h);
+      if (y !== void 0) {
+        let E = await vd(g.pid, { skipCache: true });
+        if (E !== void 0 && !MRe(y, E)) return { kind: "dead-owner" };
+      }
+    }
+    return { kind: "token", token: h.peerToken };
+  }
+  let S;
+  for (let { file: g, pid: h } of p) {
+    let y = await k(g);
+    if (y === void 0) continue;
+    let E = 0;
+    if (!qm(h)) {
+      let w = RL(y), T = w === void 0 ? void 0 : await vd(h, { skipCache: true });
+      if (w === void 0 || T === void 0) E = 1;
+      else E = MRe(w, T) ? 2 : 0;
+    }
+    if (S === void 0 || E > S.rank) S = { rank: E, peerToken: y.peerToken };
+  }
+  if (S === void 0) return { kind: "unusable" };
+  if (r?.requireLiveOwner && S.rank === 0) return { kind: "dead-owner" };
+  return { kind: "token", token: S.peerToken };
+}
+async function we(e, n) {
+  try {
+    let r = await e.readText([{ key: je.session(n), offset: 0, length: x + 1 }]);
+    if (!r.ok) return null;
+    let i = r.value.items[0];
+    if (!i.found || i.totalBytes > x) return null;
+    return i.value;
+  } catch {
+    return null;
+  }
+}
+function Q5o(e) {
+  return _({ type: W, token: e }) + `
+`;
+}
+var Eii = Q5o("0".repeat(C * 2)).length;
+function vii(e) {
+  return typeof e === "object" && e !== null && "type" in e && e.type === W;
+}
+function kii(e, n) {
+  if (n === void 0) return;
+  if (xL(e, n.peerToken)) return "peer";
+  if (xL(e, n.childToken)) return "child";
+  return;
+}
+function wZ() {
+  let { getFeatureValue_SESSION_PINNED: e } = import.meta.require("../cli/answer-next-growth-book-remote-eval-with.js");
+  try {
+    return e("tengu_session_stable_address", false);
+  } catch {
+    return false;
+  }
+}
+var ee = "sid:";
+function xVt(e) {
+  return `${ee}${e}`;
+}
+function pkt(e) {
+  return e.startsWith(ee);
+}
+function hrt(e) {
+  return !pkt(e.sock);
+}
+function U3r(e) {
+  let n = typeof e === "string" ? e.trim() : "", r = uSe(n);
+  return !n || !r || r === "untitled session" && n.toLowerCase() !== "untitled session";
+}
+function SKe(e) {
+  return e.environmentKind !== void 0 && e.environmentKind !== "bridge";
+}
+function B3r(e) {
+  return !SKe(e) && e.connected === false;
+}
+function So(e) {
+  return e.normalize("NFKC").replace(/[\p{Cc}\p{Cf}\p{Cs}]/gu, (n) => /\s/.test(n) ? n : "").trim().toLowerCase().replace(/\s+/g, "-");
+}
+function Cii(e) {
+  return Sg(So(e)) !== null;
+}
+function yrt(e) {
+  return typeof e !== "string" || gM(e);
+}
+function fkt(e, n) {
+  return e.name === Xa && n !== void 0 && e.agentId === n;
+}
+function sse(e) {
+  let n = e.teamContext;
+  if (n?.leadAgentId && n.isLeader !== false) return n.leadAgentId;
+  let r = oc(n);
+  return r ? zj(Xa, r) : void 0;
+}
+function _rt(e, n) {
+  return e.members.filter((r) => fkt(r, n) || !yrt(r.name));
+}
+function gM(e) {
+  let n = So(e);
+  return n === sy || n === Xa || n === hNe || n === ykt || Sg(n) !== null;
+}
+var N = 6, Z5o = 12, mNe = `[0-9a-f]{${N},${Z5o}}`, Ae = new RegExp(`^(.*\\S)\\s*\\[(${mNe})\\]$`);
+function X4(e) {
+  let n = Ae.exec(e.trim());
+  return n ? { name: n[1], ref: n[2] } : null;
+}
+function J4(e, n) {
+  let r = [];
+  r.push({ name: sy, id: tt(), kind: "main", where: "in-process", lastActive: void 0, sock: void 0 });
+  let i = /* @__PURE__ */ new Set();
+  for (let [s, m] of Object.entries(e.teamContext?.teammates ?? {})) i.add(s), r.push({ name: m.name, id: s, kind: "teammate", where: "in-process", lastActive: void 0, sock: void 0 });
+  for (let [s, m] of e.agentNameRegistry) {
+    let b = e.tasks[m], I = b?.type === "local_agent" ? b : void 0;
+    r.push({ name: s, id: m, kind: "subagent", where: "in-process", lastActive: I?.startTime, sock: void 0 });
+  }
+  for (let s of n.teamFile?.members ?? []) {
+    if (i.has(s.agentId)) continue;
+    i.add(s.agentId), r.push({ name: s.name, id: s.agentId, kind: "teammate", where: "this-machine", lastActive: void 0, sock: void 0 });
+  }
+  let c = wZ(), a = n.sessions.filter(hrt), l = c ? re(a) : void 0, p = c ? se(V(), a, l) : void 0;
+  for (let s of a) {
+    let m = l?.get(s)?.claims;
+    r.push({ name: s.name || Ie(s.cwd), id: s.sock, kind: "session", where: "this-machine", lastActive: s.statusUpdatedAt, sock: s.sock, ...m !== void 0 && m.size > 0 && { claimedSessionIds: [...m].sort() }, ...c && s.sessionId !== void 0 && !p.has(s.sessionId) && { stableId: xVt(s.sessionId) }, ...c && s.nameSource === "derived" && { derivedName: true }, ...s.hostSessionId !== void 0 && { hostSessionId: s.hostSessionId } });
+  }
+  let k = /* @__PURE__ */ new Map();
+  for (let s of n.sessions) if (s.bridgeSessionId !== void 0) {
+    let m = rr(s.bridgeSessionId);
+    k.set(m, [...k.get(m) ?? [], s.sock]);
+  }
+  let S = [];
+  for (let s of n.cloud ?? []) {
+    if (Abn(n.sessions, s.id)) {
+      S.push({ rawName: s.title || "untitled", socks: k.get(rr(s.id)) ?? [] });
+      continue;
+    }
+    r.push({ name: s.title || "untitled", id: s.id, kind: "cloud-session", ...U3r(s.title) && { derivedName: true }, ...s.acceptsPeerMessages === true && { reportsInbound: true }, where: s.remoteControl ? "remote" : "cloud", lastActive: s.lastActive, sock: void 0, ...s.offline && { offline: true } });
+  }
+  let g = new Set((n.cloud ?? []).map((s) => rr(s.id))), h = IVt(n.sessions);
+  for (let s of n.bridge ?? []) {
+    let m = rr(s.id);
+    if (g.has(m)) continue;
+    if (h.has(m)) {
+      S.push({ rawName: s.title || "untitled", socks: k.get(m) ?? [] });
+      continue;
+    }
+    let b = Date.parse(s.updated_at);
+    r.push({ name: s.title || "untitled", id: s.id, kind: "bridge-session", ...U3r(s.title) && { derivedName: true }, ...s.acceptsPeerMessages === true && { reportsInbound: true }, ...s.inboundReportUnavailable && { inboundReportUnavailable: true }, where: SKe(s) ? "cloud" : "remote", lastActive: Number.isNaN(b) ? void 0 : b, sock: void 0, ...B3r(s) && { offline: true } });
+  }
+  let y = sse(e), E = r.flatMap((s) => {
+    let m = uSe(s.name);
+    if (m === null || !F(m)) return [];
+    let b = s.kind === "main" || s.kind === "teammate" && fkt({ name: s.name, agentId: s.id }, y), I = (s.kind === "session" || s.kind === "cloud-session" || s.kind === "bridge-session") && So(m) === sy;
+    return b || I || !yrt(m) ? [{ ...s, name: m }] : [];
+  }), w = /* @__PURE__ */ new Set(), T = _e(E.filter((s) => {
+    if (s.kind !== "session") return true;
+    let m = `${So(s.name)}\0${_R(s.id) ?? s.id}`;
+    if (w.has(m)) return false;
+    return w.add(m), true;
+  })), M = /* @__PURE__ */ new Map();
+  for (let s of T) {
+    let m = So(s.name), b = M.get(m);
+    if (b) b.push(s);
+    else M.set(m, [s]);
+  }
+  let P = /* @__PURE__ */ new Map();
+  for (let { rawName: s, socks: m } of S) {
+    let b = uSe(s);
+    if (b === null || !F(b)) continue;
+    let I = So(b), B = P.get(I) ?? /* @__PURE__ */ new Set();
+    for (let ie of m) B.add(ie);
+    P.set(I, B);
+  }
+  return { candidates: T, byName: M, remoteNamesClaimedLocally: P };
+}
+function mkt(e, n, r) {
+  let i = e.get(n);
+  if (!i || i.length === 0) return;
+  let c = r === void 0 ? [] : i.filter((p) => p.name === r), l = (c.length > 0 ? c : i)[0];
+  if (l.where === "in-process") return { kind: "one", candidate: l };
+  return { kind: "ambiguous" };
+}
+function xRe(e) {
+  return `${e.name} [${e.ref}]`;
+}
+function j3r(e) {
+  return e === "remote" ? `${W3r(e)} (Remote Control)` : W3r(e);
+}
+function W3r(e) {
+  switch (e) {
+    case "in-process":
+      return "in this session";
+    case "cloud":
+      return "in the cloud";
+    case "remote":
+      return "on another machine";
+    case "this-machine":
+      return "on this machine";
+  }
+}
+function kbn(e, n) {
+  let r = e.kind === "main" ? "main conversation" : e.kind === "session" || e.kind === "cloud-session" || e.kind === "bridge-session" ? "Claude session" : e.kind, i = j3r(e.where), c = e.lastActive === void 0 ? "" : `, ${e.kind === "subagent" ? "started" : "active"} ${un(Math.max(0, n - e.lastActive), { mostSignificantOnly: true })} ago`;
+  return `${xRe(e)} — ${r}, ${i}${c}`;
+}
+var Te = hM;
+function uSe(e) {
+  if (typeof e !== "string") return null;
+  return [...e.replace(/[\p{Cc}\p{Cf}\p{Cs}]/gu, (r) => /\s/.test(r) ? r : "").replace(/\s+/g, " ").trim()].slice(0, Te).join("").trim() || "untitled session";
+}
+function Aor(e, n) {
+  return e.find((r) => r.name === n) ?? e.find((r) => uSe(r.name) === n);
+}
+function gNe(e) {
+  let n = uSe(e);
+  return n !== null && !PVt(n) && jF(n) ? n : null;
+}
+function Cbn(e) {
+  let n = uSe(e);
+  return n !== null && F(n) && !gM(n) ? n : null;
+}
+function F(e) {
+  return !PVt(e) && jF(e) && !e.includes("@") && e !== "*";
+}
+function PVt(e) {
+  let n = So(e);
+  return f_(e).scheme !== "other" || f_(n).scheme !== "other" || s9o(e) || s9o(n);
+}
+function _e(e) {
+  let n = e.map((a) => R(a.kind, Tbn(a))), r = xe().map((a) => R("session", a)), i = L([...n, ...r]).sort(), c = /* @__PURE__ */ new Map();
+  for (let a = 0; a < i.length; a++) {
+    let l = i[a], p = Math.max(a > 0 ? ne(l, i[a - 1]) : 0, a + 1 < i.length ? ne(l, i[a + 1]) : 0);
+    c.set(l, Math.min(l.length, Math.max(N, p + 1)));
+  }
+  return e.map((a, l) => {
+    let p = n[l];
+    return { ...a, ref: p.slice(0, c.get(p)) };
+  });
+}
+function ne(e, n) {
+  let r = 0;
+  while (r < e.length && r < n.length && e[r] === n[r]) r++;
+  return r;
+}
+function R(e, n) {
+  return String(cn(`${e}:${n}`));
+}
+function Tbn(e) {
+  return e.stableId ?? e.id;
+}
+function xe() {
+  let e = wA.CLAUDE_CODE_MESSAGING_SOCKET;
+  return e === void 0 ? [] : te(e);
+}
+function e9o(e) {
+  return wZ() ? xVt(V()) : e;
+}
+function te(e) {
+  let n = e9o(e);
+  return n === e ? [e] : [n, e];
+}
+function t9o(e, n) {
+  return te(n).some((r) => Re(e, "session", r));
+}
+function re(e) {
+  let n = [];
+  for (let i of e) {
+    let c = n.filter((l) => l.records.some((p) => Zue(p.sock, i.sock))), a = { records: [], claims: /* @__PURE__ */ new Set() };
+    for (let l of c) {
+      a.records.push(...l.records);
+      for (let p of l.claims) a.claims.add(p);
+    }
+    if (a.records.push(i), i.sessionId !== void 0) a.claims.add(i.sessionId);
+    n = n.filter((l) => !c.includes(l)), n.push(a);
+  }
+  let r = /* @__PURE__ */ new Map();
+  for (let i of n) for (let c of i.records) r.set(c, i);
+  return r;
+}
+function se(e, n, r) {
+  let i = /* @__PURE__ */ new Set([e]), c = /* @__PURE__ */ new Set();
+  for (let a of n) {
+    if (a.sessionId === void 0) continue;
+    if (i.has(a.sessionId)) c.add(a.sessionId);
+    i.add(a.sessionId);
+  }
+  for (let a of new Set(r.values())) if (a.records.length > 1) for (let l of a.claims) c.add(l);
+  return c;
+}
+function Tii(e, n, r) {
+  if (r) return true;
+  let i = V(), c = e.filter(hrt);
+  if (n !== void 0) c.push({ sock: n, sessionId: i });
+  let a = re(c);
+  return se("", c, a).has(i);
+}
+function Srt(e, n) {
+  return R(e, n).slice(0, N);
+}
+function Re(e, n, r) {
+  return e.length >= N && R(n, r).startsWith(e);
+}
+function IVt(e) {
+  return new Set(e.flatMap((n) => n.bridgeSessionId ? [rr(n.bridgeSessionId)] : []));
+}
+function Abn(e, n) {
+  let r = rr(n);
+  return e.some((i) => i.bridgeSessionId !== void 0 && rr(i.bridgeSessionId) === r);
+}
+export {
+  $3r,
+  Abn,
+  Aor,
+  B3r,
+  Cbn,
+  Cii,
+  Cor,
+  Eii,
+  F3r,
+  IVt,
+  J4,
+  PVt,
+  Q5o,
+  RRe,
+  SKe,
+  Sii,
+  So,
+  Srt,
+  Tbn,
+  Tii,
+  Tor,
+  U3r,
+  W3r,
+  X4,
+  Y4,
+  Z5o,
+  _R,
+  _ii,
+  _rt,
+  bii,
+  ckt,
+  dkt,
+  e9o,
+  fkt,
+  gM,
+  gNe,
+  hrt,
+  j3r,
+  kbn,
+  kii,
+  kor,
+  mNe,
+  mkt,
+  ose,
+  pkt,
+  sse,
+  sy,
+  t9o,
+  uSe,
+  ukt,
+  vii,
+  vor,
+  wZ,
+  wii,
+  xRe,
+  xVt,
+  yii,
+  yrt
+};

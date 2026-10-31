@@ -1,0 +1,587 @@
+// darwin/context/refusal-retraction-unauthenticated-signal.js — Claude Code 2.1.310（darwin）模块 chunk-bvqj16zq.js
+import { I3r } from "../mcp/allowed-warning.js";
+import { f } from "../shared/chunk-2fe3b2b7.js";
+import { re } from "../shared/chunk-d2c47492.js";
+import { wn, F } from "./not-admin-owned.js";
+import { S, c } from "../agents/third-party.js";
+import { yn, ei, vdr, kdr, lie, mAt, Cdr, t } from "../fs/gitlab-runner-authentication-token.js";
+import { ZC } from "../tools/device-session-limit.js";
+import { l } from "../artifacts/cowritten-artifact-html.js";
+import { t3, nn, Ld, Oe } from "../core/conversation-engine.js";
+import { a } from "../telemetry/chunk-9097a12b.js";
+import { p } from "../telemetry/chunk-9d6962d2.js";
+import { Ii } from "../shell/invalid-type.js";
+import { Ko } from "../shared/chunk-8eee6836.js";
+import { YZe } from "../api/anthropic-client.js";
+import { qi } from "../shared/async-hooks.b037.js";
+import { Zv, Gp, Jt, xn } from "../artifacts/cobalt-plinth-lovage.js";
+import { li, Lm, che, o2e } from "../core/system-prompt-blocks.js";
+import { Epn } from "../remote/bridge-outcome-branch-dropped.js";
+import { tU } from "../tasks/continued-in.js";
+import { SLn, Fwr, DOt, $wr, Uwr, pfo, ffo, Bwr, Yct, avs, lvs, dvs } from "../agents/agent-summary-skipped.js";
+import { F$e, KRn } from "../remote/remote-turn-ended-with-open-permission-requests.js";
+import { oZr } from "../shared/chunk-17a179e5.js";
+import { us } from "../agents/in-process-teammate.b77f.js";
+import { o, E, M, u, Gr, B, T } from "../vendor/zod/string-format.js";
+import { randomUUID as X } from "crypto";
+var Y = null;
+function zas(e) {
+  return e.type !== "control_request" && e.type !== "control_response" && e.type !== "keep_alive" && e.type !== "control_cancel_request" && e.type !== "transcript_mirror" && !(e.type === "system" && (e.subtype === "task_summary" || e.subtype === "session_metadata"));
+}
+function Z(e) {
+  let n = SLn(e), r = Y?.cloudMemoryToolUseIds(e.tool_use_meta) ?? [];
+  return { type: "assistant", message: e.error === "verification_required" ? ffo(e.message) : n ? { ...e.message, content: $wr(e.message.content) } : e.message, uuid: e.uuid, requestId: void 0, timestamp: e.timestamp ?? (/* @__PURE__ */ new Date()).toISOString(), remoteSourced: true, error: e.error, ...Fwr(e) && { isApiErrorMessage: true }, ...n && { sessionFailureNotice: true }, ...pfo(e.api_error_status) && { apiErrorStatus: e.api_error_status }, ...e.api_error !== void 0 && { apiError: e.api_error }, ...e.api_error_params !== void 0 && { apiErrorParams: e.api_error_params }, ...e.api_error_code !== void 0 && { apiErrorCode: e.api_error_code }, ...false, ...r.length > 0 && { cloudMemoryToolUseIds: r } };
+}
+function Q(e) {
+  return { type: "stream_event", event: e.event, ...e.ttft_ms !== void 0 && { ttftMs: e.ttft_ms } };
+}
+function v(e) {
+  let n = e;
+  if (typeof n === "string" && n !== "" && e !== void 0) return e;
+  return t("[sdkMessageAdapter] frame uuid missing or not a string — minting one", { level: "error" }), X();
+}
+function U(e) {
+  if (typeof e.content === "string") return true;
+  return t(`[sdkMessageAdapter] Dropping ${e.subtype} frame whose content is not a string`, { level: "error" }), false;
+}
+function AQr(e) {
+  if (!Array.isArray(e)) return [];
+  return e.filter((n) => typeof n === "string" && !n.startsWith("[ede_diagnostic]") && !n.startsWith("[session_crash]"));
+}
+function J(e) {
+  if (e.subtype === "success") return { type: "system", subtype: "informational", content: "Session completed successfully", level: "info", uuid: v(e.uuid), timestamp: (/* @__PURE__ */ new Date()).toISOString() };
+  let n = e.errors;
+  if (!Array.isArray(n)) return t(`[sdkMessageAdapter] ${e.subtype} result without an errors[] array — nothing to show`), null;
+  let r = AQr(n);
+  if (r.length === 0) return null;
+  return { type: "system", subtype: "informational", content: DOt(r.join(", ")), level: "warning", fromRemoteErrorResult: true, uuid: v(e.uuid), timestamp: (/* @__PURE__ */ new Date()).toISOString() };
+}
+function ee(e) {
+  let n = e.status;
+  if (typeof n !== "string" || n === "") return null;
+  return { type: "system", subtype: "informational", content: n === "compacting" ? "Compacting conversation…" : `Status: ${yn(n)}`, level: "info", uuid: v(e.uuid), timestamp: (/* @__PURE__ */ new Date()).toISOString() };
+}
+function te(e) {
+  let n = e.compact_metadata;
+  if (typeof n !== "object" || n === null) return t("[sdkMessageAdapter] Dropping compact_boundary frame without compact_metadata", { level: "error" }), null;
+  return { type: "system", subtype: "compact_boundary", content: "Conversation compacted", level: "info", uuid: v(e.uuid), timestamp: (/* @__PURE__ */ new Date()).toISOString(), compactMetadata: Bwr(e.compact_metadata), remoteSourced: true };
+}
+function c5t(e) {
+  let n = typeof e.model === "string" ? e.model : void 0;
+  if (e.model !== void 0 && n === void 0) t(`[sdkMessageAdapter] init frame model is ${e.model === null ? "null" : typeof e.model}, not a string — keeping the current model`, { level: "error" });
+  let r = typeof e.cwd === "string" ? e.cwd : void 0;
+  if (e.cwd !== void 0 && r === void 0) t("[sdkMessageAdapter] init frame cwd is not a string — not adopting", { level: "error" });
+  let s;
+  if (Array.isArray(e.slash_commands)) s = e.slash_commands.filter((d) => typeof d === "string");
+  else if (e.slash_commands !== void 0) t("[sdkMessageAdapter] init frame slash_commands is not an array — keeping the local command list", { level: "error" });
+  let i;
+  if (Array.isArray(e.mcp_servers)) i = e.mcp_servers.flatMap((d) => typeof d === "object" && d !== null && typeof d.name === "string" && (d.status === void 0 || typeof d.status === "string") ? [d.status === void 0 ? { name: d.name } : { name: d.name, status: d.status }] : []);
+  else if (e.mcp_servers !== void 0) t("[sdkMessageAdapter] init frame mcp_servers is not an array — ignoring", { level: "error" });
+  let m;
+  if (Array.isArray(e.skills)) m = e.skills.filter((d) => typeof d === "string");
+  else if (e.skills !== void 0) t("[sdkMessageAdapter] init frame skills is not an array — ignoring", { level: "error" });
+  let g;
+  if (Array.isArray(e.plugins)) g = e.plugins.flatMap((d) => typeof d === "object" && d !== null && typeof d.name === "string" ? [d.name] : []);
+  else if (e.plugins !== void 0) t("[sdkMessageAdapter] init frame plugins is not an array — ignoring", { level: "error" });
+  let y;
+  if (Array.isArray(e.tools)) y = e.tools.filter((d) => typeof d === "string");
+  else if (e.tools !== void 0) t("[sdkMessageAdapter] init frame tools is not an array — ignoring", { level: "error" });
+  return { model: n, cwd: r, slashCommands: s, skills: m, plugins: g, mcpServers: i, tools: y, workerEpoch: KRn(e) };
+}
+function wRt(e) {
+  if (!e) return;
+  if (typeof e.condition !== "string" || !Number.isSafeInteger(e.iterations) || e.iterations < 0 || !Number.isSafeInteger(e.set_at) || e.set_at < 0 || !Number.isSafeInteger(e.tokens_at_start) || e.tokens_at_start < 0 || e.last_reason !== void 0 && typeof e.last_reason !== "string") return;
+  return { condition: ei(e.condition, { maxCodeUnits: 4e3 }), iterations: e.iterations, setAt: e.set_at, tokensAtStart: e.tokens_at_start, ...e.last_reason !== void 0 && { lastReason: ei(e.last_reason, { maxCodeUnits: 512 }) } };
+}
+var ne = { env: true, settings: true, clientdata: true, experiment: true, "model-default": true, "unknown-model": true, auto: true }, oe = new Set(Object.keys(ne));
+function RQr(e) {
+  if (typeof e !== "object" || e === null || typeof e.enabled !== "boolean" || typeof e.enforced !== "boolean" || !Number.isSafeInteger(e.effective_window) || e.effective_window <= 0 || !Number.isSafeInteger(e.threshold) || e.threshold <= 0 || !oe.has(e.source)) {
+    if (qi().claim("remote_autocompact_frame_drop")) t("[sdkMessageAdapter] Dropping malformed autocompact_state frame"), p("remote_autocompact_sync", "invalid_frame");
+    return;
+  }
+  return { enabled: e.enabled, effectiveWindow: e.effective_window, threshold: e.threshold, enforced: e.enforced, source: e.source };
+}
+function jur(e, n, r) {
+  let s = RQr(n);
+  if (s === void 0) {
+    e((m) => m.remoteAutocompactState === void 0 ? m : { ...m, remoteAutocompactState: void 0 });
+    return;
+  }
+  let i = false;
+  if (e((m) => {
+    if (m.remoteAutocompactState !== void 0 && oZr(m.remoteAutocompactState, s)) return m;
+    return i = true, { ...m, remoteAutocompactState: s };
+  }), !i) return;
+  a("tengu_remote_autocompact_state_adopted", { via: r, enabled: s.enabled, enforced: s.enforced, source: c(s.source) });
+}
+var se = (e, n) => wn(Ii(e, (r) => r === void 0), Ii(n, (r) => r === void 0));
+function Wur(e, n) {
+  let r = [], s = Lm(), i = false, m = false, g = (_) => {
+    if (!e()) return;
+    a("tengu_remote_rate_limits_dropped", { via: c(n), reason: S("account_switched"), frames: _ });
+  }, y = (_, h) => {
+    if (!e()) return;
+    let b = dvs(_);
+    if (b === void 0) return;
+    if ((h === "seed" || h === "history") && (lvs(b.info) || b.info.resetsAt === void 0 && b.info.overageResetsAt === void 0)) return;
+    let A = li(), D = { ...avs(b.info, { unifiedRateLimitFallbackAvailable: A.unifiedRateLimitFallbackAvailable, upgradePaths: A.upgradePaths }), ...A.lowPriorityOffer !== void 0 && { lowPriorityOffer: A.lowPriorityOffer }, ...A.lowPriorityRetryAfterSeconds !== void 0 && { lowPriorityRetryAfterSeconds: A.lowPriorityRetryAfterSeconds }, ...A.lowPriorityMaxWaitSeconds !== void 0 && { lowPriorityMaxWaitSeconds: A.lowPriorityMaxWaitSeconds } };
+    if (che() && se(D, A)) return;
+    o2e(D), a("tengu_remote_rate_limits_adopted", { via: c(h), status: c(b.info.status), degradation: c(b.degradation), frames: _.length });
+  }, d = (_, h) => {
+    if (m) return;
+    try {
+      y(_, h);
+    } catch (b) {
+      l(b);
+    }
+  }, k = (_ = n) => {
+    i = false;
+    let h = r;
+    if (r = [], h.length === 0) return;
+    if (s !== Lm()) {
+      g(h.length);
+      return;
+    }
+    d(h, _);
+  }, R = (_) => {
+    let h = Lm();
+    if (r.length > 0 && h !== s) g(r.length), r = [];
+    s = h, r.push(_);
+  };
+  return { adopt(_, h) {
+    k(), d(_, h);
+  }, push(_) {
+    if (m) return;
+    if (R(_), !i) i = true, queueMicrotask(() => {
+      if (i) k();
+    });
+  }, hold(_) {
+    if (m) return;
+    R(_);
+  }, settle(_) {
+    if (!i) k(_);
+  }, hasHeld: () => r.length > 0 && !i, flush: () => k(), dispose() {
+    m = true, r = [];
+  } };
+}
+function L$e(e, n) {
+  if (!F$e(e)) return { type: "ignored" };
+  switch (e.type) {
+    case "control_request":
+    case "control_response":
+    case "control_cancel_request":
+      return { type: "ignored" };
+    case "assistant":
+      return { type: "message", message: Z(e) };
+    case "user": {
+      let r = e.message?.content;
+      if (Array.isArray(r) && r.some((m) => m.type === "tool_result")) {
+        let m = Uwr(e.tool_result_meta, r);
+        return { type: "message", message: { ...Oe({ content: r, toolUseResult: Epn(e.tool_use_result, e.message), uuid: e.uuid, timestamp: e.timestamp }), remoteSourced: true, ...false, ...void 0, ...m !== void 0 && { remoteToolDenialKind: m } } };
+      }
+      if (e.parent_tool_use_id) return { type: "ignored" };
+      if (e.isSynthetic && !tU(e.origin)) return { type: "ignored" };
+      let i = r === Zv || Array.isArray(r) && r.some((m) => m.type === "text" && (m.text === Zv || m.text === Gp));
+      if (n?.convertUserTextMessages || i) {
+        if (typeof r === "string" || Array.isArray(r)) return { type: "message", message: Oe({ content: r, toolUseResult: e.tool_use_result, uuid: e.uuid, timestamp: e.timestamp }) };
+      }
+      return { type: "ignored" };
+    }
+    case "stream_event":
+      return { type: "stream_event", event: Q(e) };
+    case "result": {
+      if (e.subtype === "success") return { type: "ignored" };
+      let r = J(e);
+      return r ? { type: "message", message: r } : { type: "ignored" };
+    }
+    case "system":
+      if (e.subtype === "init") return { type: "ignored" };
+      if (e.subtype === "status") {
+        if (e.status === "requesting") return { type: "stream_event", event: { type: "stream_request_start" } };
+        let r = ee(e);
+        return r ? { type: "message", message: r } : { type: "ignored" };
+      }
+      if (e.subtype === "compact_boundary") {
+        let r = te(e);
+        return r ? { type: "message", message: r } : { type: "ignored" };
+      }
+      if (e.subtype === "model_refusal_fallback") return { type: "message", message: { type: "system", subtype: "model_refusal_fallback", content: e.direction === "retry" && e.scope !== "local" && typeof e.original_model === "string" && typeof e.fallback_model === "string" ? YZe(e.original_model, e.fallback_model, e.api_refusal_category ?? null) : ei(typeof e.content === "string" ? e.content : "", { drop: Cdr, maxCodeUnits: mAt }), level: "warning", trigger: e.trigger, direction: e.direction, ...e.scope !== void 0 && { scope: e.scope }, originalModel: e.original_model, fallbackModel: e.fallback_model, requestId: e.request_id, apiRefusalCategory: e.api_refusal_category ?? null, apiRefusalExplanation: e.api_refusal_explanation ?? null, ...e.retracted_message_uuids !== void 0 && { retractedMessageUuids: e.retracted_message_uuids }, ...e.refused_user_message_uuid !== void 0 && { refusedUserMessageUuid: e.refused_user_message_uuid }, isMeta: false, uuid: v(e.uuid), timestamp: (/* @__PURE__ */ new Date()).toISOString() } };
+      if (e.subtype === "model_fallback") {
+        if (!U(e)) return { type: "ignored" };
+        return { type: "message", message: { type: "system", subtype: "model_fallback", content: yn(e.content), level: "warning", trigger: e.trigger, originalModel: e.original_model, fallbackModel: e.fallback_model, isMeta: false, uuid: v(e.uuid), timestamp: (/* @__PURE__ */ new Date()).toISOString() } };
+      }
+      if (e.subtype === "model_consent_fallback") {
+        if (!U(e)) return { type: "ignored" };
+        return { type: "message", message: Yct({ ...e, content: yn(e.content), uuid: v(e.uuid) }) };
+      }
+      if (e.subtype === "informational") {
+        if (!U(e)) return { type: "ignored" };
+        return { type: "message", message: { type: "system", subtype: "informational", content: yn(e.content), level: e.level, isMeta: false, uuid: v(e.uuid), timestamp: (/* @__PURE__ */ new Date()).toISOString(), ...e.tool_use_id && { toolUseID: e.tool_use_id }, ...e.prevent_continuation && { preventContinuation: e.prevent_continuation } } };
+      }
+      if (e.subtype === "tool_host_result") {
+        let r = Array.isArray(e.lines) ? e.lines.filter((g) => typeof g === "string").slice(0, 32).map((g) => ei(g, { maxCodeUnits: 2100 })).filter((g) => g.trim() !== "") : [], s = typeof e.label === "string" ? ei(e.label, { maxCodeUnits: 320 }) : void 0, i = e.unverified === true && s !== void 0 && s.trim() !== "";
+        if (typeof e.tool_use_id !== "string" || r.length === 0 && !i) return { type: "ignored" };
+        let m = v(e.uuid);
+        return { type: "message", message: nn({ type: "tool_host_result_lines", toolUseID: e.tool_use_id, host: ZC(typeof e.host?.name === "string" ? e.host.name : ""), lines: r, ...s !== void 0 && { label: s }, ...i && { unverified: true } }, { now: () => (/* @__PURE__ */ new Date()).toISOString(), uuid: () => m }) };
+      }
+      if (e.subtype === "permission_denied") return { type: "ignored" };
+      if (e.subtype === "local_command_output") {
+        if (!U(e)) return { type: "ignored" };
+        let r = v(e.uuid);
+        return { type: "message", message: Ld({ content: yn(e.content), uuid: () => r }) };
+      }
+      return t(`[sdkMessageAdapter] Ignoring system message subtype: ${e.subtype}`), { type: "ignored" };
+    case "tool_progress":
+      return t("[sdkMessageAdapter] Ignoring tool_progress frame"), { type: "ignored" };
+    case "auth_status":
+      return t("[sdkMessageAdapter] Ignoring auth_status message"), { type: "ignored" };
+    case "tool_use_summary":
+      return t("[sdkMessageAdapter] Ignoring tool_use_summary message"), { type: "ignored" };
+    case "rate_limit_event":
+      return t("[sdkMessageAdapter] Ignoring rate_limit_event message"), { type: "ignored" };
+    case "active_goal":
+      return { type: "ignored" };
+    case "autocompact_state":
+      return { type: "ignored" };
+    case "env_manager_log": {
+      let r = typeof e.data?.content === "string" ? e.data.content : null;
+      if (r === null) return t("[sdkMessageAdapter] env_manager_log without data.content — orchestrator wire change?", { level: "warn" }), { type: "env_log", message: "" };
+      return { type: "env_log", message: kdr(r, 1)[0] ?? "" };
+    }
+    case "conversation_reset": {
+      let r = e.new_conversation_id;
+      if (typeof r !== "string" || r === "") return t("[sdkMessageAdapter] Dropping conversation_reset frame without a string new_conversation_id", { level: "error" }), { type: "ignored" };
+      return { type: "conversation_reset", newConversationId: r };
+    }
+    default:
+      return t(`[sdkMessageAdapter] Unknown message type: ${e.type}`), { type: "ignored" };
+  }
+}
+function Gur(e) {
+  return e.type === "result";
+}
+var ie = 64, ae = 128;
+function P(e) {
+  return typeof e === "string" && e.length > 0 && e.length <= ae;
+}
+function ue(e) {
+  let n = "user_message_uuids" in e ? e.user_message_uuids : null, r = Array.isArray(n) ? n.filter(P).slice(0, ie) : [];
+  if (r.length > 0) return r;
+  let s = "user_message_uuid" in e ? e.user_message_uuid : void 0;
+  return P(s) ? [s] : void 0;
+}
+function Vas(e, n, r) {
+  let s = ue(e);
+  return r.taskWake || (s === void 0 ? r.sent : s.some((i) => n.has(i)));
+}
+function ERt(e) {
+  let n = I3r(), r = new Map(Object.entries(n.shape)), s = typeof e === "object" && e !== null && !Array.isArray(e) ? Ko(e, (m, g) => g === "status" || (r.get(g)?.safeParse(m).success ?? false)) : e, i = n.safeParse(s);
+  if (i.success) return i.data;
+  if (qi().claim("remote_rate_limit_frame_drop")) a("tengu_remote_rate_limits_dropped", { reason: S("invalid_frame"), frames: 1 });
+  return;
+}
+function zur() {
+  return { retracted: /* @__PURE__ */ new Set(), inProgressToolUses: /* @__PURE__ */ new Map(), evictedToolUses: /* @__PURE__ */ new Set(), nestedUuidAliases: /* @__PURE__ */ new Map() };
+}
+function Vur(e, n, r) {
+  let s = r.filter((i) => i !== n);
+  if (s.length > 0) e.nestedUuidAliases.set(n, s);
+}
+function d4e(e) {
+  if (typeof e !== "object" || e === null) return null;
+  let n = e, r = typeof n.uuid === "string" ? n.uuid : null;
+  if (n.type === "system" && n.subtype === "model_refusal_fallback") {
+    let s = L(n.retracted_message_uuids, r);
+    return s ? { uuids: s, source: "retraction_banner" } : null;
+  }
+  if (n.type === "assistant") {
+    let s = L(n.supersedes, r);
+    return s ? { uuids: s, source: "supersedes" } : null;
+  }
+  return null;
+}
+function L(e, n) {
+  if (!Array.isArray(e)) return null;
+  let r = e.filter((s) => typeof s === "string" && s !== n);
+  return r.length > 0 ? r : null;
+}
+function de(e, n) {
+  if (n.size === 0) return e;
+  let r = e.filter((s) => !n.has(s.uuid));
+  return r.length === e.length ? e : r;
+}
+function Kur(e, n, r) {
+  for (let s of r) e.inProgressToolUses.set(s, n);
+}
+function GAn(e, n) {
+  for (let r of n) e.inProgressToolUses.delete(r);
+}
+function zAn(e) {
+  let { index: n, signal: r, surface: s, setMessages: i, setInProgressToolUseIDs: m } = e, g = F(r.uuids, (d) => !n.retracted.has(d));
+  for (let d of r.uuids) {
+    n.retracted.add(d);
+    for (let k of n.nestedUuidAliases.get(d) ?? []) n.retracted.add(k);
+  }
+  let y = [...n.inProgressToolUses].filter(([, d]) => n.retracted.has(d)).map(([d]) => d);
+  GAn(n, y);
+  for (let d of y) n.evictedToolUses.add(d);
+  if (y.length > 0 && m) m({ action: "remove", ids: y });
+  i((d) => de(d, n.retracted)), a("tengu_refusal_retraction_evicted", { surface: c(s), source: c(r.source), uuid_count: r.uuids.length, newly_retracted_count: g, tool_use_cleared_count: y.length });
+}
+function qur(e, n, r, s) {
+  if (s !== null && e.retracted.has(s)) return 0;
+  let i = F(n, (m) => e.evictedToolUses.has(m));
+  if (i > 0) a("tengu_refusal_retraction_orphan_tool_result", { surface: c(r), count: i });
+  return i;
+}
+function Kas(e) {
+  let { index: n, events: r, surface: s, setMessages: i, setInProgressToolUseIDs: m } = e, g = 0, y = 0, d = 0;
+  for (let k of r) {
+    if (k.source !== "worker") {
+      if (d4e(k.payload)) if (k.source === void 0) d++;
+      else y++;
+      continue;
+    }
+    let R = d4e(k.payload);
+    if (R) g++, zAn({ index: n, signal: R, surface: s, setMessages: i, setInProgressToolUseIDs: m });
+  }
+  if (y > 0) a("tengu_refusal_retraction_unauthenticated_signal", { surface: c(s), reason: S("source_mismatch"), count: y });
+  if (d > 0) a("tengu_refusal_retraction_unauthenticated_signal", { surface: c(s), reason: S("source_missing"), count: d });
+  return g;
+}
+function u5t(e, n, r) {
+  if (!e.retracted.has(n)) return false;
+  return a("tengu_refusal_retraction_late_drop", { surface: c(r) }), true;
+}
+function CQr(e, n) {
+  if (n.type !== "system") return false;
+  switch (n.subtype) {
+    case "background_tasks_changed":
+      if (Array.isArray(n.tasks)) {
+        e.clear();
+        for (let r of n.tasks) if (typeof r?.task_id === "string") e.set(r.task_id, O(r.task_id, r, r.subagent_type));
+      }
+      return true;
+    case "task_started":
+      if (typeof n.task_id === "string" && n.is_backgrounded !== false) e.set(n.task_id, O(n.task_id, n, e.get(n.task_id)?.subagentType));
+      return true;
+    case "task_notification":
+      if (typeof n.task_id === "string") e.delete(n.task_id);
+      return true;
+    case "task_progress":
+    case "task_updated":
+      return true;
+    default:
+      return false;
+  }
+}
+var le = 256;
+function ce(e, n) {
+  if (n.type !== "system") return;
+  switch (n.subtype) {
+    case "background_tasks_changed":
+      if (Array.isArray(n.tasks)) {
+        for (let r of n.tasks) if (r?.awaited !== true) x(e, r?.task_id, r?.ambient);
+      }
+      return;
+    case "task_started":
+      if (n.is_backgrounded !== false && n.awaited !== true) x(e, n.task_id, n.ambient);
+      return;
+    case "task_updated":
+      if (n.patch?.is_backgrounded === true) x(e, n.task_id);
+      return;
+    default:
+      return;
+  }
+}
+function x(e, n, r) {
+  if (typeof n !== "string" || r === true || e.has(n)) return;
+  if (e.size >= le) {
+    let s = e.values().next().value;
+    if (s !== void 0) e.delete(s);
+  }
+  e.add(n);
+}
+function pe(e, n) {
+  return n.type === "system" && n.subtype === "task_notification" && typeof n.task_id === "string" && e.delete(n.task_id);
+}
+function WAn(e, n) {
+  return ce(e.awaitingFinish, n), { backgroundTaskEnded: pe(e.awaitingFinish, n), isTaskLifecycleFrame: CQr(e.running, n) };
+}
+function I(e) {
+  return typeof e === "string" ? ei(e, { maxCodeUnits: lie }) : void 0;
+}
+function O(e, n, r) {
+  return { id: e, taskType: I(n.task_type), subagentType: I(r), description: I(n.description) ?? "", ambient: n.ambient === true };
+}
+function W(e, n) {
+  return e.length === n.length && e.every((r, s) => r.id === n[s]?.id && r.taskType === n[s]?.taskType && r.subagentType === n[s]?.subagentType && r.description === n[s]?.description && r.ambient === n[s]?.ambient);
+}
+var C = "local_workflow", z = 20, me = 2592e6, ye = 40;
+function bRt(e, n, r) {
+  if (n.type !== "system") return;
+  switch (n.subtype) {
+    case "task_started": {
+      if (typeof n.task_id !== "string" || n.task_type !== C) return;
+      let s = e.get(n.task_id), i = s !== void 0 && !us(s.status) ? s : K(n.task_id, r);
+      e.set(i.id, { ...i, runId: typeof n.run_id === "string" ? n.run_id : i.runId, description: I(n.description) || i.description, workflowName: I(n.workflow_name) || i.workflowName });
+      return;
+    }
+    case "task_progress": {
+      if (typeof n.task_id !== "string" || !Array.isArray(n.workflow_progress)) return;
+      let s = e.get(n.task_id);
+      if (s !== void 0 && us(s.status)) return;
+      let i = s ?? { ...K(n.task_id, r), presence: "reported" };
+      e.set(i.id, { ...N(i, n.usage, r), runId: i.runId ?? (typeof n.run_id === "string" ? n.run_id : void 0), wireProgress: n.workflow_progress, presence: i.presence === "unlisted" ? "reported" : i.presence });
+      return;
+    }
+    case "background_tasks_changed": {
+      if (!Array.isArray(n.tasks)) return;
+      let s = new Set(n.tasks.map((i) => i?.task_id));
+      for (let i of e.values()) if (i.presence === "reported" && !s.has(i.id)) e.set(i.id, { ...i, presence: "unlisted" });
+      return;
+    }
+    case "task_updated": {
+      let s = typeof n.task_id === "string" ? e.get(n.task_id) : void 0, i = _e().safeParse(n.patch?.status).data;
+      if (s === void 0 || i === void 0 || us(s.status)) return;
+      e.set(s.id, { ...s, status: i, endTime: us(i) ? r : s.endTime });
+      return;
+    }
+    case "task_notification": {
+      let s = typeof n.task_id === "string" ? e.get(n.task_id) : void 0;
+      if (s === void 0) return;
+      let i = n.status === "completed" ? "completed" : n.status === "failed" ? "failed" : n.status === "stopped" ? "killed" : void 0, m = us(s.status);
+      if (i === void 0) {
+        if (!m) e.delete(s.id);
+        return;
+      }
+      if (m && s.status !== i) return;
+      e.set(s.id, { ...N(s, n.usage, r), status: i, endTime: s.endTime ?? r });
+      return;
+    }
+    default:
+      return;
+  }
+}
+function Uur(e, n, r) {
+  for (let y of n.values()) {
+    if (y.taskType !== C) continue;
+    let d = e.get(y.id);
+    if (d === void 0) e.set(y.id, { ...K(y.id, r), description: y.description });
+    else if (d.description === "" && y.description !== "") e.set(y.id, { ...d, description: y.description });
+  }
+  let s = [], i = [], m = [];
+  for (let y of e.values()) {
+    let d = n.get(y.id), k = us(y.status);
+    if (!k && d?.taskType !== void 0 && d.taskType !== C) {
+      e.delete(y.id);
+      continue;
+    }
+    let R = d !== void 0 ? "listed" : y.presence === "listed" ? "unlisted" : y.presence, _ = k || R === y.presence ? y : { ...y, presence: R };
+    if (_ !== y) e.set(_.id, _);
+    if (k) i.push(_);
+    else if (_.presence === "unlisted") {
+      m.push(_);
+      continue;
+    }
+    s.push(_);
+  }
+  let g = /* @__PURE__ */ new Set([...i.toSorted((y, d) => (y.endTime ?? 0) - (d.endTime ?? 0)).slice(0, Math.max(0, i.length - z)), ...m.slice(0, Math.max(0, m.length - z))]);
+  for (let y of g) e.delete(y.id);
+  return g.size === 0 ? s : s.filter((y) => !g.has(y));
+}
+function Bur(e, n, r) {
+  let s = W(e.remoteBackgroundTasks, n), i = e.remoteWorkflowRuns.length === r.length && r.every((m, g) => m === e.remoteWorkflowRuns[g]);
+  return s && i ? e : { ...e, remoteBackgroundTasks: s ? e.remoteBackgroundTasks : n, remoteWorkflowRuns: i ? e.remoteWorkflowRuns : r };
+}
+function d5t(e) {
+  for (let n of e.values()) if (!us(n.status) && n.presence !== "unlisted") e.set(n.id, { ...n, presence: "unlisted" });
+}
+function TQr(e) {
+  return e.flatMap((n) => {
+    let r = ke().safeParse(n);
+    return r.success ? [r.data] : [];
+  });
+}
+function K(e, n) {
+  return { id: e, runId: void 0, status: "running", presence: "listed", description: "", workflowName: void 0, wireProgress: [], totalTokens: 0, totalToolCalls: 0, startTime: n, endTime: void 0 };
+}
+function N(e, n, r) {
+  let s = ge().safeParse(n).data;
+  if (s === void 0) return e;
+  return { ...e, totalTokens: s.total_tokens, totalToolCalls: s.tool_uses, startTime: Math.min(e.startTime, r - s.duration_ms) };
+}
+function w(e) {
+  return e.optional().catch(void 0);
+}
+var ge = f(() => u({ total_tokens: E(), tool_uses: E(), duration_ms: E().nonnegative().max(me).catch(0) })), _e = f(() => B(["pending", "running", "completed", "failed", "killed", "paused"])), ke = f(() => {
+  let e = o().transform((r) => ei(r, { maxCodeUnits: lie })), n = o().transform((r) => vdr(r, { maxCodeUnits: mAt, maxLines: ye }).text);
+  return Gr("type", [u({ type: T("workflow_agent"), index: E().int(), label: e, state: B(["start", "progress", "done", "error"]), phaseIndex: w(E().int()), phaseTitle: w(e), agentId: w(e), agentType: w(e), isolation: w(B(["worktree", "remote"])), remoteSessionId: w(e), model: w(e), fallbackModel: w(e), tokens: w(E()), toolCalls: w(E()), durationMs: w(E()), error: w(n), startedAt: w(E()), lastProgressAt: w(E()), queuedAt: w(E()), attempt: w(E()), lastAttemptReason: w(B(["stalled", "throttled", "user-retry"])), skipped: w(M()), blocked: w(M()), cached: w(M()), lastToolName: w(e), lastToolSummary: w(e), resultPreview: w(n), promptPreview: w(n), promptFramed: w(M()) }), u({ type: T("workflow_phase"), index: E().int(), title: e, kind: w(T("child")) })]);
+});
+var Se = 100, we = 256;
+function VAn(e) {
+  if (e.type !== "system" || e.subtype !== "session_metadata") return;
+  let { metadata: n } = e;
+  if (typeof n !== "object" || n === null) return;
+  let r = "artifacts" in n ? n.artifacts : void 0;
+  return r === null || Array.isArray(r) ? r : void 0;
+}
+function xQr(e, n) {
+  let r = Re(n ?? []), s = Object.entries(e.frameUrls).filter(([, k]) => k.fromCloudSession !== true);
+  if (r.length === 0 && s.length === Object.keys(e.frameUrls).length) return e;
+  let i = new Set(s.map(([k]) => k)), m = Object.fromEntries([...s, ...r.filter(([k]) => !i.has(k))]), g = Object.entries(e.frameUrls), y = Object.entries(m);
+  return g.length === y.length && g.every(([k, R], _) => {
+    let [h, b] = y[_], A = Object.entries(R), D = Object.entries(b);
+    return k === h && A.length === D.length && A.every(([j, q]) => D.some(([G, V]) => G === j && V === q));
+  }) ? e : { ...e, frameUrls: m };
+}
+var he = f(() => u({ url: o(), title: o().optional().catch(void 0), updated_at: o().optional().catch(void 0) }));
+function Re(e) {
+  let n = /* @__PURE__ */ new Map();
+  for (let r of e) {
+    let s = he().safeParse(r);
+    if (!s.success) continue;
+    let { url: i, title: m, updated_at: g } = s.data, y = Jt(i);
+    if (y === null) continue;
+    let d = g !== void 0 ? Date.parse(g) : NaN, k = { url: xn(y), updatedAt: Number.isFinite(d) ? d : 0, ...m !== void 0 && m !== "" && { title: re(m, we) }, fromCloudSession: true }, R = n.get(y.slug);
+    if (R === void 0 || k.updatedAt >= R.updatedAt) n.set(y.slug, k);
+  }
+  return [...n].sort(([, r], [, s]) => r.updatedAt - s.updatedAt).slice(-Se).map(([r, s]) => [`${t3}${r}`, s]);
+}
+function KAn(e, n) {
+  if (n.skills === void 0 && n.plugins === void 0) return e;
+  let r = n.tools ?? e?.tools, s = n.slashCommands ?? e?.commands;
+  return { skills: n.skills ?? [], plugins: n.plugins ?? [], ...r !== void 0 && { tools: r }, ...s !== void 0 && { commands: s } };
+}
+export {
+  AQr,
+  Bur,
+  CQr,
+  ERt,
+  GAn,
+  Gur,
+  KAn,
+  Kas,
+  Kur,
+  L$e,
+  RQr,
+  TQr,
+  Uur,
+  VAn,
+  Vas,
+  Vur,
+  WAn,
+  Wur,
+  bRt,
+  c5t,
+  d4e,
+  d5t,
+  jur,
+  qur,
+  u5t,
+  wRt,
+  xQr,
+  zAn,
+  zas,
+  zur
+};

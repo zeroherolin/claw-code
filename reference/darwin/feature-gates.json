@@ -1,0 +1,5942 @@
+{
+ "cai_proud_planet": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/artifact-unobserved-connector-warning.js"
+  ]
+ },
+ "tengu-model-error-overrides": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_agents_md_mod": {
+  "defaults": [
+   "<nco>"
+  ],
+  "modules": [
+   "context/agents-md-mod.js"
+  ]
+ },
+ "tengu_agentview_inherit_mode_demote": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_agile_glade": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "telemetry/remote-tool-restart-adoption-unroutable.js"
+  ]
+ },
+ "tengu_alder_compass": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/advertised-command-is-offered.js"
+  ]
+ },
+ "tengu_amber_anchor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/fleet-past-sessions.js"
+  ]
+ },
+ "tengu_amber_creek": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/focus-events.js"
+  ]
+ },
+ "tengu_amber_ferry": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/bridge-attachment-prefetch-download.js"
+  ]
+ },
+ "tengu_amber_flint": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/chunk-cb9c99f9.js"
+  ]
+ },
+ "tengu_amber_kestrel": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/agent-tool.js"
+  ]
+ },
+ "tengu_amber_larch": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_amber_lark": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/format-behaviors.js"
+  ]
+ },
+ "tengu_amber_lattice": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_amber_lynx": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/disabled-at-save.js"
+  ]
+ },
+ "tengu_amber_packet": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_amber_prism": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_amber_redwood2": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_amber_redwood3": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_amber_relay": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_amber_rokovoko": {
+  "defaults": [
+   "<Tbe>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_amber_sextant": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_amber_tollgate": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/claudeai-mcp-auth-completed.js"
+  ]
+ },
+ "tengu_ant_yolo_equiv_strip_config": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "permissions/auto-mode-config.js"
+  ]
+ },
+ "tengu_async_goblet": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/sdk-hosted-disabled.js"
+  ]
+ },
+ "tengu_attempt_decision_shadow": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_auto_mode_config": {
+  "defaults": [
+   "<object>",
+   "<f>"
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js",
+   "core/conversation-engine.js",
+   "models/auto-mode-config.js",
+   "models/ccr-unsupported-default-mode-ignored.js",
+   "cli/session-setup.js",
+   "permissions/auto-mode-config.js",
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_auto_mode_worktree_fast_path": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_basalt_meadow": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/render-glyph-cardinality.js"
+  ]
+ },
+ "tengu_basalt_scarp": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_basalt_spur": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_bg_attach_stall_ms": {
+  "defaults": [
+   "<Rn>"
+  ],
+  "modules": [
+   "telemetry/bg-daemon-spawn-reinstall-wait.js"
+  ]
+ },
+ "tengu_bg_attach_upgrade": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/bg-attach-upgrade.js"
+  ]
+ },
+ "tengu_bg_binary_takeover": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bg-daemon-spawn-reinstall-wait.js"
+  ]
+ },
+ "tengu_bg_classifier_config": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "ui/append-timeline-line.js"
+  ]
+ },
+ "tengu_bg_leftarrow_inprocess": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_bg_low_mem_mb": {
+  "defaults": [
+   1024
+  ],
+  "modules": [
+   "context/bg-attach-upgrade.js"
+  ]
+ },
+ "tengu_bg_prewarm_burst_concurrency": {
+  "defaults": [
+   3
+  ],
+  "modules": [
+   "tasks/daemon-main.js"
+  ]
+ },
+ "tengu_bg_prewarm_burst_delay_ms": {
+  "defaults": [
+   15000
+  ],
+  "modules": [
+   "tasks/daemon-main.js"
+  ]
+ },
+ "tengu_bg_prewarm_per_sweep": {
+  "defaults": [
+   3
+  ],
+  "modules": [
+   "tasks/daemon-main.js"
+  ]
+ },
+ "tengu_bg_revival_guard": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bg-adopt-token-lost-respawn.js"
+  ]
+ },
+ "tengu_bg_spare_enable": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tasks/daemon-main.js"
+  ]
+ },
+ "tengu_bg_worker_ctty": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "auth/is-desktop-entrypoint-exempted.js"
+  ]
+ },
+ "tengu_binary_balloon": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_birch_kettle": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "skills/register-claude-code-skill.js"
+  ]
+ },
+ "tengu_birch_lantern": {
+  "defaults": [
+   "off"
+  ],
+  "modules": [
+   "agents/chunk-a37a2039.js"
+  ]
+ },
+ "tengu_bracken_sluice": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/madrone-spindle-corbel.js"
+  ]
+ },
+ "tengu_bramble_lintel": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "context/extract-memories-extraction.js"
+  ]
+ },
+ "tengu_brass_plover": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/slate-lantern-hush.js"
+  ]
+ },
+ "tengu_brass_sled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "shell/run-in-background.4c23.js"
+  ]
+ },
+ "tengu_breezy_crescent": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "shell/chunk-23a29f4d.js"
+  ]
+ },
+ "tengu_breezy_diffie": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_breezy_fairy": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_breezy_haven": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_brick_follow": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "computer-use/cf-mitigated.js",
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_bridge_apply_server_session_config": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_auth_revive": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_child_auto_mode": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_child_auto_over_settings": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_child_file_upload": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tools/send-user-file-tool.js"
+  ]
+ },
+ "tengu_bridge_child_machine_settings": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_child_tool_diff": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "git/bridge-child-tool-diff.js"
+  ]
+ },
+ "tengu_bridge_host_declined_end": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_host_profile": {
+  "defaults": [
+   "off"
+  ],
+  "modules": [
+   "mcp/bridge-host-profile-collect.js"
+  ]
+ },
+ "tengu_bridge_inbox_pointer_boundary": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "remote/bridge-inbox-pointer-boundary.js"
+  ]
+ },
+ "tengu_bridge_initialize_commands": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "agents/set-model-unrecognized.js"
+  ]
+ },
+ "tengu_bridge_min_version": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "telemetry/bridge-min-version.js"
+  ]
+ },
+ "tengu_bridge_owner_check_attribution": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_owner_pinned_end": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_partial_messages": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_poll_interval_config": {
+  "defaults": [
+   "<n>"
+  ],
+  "modules": [
+   "mcp/bridge-poll-interval-config.js"
+  ]
+ },
+ "tengu_bridge_rc_child_artifact": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_rc_child_auto_compact": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_rc_child_idle_exit_ms": {
+  "defaults": [
+   "<X>"
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_rc_child_restart_resume": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_rc_projects_hint": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_recovery_patience": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_bridge_repl_v2_cse_shim_enabled": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_requires_action_details": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_bridge_resume_respects_local_owner": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_selfheal_heartbeats": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_bridge_signed_out_neutral": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_subagent_frames": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bridge_subagent_text": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_bright_wall": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_brindle_causeway": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/mcp-sdk-generation.js"
+  ]
+ },
+ "tengu_bubbly_harbor": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "workflows/file-path.js"
+  ]
+ },
+ "tengu_bubbly_meteor": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_byte_stream_idle_timeout_ms": {
+  "defaults": [
+   "<Ip>"
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_c4e_slash_upsell": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_calm_crescent": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_calm_noodle": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_calm_osprey": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/sdk-mcp-manifests.js"
+  ]
+ },
+ "tengu_calm_riddle": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_calm_seal": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_calm_waffle": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_canary": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "telemetry/version-lock-acquired.js"
+  ]
+ },
+ "tengu_ccr_bridge": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_ccr_bundle_max_bytes": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_ccr_classifier_keepalive_enabled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_ccr_drop_unwatched_stream_events": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_event_hold_enabled": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_exclude_dynamic_restore_killswitch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_ccr_external_event_record": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/ccr-external-event-record.93a0.js"
+  ]
+ },
+ "tengu_ccr_handoff_metadata": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_hook_keepalive_enabled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_ccr_idle_heartbeat": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_no_subscriber_flush_ms": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_no_subscriber_hold_ms": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_orphan_restore_wake": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_ccr_orphan_restore_wake_shells": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_ccr_plugin_refresh_in_idle_enabled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_ccr_reactivation_beat": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_reconnect_beat": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_skip_redundant_heartbeat": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_sse_keepalive_max_interval_s": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_stream_event_flush_ms": {
+  "defaults": [
+   "<oDt>"
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_stream_first_flush_ms": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_subagent_skip_on_delta": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js"
+  ]
+ },
+ "tengu_ccr_upload_hold_marker": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_upload_trim": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_ccr_v2_bridge_create_cli": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_ccr_v2_send_events_cli": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_ccr_v2_session_crud_cli": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_cedar_lantern": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_cedar_lattice": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_cedar_marsh": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-56c542d7.js"
+  ]
+ },
+ "tengu_cedar_plume": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/advertised-command-is-offered.js"
+  ]
+ },
+ "tengu_cedar_transom": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/gable-onyx-sluice.js"
+  ]
+ },
+ "tengu_cheerful_horizon": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "api/not-signed-in.js"
+  ]
+ },
+ "tengu_chomp_inflection": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/prompt-suggestion-init.js",
+   "context/push-notif-pref-changed.js"
+  ]
+ },
+ "tengu_chomp_sable": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_chomp_thaw": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/prompt-suggestion-init.js"
+  ]
+ },
+ "tengu_chrome_auto_enable": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/team-memory-sync.js",
+   "mcp/pro-trial-start-screen-shown.js"
+  ]
+ },
+ "tengu_chrome_install_upsell": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "git/cobalt-plinth-dataviz.js"
+  ]
+ },
+ "tengu_chrome_tab_group_close": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "chrome/close-session-tab-group.js"
+  ]
+ },
+ "tengu_cicada_nap_ms": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "cli/session-setup.js"
+  ]
+ },
+ "tengu_cinder_plover": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "tools/ask-user-question-tool.js"
+  ]
+ },
+ "tengu_cinder_wren": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "tools/ask-user-question-tool.js"
+  ]
+ },
+ "tengu_classifier_disabled_surfaces": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "context/classifier-disabled-surfaces.js"
+  ]
+ },
+ "tengu_classifier_summary_kill": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/classifier-disabled-surfaces.js"
+  ]
+ },
+ "tengu_classifier_summary_llm_emit": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/classifier-disabled-surfaces.js"
+  ]
+ },
+ "tengu_clever_garden": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_clever_orbit": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_cloud_session_shell": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_cobalt_harbor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_cobalt_harbor_notice": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/normalizer-retained-output-check-failed.js",
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_cobalt_plinth": {
+  "defaults": [
+   "<expr>"
+  ],
+  "modules": [
+   "settings/gable-onyx-sluice.js"
+  ]
+ },
+ "tengu_cobalt_plinth_alder": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-willow.js"
+  ]
+ },
+ "tengu_cobalt_plinth_aspen": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "chrome/artifact-preview-emulator-gate.js"
+  ]
+ },
+ "tengu_cobalt_plinth_bracken": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_cobalt_plinth_campion": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_cobalt_plinth_damson": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/cobalt-plinth-damson.js"
+  ]
+ },
+ "tengu_cobalt_plinth_dataviz": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "git/cobalt-plinth-dataviz.js"
+  ]
+ },
+ "tengu_cobalt_plinth_fennel": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-comfrey.js"
+  ]
+ },
+ "tengu_cobalt_plinth_fern": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_cobalt_plinth_mallow": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_cobalt_plinth_moss": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_cobalt_plinth_sainfoin": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_cobalt_plinth_samphire": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_cobalt_plinth_sedge": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/cobalt-plinth-sedge.js"
+  ]
+ },
+ "tengu_cobalt_plinth_sill": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_cobalt_plinth_sorb": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/artifact-unobserved-connector-warning.js"
+  ]
+ },
+ "tengu_cobalt_plinth_sorrel": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-comfrey.js"
+  ]
+ },
+ "tengu_cobalt_plinth_tansy": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_cobalt_plinth_thrift": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/gable-onyx-sluice.js"
+  ]
+ },
+ "tengu_cobalt_plinth_willow": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-willow.js"
+  ]
+ },
+ "tengu_cobalt_plinth_yew": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/cobalt-plinth-yew.js"
+  ]
+ },
+ "tengu_cobalt_ridge": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/tool-result-clearing-after-idle-server-report.js"
+  ]
+ },
+ "tengu_cobalt_thicket": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/session-setup.js"
+  ]
+ },
+ "tengu_cobalt_wren": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/classifier-disabled-surfaces.js"
+  ]
+ },
+ "tengu_compact_cache_prefix": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_composed_quail": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_composed_treehouse": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_compressed_river": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "permissions/auto-mode-denial-dialog-auto-denied.js"
+  ]
+ },
+ "tengu_concurrent_moonbeam": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_concurrent_shore": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_context_usage_bulk_counts": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_coordinator_panel": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/tool-message-rendering.js"
+  ]
+ },
+ "tengu_copper_hinge_wren": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_copper_kestrel": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_copper_lantern": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/fleet-past-sessions.js"
+  ]
+ },
+ "tengu_copper_thistle": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_coral_anchor": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_cosmic_cookie": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bg-adopt-token-lost-respawn.js"
+  ]
+ },
+ "tengu_cosmic_shore": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "permissions/auto-mode.js"
+  ]
+ },
+ "tengu_cowork_auto_mode_include_allowed_write_mcp": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_cowork_chrome_automode_default": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/auto-mode-config.js"
+  ]
+ },
+ "tengu_cozy_dusk": {
+  "defaults": [
+   "<xe>"
+  ],
+  "modules": [
+   "telemetry/big-query-export-interval-ms.js"
+  ]
+ },
+ "tengu_cozy_eagle": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "permissions/auto-mode-config.js"
+  ]
+ },
+ "tengu_cozy_fern": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_cozy_kite": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_crimson_vector": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/tool-result.js"
+  ]
+ },
+ "tengu_cuddly_willow": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/harbor-kite-win.js"
+  ]
+ },
+ "tengu_curious_river": {
+  "defaults": [
+   "<Ae>"
+  ],
+  "modules": [
+   "mcp/build-sep2663-ending-notice.js"
+  ]
+ },
+ "tengu_curious_tower": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_curious_tower_stateless_models": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_curried_sparrow": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_daemon_refuse_stale_upgrade": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tasks/daemon-main.js"
+  ]
+ },
+ "tengu_daemon_upgrade_defer_busy": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tasks/daemon-main.js"
+  ]
+ },
+ "tengu_dapper_acorn": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-dd83b65b.js"
+  ]
+ },
+ "tengu_dapper_brooks": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/bridge-attachment-prefetch-download.js"
+  ]
+ },
+ "tengu_dapper_cupcake": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_dapper_dawn": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_dapper_platypus": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_dazzling_garden": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_deep_feather": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tools/send-message-tool.js"
+  ]
+ },
+ "tengu_deep_shore": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_defer_cap_ms": {
+  "defaults": [
+   10000
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_deferred_stub_tool": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_delightful_hamster": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/mcp-claudeai-eligibility-gate.js"
+  ]
+ },
+ "tengu_desktop_upsell": {
+  "defaults": [
+   "<q>"
+  ],
+  "modules": [
+   "plugins/advertised-command-is-offered.js"
+  ]
+ },
+ "tengu_destructive_command_warning": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_disable_live_host_context": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_disable_streaming_to_non_streaming_fallback": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_dreamy_frost": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_dreamy_sundae": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_drift_lantern": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/session-setup.js"
+  ]
+ },
+ "tengu_drifting_dream": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/auq-park-interrupted-at-stream-close.js"
+  ]
+ },
+ "tengu_eager_pillow": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_eager_rain": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_edit_minimalanchor_jrn": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_elegant_meadow": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_elegant_pancake": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "telemetry/version-lock-acquired.js"
+  ]
+ },
+ "tengu_ember_latch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "auth/usage-credits-admin-request-granted.js"
+  ]
+ },
+ "tengu_encapsulated_pebble": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/chunk-ce222b3e.js"
+  ]
+ },
+ "tengu_ethereal_mist": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_event_loop_stall": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "terminal/ink-renderer.js"
+  ]
+ },
+ "tengu_eventual_noodle": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "chrome/official-plugin-prompt-overrides.js"
+  ]
+ },
+ "tengu_expressive_church": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "agents/agent-summary-skipped.js"
+  ]
+ },
+ "tengu_expressive_whistle": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_fallow_plover": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_fancy_wand_copy": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "computer-use/native-auto-updater-skipped-unverified-release.js"
+  ]
+ },
+ "tengu_federated_flask": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "git/claude-pr-steward-is-working.js"
+  ]
+ },
+ "tengu_feedback_survey_config": {
+  "defaults": [
+   "<dRn>"
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_fern_plover": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "ui/normalizer-retained-output-check-failed.js"
+  ]
+ },
+ "tengu_fgts": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_fizzy_grove": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_fizzy_treasure": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_fleet_past_sessions": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/fleet-past-sessions.js"
+  ]
+ },
+ "tengu_fleetview_peers": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/bg-agent-action.js"
+  ]
+ },
+ "tengu_fleetview_pr_batch": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/bg-agent-action.js"
+  ]
+ },
+ "tengu_flickering_lagoon": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/send-message-tool.js"
+  ]
+ },
+ "tengu_flint_harbor_prompt": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_flint_harbor_share": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_fresh_heron": {
+  "defaults": [
+   "<G0t>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_gable_onyx_sluice": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/gable-onyx-sluice.js"
+  ]
+ },
+ "tengu_gb_refresh_interval_minutes": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_gentle_brooks": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_gentle_hummingbird": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_giggly_dragonfly": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_gleaming_fair": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_gleaming_fair_reuse": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_glimmering_glade": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_glittery_fern": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "tools/propose-skills-tool.js"
+  ]
+ },
+ "tengu_glittery_mitten": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_glowing_lark": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/mcp-task-worker-wake.js"
+  ]
+ },
+ "tengu_glowing_pancake": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/create-chrome-context.js"
+  ]
+ },
+ "tengu_gorse_fathom": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_gorse_pylon": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/madrone-spindle-corbel.js"
+  ]
+ },
+ "tengu_gorse_sill": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/madrone-spindle-corbel.js"
+  ]
+ },
+ "tengu_gravel_chorus": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_greedy_crane": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bg-adopt-token-lost-respawn.js"
+  ]
+ },
+ "tengu_groovy_eclipse": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_gypsum_kite": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_happy_ocean": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/teleport-menu.js"
+  ]
+ },
+ "tengu_harbor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/allow-channels.js"
+  ]
+ },
+ "tengu_harbor_kite": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/harbor-kite-win.js"
+  ]
+ },
+ "tengu_harbor_kite_cloud": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/has-cloud-peer-access.js"
+  ]
+ },
+ "tengu_harbor_kite_limits": {
+  "defaults": [
+   "<V>"
+  ],
+  "modules": [
+   "telemetry/harbor-kite-pacing-off.js"
+  ]
+ },
+ "tengu_harbor_kite_mode_emit": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "settings/harbor-kite-mode-emit.js"
+  ]
+ },
+ "tengu_harbor_kite_pacing_off": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/harbor-kite-pacing-off.js"
+  ]
+ },
+ "tengu_harbor_kite_win": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/harbor-kite-win.js"
+  ]
+ },
+ "tengu_harbor_ledger": {
+  "defaults": [
+   "<array>"
+  ],
+  "modules": [
+   "plugins/allow-channels.js"
+  ]
+ },
+ "tengu_harbor_moth": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/ccr-recap-generate.js"
+  ]
+ },
+ "tengu_harbor_permissions": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/chunk-1580dcc7.js"
+  ]
+ },
+ "tengu_harbor_willow": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "models/ccr-unsupported-default-mode-ignored.js"
+  ]
+ },
+ "tengu_harp_pedal": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/remote-model-picker.js"
+  ]
+ },
+ "tengu_hawthorn_steeple": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/tool-result-persisted.js"
+  ]
+ },
+ "tengu_haze_glass": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_hazel_lantern": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "remote/bridge-attachment-prefetch-download.js"
+  ]
+ },
+ "tengu_hazel_osprey": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/create-context-hint-controller.js"
+  ]
+ },
+ "tengu_hazel_osprey_floor": {
+  "defaults": [
+   "<b>"
+  ],
+  "modules": [
+   "context/create-context-hint-controller.js"
+  ]
+ },
+ "tengu_hazy_cosmos": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_hazy_nova": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_hearth_member_relay_rows_enabled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/projects-thread-reply-lead-killswitch.js"
+  ]
+ },
+ "tengu_hearth_resolved_rows": {
+  "defaults": [
+   "off"
+  ],
+  "modules": [
+   "context/projects-thread-reply-lead-killswitch.js"
+  ]
+ },
+ "tengu_heron_brook": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_hidden_frog": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_hidden_volcano": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_hipaa_history_retention_prune": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "fs/hipaa-history-retention-prune.js"
+  ]
+ },
+ "tengu_hover_rest": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bg-adopt-token-lost-respawn.js",
+   "telemetry/chunk-12c9c79d.js"
+  ]
+ },
+ "tengu_humble_emerson": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_humble_petal": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_humble_wand": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_humble_zephyr": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_humming_locket": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_humming_star": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tools/fetch-inbox-message-tool.js"
+  ]
+ },
+ "tengu_hushed_kestrel": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_hushed_lantern": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "chrome/roster-changed.js"
+  ]
+ },
+ "tengu_hushed_lark": {
+  "defaults": [
+   "<Cxn>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_hushed_lark_text": {
+  "defaults": [
+   "<xxn>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_hushed_plover": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_ide_rc_auto_enable": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_idempotent_wolf": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_idle_amber_finch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_immutable_tide": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_import": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_indexed_corbato": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "git/coordinator-mode-switched.js"
+  ]
+ },
+ "tengu_indexed_pearl": {
+  "defaults": [
+   "<FL>"
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_iridescent_boot": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_iterative_cosmos": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tasks/daemon-main.js"
+  ]
+ },
+ "tengu_iterative_falcon": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_iterative_haven": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-e97d3e34.js"
+  ]
+ },
+ "tengu_iterative_lightning": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_jade_anvil_4": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/rate-limit-options-menu-select-extra-usage.js"
+  ]
+ },
+ "tengu_jade_compass": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "workflows/managed-settings.js"
+  ]
+ },
+ "tengu_jaunty_charm": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_jaunty_ember": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/send-message-tool.js"
+  ]
+ },
+ "tengu_jaunty_plum": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_jazzy_puddle": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_jazzy_ripple": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "git/bridge-child-tool-diff.js"
+  ]
+ },
+ "tengu_jiggly_mochi": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_jolly_sparrow_enabled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_joyful_parasol": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/push-notif-pref-changed.js"
+  ]
+ },
+ "tengu_juniper_bassoon": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_juniper_relay": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/feedback-drafts-setting-changed.js"
+  ]
+ },
+ "tengu_juniper_relay_config": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "tools/worktree-entered-existing.js"
+  ]
+ },
+ "tengu_juniper_sundial": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_kairos_brief": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/tool-message-rendering.js",
+   "ui/spinner-stall-cleared.js",
+   "telemetry/kairos-brief-stop-hook-text.js"
+  ]
+ },
+ "tengu_kairos_brief_config": {
+  "defaults": [
+   "<n>"
+  ],
+  "modules": [
+   "commands/command-brief.js"
+  ]
+ },
+ "tengu_kairos_brief_stop_hook_text": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "telemetry/kairos-brief-stop-hook-text.js"
+  ]
+ },
+ "tengu_kairos_cron": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/kairos-cron-durable.js"
+  ]
+ },
+ "tengu_kairos_cron_config": {
+  "defaults": [
+   "<P8>"
+  ],
+  "modules": [
+   "telemetry/kairos-cron-config.js"
+  ]
+ },
+ "tengu_kairos_cron_durable": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/kairos-cron-durable.js"
+  ]
+ },
+ "tengu_kairos_input_needed_push": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/kairos-push-notifications.js"
+  ]
+ },
+ "tengu_kairos_loop_keepalive": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/loop-dynamic-wakeup-scheduled.js"
+  ]
+ },
+ "tengu_kairos_loop_persistent": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/get-autonomous-loop-preamble.js"
+  ]
+ },
+ "tengu_kairos_push_notifications": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/kairos-push-notifications.js",
+   "tools/push-notification-tool.js"
+  ]
+ },
+ "tengu_kairos_ready_nudge": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "telemetry/rc-permission-nudge.js"
+  ]
+ },
+ "tengu_keen_anchor": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_keen_lantern": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_keen_sloth": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_kestrel_arch": {
+  "defaults": [
+   "off"
+  ],
+  "modules": [
+   "plugins/advertised-command-is-offered.js"
+  ]
+ },
+ "tengu_kestrel_moor": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_keybinding_customization_release": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/keybinding-customization-release.js"
+  ]
+ },
+ "tengu_lantern_hinge": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_lantern_prism": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-ce222b3e.js"
+  ]
+ },
+ "tengu_lantern_sconce": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js",
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_lantern_sconce_copy": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_lantern_snuffer": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js",
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_lantern_spool": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_lazy_dove": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-b32dfdeb.js"
+  ]
+ },
+ "tengu_left_arrow_carries_queued": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_left_arrow_editing_guard": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "terminal/left-arrow-blocked.js"
+  ]
+ },
+ "tengu_level_wren": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/sdk-hosted-disabled.js"
+  ]
+ },
+ "tengu_lexical_glade": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_linear_brook": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_linear_fog": {
+  "defaults": [
+   "off"
+  ],
+  "modules": [
+   "plugins/advertised-command-is-offered.js"
+  ]
+ },
+ "tengu_linear_owl": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_linear_quail": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_linen_orbit": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_linked_cake": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_linked_clover": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "workflows/workflow-journal-started-hit-respawn.js"
+  ]
+ },
+ "tengu_lively_waffle": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "permissions/subagent-output-flagged.js"
+  ]
+ },
+ "tengu_loggia_denkbild": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_lovely_rain": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/projects-tool.js"
+  ]
+ },
+ "tengu_lucid_anchor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_lucky_brooks": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/session-title-generated.js"
+  ]
+ },
+ "tengu_lucky_quill": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_lucky_whisper": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/send-user-file-tool.js"
+  ]
+ },
+ "tengu_luminous_locket": {
+  "defaults": [
+   "<JWo>"
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_luminous_seal": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_magical_pixel": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/advertised-command-is-offered.js"
+  ]
+ },
+ "tengu_malort_pedway": {
+  "defaults": [
+   "<t>"
+  ],
+  "modules": [
+   "telemetry/chunk-dd83b65b.js"
+  ]
+ },
+ "tengu_maple_pier": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "settings/auto-default-nudge-resolved.js"
+  ]
+ },
+ "tengu_maple_rung": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/advertised-command-is-offered.js"
+  ]
+ },
+ "tengu_maple_sundial": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_marbled_teal": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_marlin_porch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "terminal/ink-renderer.js"
+  ]
+ },
+ "tengu_max_version_config": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_mcp_auto_background": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/call-mcp-tool-with-auto-background.js"
+  ]
+ },
+ "tengu_mcp_claudeai_eligibility_gate": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/mcp-claudeai-eligibility-gate.js"
+  ]
+ },
+ "tengu_mcp_connect_suspend_redial": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "chrome/official-plugin-prompt-overrides.js"
+  ]
+ },
+ "tengu_mcp_connect_timeout_retry": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js",
+   "mcp/apply-capability-serve-time-miss.848f.js"
+  ]
+ },
+ "tengu_mcp_directory_bff": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_mcp_directory_visibility": {
+  "defaults": [
+   "<AR>"
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_mcp_discover_projection_prior": {
+  "defaults": [
+   "off"
+  ],
+  "modules": [
+   "mcp/claudeai-mcp-eligibility.js"
+  ]
+ },
+ "tengu_mcp_discovery_cache_enable": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "mcp/mcp-discovery-cache-enable.js"
+  ]
+ },
+ "tengu_mcp_issuer_strict_echo": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "auth/mcp-oauth-flow-success.f313.js"
+  ]
+ },
+ "tengu_mcp_legacy_sse_fallback": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js",
+   "mcp/apply-capability-serve-time-miss.848f.js"
+  ]
+ },
+ "tengu_mcp_legacy_url_elicitation": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/claudeai-mcp-eligibility.js"
+  ]
+ },
+ "tengu_mcp_listen_reopen_park": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_mcp_listen_reopen_park_tuning": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_mcp_local_oauth_blocked_hosts": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "mcp/mcp-local-oauth-blocked-hosts.js"
+  ]
+ },
+ "tengu_mcp_protocol_negotiation_ccr": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_mcp_protocol_negotiation_claudeai": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_mcp_protocol_negotiation_http": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_mcp_protocol_negotiation_stdio": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_mcp_proxy_needs_approval_retry": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js",
+   "mcp/apply-capability-serve-time-miss.848f.js"
+  ]
+ },
+ "tengu_mcp_server_policy_bypass_exempt": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_mcp_singleton_unwrap": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js",
+   "mcp/apply-capability-serve-time-miss.848f.js"
+  ]
+ },
+ "tengu_mcp_startup_policy_seed": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/session-setup.js",
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_mcp_stateless_skip_init": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/claudeai-mcp-eligibility.js"
+  ]
+ },
+ "tengu_mcp_step_up_auth_dialog": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_mcp_strip_trailing_xml_tags": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js",
+   "mcp/apply-capability-serve-time-miss.848f.js"
+  ]
+ },
+ "tengu_mcp_subagent_prompt": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_mcp_task_worker_wake": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/mcp-task-worker-wake.js"
+  ]
+ },
+ "tengu_mcp_url_elicitation": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/claudeai-mcp-eligibility.js"
+  ]
+ },
+ "tengu_mellow_beacon": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_melodic_ember": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/sdk-mcp-manifests.js"
+  ]
+ },
+ "tengu_melodic_octopus": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_melodic_wolf": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "permissions/subagent-output-flagged.js"
+  ]
+ },
+ "tengu_mem_push_delete_mode": {
+  "defaults": [
+   "corroborate"
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_memoized_owl": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "chrome/chrome-permission-prompt.js"
+  ]
+ },
+ "tengu_memory_bulk_inflate": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_memory_store_resync_interval_minutes": {
+  "defaults": [
+   "<gT>"
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_memory_stream_list": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_mermaid_mod": {
+  "defaults": [
+   "<ae>"
+  ],
+  "modules": [
+   "plugins/is-available.f0ac.js"
+  ]
+ },
+ "tengu_merry_tide": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/enable-stub-tools.js"
+  ]
+ },
+ "tengu_mill_orange": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_mint_lanes": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_misty_anchor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_misty_spindle_enabled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js",
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_misty_sunbeam": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_misty_twilight": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_modular_mochi": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_moonlit_lagoon": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_moonlit_panda": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_moonlit_toucan": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/build-sep2663-ending-notice.js"
+  ]
+ },
+ "tengu_moss_anchor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "models/ccr-unsupported-default-mode-ignored.js"
+  ]
+ },
+ "tengu_mossy_anchor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_mossy_crown": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_mossy_gray": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/tool-result.js"
+  ]
+ },
+ "tengu_mossy_thrush": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_mossy_wirth": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/projects-tool.js"
+  ]
+ },
+ "tengu_moth_copse": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_mutable_phoenix_killswitch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_nankeen_kestrel": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "shell/sandbox.js"
+  ]
+ },
+ "tengu_native_cursor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "terminal/ink-renderer.js"
+  ]
+ },
+ "tengu_neapolitan": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_nifty_finch": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_nimble_wren": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_noble_mountain": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_noble_snowflake": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "remote/bridge-transcript-deferral.js"
+  ]
+ },
+ "tengu_noble_wozniak": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "agents/agents-command-handler.js"
+  ]
+ },
+ "tengu_non_deferrable_builtins": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "mcp/tool-search-unsupported-models.js"
+  ]
+ },
+ "tengu_observer_agents_enabled": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "agents/observer-subagent-fanout.js"
+  ]
+ },
+ "tengu_observer_subagent_fanout": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "agents/observer-subagent-fanout.js"
+  ]
+ },
+ "tengu_ochre_bittern": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/madrone-spindle-corbel.js"
+  ]
+ },
+ "tengu_ochre_dunlin": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_ochre_finch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_ochre_gantry": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_ochre_plover": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/madrone-spindle-corbel.js"
+  ]
+ },
+ "tengu_official_plugin_prompt_overrides": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "chrome/official-plugin-prompt-overrides.js"
+  ]
+ },
+ "tengu_onyx_plover": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "context/auto-dream-skipped.js"
+  ]
+ },
+ "tengu_onyx_sluice": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/artifact-comment-reply.js"
+  ]
+ },
+ "tengu_osier_pylon_trace": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-linden.js"
+  ]
+ },
+ "tengu_pale_kestrel": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_paper_halyard": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_parsed_willow": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_passport_quail": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js",
+   "context/extract-memories-extraction.js"
+  ]
+ },
+ "tengu_patient_finch": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_patient_meteor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_patient_tide": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_peaceful_leaf": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/enable-stub-tools.js"
+  ]
+ },
+ "tengu_pencil_farmer": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "agents/set-model-unrecognized.js"
+  ]
+ },
+ "tengu_penguins_off": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_pewter_avocet": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_pewter_brook": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/focus-events.js"
+  ]
+ },
+ "tengu_pewter_canteen": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_pewter_owl_model": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "telemetry/pewter-owl-model.js"
+  ]
+ },
+ "tengu_plain_heron": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_plain_kestrel": {
+  "defaults": [
+   "<vNn>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_plain_sorrel": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_playful_hare": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "commands/command-recap.js"
+  ]
+ },
+ "tengu_playful_lobster": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_playful_panda": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/sdk-hosted-disabled.js"
+  ]
+ },
+ "tengu_plugin_binary_assets": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_plugin_command_source_refresh": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "plugins/plugin-command-source-refresh.js"
+  ]
+ },
+ "tengu_plugin_input_refusal": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_plugin_menu_close_reload": {
+  "defaults": [
+   "<Ky>"
+  ],
+  "modules": [
+   "plugins/claudeai-mcp-auth-completed.js"
+  ]
+ },
+ "tengu_plugin_official_mkt_git_fallback": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js",
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_plugins_npm_marketplace": {
+  "defaults": [
+   "<CSs>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_plum_vx3": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/worktree-entered-existing.js"
+  ]
+ },
+ "tengu_polished_tulip": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_pr_footer_surface_suffix": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_precious_koala": {
+  "defaults": [
+   "off"
+  ],
+  "modules": [
+   "mcp/tool-search-unsupported-models.js"
+  ]
+ },
+ "tengu_print_ceiling_stop_agents": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_proactivity_selector": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/session-setup.js"
+  ]
+ },
+ "tengu_projects_compact_thread_rule_enabled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/projects-thread-reply-lead-killswitch.js"
+  ]
+ },
+ "tengu_projects_thread_recap": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/classifier-disabled-surfaces.js"
+  ]
+ },
+ "tengu_projects_thread_recap_prompt": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "ui/append-timeline-line.js"
+  ]
+ },
+ "tengu_projects_thread_reply_lead_killswitch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/projects-thread-reply-lead-killswitch.js"
+  ]
+ },
+ "tengu_prompt_cache_1h_config": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_propose_goal": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-066c9743.js"
+  ]
+ },
+ "tengu_proud_clover": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "models/ccr-unsupported-default-mode-ignored.js"
+  ]
+ },
+ "tengu_ptc_enabled": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_purring_pine": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tools/subagent-handback-tool.js"
+  ]
+ },
+ "tengu_quartz_pipit": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_quartz_thimble": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "plugins/plugin-eval-handler.js"
+  ]
+ },
+ "tengu_quiet_elephant": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "permissions/chunk-1580dcc7.js"
+  ]
+ },
+ "tengu_quiet_ember": {
+  "defaults": [
+   "<expr>"
+  ],
+  "modules": [
+   "telemetry/cc-plugin-responsive-mode.js"
+  ]
+ },
+ "tengu_quiet_harbor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/fleet-past-sessions.js"
+  ]
+ },
+ "tengu_quiet_heron": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_quiet_lantern": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_quiet_larkspur": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_quiet_slate_wren": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_quill_marten": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/lock-contended.js"
+  ]
+ },
+ "tengu_quirky_shore": {
+  "defaults": [
+   "off"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_quirky_teacup": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_quizzical_giraffe": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/agent-proxy-init.js"
+  ]
+ },
+ "tengu_quizzical_thimble": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/session-title-generated.js"
+  ]
+ },
+ "tengu_radiant_hare": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_radiant_heron": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-df86191c.js"
+  ]
+ },
+ "tengu_radiant_teapot": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_rc_long_turn_nudge": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "telemetry/rc-permission-nudge.js"
+  ]
+ },
+ "tengu_rc_permission_nudge": {
+  "defaults": [
+   "<s>"
+  ],
+  "modules": [
+   "telemetry/rc-permission-nudge.js"
+  ]
+ },
+ "tengu_reactive_compact_remote": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_reactive_quilt": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js"
+  ]
+ },
+ "tengu_read_dedup_killswitch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_record_created_pr_to_ccr": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_remote_auto_mode_include_destructive_mcp": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_remote_backend": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/main.js"
+  ]
+ },
+ "tengu_rename_full_session_fork": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "agents/rename-full-session-fork.js"
+  ]
+ },
+ "tengu_resume_open_live_bg": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "agents/fullscreen-upsell-trial-persisted.js"
+  ]
+ },
+ "tengu_rosy_donut": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_rosy_finch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_rosy_flute": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_rustling_crescent": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_rustling_lantern": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-a6c9c80d.js"
+  ]
+ },
+ "tengu_rustling_orbit": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "auth/policy-limits-principal-changed.js"
+  ]
+ },
+ "tengu_rustling_sunset": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_sable_orrery": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "git/bg-respawn-no-transcript.js"
+  ]
+ },
+ "tengu_saffron_credits_only_tiers": {
+  "defaults": [
+   "<cd>"
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_saffron_ferry": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_saffron_ladder": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_saffron_lattice": {
+  "defaults": [
+   "<dd>"
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_saffron_picker_dim": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_saffron_wren": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_sage_compass2": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_satchel_banjo": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_scratch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_sdk_mcp_manifests": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/sdk-mcp-manifests.js"
+  ]
+ },
+ "tengu_sedge_lantern_config": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_send_file": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-f6ecba11.js"
+  ]
+ },
+ "tengu_send_user_file": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "tools/send-user-file-tool.js"
+  ]
+ },
+ "tengu_sepia_cormorant": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_sepia_moth": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js",
+   "context/push-notif-pref-changed.js"
+  ]
+ },
+ "tengu_sequential_puffin": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_serene_teacup": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_serene_teapot": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "chrome/official-plugin-prompt-overrides.js"
+  ]
+ },
+ "tengu_serialized_petal": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_session_name_uniqueness": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/session-name-uniqueness.js"
+  ]
+ },
+ "tengu_sharded_beacon": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_sharded_moonbeam": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/system-prompt-blocks.js"
+  ]
+ },
+ "tengu_sharded_snowflake": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-ce222b3e.js"
+  ]
+ },
+ "tengu_shimmering_firefly": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/append-timeline-line.js"
+  ]
+ },
+ "tengu_shimmying_stardust": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "auth/policy-limits-principal-changed.js"
+  ]
+ },
+ "tengu_shining_fractals": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/spinner-stall-cleared.js"
+  ]
+ },
+ "tengu_shiny_stardust": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/tool-search-unsupported-models.js"
+  ]
+ },
+ "tengu_silent_harbor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_silent_heron": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_silk_hinge": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "ui/normalizer-retained-output-check-failed.js",
+   "context/push-notif-pref-changed.js"
+  ]
+ },
+ "tengu_silly_waterfall": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_skills_dashboard_enabled": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/claudeai-mcp-auth-completed.js"
+  ]
+ },
+ "tengu_slate_bittern": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_slate_finch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "models/ccr-unsupported-default-mode-ignored.js"
+  ]
+ },
+ "tengu_slate_harbor_experiment": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_slate_lantern": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_slate_lantern_ember": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_slate_marten": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/bridge-attachment-prefetch-download.js"
+  ]
+ },
+ "tengu_slate_thimble": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_sleepy_rabbit": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/session-setup.js"
+  ]
+ },
+ "tengu_sleepy_ripple": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_sleepy_shore": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "web/chunk-16fa3a7e.js"
+  ]
+ },
+ "tengu_sleepy_snowflake": {
+  "defaults": [
+   "all"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_smooth_harbor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_snappy_pelican": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_snappy_plum": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_snug_reef": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_soft_slate_nudge": {
+  "defaults": [
+   "baseline"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_soft_spindle": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_sorrel_trellis": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/madrone-spindle-corbel.js"
+  ]
+ },
+ "tengu_sorted_otter": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/tool-search-unsupported-models.js"
+  ]
+ },
+ "tengu_sorted_zebra": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/auto-mode-config.js"
+  ]
+ },
+ "tengu_spicy_blossom": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-ce222b3e.js"
+  ]
+ },
+ "tengu_splendid_sutton": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_squishy_spring": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_staged_ladybug": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_starry_squid": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "agents/agent-summary-skipped.js"
+  ]
+ },
+ "tengu_startup_announcements": {
+  "defaults": [
+   "<o>"
+  ],
+  "modules": [
+   "telemetry/chunk-b840990e.js"
+  ]
+ },
+ "tengu_startup_notice": {
+  "defaults": [
+   ""
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_static_title_under_mux": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_steady_panda": {
+  "defaults": [
+   "<QF>"
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_steady_plover": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_steady_puppy": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js"
+  ]
+ },
+ "tengu_stellar_drift": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_still_heron": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "agents/set-model-unrecognized.js"
+  ]
+ },
+ "tengu_stream_watchdog_default_on": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "api/anthropic-client.js"
+  ]
+ },
+ "tengu_streamed_thimble": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_structured_output_strict": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_subagent_cache_evict": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_surface_failed_mcp_servers": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/tool-search-unsupported-models.js"
+  ]
+ },
+ "tengu_swift_whistle": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_swirling_meteor": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_swirling_squid": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "agents/artifact-inherited-type-grant.js"
+  ]
+ },
+ "tengu_tab_read_sep": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/tab-read-sep.js"
+  ]
+ },
+ "tengu_teal_corbel": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/artifact-comment-reply.js"
+  ]
+ },
+ "tengu_teal_corbel_finial": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "artifacts/madrone-spindle-corbel.js"
+  ]
+ },
+ "tengu_teal_corbel_newel": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/artifact-unobserved-connector-warning.js"
+  ]
+ },
+ "tengu_teleport_github_access_precheck": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "remote/teleport-menu.js"
+  ]
+ },
+ "tengu_teleport_send_to_cloud": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/retire-conversation-for-teleport-pull.js"
+  ]
+ },
+ "tengu_temporal_hare": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "models/model-capability-off-from-client-data.js"
+  ]
+ },
+ "tengu_tender_truffle": {
+  "defaults": [
+   "<array>"
+  ],
+  "modules": [
+   "mcp/apply-capability-serve-time-miss.fa8e.js"
+  ]
+ },
+ "tengu_terminal_sidebar": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/push-notif-pref-changed.js",
+   "ui/repl-screen.js"
+  ]
+ },
+ "tengu_thinking_block_resumption": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_ticklish_pnueli": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_ticklish_whisper": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_tidy_abacus": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "workflows/always-on-context.js"
+  ]
+ },
+ "tengu_tidy_cloud": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_tidy_eclipse": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_tidy_fern": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/harbor-kite-pacing-off.js"
+  ]
+ },
+ "tengu_tidy_frost": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_tidy_lemon": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "telemetry/confirm-admin-request.js"
+  ]
+ },
+ "tengu_tidy_origami": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_tidy_sloth": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_tidy_widget": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "artifacts/cobalt-plinth-samphire.js"
+  ]
+ },
+ "tengu_tingly_pike": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_tips_mod": {
+  "defaults": [
+   "<y>"
+  ],
+  "modules": [
+   "plugins/host-module-of.js"
+  ]
+ },
+ "tengu_toasty_owl": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/projects-tool.js"
+  ]
+ },
+ "tengu_tool_detach": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_tool_pear": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_tool_search_unsupported_models": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "mcp/tool-search-unsupported-models.js"
+  ]
+ },
+ "tengu_tools_exclusion_killswitch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/auto-mode-config.js"
+  ]
+ },
+ "tengu_trace_lantern": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "agents/api-system.js"
+  ]
+ },
+ "tengu_tranquil_cloud": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js",
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_tranquil_starlight": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "mcp/tool-search-unsupported-models.js"
+  ]
+ },
+ "tengu_transcript_local_gc": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js"
+  ]
+ },
+ "tengu_truncated_response_recovery": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/query-loop.js"
+  ]
+ },
+ "tengu_turtle_carbon": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_tussock_oriole": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/team-artifact-tip-shown.js"
+  ]
+ },
+ "tengu_twinkling_boole": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_twinkling_cosmos": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "auth/managed-agents-task-file-upload.js"
+  ]
+ },
+ "tengu_twinkling_hoare": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/bridge-attachment-prefetch-download.js"
+  ]
+ },
+ "tengu_typed_koala": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_ultraplan_config": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_ultraplan_prompt_identifier": {
+  "defaults": [
+   "<gan>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_ultraplan_timeout_seconds": {
+  "defaults": [
+   5400
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_ultrareview_post_enabled": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_umber_petrel": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "settings/global-config-and-gates.js"
+  ]
+ },
+ "tengu_umber_plover": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_umber_sluice": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_umber_stile": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "artifacts/store-unavailable.9d8d.js"
+  ]
+ },
+ "tengu_valiant_crayon": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/auq-park-interrupted-at-stream-close.js"
+  ]
+ },
+ "tengu_valiant_crescent": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_valiant_finch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/system-prompt-blocks.js"
+  ]
+ },
+ "tengu_valiant_rain": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_vast_journal": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_vast_sunset": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_vast_tulip": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/below-floor.js"
+  ]
+ },
+ "tengu_vellum_anchor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/system-prompt-blocks.js"
+  ]
+ },
+ "tengu_vellum_siding": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_velvet_cairn": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_velvet_gannet": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "agents/agent-summary-skipped.js"
+  ]
+ },
+ "tengu_velvet_heron": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_velvet_ibis": {
+  "defaults": [
+   "<object>"
+  ],
+  "modules": [
+   "mcp/chunk-30ba4d59.js"
+  ]
+ },
+ "tengu_velvet_panda": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_velvet_tide": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "models/model-capability-off-from-client-data.js"
+  ]
+ },
+ "tengu_velvety_aurora": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "ui/append-timeline-line.js"
+  ]
+ },
+ "tengu_velvety_mango": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/launch-cloud-create-checklist.js"
+  ]
+ },
+ "tengu_velvety_sprout": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "tools/agent-tool.js"
+  ]
+ },
+ "tengu_verified_vs_assumed": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_violin_adjuster": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_violin_amati": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/flag-off.js"
+  ]
+ },
+ "tengu_violin_arching": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_violin_corner": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/create-remote-tool-hosts-runtime.js",
+   "telemetry/chunk-f9882a77.js"
+  ]
+ },
+ "tengu_violin_endpin": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/remote-tool-serving.js"
+  ]
+ },
+ "tengu_violin_eye": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_violin_ferrule": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_violin_fhole": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "shell/needs-approval.js"
+  ]
+ },
+ "tengu_violin_finetuner": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/served-tools-attach-options.js"
+  ]
+ },
+ "tengu_violin_frog": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_violin_hair": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_violin_lapping": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/remote-headless-client-host-request.js"
+  ]
+ },
+ "tengu_violin_luthier": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "shell/start-foreground-tool-host.js"
+  ]
+ },
+ "tengu_violin_neck": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_violin_nut": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_violin_overstand": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_violin_pernambuco": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "git/remote-tool-targets.js"
+  ]
+ },
+ "tengu_violin_rib": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-3175847a.js"
+  ]
+ },
+ "tengu_violin_rosin": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_violin_scroll": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/remote-tool-targets.js"
+  ]
+ },
+ "tengu_violin_spruce": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "context/remote-tool-serving.js"
+  ]
+ },
+ "tengu_violin_strad": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/flag-off.js"
+  ]
+ },
+ "tengu_violin_table": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "shell/needs-approval.js"
+  ]
+ },
+ "tengu_violin_tailgut": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/served-settings-edit-refused.js"
+  ]
+ },
+ "tengu_violin_tip": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/chunk-6d9121f4.js"
+  ]
+ },
+ "tengu_violin_varnish": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/team-memory-sync.js"
+  ]
+ },
+ "tengu_violin_waist": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "permissions/create-remote-tool-hosts-runtime.js"
+  ]
+ },
+ "tengu_violin_winding": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "git/remote-tool-targets.js"
+  ]
+ },
+ "tengu_violin_wood": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/flag-off.js",
+   "ui/clawd-background.js"
+  ]
+ },
+ "tengu_virtual_knuth": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_virtual_pancake": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_virtual_toast": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/availability-flag.8db9.js"
+  ]
+ },
+ "tengu_vivid_crown": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_vscode_feedback_survey": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_vscode_inline_pastes": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_vscode_math_rendering": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_vscode_onboarding": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_vscode_python_beside_start": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_vscode_restore_breaker": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_vscode_resume_precheck": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_vscode_review_upsell": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_vscode_stored_startup_config": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ },
+ "tengu_walnut_tiller": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "mcp/args-with-file-inputs.js"
+  ]
+ },
+ "tengu_watchdog_skip_nonstreaming_fallback": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_webfetch_deadline_ms": {
+  "defaults": [
+   "<xfn>"
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_wild_gosling": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_wild_tome": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_wise_kite": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "plugins/plugin-enabled-for-session.js"
+  ]
+ },
+ "tengu_witty_hearth": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_wobbly_dahl": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_wobbly_pinwheel": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_wondrous_acorn": {
+  "defaults": [
+   null
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_wondrous_island": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "remote/turn-handoff-flag-wait.js"
+  ]
+ },
+ "tengu_woolly_forest": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/reactive-compact-remote.js"
+  ]
+ },
+ "tengu_worker_owner_rows_killswitch": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/projects-thread-reply-lead-killswitch.js"
+  ]
+ },
+ "tengu_workflow_schema_lint_enforce": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "workflows/workflow-journal-started-hit-respawn.js"
+  ]
+ },
+ "tengu_workflows_enabled": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "workflows/managed-settings.js"
+  ]
+ },
+ "tengu_xterm_atlas_reset": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/render-glyph-cardinality.js"
+  ]
+ },
+ "tengu_zany_flask": {
+  "defaults": [
+   2
+  ],
+  "modules": [
+   "telemetry/sdk-hosted-disabled.js"
+  ]
+ },
+ "tengu_zany_melody": {
+  "defaults": [
+   true
+  ],
+  "modules": [
+   "telemetry/bridge-resume-respects-local-owner.js"
+  ]
+ },
+ "tengu_zesty_pearl": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "context/org-memory-writes-setting-changed.js"
+  ]
+ },
+ "tengu_zinc_harbor": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "core/conversation-engine.js"
+  ]
+ },
+ "tengu_zippy_gosling": {
+  "defaults": [
+   0
+  ],
+  "modules": [
+   "auth/policy-limits-principal-changed.js"
+  ]
+ },
+ "tengu_zippy_spindle": {
+  "defaults": [
+   false
+  ],
+  "modules": [
+   "cli/headless-print-mode.js"
+  ]
+ }
+}

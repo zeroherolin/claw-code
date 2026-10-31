@@ -4,72 +4,168 @@
   "path": "artifact-runtime/appifact_sdk.js",
   "bytes": 25159,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-9amyqxcf.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "shared/chunk-8f3dd750.js"
+   ],
+   "linux": [
+    "shared/chunk-8f3dd750.js"
+   ]
+  }
  },
  {
   "bunfs": "kit-modules.js-02f8fcd0.txt.zst",
   "path": "artifact-runtime/kit-modules.js",
   "bytes": 82755,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-cyfns0f1.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "cli/early-fetch-vetoed.js"
+   ],
+   "linux": [
+    "cli/early-fetch-vetoed.js"
+   ]
+  }
  },
  {
   "bunfs": "state-library.js-wy8y4843.txt",
   "path": "artifact-runtime/state-library.js",
   "bytes": 4060,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-vy1w5pmp.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "commands/claude-code.js"
+   ],
+   "linux": [
+    "commands/claude-code.js"
+   ]
+  }
  },
  {
   "bunfs": "anthropicSans400.woff2.asset",
   "path": "fonts/anthropicSans400.woff2",
   "bytes": 10980,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-wte097yz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "shared/anthropic-serif.js"
+   ],
+   "linux": [
+    "shared/anthropic-serif.js"
+   ]
+  }
  },
  {
   "bunfs": "anthropicSerif400.woff2.asset",
   "path": "fonts/anthropicSerif400.woff2",
   "bytes": 14756,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-wte097yz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "shared/anthropic-serif.js"
+   ],
+   "linux": [
+    "shared/anthropic-serif.js"
+   ]
+  }
  },
  {
   "bunfs": "audio-capture.node",
-  "path": "native/audio-capture.node",
+  "path": "native/darwin-arm64/audio-capture.node",
   "bytes": 438064,
+  "platforms": [
+   "darwin-arm64"
+  ],
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-dbj90r18.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "computer-use/chunk-5f38493e.js"
+   ]
+  }
  },
  {
   "bunfs": "computer-use-input.node",
-  "path": "native/computer-use-input.node",
+  "path": "native/darwin-arm64/computer-use-input.node",
   "bytes": 1692096,
+  "platforms": [
+   "darwin-arm64"
+  ],
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-bqp70210.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "computer-use/chunk-7f3fae0a.js"
+   ]
+  }
  },
  {
   "bunfs": "computer-use-swift.node",
-  "path": "native/computer-use-swift.node",
+  "path": "native/darwin-arm64/computer-use-swift.node",
   "bytes": 2507608,
+  "platforms": [
+   "darwin-arm64"
+  ],
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-rrrrq3eh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "computer-use/chunk-158c5f44.js"
+   ]
+  }
+ },
+ {
+  "bunfs": "audio-capture.node",
+  "path": "native/linux-arm64/audio-capture.node",
+  "bytes": 458600,
+  "platforms": [
+   "linux-arm64"
+  ],
+  "logical_keys": [],
+  "referenced_by": {
+   "linux": [
+    "computer-use/chunk-5f38493e.js"
+   ]
+  }
+ },
+ {
+  "bunfs": "clipboard-napi.node",
+  "path": "native/linux-arm64/clipboard-napi.node",
+  "bytes": 976328,
+  "platforms": [
+   "linux-arm64"
+  ],
+  "logical_keys": [],
+  "referenced_by": {
+   "linux": [
+    "shared/chunk-aa1a72e9.js"
+   ]
+  }
+ },
+ {
+  "bunfs": "audio-capture.node",
+  "path": "native/linux-x64/audio-capture.node",
+  "bytes": 492184,
+  "platforms": [
+   "linux-x64"
+  ],
+  "logical_keys": [],
+  "referenced_by": {
+   "linux": [
+    "computer-use/chunk-5f38493e.js"
+   ]
+  }
+ },
+ {
+  "bunfs": "clipboard-napi.node",
+  "path": "native/linux-x64/clipboard-napi.node",
+  "bytes": 1072904,
+  "platforms": [
+   "linux-x64"
+  ],
+  "logical_keys": [],
+  "referenced_by": {
+   "linux": [
+    "shared/chunk-aa1a72e9.js"
+   ]
+  }
  },
  {
   "bunfs": "plugin.json-yqejmsqd.txt",
@@ -78,36 +174,56 @@
   "logical_keys": [
    ".claude-plugin/plugin.json"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-4364cf72.md.zst",
   "path": "plugins/claude-test/skills/draft/SKILL.md",
   "bytes": 22588,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-616338f0.md.zst",
   "path": "plugins/claude-test/skills/execute/SKILL.md",
   "bytes": 64752,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-cc984d7e.md.zst",
   "path": "plugins/claude-test/skills/run/SKILL.md",
   "bytes": 112658,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "onboarding-8fc5cece.md.zst",
@@ -116,9 +232,14 @@
   "logical_keys": [
    "skills/run/onboarding.md"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "ct-auth.mjs-12e61ad0.txt.zst",
@@ -127,9 +248,14 @@
   "logical_keys": [
    "skills/run/scripts/ct-auth.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "ct.mjs-db1716e5.txt.zst",
@@ -138,9 +264,14 @@
   "logical_keys": [
    "skills/run/scripts/ct.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "ctbrowser.mjs-c343fa0d.txt.zst",
@@ -149,9 +280,14 @@
   "logical_keys": [
    "skills/run/scripts/ctbrowser.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "install-tools.mjs-mqgxnqdh.txt",
@@ -160,9 +296,14 @@
   "logical_keys": [
    "skills/run/scripts/install-tools.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "NOTICE-chm3rwx9.txt",
@@ -171,9 +312,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/NOTICE"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "allow-tool.mjs-dec5a728.txt.zst",
@@ -182,9 +328,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/allow-tool.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "config.mjs-c64f0576.txt.zst",
@@ -193,9 +344,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/config.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "discover.mjs-05fbb73b.txt.zst",
@@ -204,9 +360,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/discover.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "envreport.mjs-2a6a40b0.txt.zst",
@@ -215,9 +376,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/envreport.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "fence-proxy.mjs-e706eaf6.txt.zst",
@@ -226,9 +392,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/fence-proxy.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "guard.mjs-167f6a6a.txt.zst",
@@ -237,9 +408,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/guard.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "hosts.mjs-724sr8hv.txt",
@@ -248,9 +424,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/hosts.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "live-page.mjs-841e1124.txt.zst",
@@ -259,9 +440,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/live-page.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "open-page.mjs-v558kpk1.txt",
@@ -270,9 +456,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/open-page.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "psl-data.json-ffeefa5c.txt.zst",
@@ -281,9 +472,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/psl-data.json"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "run-tools.mjs-0e78c453.txt.zst",
@@ -292,9 +488,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/run-tools.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "runs.mjs-766956db.txt.zst",
@@ -303,9 +504,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/runs.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "signin.mjs-e32ba544.txt.zst",
@@ -314,9 +520,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/signin.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "tools-lock.json-2wbc4a0f.txt",
@@ -325,9 +536,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/tools-lock.json"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "tools.mjs-6ad628aa.txt.zst",
@@ -336,9 +552,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/tools.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "vet.mjs-e320abbd.txt.zst",
@@ -347,9 +568,14 @@
   "logical_keys": [
    "skills/run/scripts/lib/vet.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "playwright-mcp.mjs-4153e6ec.txt.zst",
@@ -358,9 +584,14 @@
   "logical_keys": [
    "skills/run/scripts/playwright-mcp.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "stop-on-exit.mjs-da3fcb46.txt.zst",
@@ -369,9 +600,14 @@
   "logical_keys": [
    "skills/run/scripts/stop-on-exit.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "tools-snapshot.json-517c5f68.txt.zst",
@@ -380,9 +616,14 @@
   "logical_keys": [
    "skills/run/scripts/tools-snapshot.json"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "spec-format-dwmge0np.md",
@@ -391,9 +632,14 @@
   "logical_keys": [
    "skills/run/spec-format.md"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-ecyx4ya1.md",
@@ -402,9 +648,14 @@
   "logical_keys": [
    "skills/run/templates/sign-in/SKILL.md"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "check.mjs-9esx2ea6.txt",
@@ -413,9 +664,14 @@
   "logical_keys": [
    "skills/run/templates/sign-in/scripts/check.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "sign-in.mjs-e560d968.txt.zst",
@@ -424,135 +680,210 @@
   "logical_keys": [
    "skills/run/templates/sign-in/scripts/sign-in.mjs"
   ],
-  "referenced_by": [
-   "chunk-k0mcdpfx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-test.js"
+   ],
+   "linux": [
+    "skills/skill-claude-test.js"
+   ]
+  }
  },
  {
   "bunfs": "loopAutonomousPreamble-07qcyhv4.md",
   "path": "prompts/loop/loopAutonomousPreamble.md",
   "bytes": 4972,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-c3j6hpkh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "telemetry/get-autonomous-loop-preamble.js"
+   ],
+   "linux": [
+    "telemetry/get-autonomous-loop-preamble.js"
+   ]
+  }
  },
  {
   "bunfs": "loopAutonomousPreamblePersistent-3zqtkrvg.md",
   "path": "prompts/loop/loopAutonomousPreamblePersistent.md",
   "bytes": 5380,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-c3j6hpkh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "telemetry/get-autonomous-loop-preamble.js"
+   ],
+   "linux": [
+    "telemetry/get-autonomous-loop-preamble.js"
+   ]
+  }
  },
  {
   "bunfs": "design-6m4nsdef.md",
   "path": "prompts/repl-route/design.md",
   "bytes": 5663,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-t5sjtkqz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ],
+   "linux": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ]
+  }
  },
  {
   "bunfs": "designHowTo-p8zjfw0e.md",
   "path": "prompts/repl-route/designHowTo.md",
   "bytes": 3217,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-t5sjtkqz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ],
+   "linux": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ]
+  }
  },
  {
   "bunfs": "designTwoSteps-g0bev2xr.md",
   "path": "prompts/repl-route/designTwoSteps.md",
   "bytes": 4671,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-t5sjtkqz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ],
+   "linux": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ]
+  }
  },
  {
   "bunfs": "slides-zdpeg77q.md",
   "path": "prompts/repl-route/slides.md",
   "bytes": 5868,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-t5sjtkqz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ],
+   "linux": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ]
+  }
  },
  {
   "bunfs": "slidesHowTo-09m4dbj2.md",
   "path": "prompts/repl-route/slidesHowTo.md",
   "bytes": 3013,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-t5sjtkqz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ],
+   "linux": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ]
+  }
  },
  {
   "bunfs": "slidesTwoSteps-1shjmnfb.md",
   "path": "prompts/repl-route/slidesTwoSteps.md",
   "bytes": 4170,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-t5sjtkqz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ],
+   "linux": [
+    "auth/repl-route-how-to-by-type-key.js"
+   ]
+  }
  },
  {
   "bunfs": "simple_plan-s5yyk7xh.txt",
   "path": "prompts/workflow-examples/simple_plan.txt",
   "bytes": 1826,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-31gxg38t.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "core/conversation-engine.js"
+   ],
+   "linux": [
+    "core/conversation-engine.js"
+   ]
+  }
  },
  {
   "bunfs": "three_subagents_with_critique-bd1egk7q.txt",
   "path": "prompts/workflow-examples/three_subagents_with_critique.txt",
   "bytes": 1902,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-31gxg38t.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "core/conversation-engine.js"
+   ],
+   "linux": [
+    "core/conversation-engine.js"
+   ]
+  }
  },
  {
   "bunfs": "visual_plan-9bza2qe2.txt",
   "path": "prompts/workflow-examples/visual_plan.txt",
   "bytes": 2673,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-31gxg38t.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "core/conversation-engine.js"
+   ],
+   "linux": [
+    "core/conversation-engine.js"
+   ]
+  }
  },
  {
   "bunfs": "claude-code.d.ts-bf9d954c.txt.zst",
   "path": "sdk/claude-code.d.ts",
   "bytes": 664173,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-t6f20pqm.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "plugins/core-declarations-of.js"
+   ],
+   "linux": [
+    "plugins/core-declarations-of.js"
+   ]
+  }
  },
  {
   "bunfs": "permissions_external-df98b90a.txt.zst",
   "path": "sdk/permissions_external.txt",
   "bytes": 96102,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-7dbj3tnn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "permissions/chunk-158f4b31.js"
+   ],
+   "linux": [
+    "permissions/chunk-158f4b31.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-fjp06kkf.md",
   "path": "skills/artifact-components/SKILL.md",
   "bytes": 6887,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-bszfkq8x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-components.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-components.js"
+   ]
+  }
  },
  {
   "bunfs": "component.css-02637b0d.txt.zst",
@@ -561,9 +892,14 @@
   "logical_keys": [
    "decision/component.css"
   ],
-  "referenced_by": [
-   "chunk-bszfkq8x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-components.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-components.js"
+   ]
+  }
  },
  {
   "bunfs": "decisions-script.html-e58174c4.txt.zst",
@@ -572,9 +908,14 @@
   "logical_keys": [
    "decision/decisions-script.html"
   ],
-  "referenced_by": [
-   "chunk-bszfkq8x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-components.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-components.js"
+   ]
+  }
  },
  {
   "bunfs": "skeleton.html-893t268n.txt",
@@ -583,9 +924,14 @@
   "logical_keys": [
    "decision/skeleton.html"
   ],
-  "referenced_by": [
-   "chunk-bszfkq8x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-components.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-components.js"
+   ]
+  }
  },
  {
   "bunfs": "theme-script.html-zm5eq8m1.txt",
@@ -594,9 +940,14 @@
   "logical_keys": [
    "decision/theme-script.html"
   ],
-  "referenced_by": [
-   "chunk-bszfkq8x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-components.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-components.js"
+   ]
+  }
  },
  {
   "bunfs": "tokens.css-6f9090cf.txt.zst",
@@ -605,27 +956,42 @@
   "logical_keys": [
    "decision/tokens.css"
   ],
-  "referenced_by": [
-   "chunk-bszfkq8x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-components.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-components.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-15dc2cc1.md.zst",
   "path": "skills/artifact-design/SKILL.md",
   "bytes": 22082,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-16vejqnd.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-design.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-design.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-kyber1ah.md",
   "path": "skills/artifact-diagramming/SKILL.md",
   "bytes": 4057,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-h852fhqn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-diagramming.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-diagramming.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-5vqnvygj.md",
@@ -634,9 +1000,14 @@
   "logical_keys": [
    "data-table"
   ],
-  "referenced_by": [
-   "chunk-gzaa5nta.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-types.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-types.js"
+   ]
+  }
  },
  {
   "bunfs": "template.html-cad26093.txt.zst",
@@ -645,18 +1016,28 @@
   "logical_keys": [
    "template.html"
   ],
-  "referenced_by": [
-   "chunk-gzaa5nta.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-types.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-types.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-sq87gt02.md",
   "path": "skills/artifact-types/explainer/SKILL.md",
   "bytes": 5847,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-gzaa5nta.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-types.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-types.js"
+   ]
+  }
  },
  {
   "bunfs": "template.html-j5g90adz.txt",
@@ -665,18 +1046,28 @@
   "logical_keys": [
    "template.html"
   ],
-  "referenced_by": [
-   "chunk-gzaa5nta.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-types.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-types.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-z3x847gz.md",
   "path": "skills/artifact-types/report/SKILL.md",
   "bytes": 5714,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-gzaa5nta.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-types.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-types.js"
+   ]
+  }
  },
  {
   "bunfs": "template.html-268183fd.txt.zst",
@@ -685,18 +1076,28 @@
   "logical_keys": [
    "template.html"
   ],
-  "referenced_by": [
-   "chunk-gzaa5nta.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-artifact-types.js"
+   ],
+   "linux": [
+    "skills/skill-artifact-types.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-1755097b.md.zst",
   "path": "skills/claude-api/SKILL.md",
   "bytes": 106554,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-b02de282.md.zst",
@@ -705,9 +1106,14 @@
   "logical_keys": [
    "csharp/claude-api/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "batches-azab338a.md",
@@ -716,9 +1122,14 @@
   "logical_keys": [
    "csharp/claude-api/batches.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "files-api-h174sj6q.md",
@@ -727,9 +1138,14 @@
   "logical_keys": [
    "csharp/claude-api/files-api.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "opentelemetry-a5cc3j2q.md",
@@ -738,9 +1154,14 @@
   "logical_keys": [
    "csharp/claude-api/opentelemetry.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "streaming-h393f7mp.md",
@@ -749,9 +1170,14 @@
   "logical_keys": [
    "csharp/claude-api/streaming.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-use-h7r7zec1.md",
@@ -760,9 +1186,14 @@
   "logical_keys": [
    "csharp/claude-api/tool-use.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "examples-edce50f1.md.zst",
@@ -771,9 +1202,14 @@
   "logical_keys": [
    "curl/examples.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-ffd8c358.md.zst",
@@ -782,9 +1218,14 @@
   "logical_keys": [
    "curl/managed-agents.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-51f12603.md.zst",
@@ -793,9 +1234,14 @@
   "logical_keys": [
    "go/claude-api/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "files-api-9r91z451.md",
@@ -804,9 +1250,14 @@
   "logical_keys": [
    "go/claude-api/files-api.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "opentelemetry-26ah6r5h.md",
@@ -815,9 +1266,14 @@
   "logical_keys": [
    "go/claude-api/opentelemetry.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "streaming-z3xabcf3.md",
@@ -826,9 +1282,14 @@
   "logical_keys": [
    "go/claude-api/streaming.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-use-582a7836.md.zst",
@@ -837,9 +1298,14 @@
   "logical_keys": [
    "go/claude-api/tool-use.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-7a1fe9f0.md.zst",
@@ -848,9 +1314,14 @@
   "logical_keys": [
    "go/managed-agents/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-74fc4077.md.zst",
@@ -859,9 +1330,14 @@
   "logical_keys": [
    "java/claude-api/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "files-api-gjyn8jqt.md",
@@ -870,9 +1346,14 @@
   "logical_keys": [
    "java/claude-api/files-api.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "opentelemetry-n5e363c1.md",
@@ -881,9 +1362,14 @@
   "logical_keys": [
    "java/claude-api/opentelemetry.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "streaming-jhkcqra8.md",
@@ -892,9 +1378,14 @@
   "logical_keys": [
    "java/claude-api/streaming.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-use-0ba43b6b.md.zst",
@@ -903,9 +1394,14 @@
   "logical_keys": [
    "java/claude-api/tool-use.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-f73e91a6.md.zst",
@@ -914,9 +1410,14 @@
   "logical_keys": [
    "java/managed-agents/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-ed5aeh0k.md",
@@ -925,9 +1426,14 @@
   "logical_keys": [
    "php/claude-api/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "batches-fqqffaw8.md",
@@ -936,9 +1442,14 @@
   "logical_keys": [
    "php/claude-api/batches.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "files-api-cbspt4rc.md",
@@ -947,9 +1458,14 @@
   "logical_keys": [
    "php/claude-api/files-api.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "opentelemetry-z2ncngqw.md",
@@ -958,9 +1474,14 @@
   "logical_keys": [
    "php/claude-api/opentelemetry.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "streaming-1ym052nm.md",
@@ -969,9 +1490,14 @@
   "logical_keys": [
    "php/claude-api/streaming.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-use-49b89f92.md.zst",
@@ -980,9 +1506,14 @@
   "logical_keys": [
    "php/claude-api/tool-use.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-29cff9e7.md.zst",
@@ -991,9 +1522,14 @@
   "logical_keys": [
    "php/managed-agents/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-9ed2461c.md.zst",
@@ -1002,9 +1538,14 @@
   "logical_keys": [
    "python/claude-api/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "batches-tmdzz8fs.md",
@@ -1013,9 +1554,14 @@
   "logical_keys": [
    "python/claude-api/batches.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "files-api-0t33d0q1.md",
@@ -1024,9 +1570,14 @@
   "logical_keys": [
    "python/claude-api/files-api.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "opentelemetry-3fdcpdte.md",
@@ -1035,9 +1586,14 @@
   "logical_keys": [
    "python/claude-api/opentelemetry.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "sdk-upgrade-d991ae22.md.zst",
@@ -1046,9 +1602,14 @@
   "logical_keys": [
    "python/claude-api/sdk-upgrade.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "streaming-fbb1ea6d.md.zst",
@@ -1057,9 +1618,14 @@
   "logical_keys": [
    "python/claude-api/streaming.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-use-1b429d2c.md.zst",
@@ -1068,9 +1634,14 @@
   "logical_keys": [
    "python/claude-api/tool-use.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-74802ac4.md.zst",
@@ -1079,9 +1650,14 @@
   "logical_keys": [
    "python/managed-agents/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-qjqxhy5f.md",
@@ -1090,9 +1666,14 @@
   "logical_keys": [
    "ruby/claude-api/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "opentelemetry-y8cvd8yg.md",
@@ -1101,9 +1682,14 @@
   "logical_keys": [
    "ruby/claude-api/opentelemetry.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "streaming-pjtdae2j.md",
@@ -1112,9 +1698,14 @@
   "logical_keys": [
    "ruby/claude-api/streaming.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-use-4gvjkhwj.md",
@@ -1123,9 +1714,14 @@
   "logical_keys": [
    "ruby/claude-api/tool-use.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-d26070a5.md.zst",
@@ -1134,9 +1730,14 @@
   "logical_keys": [
    "ruby/managed-agents/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "admin-api-4b056a98.md.zst",
@@ -1145,9 +1746,14 @@
   "logical_keys": [
    "shared/admin-api.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "agent-design-fa62971c.md.zst",
@@ -1156,9 +1762,14 @@
   "logical_keys": [
    "shared/agent-design.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "anthropic-cli-cd9f2868.md.zst",
@@ -1167,9 +1778,14 @@
   "logical_keys": [
    "shared/anthropic-cli.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "api-version-migration-f8391d66.md.zst",
@@ -1178,9 +1794,14 @@
   "logical_keys": [
    "shared/api-version-migration.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "claude-platform-on-aws-qejnkpky.md",
@@ -1189,9 +1810,14 @@
   "logical_keys": [
    "shared/claude-platform-on-aws.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "cost-optimization-df985707.md.zst",
@@ -1200,9 +1826,14 @@
   "logical_keys": [
    "shared/cost-optimization.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "error-codes-4eee6402.md.zst",
@@ -1211,9 +1842,14 @@
   "logical_keys": [
    "shared/error-codes.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "build-eval-e9acb85b.md.zst",
@@ -1222,9 +1858,14 @@
   "logical_keys": [
    "shared/evals/build-eval.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "cost-hillclimb-be195324.md.zst",
@@ -1233,9 +1874,14 @@
   "logical_keys": [
    "shared/evals/cost-hillclimb.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "eval-audit-d52687b9.md.zst",
@@ -1244,9 +1890,14 @@
   "logical_keys": [
    "shared/evals/eval-audit.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "eval-hillclimb-643520d6.md.zst",
@@ -1255,9 +1906,14 @@
   "logical_keys": [
    "shared/evals/eval-hillclimb.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "SCHEMA-7cf439b0.md.zst",
@@ -1266,9 +1922,14 @@
   "logical_keys": [
    "shared/evals/report/SCHEMA.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "build-report-lite-jwtbvm49.mjs",
@@ -1277,9 +1938,14 @@
   "logical_keys": [
    "shared/evals/report/build-report-lite.mjs"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "runner-scaffold-q2rf9gg9.mjs",
@@ -1288,9 +1954,14 @@
   "logical_keys": [
    "shared/evals/report/runner-scaffold.mjs"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "google-cloud-anthropic-managed-690a44d5.md.zst",
@@ -1299,9 +1970,14 @@
   "logical_keys": [
    "shared/google-cloud-anthropic-managed.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "live-sources-de7dea53.md.zst",
@@ -1310,9 +1986,14 @@
   "logical_keys": [
    "shared/live-sources.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-api-reference-5249320e.md.zst",
@@ -1321,9 +2002,14 @@
   "logical_keys": [
    "shared/managed-agents-api-reference.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-client-patterns-05c93984.md.zst",
@@ -1332,9 +2018,14 @@
   "logical_keys": [
    "shared/managed-agents-client-patterns.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-core-c5fcb8e4.md.zst",
@@ -1343,9 +2034,14 @@
   "logical_keys": [
    "shared/managed-agents-core.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-environments-2c396a08.md.zst",
@@ -1354,9 +2050,14 @@
   "logical_keys": [
    "shared/managed-agents-environments.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-events-98177506.md.zst",
@@ -1365,9 +2066,14 @@
   "logical_keys": [
    "shared/managed-agents-events.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-memory-3a172a12.md.zst",
@@ -1376,9 +2082,14 @@
   "logical_keys": [
    "shared/managed-agents-memory.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-multiagent-2391e3af.md.zst",
@@ -1387,9 +2098,14 @@
   "logical_keys": [
    "shared/managed-agents-multiagent.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-onboarding-from-quickstart-3ad1d0c1.md.zst",
@@ -1398,9 +2114,14 @@
   "logical_keys": [
    "shared/managed-agents-onboarding-from-quickstart.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-onboarding-from-url-10200722.md.zst",
@@ -1409,9 +2130,14 @@
   "logical_keys": [
    "shared/managed-agents-onboarding-from-url.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-onboarding-0b38bb5f.md.zst",
@@ -1420,9 +2146,14 @@
   "logical_keys": [
    "shared/managed-agents-onboarding.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-outcomes-bad5446f.md.zst",
@@ -1431,9 +2162,14 @@
   "logical_keys": [
    "shared/managed-agents-outcomes.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-overview-0d09c3a4.md.zst",
@@ -1442,9 +2178,14 @@
   "logical_keys": [
    "shared/managed-agents-overview.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "bug-hunter-t77r14b6.md",
@@ -1453,9 +2194,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/bug-hunter.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "contract-tracker-56hvtgvv.md",
@@ -1464,9 +2210,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/contract-tracker.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "data-analyst-mftdhs5h.md",
@@ -1475,9 +2226,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/data-analyst.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "deep-researcher-kr59y5yh.md",
@@ -1486,9 +2242,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/deep-researcher.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "explainer-video-maker-sm29032a.md",
@@ -1497,9 +2258,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/explainer-video-maker.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "field-monitor-g66mv9dp.md",
@@ -1508,9 +2274,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/field-monitor.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "incident-commander-ks44x788.md",
@@ -1519,9 +2290,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/incident-commander.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "performance-tuner-6c866b59.md.zst",
@@ -1530,9 +2306,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/performance-tuner.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "sprint-retro-facilitator-tmga9swn.md",
@@ -1541,9 +2322,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/sprint-retro-facilitator.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "structured-extractor-rec1wxww.md",
@@ -1552,9 +2338,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/structured-extractor.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "support-agent-drb7j85g.md",
@@ -1563,9 +2354,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/support-agent.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "support-to-eng-escalator-qqj4c1c7.md",
@@ -1574,9 +2370,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/support-to-eng-escalator.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "watchlist-scanner-kfkrzjrr.md",
@@ -1585,9 +2386,14 @@
   "logical_keys": [
    "shared/managed-agents-quickstarts/watchlist-scanner.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-scheduled-deployments-7c6a1a7e.md.zst",
@@ -1596,9 +2402,14 @@
   "logical_keys": [
    "shared/managed-agents-scheduled-deployments.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-secure-8f1a4973.md.zst",
@@ -1607,9 +2418,14 @@
   "logical_keys": [
    "shared/managed-agents-secure.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-self-hosted-sandboxes-b2d3e09c.md.zst",
@@ -1618,9 +2434,14 @@
   "logical_keys": [
    "shared/managed-agents-self-hosted-sandboxes.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-tools-7cc8a37b.md.zst",
@@ -1629,9 +2450,14 @@
   "logical_keys": [
    "shared/managed-agents-tools.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "managed-agents-webhooks-c9326ad3.md.zst",
@@ -1640,9 +2466,14 @@
   "logical_keys": [
    "shared/managed-agents-webhooks.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "model-migration-7891819d.md.zst",
@@ -1651,9 +2482,14 @@
   "logical_keys": [
    "shared/model-migration.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "models-176e5f7a.md.zst",
@@ -1662,9 +2498,14 @@
   "logical_keys": [
    "shared/models.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "opentelemetry-abc03100.md.zst",
@@ -1673,9 +2514,14 @@
   "logical_keys": [
    "shared/opentelemetry.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "platform-availability-7671ac66.md.zst",
@@ -1684,9 +2530,14 @@
   "logical_keys": [
    "shared/platform-availability.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "preserved-thinking-migration-84258a5d.md.zst",
@@ -1695,9 +2546,14 @@
   "logical_keys": [
    "shared/preserved-thinking-migration.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "causes-dedf5d6e.md.zst",
@@ -1706,9 +2562,14 @@
   "logical_keys": [
    "shared/preserved-thinking-migration/causes.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "drop_block_probe-bcdfaa4d.py.zst",
@@ -1717,9 +2578,14 @@
   "logical_keys": [
    "shared/preserved-thinking-migration/drop_block_probe.py"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "prefix_diff-69deb9d3.py.zst",
@@ -1728,9 +2594,14 @@
   "logical_keys": [
    "shared/preserved-thinking-migration/prefix_diff.py"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "prompt-audit-c0e24c48.md.zst",
@@ -1739,9 +2610,14 @@
   "logical_keys": [
    "shared/prompt-audit.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "prompt-caching-44ffa968.md.zst",
@@ -1750,9 +2626,14 @@
   "logical_keys": [
    "shared/prompt-caching.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "token-counting-znjwtf00.md",
@@ -1761,9 +2642,14 @@
   "logical_keys": [
    "shared/token-counting.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-use-concepts-c2460f49.md.zst",
@@ -1772,9 +2658,14 @@
   "logical_keys": [
    "shared/tool-use-concepts.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-4f0b5262.md.zst",
@@ -1783,9 +2674,14 @@
   "logical_keys": [
    "typescript/claude-api/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "batches-s5ra532b.md",
@@ -1794,9 +2690,14 @@
   "logical_keys": [
    "typescript/claude-api/batches.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "files-api-m5wzhchy.md",
@@ -1805,9 +2706,14 @@
   "logical_keys": [
    "typescript/claude-api/files-api.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "opentelemetry-qf3594ft.md",
@@ -1816,9 +2722,14 @@
   "logical_keys": [
    "typescript/claude-api/opentelemetry.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "streaming-e0e3c46f.md.zst",
@@ -1827,9 +2738,14 @@
   "logical_keys": [
    "typescript/claude-api/streaming.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-use-277d8154.md.zst",
@@ -1838,9 +2754,14 @@
   "logical_keys": [
    "typescript/claude-api/tool-use.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "README-c729f2c2.md.zst",
@@ -1849,18 +2770,28 @@
   "logical_keys": [
    "typescript/managed-agents/README.md"
   ],
-  "referenced_by": [
-   "chunk-t6eehhdn.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-api.js"
+   ],
+   "linux": [
+    "skills/skill-claude-api.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-0vb5xk0r.md",
   "path": "skills/claude-code-docs/SKILL.md",
   "bytes": 7160,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-dehvc445.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ],
+   "linux": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ]
+  }
  },
  {
   "bunfs": "claude-tag-dht2qzjm.md",
@@ -1869,9 +2800,14 @@
   "logical_keys": [
    "references/claude-tag.md"
   ],
-  "referenced_by": [
-   "chunk-dehvc445.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ],
+   "linux": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ]
+  }
  },
  {
   "bunfs": "live-sources-pvws3ftv.md",
@@ -1880,9 +2816,14 @@
   "logical_keys": [
    "references/live-sources.md"
   ],
-  "referenced_by": [
-   "chunk-dehvc445.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ],
+   "linux": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ]
+  }
  },
  {
   "bunfs": "plugin-eval-quickref-e95bcd1b.md.zst",
@@ -1891,11 +2832,18 @@
   "logical_keys": [
    "references/plugin-eval-quickref.md"
   ],
-  "referenced_by": [
-   "chunk-2497tyw9.js",
-   "chunk-92zrg6a8.js",
-   "chunk-dehvc445.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-code-docs.1fbb.js",
+    "skills/skill-claude-code-docs.3989.js",
+    "skills/skill-claude-code-docs.df4f.js"
+   ],
+   "linux": [
+    "skills/skill-claude-code-docs.1fbb.js",
+    "skills/skill-claude-code-docs.3989.js",
+    "skills/skill-claude-code-docs.df4f.js"
+   ]
+  }
  },
  {
   "bunfs": "plugin-eval-8fcbd81e.md.zst",
@@ -1904,9 +2852,14 @@
   "logical_keys": [
    "references/plugin-eval.md"
   ],
-  "referenced_by": [
-   "chunk-dehvc445.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ],
+   "linux": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ]
+  }
  },
  {
   "bunfs": "recent-changes-g7ehqj27.md",
@@ -1915,18 +2868,28 @@
   "logical_keys": [
    "references/recent-changes.md"
   ],
-  "referenced_by": [
-   "chunk-dehvc445.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ],
+   "linux": [
+    "skills/skill-claude-code-docs.df4f.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-a71d0623.md.zst",
   "path": "skills/cowork-plugin/SKILL.md",
   "bytes": 19818,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-gdzen90v.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-cowork-plugin.js"
+   ],
+   "linux": [
+    "skills/skill-cowork-plugin.js"
+   ]
+  }
  },
  {
   "bunfs": "component-schemas-7fabf82f.md.zst",
@@ -1935,9 +2898,14 @@
   "logical_keys": [
    "references/component-schemas.md"
   ],
-  "referenced_by": [
-   "chunk-gdzen90v.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-cowork-plugin.js"
+   ],
+   "linux": [
+    "skills/skill-cowork-plugin.js"
+   ]
+  }
  },
  {
   "bunfs": "example-plugins-9n8v6pe1.md",
@@ -1946,9 +2914,14 @@
   "logical_keys": [
    "references/example-plugins.md"
   ],
-  "referenced_by": [
-   "chunk-gdzen90v.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-cowork-plugin.js"
+   ],
+   "linux": [
+    "skills/skill-cowork-plugin.js"
+   ]
+  }
  },
  {
   "bunfs": "mcp-servers-chmkz450.md",
@@ -1957,9 +2930,14 @@
   "logical_keys": [
    "references/mcp-servers.md"
   ],
-  "referenced_by": [
-   "chunk-gdzen90v.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-cowork-plugin.js"
+   ],
+   "linux": [
+    "skills/skill-cowork-plugin.js"
+   ]
+  }
  },
  {
   "bunfs": "search-strategies-4qam2bp6.md",
@@ -1968,18 +2946,28 @@
   "logical_keys": [
    "references/search-strategies.md"
   ],
-  "referenced_by": [
-   "chunk-gdzen90v.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-cowork-plugin.js"
+   ],
+   "linux": [
+    "skills/skill-cowork-plugin.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-8zd8x5rj.md",
   "path": "skills/dataviz/SKILL.md",
   "bytes": 8037,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-9stddnqh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.d8c8.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.d8c8.js"
+   ]
+  }
  },
  {
   "bunfs": "anti-patterns-c1rmzbdk.md",
@@ -1988,9 +2976,14 @@
   "logical_keys": [
    "references/anti-patterns.md"
   ],
-  "referenced_by": [
-   "chunk-9stddnqh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.d8c8.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.d8c8.js"
+   ]
+  }
  },
  {
   "bunfs": "choosing-a-form-0b6fjqkn.md",
@@ -1999,9 +2992,14 @@
   "logical_keys": [
    "references/choosing-a-form.md"
   ],
-  "referenced_by": [
-   "chunk-9stddnqh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.d8c8.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.d8c8.js"
+   ]
+  }
  },
  {
   "bunfs": "color-formula-22636152.md.zst",
@@ -2010,9 +3008,14 @@
   "logical_keys": [
    "references/color-formula.md"
   ],
-  "referenced_by": [
-   "chunk-9stddnqh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.d8c8.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.d8c8.js"
+   ]
+  }
  },
  {
   "bunfs": "components-vtwwx2hf.md",
@@ -2021,9 +3024,14 @@
   "logical_keys": [
    "references/components.md"
   ],
-  "referenced_by": [
-   "chunk-9stddnqh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.d8c8.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.d8c8.js"
+   ]
+  }
  },
  {
   "bunfs": "interaction-d4xwjtb3.md",
@@ -2032,9 +3040,14 @@
   "logical_keys": [
    "references/interaction.md"
   ],
-  "referenced_by": [
-   "chunk-9stddnqh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.d8c8.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.d8c8.js"
+   ]
+  }
  },
  {
   "bunfs": "marks-and-anatomy-xxwmekt5.md",
@@ -2043,9 +3056,14 @@
   "logical_keys": [
    "references/marks-and-anatomy.md"
   ],
-  "referenced_by": [
-   "chunk-9stddnqh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.d8c8.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.d8c8.js"
+   ]
+  }
  },
  {
   "bunfs": "palette-f0ae74f9.md.zst",
@@ -2054,243 +3072,378 @@
   "logical_keys": [
    "references/palette.md"
   ],
-  "referenced_by": [
-   "chunk-9stddnqh.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.d8c8.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.d8c8.js"
+   ]
+  }
  },
  {
   "bunfs": "validate_palette.js-f945bc6a.txt.zst",
   "path": "skills/dataviz/scripts/validate_palette.js",
   "bytes": 19958,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-5werwkjz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.41e9.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.41e9.js"
+   ]
+  }
  },
  {
   "bunfs": "validate_palette.py-f97163c4.txt.zst",
   "path": "skills/dataviz/scripts/validate_palette.py",
   "bytes": 17684,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-am11zw22.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-dataviz.38d7.js"
+   ],
+   "linux": [
+    "skills/skill-dataviz.38d7.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-b6859017.md.zst",
   "path": "skills/design-sync/SKILL.md",
   "bytes": 28225,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "bundle.mjs-c7466167.txt.zst",
   "path": "skills/design-sync/converter/bundle.mjs",
   "bytes": 15686,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-bkv536mj.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.724f.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.5e09.js"
+   ]
+  }
  },
  {
   "bunfs": "capture.mjs-9e2f2f8b.txt.zst",
   "path": "skills/design-sync/converter/capture.mjs",
   "bytes": 15723,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-r4qg09sx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.75f5.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.8d0e.js"
+   ]
+  }
  },
  {
   "bunfs": "common.mjs-21a45017.txt.zst",
   "path": "skills/design-sync/converter/common.mjs",
   "bytes": 12029,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-mebzwxbz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.aa8f.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.c096.js"
+   ]
+  }
  },
  {
   "bunfs": "compare.mjs-4b810a57.txt.zst",
   "path": "skills/design-sync/converter/compare.mjs",
   "bytes": 46110,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-1nhq0120.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.5e09.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.a7e5.js"
+   ]
+  }
  },
  {
   "bunfs": "css-fallback.mjs-75zwvs8w.txt",
   "path": "skills/design-sync/converter/css-fallback.mjs",
   "bytes": 5462,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "css.mjs-0d869c37.txt.zst",
   "path": "skills/design-sync/converter/css.mjs",
   "bytes": 8432,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-2ew9e1q2.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.9976.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.724f.js"
+   ]
+  }
  },
  {
   "bunfs": "detect.mjs-4ep12q1p.txt",
   "path": "skills/design-sync/converter/detect.mjs",
   "bytes": 1471,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "docs.mjs-0d218ce7.txt.zst",
   "path": "skills/design-sync/converter/docs.mjs",
   "bytes": 13432,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-58evf3f2.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.ee6d.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.aeed.js"
+   ]
+  }
  },
  {
   "bunfs": "dts.mjs-59972049.txt.zst",
   "path": "skills/design-sync/converter/dts.mjs",
   "bytes": 30120,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-55zjsadd.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.05ca.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.8f00.js"
+   ]
+  }
  },
  {
   "bunfs": "emit.mjs-7951914b.txt.zst",
   "path": "skills/design-sync/converter/emit.mjs",
   "bytes": 37817,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-595kt4nc.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.aeed.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.aa8f.js"
+   ]
+  }
  },
  {
   "bunfs": "http-serve.mjs-jyx95bas.txt",
   "path": "skills/design-sync/converter/http-serve.mjs",
   "bytes": 2054,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "package-build.mjs-5c9a3b66.txt.zst",
   "path": "skills/design-sync/converter/package-build.mjs",
   "bytes": 55699,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-554qadnz.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.8d0e.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.6f58.js"
+   ]
+  }
  },
  {
   "bunfs": "package-validate.mjs-3a0e4e2a.txt.zst",
   "path": "skills/design-sync/converter/package-validate.mjs",
   "bytes": 51938,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-rpxp84wj.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.6f58.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.ee6d.js"
+   ]
+  }
  },
  {
   "bunfs": "preview-gen-storybook.mjs-yedg6ts5.txt",
   "path": "skills/design-sync/converter/preview-gen-storybook.mjs",
   "bytes": 6916,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "preview-rebuild.mjs-88e389b0.txt.zst",
   "path": "skills/design-sync/converter/preview-rebuild.mjs",
   "bytes": 16294,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-82jehpd1.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.2ddc.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.75f5.js"
+   ]
+  }
  },
  {
   "bunfs": "previews.mjs-8fcda441.txt.zst",
   "path": "skills/design-sync/converter/previews.mjs",
   "bytes": 9596,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-e1pd33mq.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.3c82.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.2ddc.js"
+   ]
+  }
  },
  {
   "bunfs": "probe.mjs-24tedw09.txt",
   "path": "skills/design-sync/converter/probe.mjs",
   "bytes": 7074,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "remote-diff.mjs-a2ecedbc.txt.zst",
   "path": "skills/design-sync/converter/remote-diff.mjs",
   "bytes": 13764,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-n8abbnmj.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.a7e5.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.192a.js"
+   ]
+  }
  },
  {
   "bunfs": "resync.mjs-4ec2827e.txt.zst",
   "path": "skills/design-sync/converter/resync.mjs",
   "bytes": 23240,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-qg55ftdq.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.8f00.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.05ca.js"
+   ]
+  }
  },
  {
   "bunfs": "source-kit.mjs-51mswsdh.txt",
   "path": "skills/design-sync/converter/source-kit.mjs",
   "bytes": 7500,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "source-storybook.mjs-125aecbd.txt.zst",
   "path": "skills/design-sync/converter/source-storybook.mjs",
   "bytes": 18429,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-bqcyaaqp.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.192a.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.a732.js"
+   ]
+  }
  },
  {
   "bunfs": "story-imports.mjs-c9db5303.txt.zst",
   "path": "skills/design-sync/converter/story-imports.mjs",
   "bytes": 15829,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-2ctmp5v3.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.c096.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.9976.js"
+   ]
+  }
  },
  {
   "bunfs": "sync-hashes.mjs-a0844915.txt.zst",
   "path": "skills/design-sync/converter/sync-hashes.mjs",
   "bytes": 10800,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-j7x6xhsx.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.a732.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.3c82.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-a98d25a2.md.zst",
@@ -2299,9 +3452,14 @@
   "logical_keys": [
    "non-storybook/SKILL.md"
   ],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-76b8b2a9.md.zst",
@@ -2310,18 +3468,28 @@
   "logical_keys": [
    "storybook/SKILL.md"
   ],
-  "referenced_by": [
-   "chunk-ryj60c9z.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-design-sync.cc53.js"
+   ],
+   "linux": [
+    "skills/skill-design-sync.cc53.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-h8rn0xak.md",
   "path": "skills/doc/SKILL.md",
   "bytes": 6409,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-pgcarp1a.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-doc.js"
+   ],
+   "linux": [
+    "skills/skill-doc.js"
+   ]
+  }
  },
  {
   "bunfs": "template.html-101715f9.txt.zst",
@@ -2330,117 +3498,182 @@
   "logical_keys": [
    "template.html"
   ],
-  "referenced_by": [
-   "chunk-pgcarp1a.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-doc.js"
+   ],
+   "linux": [
+    "skills/skill-doc.js"
+   ]
+  }
  },
  {
   "bunfs": "reference-b976cc65.md.zst",
   "path": "skills/plugin-authoring/REFERENCE.md",
   "bytes": 77613,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-jsy60ys5.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-plugin-authoring.js"
+   ],
+   "linux": [
+    "skills/skill-plugin-authoring.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-aa0d9c2d.md.zst",
   "path": "skills/plugin-authoring/SKILL.md",
   "bytes": 8606,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-jsy60ys5.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-plugin-authoring.js"
+   ],
+   "linux": [
+    "skills/skill-plugin-authoring.js"
+   ]
+  }
  },
  {
   "bunfs": "band-state.d.ts-jt01vrsc.txt",
   "path": "skills/plugin-authoring/examples/band-state.d.ts",
   "bytes": 176,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-jsy60ys5.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-plugin-authoring.js"
+   ],
+   "linux": [
+    "skills/skill-plugin-authoring.js"
+   ]
+  }
  },
  {
   "bunfs": "band.tsx-1v7nt0yx.txt",
   "path": "skills/plugin-authoring/examples/band.tsx",
   "bytes": 1447,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-jsy60ys5.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-plugin-authoring.js"
+   ],
+   "linux": [
+    "skills/skill-plugin-authoring.js"
+   ]
+  }
  },
  {
   "bunfs": "pane-state.d.ts-11bz0njc.txt",
   "path": "skills/plugin-authoring/examples/pane-state.d.ts",
   "bytes": 181,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-jsy60ys5.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-plugin-authoring.js"
+   ],
+   "linux": [
+    "skills/skill-plugin-authoring.js"
+   ]
+  }
  },
  {
   "bunfs": "pane.test.tsx-ee55mcxg.txt",
   "path": "skills/plugin-authoring/examples/pane.test.tsx",
   "bytes": 2126,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-jsy60ys5.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-plugin-authoring.js"
+   ],
+   "linux": [
+    "skills/skill-plugin-authoring.js"
+   ]
+  }
  },
  {
   "bunfs": "pane.tsx-mhv389ra.txt",
   "path": "skills/plugin-authoring/examples/pane.tsx",
   "bytes": 1732,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-jsy60ys5.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-plugin-authoring.js"
+   ],
+   "linux": [
+    "skills/skill-plugin-authoring.js"
+   ]
+  }
  },
  {
   "bunfs": "tool-call.ts-tv29hdsd.txt",
   "path": "skills/plugin-authoring/examples/tool-call.ts",
   "bytes": 701,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-jsy60ys5.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-plugin-authoring.js"
+   ],
+   "linux": [
+    "skills/skill-plugin-authoring.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-b0897508.md.zst",
   "path": "skills/prototype/SKILL.md",
   "bytes": 11626,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-c6nmm67v.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-prototype.js"
+   ],
+   "linux": [
+    "skills/skill-prototype.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-e3d212e9.md.zst",
   "path": "skills/run-skill-generator/SKILL.md",
   "bytes": 16553,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-87fk1p13.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run-skill-generator.js"
+   ],
+   "linux": [
+    "skills/skill-run-skill-generator.js"
+   ]
+  }
  },
  {
   "bunfs": "template-eg8004mh.md",
   "path": "skills/run-skill-generator/TEMPLATE.md",
   "bytes": 4096,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-87fk1p13.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run-skill-generator.js"
+   ],
+   "linux": [
+    "skills/skill-run-skill-generator.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-9ddmsnpa.md",
   "path": "skills/run/SKILL.md",
   "bytes": 3591,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-5j21306x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run.js"
+   ],
+   "linux": [
+    "skills/skill-run.js"
+   ]
+  }
  },
  {
   "bunfs": "cli-40vh1c3p.md",
@@ -2449,9 +3682,14 @@
   "logical_keys": [
    "examples/cli.md"
   ],
-  "referenced_by": [
-   "chunk-5j21306x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run.js"
+   ],
+   "linux": [
+    "skills/skill-run.js"
+   ]
+  }
  },
  {
   "bunfs": "electron-8035775b.md.zst",
@@ -2460,9 +3698,14 @@
   "logical_keys": [
    "examples/electron.md"
   ],
-  "referenced_by": [
-   "chunk-5j21306x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run.js"
+   ],
+   "linux": [
+    "skills/skill-run.js"
+   ]
+  }
  },
  {
   "bunfs": "library-yywvyb11.md",
@@ -2471,9 +3714,14 @@
   "logical_keys": [
    "examples/library.md"
   ],
-  "referenced_by": [
-   "chunk-5j21306x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run.js"
+   ],
+   "linux": [
+    "skills/skill-run.js"
+   ]
+  }
  },
  {
   "bunfs": "playwright-g4wwbqeh.md",
@@ -2482,9 +3730,14 @@
   "logical_keys": [
    "examples/playwright.md"
   ],
-  "referenced_by": [
-   "chunk-5j21306x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run.js"
+   ],
+   "linux": [
+    "skills/skill-run.js"
+   ]
+  }
  },
  {
   "bunfs": "server-z4ytjptt.md",
@@ -2493,9 +3746,14 @@
   "logical_keys": [
    "examples/server.md"
   ],
-  "referenced_by": [
-   "chunk-5j21306x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run.js"
+   ],
+   "linux": [
+    "skills/skill-run.js"
+   ]
+  }
  },
  {
   "bunfs": "tui-93b0fcsh.md",
@@ -2504,18 +3762,28 @@
   "logical_keys": [
    "examples/tui.md"
   ],
-  "referenced_by": [
-   "chunk-5j21306x.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-run.js"
+   ],
+   "linux": [
+    "skills/skill-run.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-cf37e4b8.md.zst",
   "path": "skills/verify/SKILL.md",
   "bytes": 12308,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-e1ja5bdc.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-verify.js"
+   ],
+   "linux": [
+    "skills/skill-verify.js"
+   ]
+  }
  },
  {
   "bunfs": "cli-f091jpwx.md",
@@ -2524,9 +3792,14 @@
   "logical_keys": [
    "examples/cli.md"
   ],
-  "referenced_by": [
-   "chunk-e1ja5bdc.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-verify.js"
+   ],
+   "linux": [
+    "skills/skill-verify.js"
+   ]
+  }
  },
  {
   "bunfs": "server-6cyhjq09.md",
@@ -2535,27 +3808,42 @@
   "logical_keys": [
    "examples/server.md"
   ],
-  "referenced_by": [
-   "chunk-e1ja5bdc.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-verify.js"
+   ],
+   "linux": [
+    "skills/skill-verify.js"
+   ]
+  }
  },
  {
   "bunfs": "SKILL-e92179a2.md.zst",
   "path": "skills/workshop/SKILL.md",
   "bytes": 40528,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-gr88cgcj.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-workshop.1cf5.js"
+   ],
+   "linux": [
+    "skills/skill-workshop.1cf5.js"
+   ]
+  }
  },
  {
   "bunfs": "artifact-plan.html-80a36a32.txt.zst",
   "path": "skills/workshop/templates/artifact-plan.html",
   "bytes": 38063,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-0nej4jsc.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-workshop.f9e2.js"
+   ],
+   "linux": [
+    "skills/skill-workshop.f9e2.js"
+   ]
+  }
  },
  {
   "bunfs": "artifact-workshop.html-a79fa64e.txt.zst",
@@ -2564,9 +3852,14 @@
   "logical_keys": [
    "templates/artifact-workshop.html"
   ],
-  "referenced_by": [
-   "chunk-gr88cgcj.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-workshop.1cf5.js"
+   ],
+   "linux": [
+    "skills/skill-workshop.1cf5.js"
+   ]
+  }
  },
  {
   "bunfs": "workshop-page.html-22624ec4.txt.zst",
@@ -2575,35 +3868,55 @@
   "logical_keys": [
    "templates/workshop-page.html"
   ],
-  "referenced_by": [
-   "chunk-gr88cgcj.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "skills/skill-workshop.1cf5.js"
+   ],
+   "linux": [
+    "skills/skill-workshop.1cf5.js"
+   ]
+  }
  },
  {
   "bunfs": "chart.umd.min.js",
   "path": "vendor/chart.umd.min.js",
   "bytes": 208522,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-ahz28xsf.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "shared/load-chart-bundle-js.039c.js"
+   ],
+   "linux": [
+    "shared/load-chart-bundle-js.7ac9.js"
+   ]
+  }
  },
  {
   "bunfs": "hljsBundle.generated.min.js",
   "path": "vendor/hljsBundle.generated.min.js",
   "bytes": 606473,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-w03h7t5s.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "shared/load-chart-bundle-js.7ac9.js"
+   ],
+   "linux": [
+    "shared/load-chart-bundle-js.039c.js"
+   ]
+  }
  },
  {
   "bunfs": "mermaid.min.js",
   "path": "vendor/mermaid.min.js",
   "bytes": 3566058,
   "logical_keys": [],
-  "referenced_by": [
-   "chunk-zsth6qpw.js"
-  ]
+  "referenced_by": {
+   "darwin": [
+    "shared/load-mermaid-bundle-js.js"
+   ],
+   "linux": [
+    "shared/load-mermaid-bundle-js.js"
+   ]
+  }
  }
 ]

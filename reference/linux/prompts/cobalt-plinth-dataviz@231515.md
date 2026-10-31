@@ -1,0 +1,385 @@
+# Update Config Skill
+
+Modify Claude Code configuration by updating settings.json files.
+
+## When Hooks Are Required (Not Memory)
+
+If the user wants something to happen automatically in response to an EVENT, they need a **hook** configured in settings.json. Memory/preferences cannot trigger automated actions.
+
+**These require hooks:**
+- "Before compacting, ask me what to preserve" → PreCompact hook
+- "After writing files, run prettier" → PostToolUse hook with Write|Edit matcher
+- "When I run bash commands, log them" → PreToolUse hook with Bash matcher
+- "Always run tests after code changes" → PostToolUse hook
+
+**Hook events:** PreToolUse, PostToolUse, PreCompact, PostCompact, Stop, Notification, SessionStart
+
+## CRITICAL: Read Before Write
+
+**Always read the existing settings file before making changes.** Merge new settings with existing ones - never replace the entire file.
+
+## CRITICAL: Use AskUserQuestion for Ambiguity
+
+When the user's request is ambiguous, use AskUserQuestion to clarify:
+- Which settings file to modify (user/project/local)
+- Whether to add to existing arrays or replace them
+- Specific values when multiple options exist
+
+## Decision: /config command vs Direct Edit
+
+**Suggest the `/config` slash command** for these simple settings:
+- `theme`, `editorMode`, `verbose`, `model`
+- `language`, `alwaysThinkingEnabled`
+- `permissions.defaultMode`
+
+**Edit settings.json directly** for:
+- Hooks (PreToolUse, PostToolUse, etc.)
+- Complex permission rules (allow/deny arrays)
+- Environment variables
+- MCP server configuration
+- Plugin configuration
+
+## Workflow
+
+1. **Clarify intent** - Ask if the request is ambiguous
+2. **Read existing file** - Use Read tool on the target settings file
+3. **Merge carefully** - Preserve existing settings, especially arrays
+4. **Edit file** - Use Edit tool (if file doesn't exist, ask user to create it first)
+5. **Confirm** - Tell user what was changed
+
+## Merging Arrays (Important!)
+
+When adding to permission arrays or hook arrays, **merge with existing**, don't replace:
+
+**WRONG** (replaces existing permissions):
+```json
+{ "permissions": { "allow": ["Bash(npm *)"] } }
+```
+
+**RIGHT** (preserves existing + adds new):
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",      // existing
+      "Edit(.claude)",    // existing
+      "Bash(npm *)"       // new
+    ]
+  }
+}
+```
+
+## Settings File Locations
+
+Choose the appropriate file based on scope:
+
+| File | Scope | Git | Use For |
+|------|-------|-----|---------|
+| `~/.claude/settings.json` | Global | N/A | Personal preferences for all projects |
+| `.claude/settings.json` | Project | Commit | Team-wide hooks, permissions, plugins |
+| `.claude/settings.local.json` | Project | Gitignore | Personal overrides for this project |
+
+Settings load in order: user → project → local (later overrides earlier).
+
+## Settings Schema Reference
+
+### Permissions
+```json
+{
+  "permissions": {
+    "allow": ["Bash(npm *)", "Edit(.claude)", "Read"],
+    "deny": ["Bash(rm -rf *)"],
+    "ask": ["Edit(//etc/*)"],
+    "defaultMode": "default" | "plan" | "acceptEdits" | "dontAsk",
+    "additionalDirectories": ["/extra/dir"]
+  }
+}
+```
+
+**Permission Rule Syntax:**
+- Exact match: `"Bash(npm run test)"`
+- Prefix wildcard: `"Bash(git *)"` - matches `git`, `git status`, `git commit`, etc.
+- Tool only: `"Read"` - allows all Read operations
+- File paths: `"Edit(src/**)"` - path rules in `permissions` use `Edit(path)` for every file-writing tool (Write, Edit, NotebookEdit) and `Read(path)` for reads. `Write(path)`, `NotebookEdit(path)` and `Glob(path)` rules are not matched by file permission checks. Bare tool names (`"Write"`), deny/ask `Tool(param:value)` rules and hook `if` conditions still use each tool's own name
+
+### Environment Variables
+```json
+{
+  "env": {
+    "DEBUG": "true",
+    "MY_API_KEY": "value"
+  }
+}
+```
+
+### Model & Agent
+```json
+{
+  "model": "sonnet",  // or "fable", "opus", "haiku", full model ID
+  "agent": "agent-name",
+  "alwaysThinkingEnabled": true
+}
+```
+
+### Attribution (Commits & PRs)
+```json
+{
+  "attribution": {
+    "commit": "Custom commit trailer text",
+    "pr": "Custom PR description text"
+  }
+}
+```
+Set `commit` or `pr` to empty string `""` to hide that attribution. To hide all of it, set both to `""` and also set `"sessionUrl": false`. Write this object form, not `"attribution": false`: older Claude Code versions reject true or false here and then skip the whole settings file.
+
+### MCP Server Management
+```json
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": ["server1", "server2"],
+  "disabledMcpjsonServers": ["blocked-server"]
+}
+```
+
+### Plugins
+```json
+{
+  "enabledPlugins": {
+    "formatter@anthropic-tools": true
+  }
+}
+```
+Plugin syntax: `plugin-name@source` where source is `claude-code-marketplace`, `claude-plugins-official`, or `builtin`.
+
+### Other Settings
+- `language`: Preferred response language (e.g., "japanese")
+- `cleanupPeriodDays`: Days to keep transcripts before automatic cleanup (default: 30; minimum 1)
+- `respectGitignore`: Whether to respect .gitignore (default: true)
+- `spinnerTipsEnabled`: Show tips in spinner
+- `timeFormat`: Clock format for times shown in the UI: "auto" (default), "12-hour", "24-hour", "24-hour-utc", or a strftime pattern such as "%H:%M"
+- `timeZone`: IANA time zone for times shown in the UI, e.g. "UTC" (default: system time zone)
+- `spinnerVerbs`: Customize spinner verbs (`{ "mode": "append" | "replace", "verbs": [...] }`)
+- `spinnerTipsOverride`: Override spinner tips (`{ "excludeDefault": true, "tips": ["Custom tip"] }`)
+- `syntaxHighlightingDisabled`: Disable diff highlighting
+
+
+## Hooks Configuration
+
+Hooks run commands at specific points in Claude Code's lifecycle.
+
+### Hook Structure
+```json
+{
+  "hooks": {
+    "EVENT_NAME": [
+      {
+        "matcher": "ToolName|OtherTool",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "your-command-here",
+            "timeout": 60,
+            "statusMessage": "Running..."
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Hook Events
+
+| Event | Matcher | Purpose |
+|-------|---------|---------|
+| PermissionRequest | Tool name | Run before permission prompt |
+| PreToolUse | Tool name | Run before tool, can block |
+| PostToolUse | Tool name | Run after successful tool |
+| PostToolUseFailure | Tool name | Run after tool fails |
+| Notification | Notification type | Run on notifications |
+| Stop | - | Run when Claude stops (including clear, resume, compact) |
+| PreCompact | "manual"/"auto" | Before compaction |
+| PostCompact | "manual"/"auto" | After compaction (receives summary) |
+| UserPromptSubmit | - | When user submits |
+| SessionStart | - | When session starts |
+
+**Common tool matchers:** `Bash`, `Write`, `Edit`, `Read`, `Glob`, `Grep`
+
+### Hook Types
+
+**1. Command Hook** - Runs a shell command:
+```json
+{ "type": "command", "command": "prettier --write $FILE", "timeout": 30 }
+```
+
+**2. Prompt Hook** - Evaluates a condition with LLM:
+```json
+{ "type": "prompt", "prompt": "Is this safe? $ARGUMENTS" }
+```
+Only available for tool events: PreToolUse, PostToolUse, PermissionRequest.
+
+**3. Agent Hook** - Runs an agent with tools:
+```json
+{ "type": "agent", "prompt": "Verify tests pass: $ARGUMENTS" }
+```
+Only available for tool events: PreToolUse, PostToolUse, PermissionRequest.
+
+### Hook Input (stdin JSON)
+```json
+{
+  "session_id": "abc123",
+  "tool_name": "Write",
+  "tool_input": { "file_path": "/path/to/file.txt", "content": "..." },
+  "tool_response": { "success": true }  // PostToolUse only
+}
+```
+
+### Hook JSON Output
+
+Hooks can return JSON to control behavior:
+
+```json
+{
+  "systemMessage": "Warning shown to user in UI",
+  "continue": false,
+  "stopReason": "Message shown when blocking",
+  "suppressOutput": false,
+  "decision": "block",
+  "reason": "Explanation for decision",
+  "hookSpecificOutput": {
+    "hookEventName": "PostToolUse",
+    "additionalContext": "Context injected back to model"
+  }
+}
+```
+
+**Fields:**
+- `systemMessage` - Display a message to the user (all hooks)
+- `continue` - Set to `false` to block/stop (default: true)
+- `stopReason` - Message shown when `continue` is false
+- `suppressOutput` - Hide stdout from transcript (default: false)
+- `decision` - "block" for PostToolUse/Stop/UserPromptSubmit hooks (deprecated for PreToolUse, use hookSpecificOutput.permissionDecision instead)
+- `reason` - Explanation for decision
+- `hookSpecificOutput` - Event-specific output (must include `hookEventName`):
+  - `additionalContext` - Text injected into model context
+  - `permissionDecision` - "allow", "deny", or "ask" (PreToolUse only)
+  - `permissionDecisionReason` - Reason for the permission decision (PreToolUse only)
+  - `updatedInput` - Modified tool input (PreToolUse only)
+
+### Common Patterns
+
+**Auto-format after writes:**
+```json
+{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Write|Edit",
+      "hooks": [{
+        "type": "command",
+        "command": "jq -r '.tool_response.filePath // .tool_input.file_path' | { read -r f; prettier --write \"$f\"; } 2>/dev/null || true"
+      }]
+    }]
+  }
+}
+```
+
+**Log all bash commands:**
+```json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Bash",
+      "hooks": [{
+        "type": "command",
+        "command": "jq -r '.tool_input.command' >> ~/.claude/bash-log.txt"
+      }]
+    }]
+  }
+}
+```
+
+**Stop hook that displays message to user:**
+
+Command must output JSON with `systemMessage` field:
+```bash
+# Example command that outputs: {"systemMessage": "Session complete!"}
+echo '{"systemMessage": "Session complete!"}'
+```
+
+**Run tests after code changes:**
+```json
+{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Write|Edit",
+      "hooks": [{
+        "type": "command",
+        "command": "jq -r '.tool_input.file_path // .tool_response.filePath' | grep -E '\\.(ts|js)$' && npm test || true"
+      }]
+    }]
+  }
+}
+```
+
+
+${…}
+
+## Example Workflows
+
+### Adding a Hook
+
+User: "Format my code after Claude writes it"
+
+1. **Clarify**: Which formatter? (prettier, gofmt, etc.)
+2. **Read**: `.claude/settings.json` (or create if missing)
+3. **Merge**: Add to existing hooks, don't replace
+4. **Result**:
+```json
+{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Write|Edit",
+      "hooks": [{
+        "type": "command",
+        "command": "jq -r '.tool_response.filePath // .tool_input.file_path' | { read -r f; prettier --write \"$f\"; } 2>/dev/null || true"
+      }]
+    }]
+  }
+}
+```
+
+### Adding Permissions
+
+User: "Allow npm commands without prompting"
+
+1. **Read**: Existing permissions
+2. **Merge**: Add `Bash(npm *)` to allow array
+3. **Result**: Combined with existing allows
+
+### Environment Variables
+
+User: "Set DEBUG=true"
+
+1. **Decide**: User settings (global) or project settings?
+2. **Read**: Target file
+3. **Merge**: Add to env object
+```json
+{ "env": { "DEBUG": "true" } }
+```
+
+## Common Mistakes to Avoid
+
+1. **Replacing instead of merging** - Always preserve existing settings
+2. **Wrong file** - Ask user if scope is unclear
+3. **Invalid JSON** - Validate syntax after changes
+4. **Forgetting to read first** - Always read before write
+
+## Troubleshooting Hooks
+
+If a hook isn't running:
+1. **Check the settings file** - Read ~/.claude/settings.json or .claude/settings.json
+2. **Verify JSON syntax** - Invalid JSON silently fails
+3. **Check the matcher** - Does it match the tool name? (e.g., "Bash", "Write", "Edit")
+4. **Check hook type** - Is it "command", "prompt", or "agent"?
+5. **Test the command** - Run the hook command manually to see if it works
+6. **Use --debug** - Run `claude --debug` to see hook execution logs

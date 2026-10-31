@@ -1,0 +1,16 @@
+// darwin/vendor/react/chunk-40234545.js — Claude Code 2.1.310（darwin）模块 chunk-f790ajz4.js
+var v = Symbol.for("react.transitional.element"), x = Symbol.for("react.fragment");
+function k(o, t, s) {
+  var l = null;
+  if (s !== void 0 && (l = "" + s), t.key !== void 0 && (l = "" + t.key), "key" in t) {
+    s = {};
+    for (var E in t) E !== "key" && (s[E] = t[E]);
+  } else s = t;
+  return t = s.ref, { $$typeof: v, type: o, key: l, ref: t !== void 0 ? t : null, props: s };
+}
+var Q = x, e = k, r = k;
+export {
+  Q,
+  e,
+  r
+};

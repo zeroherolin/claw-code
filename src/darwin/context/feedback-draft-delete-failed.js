@@ -1,0 +1,140 @@
+// darwin/context/feedback-draft-delete-failed.js — Claude Code 2.1.310（darwin）模块 chunk-1syaxz4c.js
+import { V } from "./not-admin-owned.js";
+import { S, c, ce } from "../agents/third-party.js";
+import { Gy, ga, qo, MR, t } from "../fs/gitlab-runner-authentication-token.js";
+import { I } from "../shared/chunk-d2c47492.js";
+import { i } from "../shared/environment.js";
+import { a } from "../telemetry/chunk-9097a12b.js";
+import { g, m } from "../telemetry/chunk-9d6962d2.js";
+import { $oe } from "../settings/global-config-and-gates.js";
+import { Hre } from "../api/anthropic-client.js";
+import { mle, wft, oje, WA } from "../core/conversation-engine.js";
+import { sPe, k5t, C5t, ORt, MRt, iPe, rpr, aPe, spr, T5t } from "./trailing-api-error-notice-skipped.js";
+import { Lyr, Nyr, sXt, Fyr, lIe, $yr, Uyr, Adt, rhs, ohs, shs, Byr, Yfe, yio, jyr, DMn, mIt, LMn } from "../tools/worktree-entered-existing.js";
+import { WX, xwe } from "./api-request-blob.js";
+import { _e } from "../shared/chunk-86ecf3aa.js";
+var H = 65536;
+function J(e) {
+  return Buffer.byteLength(ga(ga(e)).slice(1, -1));
+}
+function q(e) {
+  let r = ga(e).slice(1, -1);
+  return Buffer.byteLength(ga(r).slice(1, -1));
+}
+function x(e) {
+  let r = rpr(e);
+  if (r <= iPe) return { payload: e, trim: null };
+  using h = Gy`fitFeedbackPayloadToBudget(${r})`;
+  let u = r - (iPe - H), s = e.transcript.map((_) => J(_) + 1), y = s.reduce((_, b) => _ + b, 0), w = e.rawTranscriptJsonl === void 0 ? 0 : q(e.rawTranscriptJsonl), M = u <= y ? y - u : Math.max(0, y - Math.max(0, u - w)), { start: T, keptBytes: k, oversized: f } = spr(s, M), l = e.transcript.slice(T), D = f.size === 0 ? l : l.filter((_, b) => !f.has(T + b)), v = u - (y - k), d = e.rawTranscriptJsonl, R = d === void 0 ? "absent" : "untouched";
+  if (v > 0 && d !== void 0) {
+    let _ = w - v;
+    if (_ <= 0) d = void 0, R = "omitted";
+    else {
+      let b = d.split(`
+`), C = b.map((j) => q(j + `
+`)), { start: o, oversized: B } = spr(C, _), L = b.slice(o), E = (B.size === 0 ? L : L.filter((j, O) => !B.has(o + O))).join(`
+`);
+      if (E === "") d = void 0, R = "omitted";
+      else d = E, R = "reduced";
+    }
+  }
+  let n = { keptMessageCount: D.length, totalMessageCount: e.transcript.length, oversizedMessageCount: f.size, rawTail: R, rawTailKeptBytes: d === void 0 ? 0 : Buffer.byteLength(d) }, F = K(n);
+  if (F === null) return { payload: e, trim: null };
+  let { rawTranscriptJsonl: P, ...z } = e, A = { ...z, message_count: D.length, description: `${e.description}
+${F}`, transcript: D, ...d !== void 0 && { rawTranscriptJsonl: d } }, p = rpr(A);
+  if (p > iPe) t(`fitFeedbackPayloadToBudget: still ${p} bytes after trim (budget ${iPe})`, { level: "error" });
+  return { payload: A, trim: n };
+}
+function K(e) {
+  let r = [];
+  if (e.keptMessageCount < e.totalMessageCount) r.push(`kept ${e.keptMessageCount} of ${e.totalMessageCount} transcript messages (newest kept first)`);
+  if (e.rawTail === "reduced") r.push(`kept ${Math.max(1, Math.round(e.rawTailKeptBytes / 1024))} KiB of the raw session log (newest kept first)`);
+  else if (e.rawTail === "omitted") r.push("omitted the raw session log");
+  if (r.length === 0) return null;
+  return `transcript_truncated: ${r.join("; ")} (trimmed client-side to fit the upload size limit)`;
+}
+function W(e, r = "panel") {
+  let h = Adt(e.request_ids), u = Uyr(e.area), s = rhs(e.failure_mode), y = ohs(e.task_category), w = Byr(e.effort), M = shs(e.thinking_type), T = Yfe(e.thinking_budget), k = Yfe(e.message_count), f = Yfe(e.assistant_turn_count), l = Yfe(e.subagent_count);
+  return [`[${e.type}] ${sXt(e.title)}`, "", Fyr(e.details), "", "---", r === "card_send_as_is" ? "Drafted by Claude via the SendFeedback tool; approved by the user from the above-prompt card without full review." : "Drafted by Claude via the SendFeedback tool; reviewed and approved by the user before sending.", `trigger: ${e.trigger}`, ...u !== void 0 ? [`area: ${u}`] : [], ...s !== void 0 ? [`failure_mode: ${s}`] : [], ...y !== void 0 ? [`task_category: ${y}`] : [], `draft_id: ${e.draft_id}`, `drafted_at: ${e.created_at}`, `source_session_id: ${e.source_session_id}`, `model: ${$yr(e.model)}`, `cli_version: ${lIe(e.cli_version, Lyr)}`, `os: ${lIe(e.os, Nyr)}`, ...w !== void 0 ? [`effort: ${w}`] : [], ...M !== void 0 ? [`thinking: ${M}${T !== void 0 ? ` (budget ${T})` : ""}`] : [], ...f !== void 0 ? [`turns: ${f} assistant${k !== void 0 ? ` / ${k} messages` : ""}${l !== void 0 && l > 0 ? `, ${l} ${I(l, "subagent")}` : ""}`] : [], ...h.length > 0 ? [`request_ids: ${h.join(", ")}`] : []].join(`
+`);
+}
+function Y(e) {
+  let r = [];
+  using h = Gy`parseDraftTranscriptMessages(${e.length})`;
+  for (let u of e.split(`
+`)) {
+    if (!u) continue;
+    let s;
+    try {
+      s = qo(u);
+    } catch {
+      continue;
+    }
+    if (typeof s !== "object" || s === null) continue;
+    if (s.type !== "user" && s.type !== "assistant") continue;
+    if (typeof s.uuid !== "string" || typeof s.timestamp !== "string" || s.isSidechain === true || !s.message) continue;
+    r.push(s.type === "user" ? { type: "user", uuid: s.uuid, timestamp: s.timestamp, message: s.message, ...s.isMeta === true && { isMeta: true }, ...s.toolUseResult !== void 0 && { toolUseResult: s.toolUseResult }, ...s.isCompactSummary === true && { isCompactSummary: true }, ...s.repeatsCompactSummary === true && { repeatsCompactSummary: true } } : { type: "assistant", uuid: s.uuid, timestamp: s.timestamp, message: s.message, requestId: s.requestId });
+  }
+  return r;
+}
+var N = "Feedback payload too large. Try again without the transcript, or shorten the details.";
+async function _lt({ draft: e, includeTranscript: r, currentSessionMessages: h, surface: u = "cli", via: s = "panel", signal: y, storageV5: w, credentials: M, host: T }) {
+  let k = e.source_session_id === V(), f = [], l;
+  if (r && e.transcript_ref) {
+    let p = await yio(e);
+    if (k) {
+      if (f = WA(WX(h, { host: T })), p !== null) try {
+        let { content: _, bytesRead: b, bytesTotal: C } = await MR(p, MRt), o = _;
+        if (b < C) o = o.slice(o.indexOf(`
+`) + 1);
+        if (mle(o)) t("rawTranscriptJsonl withheld from feedback draft submit: contains_3p_transcript_markers");
+        else l = xwe(oje(o), { host: T }).jsonl;
+      } catch {
+      }
+    } else if (p !== null) try {
+      let { content: _, bytesRead: b, bytesTotal: C } = await MR(p, MRt), o = _;
+      if (b < C) o = o.slice(o.indexOf(`
+`) + 1);
+      if (!jyr(o, e)) t("draft transcript withheld from feedback submit: identity_not_corroborated");
+      else {
+        let B = Y(o);
+        if (wft(B)) t("draft transcript withheld from feedback submit: contains_3p_transcript_markers");
+        else f = WX(B, { host: void 0 });
+        if (mle(o)) t("rawTranscriptJsonl withheld from feedback draft submit: contains_3p_transcript_markers");
+        else l = xwe(oje(o), { host: void 0 }).jsonl;
+      }
+    } catch {
+    }
+  }
+  let D = Adt(e.request_ids).at(-1) ?? null, v = { latestAssistantMessageId: D, latestAssistantAPIMessageId: null, lastInterruptedAssistantAPIMessageId: null, message_count: f.length, datetime: (/* @__PURE__ */ new Date()).toISOString(), description: W(e, s), surface: u, platform: i.platform, gitRepo: false, commitSha: null, version: e.cli_version, transcript: f, ...l && { rawTranscriptJsonl: l } }, { payload: d, trim: R } = x(v), n = await T5t(d, y, void 0, M);
+  if (n.success) {
+    try {
+      await DMn(e.draft_id, w);
+    } catch (p) {
+      t(`feedbackDrafts: post-submit draft delete failed: ${p instanceof Error ? p.name : "unknown"}`, { level: "error" }), a("tengu_feedback_draft_delete_failed", { phase: S("post_submit") });
+    }
+    if (k) LMn();
+    if (s !== "card_send_as_is") mIt(e.draft_id);
+    return a("tengu_feedback_draft_submitted", { type: c(e.type), trigger: c(e.trigger), failure_mode: ce(e.failure_mode), task_category: ce(e.task_category), transcript_included: d.transcript.length > 0 || d.rawTranscriptJsonl ? S("true") : S("false"), transcript_trimmed: R !== null ? S("true") : S("false"), transcript_requested: r ? S("true") : S("false"), transcript_available: e.transcriptAvailable ? S("true") : S("false"), from_this_session: k ? S("true") : S("false"), feedback_id: _e(n.feedbackId), last_request_id: _e(D) }), g("feedback_draft_submit"), { success: true, feedbackId: n.feedbackId };
+  }
+  m("feedback_draft_submit", n.failureReason ?? "network_error", { from_this_session: k ? S("true") : S("false") });
+  let F = k5t(n);
+  if (F !== void 0) return { success: false, error: F, orgRefusalReason: sPe(n) };
+  if (n.failureReason === "auth_error") return { success: false, error: !$oe().error && aPe() || "Couldn't send feedback: not signed in. Run /login, then retry." };
+  if (n.payloadTooLarge) return { success: false, error: N, payloadTooLarge: true };
+  if (n.failureReason === "policy_blocked") return { success: false, error: Hre() ?? "Feedback is disabled by your organization's policy." };
+  let P = C5t(n);
+  if (P !== void 0) return { success: false, error: `${P} The draft is still queued.` };
+  let z = ORt(n) ?? (n.failureReason === "timeout" ? " (request timed out)" : " (couldn't reach the service)"), A = n.refusal?.kind === "other" ? "" : " Try again later.";
+  return { success: false, error: `Couldn't send feedback${z}. The draft is still queued.${A}` };
+}
+async function l8t(e, r, h) {
+  let u = await DMn(e.draft_id, h);
+  if (mIt(e.draft_id), !u) return;
+  if (e.source_session_id === V()) LMn();
+  a("tengu_feedback_draft_discarded", { type: c(e.type), trigger: c(e.trigger), discarded_via: c(r) });
+}
+export {
+  _lt,
+  l8t
+};

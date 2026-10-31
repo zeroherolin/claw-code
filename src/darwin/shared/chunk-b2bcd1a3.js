@@ -1,0 +1,16 @@
+// darwin/shared/chunk-b2bcd1a3.js — Claude Code 2.1.310（darwin）模块 chunk-85b0dqn6.js
+import { Ie } from "../plugins/chunk-c198f87f.js";
+import { utr } from "./chunk-23ad546c.js";
+import { PG } from "./chunk-7c8c6c5a.js";
+import { to } from "./chunk-499997af.js";
+var EUr = to();
+function gu(o) {
+  let t = Ie().admissionText;
+  if ((o.judgedUnder ?? null) === t) return true;
+  let r = o.args.pluginStorageId;
+  return PG(r) || !utr(r, EUr.get()?.() ?? null);
+}
+export {
+  EUr,
+  gu
+};

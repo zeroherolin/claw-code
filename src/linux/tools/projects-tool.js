@@ -1,0 +1,1097 @@
+// linux/tools/projects-tool.js — Claude Code 2.1.310（linux）模块 chunk-7v6e212y.js
+import { Kt } from "../shared/chunk-3b9c376b.js";
+import "../fs/async-hooks.93b1.js";
+import { L, Y_, nt, U, ke, ci, WSe, J } from "../context/not-admin-owned.js";
+import "../fs/chunk-86a4e44e.js";
+import { c, ce } from "../agents/third-party.js";
+import { Ye, R, d, E, Er, EA } from "../telemetry/anthropic-workspace-id.js";
+import { si } from "../shared/chunk-57ff8cc1.js";
+import "../fs/node-modules.js";
+import "../shared/chunk-37dd5dd4.js";
+import { a } from "../telemetry/chunk-9097a12b.js";
+import { g, f } from "../telemetry/chunk-9d6962d2.js";
+import { _, t } from "../fs/gitlab-runner-authentication-token.js";
+import "../shared/async-hooks.9e79.js";
+import "../models/claude-3-5-sonnet.js";
+import "../shared/chunk-0870a9b4.js";
+import { i } from "../shared/environment.js";
+import "../auth/oauth-2025-04-20.js";
+import "../shared/chunk-50219e50.js";
+import "../fs/backed-up.js";
+import { Ze, TSe } from "../shared/chunk-d2c47492.js";
+import "../artifacts/cowritten-artifact-html.js";
+import "../fs/chunk-ce5d00cd.js";
+import "../shared/chunk-de56f88d.js";
+import { L8e } from "../fs/not-owned.js";
+import { Ar, k, Wn } from "../settings/global-config-and-gates.js";
+import { PI, d6, AM, Dfe } from "../git/utf-8.js";
+import "../artifacts/chunk-a6c9d164.js";
+import "../shared/async-hooks.5238.js";
+import "../context/tool-cgroup-exclude-classes.js";
+import "../shared/chunk-8eee6836.js";
+import "../git/utf8-keep-bom.js";
+import "../shell/chunk-fea9c492.js";
+import "../git/chunk-c16cb6b4.js";
+import "../shared/chunk-4563156b.js";
+import "../shared/chunk-d4196a83.js";
+import { sP } from "../shell/chunk-8eebd6c6.js";
+import "../context/utf-8.js";
+import { Dn } from "../fs/utf-8.8f8e.js";
+import "../fs/tempdir-owner-mismatch.js";
+import "../fs/utf-8.aa9a.js";
+import "../fs/async-hooks.7959.js";
+import "../plugins/chunk-0a4c51cf.js";
+import { ot } from "../fs/chunk-86be9585.js";
+import { p } from "../shared/chunk-2fe3b2b7.js";
+import { __ } from "../remote/local-agent.js";
+import "../mcp/toolbox-mcp-server-id.js";
+import "../mcp/claude-browser.js";
+import "../cli/chunk-af2447be.js";
+import "../remote/self-hosted.js";
+import "../context/fetch-project-timeline.js";
+import "../shared/chunk-1b1c4439.js";
+import "../shell/invalid-type.js";
+import "../settings/workflow-launch-exec.js";
+import "../fs/chunk-475c6783.js";
+import "../permissions/classifier-transcript-too-long.js";
+import "../permissions/quota-auto-resume-disabled.js";
+import "../terminal/chunk-3ca478a4.js";
+import "../mcp/chunk-0e2a1db6.js";
+import "../mcp/always-allow.js";
+import "../plugins/skills-dir.js";
+import "../fs/chunk-9b7a3f1c.js";
+import "../settings/settings-auto-mode-rules-untrusted-source-ignored.js";
+import "../remote/moved-directory.js";
+import "../mcp/init-function-end.js";
+import "../models/total-tokens-reminder.js";
+import "../shell/spawn-error.js";
+import "../terminal/xterm-ghostty.js";
+import { Be } from "../mcp/allowed-warning.js";
+import "../fs/content-encoding.js";
+import "../auth/descriptor-direct.js";
+import "../fs/ca-certs-load.js";
+import "../shared/chunk-f98598c3.js";
+import "../auth/permission-error.js";
+import "../auth/claude-code-user.js";
+import "../shell/find-generic-password.js";
+import "../auth/profile-explicit.js";
+import "../api/anthropic-client.js";
+import "../shared/async-hooks.b037.js";
+import "../fs/chunk-b6c2193e.js";
+import "../fs/chunk-21654dda.js";
+import "../shared/chunk-3a99f127.js";
+import "../auth/auth-launcher-host-login.js";
+import "../permissions/turn-abort.js";
+import "../settings/ax-sr-suggestion-nav.js";
+import "../fs/reply-across-default-dirs.js";
+import "../telemetry/chunk-b109a1d6.js";
+import "../telemetry/chunk-addb1ac7.js";
+import "../agents/chunk-44729602.js";
+import "../git/get-url.js";
+import "../shared/chunk-dda594a8.js";
+import "../shared/chunk-46ffe22f.js";
+import { ube } from "../artifacts/cobalt-plinth-lovage.js";
+import "../computer-use/chunk-217335d0.js";
+import "../workflows/chunk-a1595c7e.js";
+import "../agents/session-stable-address.js";
+import "../agents/in-process-teammate.32be.js";
+import "../shared/chunk-537f65d6.js";
+import "../git/ssh-placeholder.js";
+import "../auth/claude-desktop-3p.js";
+import { C7, on, Sp } from "../auth/env-quad.js";
+import { jWo, WWo } from "../shared/project-docs.js";
+import "../agents/chunk-5531d42a.js";
+import { KY, yWo, _Wo, JAe, Rt, tn } from "../context/tool-result-clearing-after-idle-server-report.js";
+import "../models/model-capability-off-from-client-data.js";
+import { UHe, oce, Cy, U9n, b2e, S2e } from "../context/org-memory-writes-setting-changed.js";
+import "../git/chunk-86d270cc.js";
+import "../fs/files-directories.js";
+import "../context/chunk-4d91d9f0.js";
+import "../mcp/tool-search-unsupported-models.js";
+import "../settings/built-in.js";
+import "../settings/chunk-10c0eeb6.js";
+import "../plugins/chunk-c198f87f.js";
+import "../plugins/not-found.js";
+import "../shared/chunk-16f9cd1b.js";
+import "../shared/chunk-53e41b56.js";
+import "../plugins/entry-refused.js";
+import "../permissions/frontmatter-grant-withheld.js";
+import "../agents/in-process-teammate.9720.js";
+import "../shell/chunk-fc32a44c.js";
+import "../vendor/highlight/file-path.js";
+import "./device-session-limit.js";
+import "../permissions/peer-too-old.js";
+import "../remote/live-shared-artifact-sensitive-delta.js";
+import "../shared/chunk-e1c578e0.js";
+import "../permissions/chunk-42a3174d.js";
+import "../context/stream-no-events-fallback-warning.js";
+import "../context/tool-use-id.js";
+import "../artifacts/same-account.js";
+import "../artifacts/read-shared-artifact.js";
+import "../models/ccr-unsupported-default-mode-ignored.js";
+import "../settings/chunk-9121eb73.js";
+import "../workflows/managed-settings.js";
+import "../permissions/max-thinking-tokens.js";
+import "../fs/cowork-plugins.js";
+import { EU } from "../artifacts/utf-8.js";
+import "../fs/redirected-statement.js";
+import "../shell/tree-sitter-parse-abort.js";
+import "../shared/chunk-22f77b65.js";
+import "./structured-output-tool.js";
+import "../permissions/bot-protected-tengu-atomic-magpie.js";
+import "../remote/chunk-7e620e0d.js";
+import "../shared/chunk-653a48cc.js";
+import "../mcp/chunk-7d9731c1.js";
+import "../mcp/chunk-4d80773e.js";
+import "../fs/chunk-0b1060fd.js";
+import "../shell/sandbox.js";
+import "../shared/proxy-authorization.js";
+import "../fs/unadoptable-session-id.js";
+import "../shell/async-hooks.js";
+import { l1t, Run, kHe, __t } from "../fs/file-upload.js";
+import "../settings/non-string-value.js";
+import "../shared/chunk-471874cc.js";
+import "../fs/attach-journal.js";
+import "../shared/chunk-de64395b.js";
+import "../telemetry/flag-off.js";
+import "../mcp/mcp-drive-file-reference-upload.js";
+import { cb, YGe } from "../shared/chunk-f0176518.js";
+import "../telemetry/reactive-compact-remote.js";
+import { fpt, _c, SK, mHr } from "../core/conversation-engine.js";
+import "../shared/chunk-6ea667ee.js";
+import "../agents/chunk-25f20db5.js";
+import { ks } from "../context/projects-thread-reply-lead-killswitch.js";
+import "../shared/forwarded-user-turns.js";
+import "../core/system-prompt-blocks.js";
+import "../settings/attribution-project.js";
+import "../context/team-memory-sync.js";
+import "../shared/chunk-4f9a38d5.js";
+import "../telemetry/chunk-cb9c99f9.js";
+import "../shared/chunk-0542336f.js";
+import "../shared/chunk-b5845da6.js";
+import "../remote/bridge-outcome-branch-dropped.js";
+import "../context/account-memory-text-not-identified.js";
+import "../telemetry/service-error-detail-not-plain.js";
+import "../mcp/spawn-to-exec-ms.js";
+import "../shared/chunk-7a8599f4.js";
+import "../vendor/zod/tool-use.js";
+import "./memory-write-tool.js";
+import "../tasks/bridge-ingress-demoted.js";
+import "../shared/file-attachments.js";
+import "../shell/chunk-e0b62862.js";
+import "../shared/chunk-77f14287.js";
+import "../telemetry/harbor-kite-pacing-off.js";
+import "../permissions/subagent-output-flagged.js";
+import "../agents/web-fetch.js";
+import "../telemetry/harbor-kite-win.js";
+import "../telemetry/session-name-uniqueness.js";
+import "../context/chunk-5971c749.js";
+import "../auth/wif-user-oauth-refresh-race-resolved.js";
+import "../telemetry/gzip-request-body-latch-cleared.js";
+import "../shared/chunk-49d7e3e2.js";
+import "../permissions/light-daltonized.js";
+import "../shared/chunk-6adae81c.js";
+import "../shell/content-scan-transient.js";
+import "../telemetry/remote-tool-restart-adoption-unroutable.js";
+import "../auth/allowed-taints-clean.js";
+import "../telemetry/dd-evp-origin-version.js";
+import "../remote/claude-code-error-tracking.js";
+import "../telemetry/focus-events.js";
+import "../fs/ccr-left-running-programs-note.js";
+import "../git/bridge-child-tool-diff.js";
+import "../terminal/wl-copy.js";
+import "../tasks/continued-in.js";
+import "../shared/chunk-b2bcd1a3.js";
+import "../telemetry/chunk-1bb3c64e.js";
+import "../hooks/tool-name.js";
+import "../workflows/chunk-5e65bb82.js";
+import "../commands/claude-code.js";
+import "../plugins/plugin-command-source-refresh.js";
+import "../settings/shared-if-writable.js";
+import "../plugins/chunk-238ac5cd.js";
+import "../context/chunk-a8653d40.js";
+import "../workflows/workflow-size-guideline-change.js";
+import "../mcp/copy-failed.js";
+import "../telemetry/chunk-d4426fa7.js";
+import "../plugins/claudeai-plugins-sync-enabled.js";
+import "../git/config-unreadable.js";
+import "../mcp/third-party.js";
+import "../plugins/plugin-enabled-for-session.js";
+import "../remote/chunk-c3e8b741.js";
+import "../git/plugin-directory-catalog-load.js";
+import "../agents/tool-use-id.js";
+import { bj } from "../telemetry/tab-read-sep.js";
+import "../shared/chunk-b5e358e4.js";
+import "../permissions/caps-lock.js";
+import "../shared/chunk-e9b94e10.js";
+import "../plugins/plugin-function-hooks-pane-ask.js";
+import "../agents/api-system.js";
+import "../shared/too-long.js";
+import "../fs/chunk-dacd9872.js";
+import "../models/auto-mode-config.js";
+import "../shared/chunk-f0d2d1c6.js";
+import "../shared/not-json.js";
+import "../settings/gable-onyx-sluice.js";
+import "../mcp/cobalt-plinth-sedge.js";
+import "../artifacts/artifact-share-status.js";
+import "../shared/chunk-5f244a2f.js";
+import "../shared/network-device.js";
+import "../remote/chunk-8d3e7b64.js";
+import "../shared/chunk-ec79692e.js";
+import "../terminal/cell-segmenter-factory.js";
+import "../shared/chunk-39180da8.js";
+import "../agents/agent-retry-status.js";
+import "../shared/utf-8.js";
+import "../agents/chunk-93a99f2c.js";
+import "../context/envelope-pinned-id.js";
+import "../shared/general-purpose.js";
+import "../agents/swarm-team-file-update.js";
+import "../shared/session-activity-parked-exceeds-refcount.js";
+import "../plugins/unsubscribe-pr-activity.js";
+import "../fs/chunk-fce4a4b4.js";
+import "../settings/settings-change-staged.js";
+import "../remote/bridge-message-received.js";
+import "../remote/chunk-8734517b.js";
+import "./tool-result-persisted.js";
+import "../workflows/workflow-subagent.js";
+import "../telemetry/mcp-sdk-generation.js";
+import "../mcp/claudeai-mcp-eligibility.js";
+import "../mcp/declared-tools-dropped-at-compaction.js";
+import "../telemetry/chunk-164c8a46.js";
+import "../telemetry/binary-content-persisted.js";
+import "../agents/chunk-e7d109ea.js";
+import "../commands/skill-bundled-extract.js";
+import "../telemetry/bridge-resume-respects-local-owner.js";
+import "../auth/policy-limits-principal-changed.js";
+import "../telemetry/keybinding-customization-release.js";
+import "../telemetry/fleet-past-sessions.js";
+import "../permissions/agent-memory.js";
+import "../telemetry/bg-roster-parse-failed.js";
+import "../remote/anthropic-client-request-reason.js";
+import "../git/needs-reply.js";
+import "../permissions/chunk-f7872d86.js";
+import "../shared/chunk-bb143d83.js";
+import "../shell/bridge-folder-already-served.js";
+import "../remote/bridge-project-files-write.js";
+import "../commands/command-web-setup.js";
+import "../telemetry/org-policy-denied.js";
+import "../remote/sessions-elevated-auth-disable-proactive-enrollment.js";
+import "../telemetry/pewter-owl-model.js";
+import "../telemetry/kairos-brief-stop-hook-text.js";
+import "../shared/create-from-type.js";
+import "../fs/utf-8.0ed0.js";
+import "../telemetry/kairos-push-notifications.js";
+import "../shell/chunk-23a29f4d.js";
+import "../context/kairos-cron-durable.js";
+import "../chrome/chrome-open-url.js";
+import "../shared/chunk-e97d1551.js";
+import "../telemetry/chunk-04e1acdf.js";
+import "../shared/chunk-eb4cd166.js";
+import "../git/coordinator-mode-switched.js";
+import "../artifacts/chunk-59598412.js";
+import "../telemetry/image-resize-fallback.js";
+import "../fs/chunk-b6b2e102.js";
+import "../remote/fetch-failed.js";
+import "../shared/chunk-26f5a8ce.js";
+import "../vendor/mcp-sdk/chunk-384e0b2c.js";
+import "../shared/remote-control.js";
+import "../git/git-repository.js";
+import "../ide/gitdir-outside-modules.js";
+import "../git/no-descriptor-listing.js";
+import "../terminal/chunk-4c553df7.js";
+import "../vendor/highlight/plugin-hljs-languages.js";
+import "../design/allow-design-sync.js";
+import "../shared/needs-reconnect.js";
+import "../permissions/needs-reconnect.1db4.js";
+import "../telemetry/tool-result.js";
+import "../permissions/session-inbox.js";
+import "../hooks/plugin-function-hooks-switch-followed.js";
+import "../settings/chunk-ea11cbf9.js";
+import { XX, dco, KUe, wJt, dSs, rSr, b3e, cSs, cco, uSs, uco, fSs, pSs, X2, eOt } from "../context/projects-tool-memory.js";
+import { SJt, nSr, FW, hIe } from "../context/lock-contended.js";
+import { rbr, jDn } from "../hooks/path-rule.js";
+import "../shared/not-regular.js";
+import "../permissions/auto-mode.js";
+import "../shared/action-not-found.4cf4.js";
+import "../shared/chunk-c201e157.js";
+import "../agents/in-process-teammate.b77f.js";
+import "../shared/chunk-1b66b4d6.js";
+import "../agents/chunk-1782da8d.js";
+import "../shared/chunk-ceeef64e.js";
+import "../shared/chunk-ab773be5.js";
+import "../shared/chunk-2c491c49.js";
+import "../agents/chunk-7daf58a0.js";
+import "../shared/chunk-dacc950e.js";
+import "../shared/chunk-2d0a0ef6.js";
+import "../fs/chunk-81d6ccfe.js";
+import "../telemetry/chunk-ce222b3e.js";
+import { h5n } from "../shared/project-read.js";
+import "../telemetry/started-after-init-empty.js";
+import "../shared/chunk-6fb6a920.js";
+import "../ide/needs-auth.js";
+import "../telemetry/chunk-63c0e0aa.js";
+import "../shared/chunk-8485aee7.js";
+import "../shared/chunk-767f1b52.js";
+import "../mcp/chunk-a5cd39f7.js";
+import "../plugins/plugin-remote-fetch.js";
+import "../shared/aarch64-unknown-linux-musl.js";
+import "../permissions/swarm-sandbox-permission-request.js";
+import "../shared/chunk-bfd2df5f.js";
+import "../shared/chunk-052ccb69.js";
+import "../shared/chunk-a2f0327b.js";
+import "../shared/chunk-cbf69fda.js";
+import "../shared/chunk-669ef766.js";
+import "../permissions/not-found.js";
+import "../plugins/chunk-53f86049.js";
+import "../shell/chunk-88b36f19.js";
+import "../shared/chunk-b7346a10.js";
+import "../telemetry/chunk-cbe4ae1f.js";
+import "../shared/chunk-810598ee.js";
+import "../shared/chunk-c60ee8b6.js";
+import "../shared/chunk-b7194706.js";
+import "../shared/chunk-5e774940.js";
+import "../shell/chunk-57b85523.js";
+import "../mcp/mcp-task-worker-wake.js";
+import "../shared/chunk-e30378d4.js";
+import "../shared/chunk-a5f59e6a.js";
+import "../shared/chunk-51932285.js";
+import "../shared/chunk-3484f8f6.js";
+import "../context/session-state-changed.js";
+import "../shared/chunk-82eb5142.js";
+import "../shared/chunk-53dd95bc.js";
+import "../shared/chunk-725c984c.js";
+import "../settings/chunk-b0c789b9.js";
+import "../shared/chunk-a8015993.js";
+import "../shared/chunk-f01c3cc7.js";
+import "../shared/dev-mods.js";
+import "../mcp/mcp-answer-stream-ended.js";
+import "../shared/chunk-9f5e078b.js";
+import "../telemetry/stop-hook-removed.js";
+import "../shared/chunk-fe849e7d.js";
+import "../permissions/chunk-a168e9f4.js";
+import "../git/not-link.js";
+import "../models/fable-5-1-prompt-bundle.js";
+import "../context/other-server.js";
+import "../shared/chunk-c564b685.js";
+import "../agents/chunk-f334f2d3.js";
+import "../shared/chunk-b09058c6.js";
+import "../auth/none-at-claim.js";
+import "../shared/chunk-37f396c1.js";
+import "../shared/chunk-339a284e.js";
+import "../shared/chunk-e9fc3352.js";
+import "../shared/chunk-7e745eb7.js";
+import "../api/control-response.js";
+import "../shared/chunk-aa1a72e9.js";
+import "../hooks/async-hooks.js";
+import "../shared/chunk-3309934d.js";
+import "../shared/chunk-23ad546c.js";
+import "../mcp/chunk-d6e9c05b.js";
+import "../shared/chunk-7c8c6c5a.js";
+import "../shared/chunk-67236fa7.js";
+import "../shared/allow-bundled-skills.js";
+import { qe } from "../shared/allow-large.js";
+import "../shared/chunk-cb8096b1.js";
+import "../shared/chunk-d1292a44.js";
+import "../shared/chunk-6ae01e90.js";
+import "../models/claude-mythos-preview.js";
+import { H } from "../shared/chunk-7027e6d5.js";
+import "../shared/sk-ant-sid.js";
+import { o, v, M, oe, T, u, Ue, Gr, me, B, A } from "../vendor/zod/string-format.js";
+import "../vendor/aws-sdk/chunk-d15f3977.js";
+import "../shared/chunk-cc3baac1.js";
+import "../shared/chunk-1f805b50.js";
+import "../fs/not-utf8.js";
+import "../context/tool-result.js";
+import "../shared/chunk-8bf008d9.js";
+import { Mb, et } from "../shared/chunk-061dbb8e.js";
+import "../shared/chunk-6da6c5a3.js";
+import "../shared/chunk-86ecf3aa.js";
+import { Oxe, Zm } from "../telemetry/chunk-a27d4004.js";
+import { z } from "../shared/chunk-be29de51.js";
+import "../remote/chunk-95151620.js";
+import { ve } from "../shared/chunk-fee3c428.js";
+import { createHash as yt } from "crypto";
+import { constants as pe } from "fs";
+import { open as jt, realpath as de, stat as bt } from "fs/promises";
+import { isAbsolute as ye, join as ne, sep as xe, resolve as ae } from "path";
+var _t = "Note: `original` is not available in this session and was ignored.", pt = "Note: `if_version` is not available in this session and was ignored: this call did not check whether the doc had changed.";
+function Te(e, { originalOffered: n, docVersionsOffered: r }) {
+  if (!H(e)) return null;
+  let s = typeof e.force === "boolean", l = !n && "original" in e, h = !r && "if_version" in e;
+  if (!s && !l && !h) return null;
+  let w = { ...e }, m = [];
+  if (s) delete w.force, m.push("legacy_force");
+  if (l) delete w.original, m.push("original_while_off");
+  if (h) delete w.if_version, m.push("if_version_while_off");
+  let y = [...l && e.original === true ? [_t] : [], ...h ? [pt] : []];
+  return { input: w, shapeClass: m.join("+"), ...y.length > 0 && { resultNote: y.join(`
+`) } };
+}
+var Ee = "tengu_breezy_pelican", mt = 0.16666666666666666, wt = 2e5;
+function Se(e) {
+  let n = (s) => e.some((l) => Rt(l, s));
+  if (!n(qe) || !n(Be) || !gt()) return;
+  let r = n(Ar) ? Ar : "`grep`";
+  return `local_file is for reading only: read the parts you need with ${qe}'s offset and limit, or search it with ${r}. Edits to it never reach the project, and project_write rejects it as local_path. To change the document or make a file from it, run \`cat /path/of/local_file > new-name\` in the working directory, where new-name is a name that no file there has, and work on that file. To save a change, call project_write with the document's path and that file as local_path. If the document is an upload such as a PDF, that saves a new text document and leaves the upload as it is.`;
+}
+function gt() {
+  return k(Ee, null)?.copy_hint === true;
+}
+function Ae({ model: e, configuredWindow: n, messages: r }) {
+  let s = k(Ee, null);
+  if (s?.mode !== "always" && s?.mode !== "after_compaction") return;
+  let l = _c(e), h = SK(l, n);
+  if (!(h > 0) || h > wt) return;
+  if (s.mode === "after_compaction" && !mHr(r)) return;
+  let { fraction: w } = s;
+  return { maxTokens: Math.round(h * (typeof w === "number" && w > 0 && w <= 1 ? w : mt)), bytesPerToken: l.bytesPerToken };
+}
+var le = new nt(() => ({}));
+function Oe() {
+  return le.peek(U())?.host !== void 0;
+}
+function Re(e, n, r, s) {
+  if (n === "") return { inView: true, foundIn: "none" };
+  let l = ks(e), h;
+  if (s !== void 0) {
+    for (let m of l) if (m.type === "assistant" && Array.isArray(m.message.content) && m.message.content.some((y) => y.type === "tool_use" && y.id === s)) {
+      h = m.message.id;
+      break;
+    }
+  }
+  let w = /* @__PURE__ */ new Set();
+  for (let m of l) {
+    if (Y_(m)) continue;
+    if (m.type === "attachment" && m.attachment.type === "project_doc_reads" && !fpt(m) && JAe(m.attachment)?.some((y) => y.read.content === n)) return { inView: true, foundIn: "attached_read" };
+    if (m.type === "assistant" && Array.isArray(m.message.content)) {
+      if (h !== void 0 && m.message.id === h) break;
+      for (let y of m.message.content) {
+        if (y.type !== "tool_use" || !r.includes(y.name)) continue;
+        w.add(y.id);
+        let j = y.input;
+        if (typeof j === "object" && j !== null && "method" in j && j.method === "project_write" && "content" in j && j.content === n) return { inView: true, foundIn: "own_write" };
+      }
+    }
+    if (m.type === "user" && Array.isArray(m.message.content)) for (let y of m.message.content) {
+      if (y.type !== "tool_result" || !w.has(y.tool_use_id) || y.is_error === true || typeof y.content !== "string") continue;
+      let j = ot(Ze(y.content, `
+
+`), false);
+      if (typeof j === "object" && j !== null && "method" in j && j.method === "project_read" && "content" in j && j.content === n) return { inView: true, foundIn: "read_result" };
+    }
+  }
+  return { inView: false, foundIn: "none" };
+}
+var Xe = (e, n) => Ue({ method: B(["project_info", "project_read", "project_search", "project_write", "project_delete", "project_memory_list", "project_memory_read"]), path: o().min(1).max(255).optional().describe('project_read/project_write/project_delete: doc path. project_write: an existing path is replaced in place; a new bare filename (no "/") is namespaced to "claude/<name>". project_memory_read: memory file path as listed by project_memory_list.'), content: o().optional().describe(e), local_path: o().min(1).optional().describe(n), present_to_user: M().optional().describe("project_write: true marks this doc as the file the user needs to see — the deliverable they asked for or must act on. Defaults to false; leave it unset for routine saves, notes, and bulk writes."), if_version: o().optional().describe("project_write to an existing doc: the `version` that came with the copy you worked from (from project_read or project_write). The write is refused if the doc has changed since. Omit for a new doc."), query: o().min(1).optional().describe("project_search: knowledge-base query"), n: v().int().min(1).max(15).optional().describe("project_search: number of hits (default 5)"), original: M().optional().describe("project_read: true saves the original file of a document-kind upload (PDF, docx) to a local file and returns its path, in place of its extracted text. Ignored for text docs and other uploads.") });
+function K() {
+  return cb()?.maxBytes !== 0 && Wn("tengu_mossy_wirth", false);
+}
+var fe = p(() => Xe("project_write: inline doc text. Mutually exclusive with local_path. Use local_path for anything you have on disk.", "project_write: a file inside the working directory to upload. The tool reads, encodes, and uploads directly — contents never enter your context. Mutually exclusive with content.")), _e = p(() => Xe("project_write: inline doc text. Mutually exclusive with local_path.", "project_write: the absolute path of a file that you have read or written in full in this session. Mutually exclusive with content.")), Tt = p(() => fe().omit({ original: true })), Et = p(() => _e().omit({ original: true })), St = p(() => fe().omit({ if_version: true })), vt = p(() => _e().omit({ if_version: true })), kt = p(() => fe().omit({ original: true, if_version: true })), At = p(() => _e().omit({ original: true, if_version: true })), Z = { notice: o().optional() }, Ce = { version: o().optional().describe("@internal Lowercase hex SHA-256 of the UTF-8 bytes of a text doc's whole text. Set only where docVersionsOffered.") }, Ot = p(() => u({ knowledge_size: v(), max_knowledge_size: v() })), xt = p(() => Gr("method", [u({ method: A("project_info"), ...Z, name: o(), description: o(), instructions: o(), docs: T(u({ path: o(), created_at: o().nullable() })), files: T(u({ path: o(), file_kind: o(), created_at: o().nullable() })).optional(), sync_sources: T(u({ type: o().nullable(), config: me(o(), oe()) })).optional(), knowledge: Ot() }), u({ method: A("project_read"), ...Z, path: o(), ...Ce, file_kind: o().optional(), content: o().optional(), local_file: o().optional(), size_bytes: v().optional().describe("@internal Size in UTF-8 bytes of the document's whole text. Set only when the text is in local_file and project_read had a token limit on inline text."), created_at: o().nullable() }), u({ method: A("project_search"), ...Z, rag: M(), hits: T(u({ name: o().optional(), doc_uuid: o().optional(), text: o().optional() })).optional(), docs: T(o()).optional() }), u({ method: A("project_write"), ...Z, path: o(), doc_uuid: o(), ...Ce, replaced: M(), present_to_user: M().optional(), local_path: o().optional() }), u({ method: A("project_delete"), ...Z, path: o(), deleted: M() }), u({ method: A("project_memory_list"), ...Z, files: T(u({ path: o(), size_bytes: v(), updated_at: o().nullable(), truncated: M() })), truncated: M() }), u({ method: A("project_memory_read"), ...Z, path: o(), content: o().optional(), local_file: o().optional(), size_bytes: v(), updated_at: o().nullable(), truncated: M() })])), Ct = { project_info: [], project_read: ["path"], project_search: ["query"], project_write: ["path"], project_delete: ["path"], project_memory_list: [], project_memory_read: ["path"] };
+function It(e) {
+  return e === "project_info" || e === "project_read" || e === "project_search" || e === "project_memory_list" || e === "project_memory_read";
+}
+function Je(e) {
+  let n = ci();
+  if (n !== null) return ae(n, e);
+  return ye(e) ? ae(e) : e;
+}
+function he(e) {
+  switch (e?.method) {
+    case "project_info":
+      return "Read project info";
+    case "project_read":
+      return e.path ? `Read ${e.path}` : "Read project doc";
+    case "project_search":
+      return e.query ? `Search "${e.query}"` : "Search project";
+    case "project_write": {
+      let n = e.path ?? "?", r = e.local_path ? ` from ${Je(e.local_path)}` : "";
+      return `Write ${n}${r}`;
+    }
+    case "project_delete":
+      return e.path ? `Delete ${e.path}` : "Delete project doc";
+    case "project_memory_list":
+      return "List project memory";
+    case "project_memory_read":
+      return e.path ? `Read memory ${e.path}` : "Read project memory file";
+    default:
+      return "Project";
+  }
+}
+function Nt(e) {
+  switch (e) {
+    case "custom_client":
+      return 'The claude.ai login uses a custom OAuth client, which cannot be granted project scopes. Run /login with the standard "Claude account with subscription" flow to use Projects.';
+    case "save_failed":
+      return "Could not save the refreshed claude.ai credentials (secure storage was unavailable), and the server has already consumed the stored ones. Run /login to reconnect, then retry.";
+    case "no_token":
+      return 'Run /login and select "Claude account with subscription", then retry — the "Anthropic Console account" option does not provide claude.ai credentials.';
+    case "no_refresh":
+      return "The claude.ai login cannot be refreshed in this session — the token was supplied via CLAUDE_CODE_OAUTH_TOKEN, or its refresh token has expired or was revoked. Run /login to reconnect.";
+    case "expand_failed":
+      return 'Could not add project scopes to the token. Run /login, select "Claude account with subscription", and retry.';
+    case "lock_contended":
+      return "Another Claude Code process is refreshing the OAuth token. Retry in a moment.";
+    case "wrong_provider":
+      return "Projects is only available with claude.ai authentication. It is not supported through Bedrock, Vertex, or other third-party providers.";
+    case "essential_traffic_only":
+      return "Projects is unavailable while nonessential network traffic is restricted (CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC is set).";
+    case "policy_disabled": {
+      let { featureLabel: n, verb: r } = C7("allow_projects_tool");
+      return Sp("allow_projects_tool", n, r) ?? ube(n);
+    }
+  }
+}
+var Ie = "Upgraded your claude.ai login to include project access (user:projects:read, user:projects:write). This lets the session read and write the project's knowledge docs on claude.ai.";
+class W extends Error {
+  reasonCode;
+  constructor(e, n) {
+    super(e);
+    this.reasonCode = n;
+    this.name = "ProjectsPreconditionError";
+  }
+}
+async function zt(e) {
+  let n = await SJt(e);
+  if (!n.ok) {
+    let r = n.reason === "wrong_provider" || n.reason === "essential_traffic_only" || n.reason === "policy_disabled" || n.reason === "lock_contended" || n.reason === "custom_client" || n.reason === "save_failed" ? "" : "Projects needs a claude.ai login. ", s = n.detail ? ` (${n.detail})` : "";
+    throw new W(`${r}${Nt(n.reason)}${s}`);
+  }
+  return { accessToken: n.accessToken, expanded: n.expanded };
+}
+function Ne() {
+  return i.CLAUDE_PROJECT_UUID;
+}
+var Pn = tn({ name: KY, searchHint: "read and write the session's attached claude.ai project", backgrounding: "never", maxResultSizeChars: 3e5, persistenceThresholdCeiling: 3e5, isEnabled() {
+  return on("allow_projects_tool") && Ne() !== void 0;
+}, async description() {
+  return _Wo({ localUploads: we(), memory: !J(), original: K(), versions: hIe() });
+}, async prompt() {
+  return _Wo({ localUploads: we(), memory: !J(), original: K(), versions: hIe() });
+}, get inputSchema() {
+  let e = we() === "elsewhere";
+  if (!hIe()) {
+    if (e) return K() ? vt() : At();
+    return K() ? St() : kt();
+  }
+  if (e) return K() ? _e() : Et();
+  return K() ? fe() : Tt();
+}, get outputSchema() {
+  return xt();
+}, isConcurrencySafe() {
+  return false;
+}, isReadOnly(e) {
+  return It(e.method);
+}, isDestructive(e) {
+  return e.method === "project_write" || e.method === "project_delete";
+}, userFacingName(e) {
+  return `Project: ${he(e)}`;
+}, getToolUseSummary(e) {
+  return e?.method ? he(e) : null;
+}, toAutoClassifierInput(e) {
+  return he(e);
+}, renderToolUseMessage(e) {
+  return he(e);
+}, coerceInput(e) {
+  return Te(e, { originalOffered: K(), docVersionsOffered: hIe() });
+}, create(e) {
+  return { async validateInput(n) {
+    let r = Ct[n.method].filter((s) => n[s] === void 0);
+    if (r.length > 0) return { result: false, message: `${n.method} requires: ${r.join(", ")}.`, errorCode: 1 };
+    if (n.method === "project_write") {
+      let s = n.content !== void 0, l = n.local_path !== void 0;
+      if (s === l) return { result: false, message: 'project_write requires exactly one of "content" or "local_path".', errorCode: 1 };
+      if (n.if_version !== void 0 && !Mb.test(n.if_version)) return { result: false, message: "Nothing was changed. if_version must be the 64-character `version` that came with the copy you worked from, copied exactly. If you do not have it, project_read the doc. Omit it for a new doc.", errorCode: 1 };
+    }
+    return { result: true };
+  }, async call(n, r) {
+    let s = r.signal, l = Ne();
+    if (!l) throw new W("No project attached to this session. Project tools are available when the session is started inside a claude.ai Project.");
+    let h = "";
+    try {
+      let w = await zt(e.credentials);
+      h = w.accessToken;
+      let m = await ho(n, l, e.session, s, e.storageV5, e.credentials, Lt(n, r, e), () => {
+        let y = cb();
+        return (y === void 0 ? S2e(e) : y.maxBytes > 0) ? Ae({ model: e.model(), configuredWindow: e.autoCompactWindow(), messages: e.messages() }) : void 0;
+      }, () => cb() === void 0 ? Se(e.tools) : void 0, e.permissions, e.agentId === void 0 ? le.peek(e.session)?.host : void 0, e.agentId === void 0 ? e.readFileState : void 0, r.innerCall === true || e.messages().length === 0 ? void 0 : (y) => Re(e.messages(), y, rbr(e), r.toolUseId));
+      return { data: w.expanded ? { ...m, notice: m.notice ? `${Ie}
+
+${m.notice}` : Ie } : m };
+    } catch (w) {
+      if (n.method === "project_write" && n.local_path !== void 0) Zt(w, s, e.agentId === void 0 ? le.peek(e.session)?.host : void 0);
+      if (s.aborted) throw new Ye();
+      let m = w instanceof X ? w.cause : w, y = pSs(d(m), h);
+      if (m instanceof W) throw new W(y, m.reasonCode);
+      if (n.method === "project_write" && m instanceof X2 && m.errorCode === "project_knowledge_full") throw new W(at, "project_knowledge_full");
+      let j = E(m) ?? (z() && e.storageV5 !== void 0 && m instanceof Error && Oxe(m.cause) ? Zm(m.cause) : void 0), S = w instanceof X ? Yt(w) : "", I = Error(S === "" ? y : `${y.replace(/[.\s]*$/, "")}.${S}`);
+      if (EA(j) && j !== "EACCES" && j !== "EPERM" || j === "EISDIR" || j === "ENOSPC" || j === "EDQUOT" || j === "EIO") I.code = j;
+      throw I;
+    }
+  } };
+}, mapToolResultToToolResultBlockParam(e, n) {
+  return { tool_use_id: n, type: "tool_result", content: _(e) };
+} }), Qe = { NFD: "canonical", NFKD: "compatibility" }, Dt = 36, Pt = 1024;
+function tt(e, n, r) {
+  let s = Math.min(Dt * e.length, Pt), l = e.normalize(r), [h, w] = L(n.filter((m) => m.length <= s && m.normalize(r) === l));
+  return w === void 0 ? h : void 0;
+}
+function rt(e, n, r, s) {
+  if (n.includes(e)) return e;
+  for (let l of r) {
+    let h = tt(e, n, l);
+    if (h !== void 0) return s(h, Qe[l]) ? h : e;
+  }
+  return e;
+}
+function it(e) {
+  let n = e.replace(/^\.\//, "");
+  return n.includes("/") ? [n] : [n, `claude/${n}`];
+}
+function Mt(e, n, r, s) {
+  let l = it(e), h = l.find((m) => n.includes(m));
+  if (h !== void 0) return { path: h, listed: h };
+  for (let m of l) {
+    let y = rt(m, [...n, ...r], ["NFD"], (j, S) => n.includes(j) && s(j, S));
+    if (y !== m) return { path: m, listed: y };
+  }
+  let w = l.at(-1) ?? l[0];
+  return { path: w, listed: w };
+}
+function $t(e, n, r) {
+  let s = it(e), l = s.find((h) => n.includes(h));
+  if (l !== void 0) return l === e || r(l, "respelled") ? l : e;
+  for (let h of ["NFD", "NFKD"]) for (let w of s) {
+    let m = tt(w, n, h);
+    if (m !== void 0) return r(m, Qe[h]) ? m : e;
+  }
+  return e;
+}
+function Ft(e, n, r) {
+  let s = n.permissionPhase?.pipeline, l = s?.result.decisionReason?.type;
+  if (n.innerCall === true || n.remoteCall !== void 0 || s?.result.behavior !== "allow" || s.answered !== void 0 || s.input.path !== e.path || s.input.method !== e.method || l !== void 0 && l !== "mode" && l !== "rule") return "not_plain_allow";
+  try {
+    return jDn(e, r);
+  } catch (h) {
+    return t(`Projects: could not check hooks and permission rules for a listed name other than the path as typed, so the path was used as typed: ${d(h)}`, { level: "error" }), "error";
+  }
+}
+function Lt(e, n, r) {
+  return (s, l) => {
+    let h = Ft(e, n, r);
+    return a("tengu_projects_unicode_name_match", { method: c(e.method), form: c(l), blocked_by: ce(h) }), h === void 0;
+  };
+}
+var Bt = 4, at = "Write refused; nothing in the project was changed. This write would put the project over its maximum size. Any doc already at this path still holds its old content; do not delete it to retry, because the retry can be refused too, and the content would then be lost. Do not delete other docs to make room unless the user asks. Tell the user the project is out of room: they can remove docs or files they no longer need, or ask you to write less.", Ut = "Write refused; nothing in the project was changed. The doc at this path is no longer the version in if_version: someone else, another session, or an earlier save of yours has changed it. Call project_read on this path, make your change in the text that it returns, and write again with the version that it returns as if_version, up to two retries in total. If it is still refused, tell the user that the new content was not saved, and offer it to them another way. Do not drop if_version to force the write, and do not delete the doc.", ze = "Write refused; nothing in the project was changed. This session cannot check if_version. Call project_read on this path, make your change in the text that it returns, and write again without if_version.", Wt = "Write refused; nothing in the project was changed. A doc is already at this path, and this tool cannot find its current text in your context: the doc as shown to you in this conversation, a project_read of it, or your own earlier write of that text. Call project_read on this path, make your change in the text that it returns, and write again. Do not delete the doc to write it afresh: a delete cannot be undone here, and the new doc would hold only what you remember of the old one. If project_read cannot return the doc's whole text inline, do not repeat this write: follow what that result tells you, or tell the user that this doc could not be rewritten from here.", Ht = "This tool cannot undo a delete. To change a doc, do not delete it first: project_write to its path replaces the content in place.";
+class X extends Error {
+  cause;
+  at;
+  constructor(e, n) {
+    super("a project save failed");
+    this.cause = e;
+    this.at = n;
+  }
+}
+var Vt = /* @__PURE__ */ new Set([408, 429, 500, 502, 503, 504]), Gt = /* @__PURE__ */ new Set(["EAI_AGAIN", "ECONNABORTED", "ECONNREFUSED", "ECONNRESET", "EPIPE", "ETIMEDOUT"]), st = "Call project_read on this path before any other write or delete: if it returns the new content, stop and tell the user that an earlier copy may need removing from the project in claude.ai; if not, you may retry the write once, and only once in total unless the user asks you to try again.";
+function Yt({ cause: e, at: n }) {
+  let r = e instanceof X2 ? e.status : void 0, s = r === void 0 ? Gt.has(E(e) ?? "") ? "may_pass" : "unknown" : r === 404 || r === 410 ? "gone" : Vt.has(r) ? "may_pass" : r === 0 || r >= 400 && r < 500 ? "refused" : "unknown", l = "and offer it to them another way.";
+  if (s === "gone" || s === "refused" && n === "no_doc") return " Tell the user that the content was not saved, and offer it to them another way.";
+  let h = "Tell the user that the new content may not have been saved, and offer it to them another way.";
+  if (n === "no_doc") return s === "may_pass" ? " The content may not be in the project. Call project_read on this path: if it returns the content, the save went through late; if not, try the same project_write again, up to two retries in total. If it still fails, tell the user that it was not saved, and offer it to them another way." : " The content may not be in the project. Tell the user that it may not have been saved, and offer it to them another way.";
+  let w = "Do not delete it to retry: this tool cannot undo a delete, and if the retry failed too, the doc would be lost.";
+  if (s === "refused") return ` This call changed nothing: the doc at this path is still there. ${w} Tell the user that this save did not go through, and offer the new content to them another way.`;
+  if (n === "doc_beside_new") {
+    let y = `The old doc at this path was not removed. ${w} The new content may have been saved late as a second doc at this path.`;
+    return s === "may_pass" ? ` ${y} ${st} If that fails too, tell the user that the new content may not have been saved, and offer it to them another way.` : ` ${y} ${h}`;
+  }
+  let m = "The doc at this path was not removed: it holds its old content, or the new content if the save went through late.";
+  return s === "may_pass" ? ` ${m} ${w} Try the same project_write again, up to two retries in total. If it still fails, tell the user that the new content was not saved, and offer it to them another way.` : ` ${m} ${w} ${h}`;
+}
+function qt(e, n) {
+  if (e.max_knowledge_size <= 0) return;
+  let r = Math.ceil(n / Bt);
+  if (e.knowledge_size + r > e.max_knowledge_size) throw new W(at, "write_would_exceed_project_size_limit");
+}
+var De = 26214400, lt = "project_write: local_path is not available in this session; pass the text as content.", Xt = 1048576;
+function we() {
+  return !J() ? "here" : Oe() ? "elsewhere" : "none";
+}
+var Jt = ["local_path_not_available", "local_path_not_absolute", "local_path_too_long", "local_path_outside_cwd", "local_path_no_file", "local_path_os_permission_denied", "local_path_not_regular_file", "local_path_protected_file", "local_path_read_needs_permission", "local_path_file_not_read_yet", "local_path_file_differs_from_read", "local_path_notebook", "local_path_hard_link", "local_path_file_too_large", "local_path_container_unreachable", "local_path_repo_rules_unread", "local_path_other_container_refusal", "content_has_nul", "write_would_exceed_project_size_limit", "project_knowledge_full"];
+function N(e, n) {
+  return new W(e, n);
+}
+function re(e, n, r = {}) {
+  a("tengu_projects_write_by_local_path", { outcome: c(e), reason: ce(r.reason), failed_step: ce(r.failedStep), read_from: c(n !== void 0 ? "tool_container" : J() ? "none" : "local_disk"), replaced: r.replaced, saved_bytes: r.savedBytes, via_ccr_bridge: XX() });
+}
+function Zt(e, n, r) {
+  let s = e instanceof X ? e.cause : e;
+  if (n.aborted) re("cancelled", r);
+  else if (s instanceof W) re("refused", r, { reason: Jt.find((l) => l === s.reasonCode) });
+  else if (s instanceof X2 && s.errorCode === "project_knowledge_full") re("refused", r, { reason: "project_knowledge_full" });
+  else re("failed", r, { failedStep: e instanceof X ? "save" : "other" });
+}
+async function Qt(e, n, r, s) {
+  if (!ye(e) || e.length > Run) throw N(`project_write: local_path must be an absolute path of at most ${Run} characters in this session.`, ye(e) ? "local_path_too_long" : "local_path_not_absolute");
+  if (n.ruleItCannotApply(r) !== void 0) throw N(lt, "local_path_not_available");
+  if (sP(ae(e.trim()))) throw N("project_write: a notebook is not uploaded by local_path in this session. Pass its text as content.", "local_path_notebook");
+  let l = await n.read(e, s);
+  if (l.ok && l.text.length <= Xt) return l.text;
+  switch (l.ok ? "over_the_cap" : l.code) {
+    case "read_it_first":
+      throw N("project_write: Read the whole file at local_path first (again, if you read, wrote or edited it earlier in this chat), or pass its text as content.", "local_path_file_not_read_yet");
+    case "not_as_read":
+      throw N("project_write: the file at local_path has changed since you read or wrote it. Read it again, or pass its text as content.", "local_path_file_differs_from_read");
+    case "over_the_cap":
+      throw N("project_write: the file at local_path is over 1 MiB, too long to upload by path in this session and too long to type as content. Nothing was written. Tell the user that this file is too large to save from here.", "local_path_file_too_large");
+    case "repo_rules_unread":
+      throw N("project_write: this session's cloud environment could not read the repository's permission rules, so the file at local_path was not read and nothing was written. Retrying won't help: tell the user that .claude/settings.json or .claude/settings.local.json may have to be fixed or removed, or pass the text as content if it is fit to share.", "local_path_repo_rules_unread");
+    case "container_unreachable":
+    case "no_answer":
+      throw N("project_write: this session's cloud environment could not be reached, so the file at local_path was not read and nothing was written. Try again, or pass its text as content.", "local_path_container_unreachable");
+    case "refused":
+      throw N("project_write: the file at local_path cannot be uploaded by path: it is missing or unreadable, or its location, name or type is not allowed. If its text is fit to share, pass it as content.", "local_path_other_container_refusal");
+    default:
+      throw N("project_write: the file at local_path cannot be uploaded by path; pass its text as content.", "local_path_other_container_refusal");
+  }
+}
+async function Pe(e, n, r) {
+  return r ? l1t(n) || await __t(n) : kHe(e, n);
+}
+function Me(e, n, r) {
+  return e.some((s) => {
+    let l = n.get(s);
+    return oce(l) && (r === void 0 || (l.readBaseline !== void 0 ? UHe(l.readBaseline, Cy(r)) : U9n(l, r)));
+  });
+}
+async function eo(e, n, r) {
+  if (J()) throw N(lt, "local_path_not_available");
+  let s = (C) => C.endsWith(xe) ? C : C + xe, l = ae(ke()), h = ae(l, e), w = r !== void 0 && __() && EU(i.CLAUDE_CODE_REMOTE_SESSION_ID, i.CLAUDE_CODE_ENVIRONMENT_KIND) ? WWo() : [], m = [l, ...w].find((C) => h === C || h.startsWith(s(C)));
+  if (m === void 0) throw N("project_write: local_path must be inside the working directory.", "local_path_outside_cwd");
+  if (h.length > Run) throw N("project_write: no file exists at local_path.", "local_path_too_long");
+  let y = "project_write: local_path must not name a credential file, a device, or a file that Claude Code keeps for itself (its config and token folders).", j = (C) => {
+    let F = b2e([C], n(), { refuseAutomounterShapes: true });
+    if (F.layer !== "allow" && !(F.layer === "path-mode-ask" && F.decision.decisionReason?.type === "workingDir")) throw N("project_write: this session may not read the file at local_path without asking (a permission rule or setting, a network path, or links that cannot be followed), so it cannot be uploaded by path.", "local_path_read_needs_permission");
+  }, S = m !== l && m === w[0];
+  if (await Pe(h, h, S)) throw N(y, "local_path_protected_file");
+  j(h);
+  let I, V;
+  try {
+    [I, V] = await Promise.all([de(h), m !== l ? m : de(m)]);
+  } catch (C) {
+    let F = E(C);
+    if (F === "ENOENT" || F === "ENOTDIR" || F === "ENAMETOOLONG") throw N("project_write: no file exists at local_path.", "local_path_no_file");
+    if (F === "EACCES" || F === "EPERM") throw N("project_write: local_path is not readable.", "local_path_os_permission_denied");
+    throw C;
+  }
+  if (I !== V && !I.startsWith(s(V))) throw Error("project_write: local_path resolves outside the working directory.");
+  if (await Pe(h, I, S)) throw N(y, "local_path_protected_file");
+  j(I);
+  let G = "project_write: Read the whole file at local_path first, or pass its text as content. Outside the working directory, a file is uploaded by path only when this session has read all of it and it has not changed since.", x = [h, I];
+  if (m !== l && x.some(sP)) throw N("project_write: a notebook outside the working directory is not uploaded by local_path. Pass its text as content.", "local_path_notebook");
+  if (m !== l && !(r && Me(x, r))) throw N(G, "local_path_file_not_read_yet");
+  let b = pe.O_NOFOLLOW, O = pe.O_NONBLOCK ?? 0, P = 0, D;
+  try {
+    D = await jt(I, pe.O_RDONLY | b | P | O);
+  } catch (C) {
+    let F = E(C);
+    if (F === "ENOENT") throw N("project_write: no file exists at local_path.", "local_path_no_file");
+    if (F === "EACCES" || F === "EPERM") throw N("project_write: local_path is not readable.", "local_path_os_permission_denied");
+    if (F === "EISDIR" || F === "ENXIO" || F === "EOPNOTSUPP") throw N("project_write: local_path must be a regular file.", "local_path_not_regular_file");
+    if (F === "ELOOP") throw Error("project_write: local_path was replaced during the upload.");
+    throw C;
+  }
+  try {
+    let C = await D.stat({ bigint: true }), F = "project_write: local_path was replaced during the upload.";
+    {
+      let te = await de(`/proc/self/fd/${D.fd}`).catch(() => null);
+      if (te !== null && te !== I) throw Error("project_write: local_path was replaced during the upload.");
+    }
+    let Y, q;
+    try {
+      Y = await de(h), q = await bt(Y, { bigint: true });
+    } catch {
+      throw Error("project_write: local_path was replaced during the upload.");
+    }
+    if (Y !== I) throw Error("project_write: local_path was replaced during the upload.");
+    if (q.dev !== C.dev) throw Error("project_write: local_path was replaced during the upload.");
+    if (C.ino !== 0n && q.ino !== C.ino) throw Error("project_write: local_path was replaced during the upload.");
+    if (!C.isFile()) throw N("project_write: local_path must be a regular file.", "local_path_not_regular_file");
+    if (C.nlink > 1n) throw N("project_write: the file at local_path has a second name (a hard link), so its name does not say what it is. Pass its text as content instead.", "local_path_hard_link");
+    if (C.size > BigInt(De)) throw N(`project_write: file at local_path exceeds the ${De}-byte limit.`, "local_path_file_too_large");
+    let Q = (await D.readFile()).toString("utf8");
+    if (m === l) return Q;
+    if (!(r && Me(x, r, Q))) throw N(G, "local_path_file_differs_from_read");
+    return Cy(Q);
+  } finally {
+    await D.close();
+  }
+}
+var to = `Write refused; nothing in the project was changed. The doc at this path holds more than ${b3e} bytes, more than project_read shows inline, so a rewrite typed from what it showed you would drop the rest. Do not delete the doc to write it again unless the user asks: a delete cannot be undone here. If you have the whole new text in a file that this session accepts as \`local_path\`, pass that file, but not a file made from only part of the doc. Otherwise write the new text to a new path, and tell the user that this doc is too large to rewrite here.`;
+async function $e(e, n, r, s, l, h, w, m, y, j) {
+  let S = await ct(n, "project-doc", r, s, h, w, m, y !== void 0);
+  return h5n(e, j, { ...S, ...w !== void 0 && "local_file" in S && { size_bytes: Buffer.byteLength(n, "utf8") }, ...y !== void 0 && "local_file" in S && { notice: y } }, l);
+}
+async function ct(e, n, r, s, l, h, w = null, m = false) {
+  let y = Buffer.byteLength(e, "utf8");
+  if (y <= b3e) return h !== void 0 && oo(e, y, h, w) ? no(e, y, r, s, l, m) : { content: e };
+  let j = cb();
+  if (j !== void 0) {
+    let S = n === "project-doc" ? " project_search still covers the whole doc." : "", I = TSe(e, j.maxBytes), V = Buffer.from(I, "utf8"), G = V.byteLength === 0 ? null : await YGe(j, { leafName: be(n, r), data: V });
+    if (G !== null) return I === e ? { local_file: G.path } : { local_file: G.path, notice: `Only the first ${V.byteLength} of ${y} bytes were saved to local_file, the most this session keeps in one file.${S}` };
+    let x = j.maxBytes === 0 ? ": this session does not keep larger results as files." : "; the rest could not be saved to a file this session can open.";
+    return { content: TSe(e, b3e), notice: `Only the first ${b3e} of ${y} bytes are shown${x}${S}` };
+  }
+  return { local_file: await dt(n, r, e, s, l, m) };
+}
+function oo(e, n, r, s) {
+  let l = Math.min(s !== null && s > 0 ? s : Math.ceil(n / r.bytesPerToken), n);
+  if (l <= r.maxTokens) return false;
+  let h = 0;
+  for (let w of e.split(`
+`)) h = Math.max(h, Buffer.byteLength(w));
+  if (h / n * l > bj().maxTokens / 2) return f("projects_tool_read_to_file", "long_line"), false;
+  return true;
+}
+async function no(e, n, r, s, l, h) {
+  let w = cb();
+  if (w !== void 0) {
+    let m = n > w.maxBytes ? null : await YGe(w, { leafName: be("project-doc", r), data: Buffer.from(e, "utf8") });
+    if (m === null) return f("projects_tool_read_to_file", "not_stored"), { content: e };
+    return g("projects_tool_read_to_file"), { local_file: m.path };
+  }
+  try {
+    let m = await dt("project-doc", r, e, s, l, h);
+    return g("projects_tool_read_to_file"), { local_file: m };
+  } catch (m) {
+    return t(`project_read: could not save the document to a file, so returning all ${n} bytes inline: ${d(m)}`, { level: "warn" }), f("projects_tool_read_to_file", "write_failed"), { content: e };
+  }
+}
+function be(e, n) {
+  return `${e}-${n.replace(/[^a-zA-Z0-9-]/g, "_")}.txt`;
+}
+async function dt(e, n, r, s, l, h) {
+  let w = be(e, n);
+  if (h && WSe() !== null) {
+    let j;
+    try {
+      let S = ne(jWo(), s.root.id), I = await L8e(S, 2);
+      if (typeof I !== "string") {
+        try {
+          await Dn(ne(I.at, w), r, 384);
+        } finally {
+          await I.release();
+        }
+        return g("projects_tool_doc_outside_config_home"), ne(S, w);
+      }
+      j = I;
+    } catch (S) {
+      j = Er(S) ?? "unknown";
+    }
+    f("projects_tool_doc_outside_config_home", j), t(`project_read: could not save the document in the project-docs folder (${j}), so it is saved under the session's tool-results folder`, { level: "warn" });
+  }
+  let m = PI(s), y = ne(m, w);
+  if (await AM(m, l), await ht(l, m, w, r, e === "project-memory" ? "project_memory_read" : "project_read")) return y;
+  return await Dfe(y, Buffer.from(r, "utf8"), 384), y;
+}
+async function ht(e, n, r, s, l) {
+  if (z() && e !== void 0) {
+    let h = d6(n, r);
+    if (h !== void 0) {
+      let w = await e.write(h, s, { publishDiscipline: "inPlace", mode: 384 });
+      if (!w.ok) throw l === "project_read" ? Error("project_read: spill to tool-results failed", { cause: w.error }) : Error("project_memory_read: spill to tool-results failed", { cause: w.error });
+      return true;
+    }
+  }
+  return false;
+}
+var je = "only its extracted text, if it has any, can be read here (project_read without `original`). If that is not enough, tell the user the original cannot be opened here.";
+function ut(e, n, r) {
+  let s = `above the ${rSr}-byte limit for in-session downloads`, l = r === void 0 ? `is ${s}` : `is ${r} bytes, ${s}`;
+  return n ? new W(`project_read: "${FW(e)}" ${l}. So ${je}`, "project_original_too_large") : new W(`project_read: "${FW(e)}" has no text extract and ${l}; tell the user this file cannot be opened here.`, "project_upload_too_large");
+}
+async function Fe({ projectUuid: e, path: n, fileUuid: r, signal: s, credentials: l, originalAsked: h }) {
+  try {
+    return await cSs(e, r, s, l);
+  } catch (w) {
+    if (w instanceof X2 && w.errorCode === "file_read_too_large") throw ut(n, h);
+    throw w;
+  }
+}
+async function ro(e, n, r, s, l, h, w, m) {
+  let y = cb();
+  if (y?.maxBytes === 0) return { method: "project_read", path: n, file_kind: r.file_kind, created_at: r.created_at ?? null, notice: `"${FW(n)}" is a ${FW(r.file_kind)} upload with no text extract, and this session does not keep files, so it was not downloaded; tell the user this file cannot be opened here.` };
+  let j = (D) => {
+    if (D > rSr) throw ut(n, m, D);
+  }, S = { projectUuid: e, path: n, fileUuid: r.file_uuid, signal: l, credentials: w, originalAsked: m }, I = await Fe(S);
+  j(I.file_size_bytes);
+  let V = Buffer.from(I.content_base64, "base64");
+  if (V.byteLength !== I.file_size_bytes) {
+    if (I = await Fe(S), j(I.file_size_bytes), V = Buffer.from(I.content_base64, "base64"), V.byteLength !== I.file_size_bytes) throw Error("project_read: downloaded bytes do not match the reported file size (corrupt response, or the file is being modified concurrently — retry if a save was just issued).");
+  }
+  if (I.uuid !== r.file_uuid) throw Error("project_read: server returned a different file.");
+  if (Kt(I.uuid) === null) throw Error("project_read: server returned a malformed file id.");
+  let G = (I.file_name.split(/[/\\]/).pop() ?? "").replace(/[^a-zA-Z0-9._-]/g, "_").slice(-64).replace(/^\.+/, "") || "file", x = `project-file-${I.uuid}-${G}`, b = `"${FW(n)}" is a ${FW(I.file_kind)} upload${m ? "" : " with no text extract"}; its original bytes (${I.file_size_bytes}) `, O, P = `${b}could not be saved to a file this session can open; ${m ? je : "tell the user this file could not be opened."}`;
+  if (y === void 0) O = await io(x, V, s, h);
+  else if (V.byteLength > y.maxBytes) O = null, P = `${b}are more than this session keeps in one file (${y.maxBytes} bytes), so they were not saved; ${m ? je : "tell the user this file cannot be opened here."}`;
+  else {
+    let D = await YGe(y, { leafName: x, data: V });
+    O = D === null ? null : D.path;
+  }
+  return { method: "project_read", path: n, file_kind: I.file_kind, ...O !== null && { local_file: O }, created_at: I.created_at ?? null, notice: O !== null ? `${b}were saved to local_file. Open it with file-appropriate tooling.` : P };
+}
+async function io(e, n, r, s) {
+  let l = PI(r), h = ne(l, e);
+  if (await AM(l, s), await ht(s, l, e, n, "project_read")) return h;
+  return await Dfe(h, n, 384), h;
+}
+var ao = 6e5, Le = ve({ lackedUpdateAt: Number.NEGATIVE_INFINITY }, (e) => {
+  e.lackedUpdateAt = Number.NEGATIVE_INFINITY;
+});
+async function so(e, n, r, s, l, h, w, m, y) {
+  if (!h || Date.now() - Le.lackedUpdateAt >= ao) try {
+    return await uSs(e, n, s, l, w, m, y);
+  } catch (S) {
+    if (S instanceof X2 && S.errorCode === "project_doc_stale") throw new W(Ut, "project_doc_stale");
+    if (S instanceof X2 && S.errorCode === "project_doc_too_large_to_replace") throw new W(to, "project_doc_too_large_to_replace");
+    if (h && m !== void 0 && S instanceof X2 && S.status === 400 && S.errorCode === void 0 && !dco(S)) throw new W(ze, "if_version_not_served");
+    if (!h || !dco(S)) throw new X(S, "doc_updated");
+    Le.lackedUpdateAt = Date.now();
+  }
+  if (l.aborted) throw new Ye();
+  if (m !== void 0) throw new W(ze, "if_version_not_served");
+  let j = await cco(e, r, s, void 0, w).catch((S) => {
+    throw new X(S, "doc_beside_new");
+  });
+  if (typeof j?.uuid !== "string" || j.uuid === n) throw new R(`project_write: could not confirm that the new content was saved. Nothing was removed, so the project may now list this path twice. ${st}`, "project_write could not confirm that the new content was saved");
+  try {
+    await uco(e, n, void 0, w);
+  } catch (S) {
+    throw t(`Projects: the replaced doc ${n} could not be removed: ${d(S)}`, { level: "error" }), Error("project_write: the new content was saved, but the earlier copy of this doc may not have been removed, so the project may now list this path twice. project_read returns the new content. Do not repeat this write, and do not call project_delete: it would remove the new content, not the earlier copy. Tell the user that the earlier copy may need removing from the project in claude.ai.");
+  }
+  return j;
+}
+function ge(e, n) {
+  let r = e.documents.find((s) => s.file_name === n);
+  return r ? { uuid: r.uuid, created_at: r.created_at ?? null } : void 0;
+}
+function We(e, n) {
+  return (e.files ?? []).find((r) => r.file_name === n);
+}
+function ie(e) {
+  return e.documents.map((n) => n.file_name).filter((n) => typeof n === "string");
+}
+function ue(e) {
+  return (e.files ?? []).map((n) => n.file_name).filter((n) => typeof n === "string");
+}
+function He(e, n, r) {
+  let s = [...ie(e), ...ue(e)].map(FW), l = s.length > 0 ? ` Available: ${s.slice(0, 30).join(", ")}${s.length > 30 ? `, … and ${s.length - 30} more` : ""}` : " The project has no docs or files.";
+  if (r === "project_read" && (e.sync_sources ?? []).length > 0) l = s.length > 0 ? `${l}. Files from the project's synced sources, such as GitHub or Google Drive, are not listed and cannot be read by name here.` : " Files from the project's synced sources, such as GitHub or Google Drive, are not listed and cannot be read by name here.";
+  return new W(`No doc or file at "${FW(n)}".${l}`);
+}
+function lo(e, n) {
+  let r = e.files.map((l) => FW(l.path)), s = r.length > 0 ? ` Available: ${r.slice(0, 30).join(", ")}${r.length > 30 ? `, … and ${r.length - 30} more` : ""}` : " The project has no memory files.";
+  return new W(`No memory file at "${FW(n)}".${s}`);
+}
+function Ve(e) {
+  if (e) throw new W(J() ? `This tool does not serve project memory in this session: it runs through the remote-session bridge, which has no memory route. ${yWo} The project's docs are still available through the other methods.` : "Project memory is not available in this session: it runs through the remote-session bridge, which has no memory access. The project's docs are still available through the other methods.");
+}
+var co = 500, Ge = "No project memory is available in this session. It may be turned off, or this server may not serve it yet. It is checked again when this session's context is next rebuilt (for example after /clear or a compaction) and in a new session.", Ke = "Memory as read at this session's start or its last context refresh; not live.";
+function ee(e, n, r) {
+  if (e === void 0) throw new W(`${r} requires "${n}"`);
+  return e;
+}
+async function ho(e, n, r, s, l, h, w, m, y, j, S, I, V) {
+  let G = XX();
+  switch (e.method) {
+    case "project_info": {
+      let x = await KUe(n, s, h);
+      return { method: "project_info", name: x.name, description: x.description ?? "", instructions: x.prompt_template ?? "", docs: x.documents.flatMap((b) => b.file_name !== null ? [{ path: b.file_name, created_at: b.created_at ?? null }] : []), files: (x.files ?? []).flatMap((b) => b.file_name !== null ? [{ path: b.file_name, file_kind: b.file_kind, created_at: b.created_at ?? null }] : []), sync_sources: (x.sync_sources ?? []).map((b) => ({ type: b.type, config: b.config })), knowledge: { knowledge_size: x.knowledge_stats.knowledge_size, max_knowledge_size: x.knowledge_stats.max_knowledge_size } };
+    }
+    case "project_read": {
+      let x = ee(e.path, "path", e.method), b = await KUe(n, s, h), O = $t(x, [...ie(b), ...ue(b)], w), P = ge(b, O);
+      if (!P) {
+        let C = We(b, O);
+        if (!C) throw He(b, O, e.method);
+        let F = C.file_kind === "document" && e.original === true && K();
+        if (C.file_kind === "document" && !F) {
+          let Y = await dSs(n, C.file_uuid, s, h);
+          if (Y.file_kind === "document" && Y.content.trim() !== "") return $e(O, Y.content, C.file_uuid, r, { file_kind: Y.file_kind, created_at: Y.created_at ?? null }, l, m(), null, y());
+        }
+        return ro(n, O, C, r, s, l, h, F);
+      }
+      let D = await wJt(n, P.uuid, s, h);
+      return $e(O, D.content, P.uuid, r, { created_at: D.created_at ?? null }, l, m(), D.estimated_token_count, y(), hIe() ? et(D.content) : void 0);
+    }
+    case "project_search": {
+      let x = ee(e.query, "query", e.method), b = e.n ?? 5;
+      try {
+        let O = await fSs(n, x, b, s, h);
+        return { method: "project_search", rag: true, hits: uo(O) };
+      } catch (O) {
+        if (O instanceof X2 && O.status === 403) {
+          let P = await KUe(n, s, h);
+          return { method: "project_search", rag: false, docs: ie(P) };
+        }
+        throw O;
+      }
+    }
+    case "project_write": {
+      let x = ee(e.path, "path", e.method), b = e.local_path !== void 0 ? S !== void 0 ? await Qt(e.local_path, S, j(), s) : await eo(e.local_path, j, I) : ee(e.content, "content", e.method);
+      if (b.includes("\0")) throw N("Write refused; nothing in the project was changed. The content contains NUL bytes, which project docs cannot store (usually a binary or UTF-16 file). Convert it to UTF-8 text (re-encode UTF-16, extract the text from a binary, or remove the NUL bytes), then write again.", "content_has_nul");
+      let O = await KUe(n, s, h), { path: P, listed: D } = Mt(x, ie(O), ue(O), w), C = ge(O, D);
+      if (!C) qt(O.knowledge_stats, Buffer.byteLength(b, "utf8"));
+      if (C && e.local_path === void 0 && V !== void 0 && k("tengu_lovely_rain", false)) {
+        let q = await wJt(n, C.uuid, s, h).catch((ft) => {
+          throw new R(`Write not done; nothing in the project was changed. Before it replaces a doc, this tool reads the doc's current text, and that read failed: ${d(ft).replace(/[.\s]*$/, "")}. Try the same write once more. Do not delete the doc to retry: this tool cannot undo a delete. If it fails again, tell the user that the content was not saved, and offer it to them another way.`, "project_write could not read the doc it would replace");
+        }), se = V(q.content), Q = Buffer.byteLength(q.content, "utf8"), te = Buffer.byteLength(b, "utf8");
+        if (a("tengu_projects_write_text_in_view", { outcome: c(se.inView ? "in_view" : "not_in_view"), found_in: c(se.foundIn), shrank: 4 * te < 3 * Q, old_bytes: Q, new_bytes: te, via_ccr_bridge: G }), !se.inView) throw new W(Wt, "write_over_a_doc_not_in_view");
+      }
+      let F = await (C ? so(n, C.uuid, D, b, s, G, h, e.if_version, e.local_path === void 0 && k("tengu_toasty_owl", false) ? b3e : void 0) : cco(n, P, b, s, h).catch((q) => {
+        throw new X(q, "no_doc");
+      })).finally(nSr), Y = { method: "project_write", path: P, doc_uuid: F.uuid, ...hIe() && { version: et(b) }, replaced: C !== void 0, present_to_user: e.present_to_user ?? false, ...e.local_path !== void 0 ? { local_path: Je(e.local_path) } : {} };
+      if (C && hIe()) g("projects_tool_if_version", { sent: e.if_version !== void 0 });
+      if (e.local_path !== void 0) re("saved", S, { replaced: C !== void 0, savedBytes: Buffer.byteLength(b, "utf8") });
+      return Y;
+    }
+    case "project_delete": {
+      let x = ee(e.path, "path", e.method), b = await KUe(n, s, h), O = rt(x, [...ie(b), ...ue(b)], ["NFD"], w), P = ge(b, O);
+      if (!P) {
+        if (We(b, O)) throw Error(`"${FW(x)}" is a file upload; project_delete only removes text docs. File uploads can be removed from the project in claude.ai.`);
+        throw He(b, x, e.method);
+      }
+      return await uco(n, P.uuid, s, h).finally(nSr), { method: "project_delete", path: x, deleted: true, notice: Ht };
+    }
+    case "project_memory_list": {
+      Ve(G);
+      let x = await si(eOt(n, h), s, () => new Ye());
+      if (x === null) return { method: "project_memory_list", files: [], truncated: false, notice: Ge };
+      let b = x.files.slice(0, co), O = x.files.length - b.length;
+      return { method: "project_memory_list", files: b.map((P) => ({ path: P.path, size_bytes: P.size_bytes, updated_at: P.updated_at, truncated: P.truncated })), truncated: O > 0 || x.truncated, notice: [Ke, ...O > 0 ? [`Showing the first ${b.length} of ${x.files.length} memory files; there is no way to list the rest in this session.`] : x.truncated ? ["More memory files exist than the server returned."] : []].join(" ") };
+    }
+    case "project_memory_read": {
+      Ve(G);
+      let x = ee(e.path, "path", e.method), b = await si(eOt(n, h), s, () => new Ye());
+      if (b === null) throw new W(Ge);
+      let O = b.files.find((C) => C.path === x);
+      if (O === void 0) throw lo(b, x);
+      let P = yt("sha256").update(x).digest("hex"), D = await ct(O.content, "project-memory", P, r, l);
+      return { method: "project_memory_read", path: O.path, ...D, size_bytes: O.size_bytes, updated_at: O.updated_at, truncated: O.truncated, notice: [Ke, ..."notice" in D && D.notice !== void 0 ? [D.notice] : [], ...O.truncated ? ["Only the first part of this file is returned: the server cut it at its size cap."] : []].join(" ") };
+    }
+  }
+}
+function uo(e) {
+  if (e === null || typeof e !== "object") return [];
+  let n = e, r = [];
+  for (let s of ["text_results", "rich_content_results"]) {
+    let l = n[s];
+    if (!Array.isArray(l)) continue;
+    for (let h of l) {
+      if (h === null || typeof h !== "object") continue;
+      let w = h, m = w.chunk !== null && typeof w.chunk === "object" ? w.chunk : void 0;
+      r.push({ name: typeof w.name === "string" ? w.name : void 0, doc_uuid: typeof w.doc_uuid === "string" ? w.doc_uuid : void 0, text: m && typeof m.text === "string" ? m.text : void 0 });
+    }
+  }
+  return r;
+}
+export {
+  Pn as ProjectsTool
+};

@@ -1,0 +1,66 @@
+// linux/settings/directory-added.js — Claude Code 2.1.310（linux）模块 chunk-k86j4y4g.js
+import { F, tt, Ol, wW } from "../context/not-admin-owned.js";
+import { In, Fa, MR, zs } from "../fs/node-modules.js";
+import { Po, ie, t } from "../fs/gitlab-runner-authentication-token.js";
+import { I } from "../shared/chunk-d2c47492.js";
+import { Qt } from "./workflow-launch-exec.js";
+import { BNt, UA, IP, ODr } from "../core/conversation-engine.js";
+import { he } from "../terminal/xterm-ghostty.js";
+import { Jn, Ju, s7, Ry, Iu } from "../context/org-memory-writes-setting-changed.js";
+import { ud } from "./built-in.js";
+import { ae } from "../permissions/max-thinking-tokens.js";
+import { ze } from "../shell/sandbox.js";
+import { mr } from "../workflows/chunk-5e65bb82.js";
+import { jhe } from "../tools/tool-result-persisted.js";
+import { NOo } from "../telemetry/bg-roster-parse-failed.js";
+import { P8e } from "../shared/skill-directory-reload.js";
+import { randomUUID as k } from "crypto";
+import { resolve as P } from "path";
+function h(e, o) {
+  let s = Ol();
+  if (s.some((m) => In(P(m)) === o)) return false;
+  return wW([...s, o]), UA(e), IP(e, "directory_added"), P8e(), true;
+}
+async function pFn(e, o, s) {
+  let n = { type: "addDirectories", directories: [o], destination: s ? "localSettings" : "session" };
+  e.setToolPermissionContext((i) => Ju(i, n)), h(e.session, o), ze.refreshConfig(), e.storageV5 ? ODr(o, e.storageV5) : ODr(o), NOo("--add-dir", o, e.storageV5);
+  let d;
+  if (s) try {
+    await s7(n, e.storageV5), d = `Added ${he.bold(o)} as a working directory and saved to local settings`;
+  } catch (i) {
+    d = `Added ${he.bold(o)} as a working directory. Failed to save to local settings: ${i instanceof Error ? i.message : "Unknown error"}`;
+  }
+  else d = `Added ${he.bold(o)} as a working directory for this session`;
+  let u = k();
+  return BNt(e.session, o, "slash_command", { storageV5: e.storageV5, credentials: e.credentials }).then(async ({ results: i, systemMessages: l }) => {
+    for (let r of i) if (!r.succeeded && r.output) t(`DirectoryAdded hook failed: ${r.output}`, { level: "error" });
+    let a = F(i, (r) => !r.succeeded), g = [...await Promise.all(l.map((r, f) => jhe(r, `add-dir-${u}-${f}`, "systemMessage", { storageV5: e.storageV5 }).then((p) => `DirectoryAdded hook: ${p}`))), ...a > 0 ? [`${a} DirectoryAdded ${I(a, "hook")} failed; output is in the debug log, not shown here`] : []];
+    if (g.length > 0) e.messageQueue.enqueuePendingNotification({ value: g.join(`
+`), mode: "task-notification", skipAttachments: true, agentId: tt(), isMeta: true });
+  }).catch((i) => {
+    e.messageQueue.enqueuePendingNotification({ value: `DirectoryAdded hook execution failed: ${i instanceof Error ? i.message : String(i)}`, mode: "task-notification", skipAttachments: true, agentId: tt(), isMeta: true });
+  }), d;
+}
+function MZt(e, o) {
+  let s = ae(e);
+  if (o.isExactMatch || !o.isOriginalCwd) return null;
+  let m = ie(), { resolvedPath: n, isCanonical: d } = Po(m, o.absolutePath), { resolvedPath: u, isCanonical: i } = Po(m, o.workingDir), l = he.bold(Jn(o.directoryPath));
+  if (!d || !i) {
+    if ([o.absolutePath, o.workingDir].some((c) => zs(c) || Fa(c) || MR(c))) return null;
+    return `${l} couldn't be resolved to a real location, so its skills, commands, and agents weren't loaded. Check that it is a directory inside the working directory and try again.`;
+  }
+  if (!Ry(o.absolutePath, { ...s, additionalWorkingDirectories: /* @__PURE__ */ new Map() }) || !Iu(n, u, { caseFold: false, skipPrivateAlias: true, uncShapeParity: true })) {
+    let c = Jn(n);
+    return n === o.absolutePath ? `${l} leads outside the working directory, so its skills, commands, and agents weren't loaded. Add that location with /add-dir to grant access to it.` : `${l} leads outside the working directory through a link (it resolves to ${he.bold(c)}), so its skills, commands, and agents weren't loaded. Run /add-dir ${c} to grant access to it.`;
+  }
+  if (n === u) return null;
+  let a = `${l} is inside the current working directory ${he.bold(Jn(o.workingDir))}`, g = Qt("projectSettings"), r = g && !mr("skills", { explicitlyRequested: true }) && !ud("skills"), f = g && !mr("agents") && !ud("agents");
+  if (!r && !f) return `${a}; skills, commands, and agents from additional directories are disabled in this session, so nothing was loaded.`;
+  let p = r && f ? "skills, commands, and agents" : r ? "skills and commands" : "agents", y = h(e.session, o.absolutePath);
+  if (y) ze.refreshConfig();
+  return y ? `${a}; loading its ${p} for this session.` : `${a}; its ${p} are already included for this session.`;
+}
+export {
+  MZt,
+  pFn
+};

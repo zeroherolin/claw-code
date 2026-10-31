@@ -1,0 +1,1429 @@
+{
+ "AI_AGENT": [
+  "remote/claude-code-remote.js"
+ ],
+ "ALACRITTY_LOG": [
+  "shared/environment.js"
+ ],
+ "ALL_PROXY": [
+  "remote/self-hosted-runner-main.js",
+  "git/rev-parse.js"
+ ],
+ "ANTHROPIC_API_KEY": [
+  "telemetry/bridge-resume-respects-local-owner.js",
+  "cli/bg-claim-env-dropped.js",
+  "auth/auth-login.js"
+ ],
+ "ANTHROPIC_AUTH_TOKEN": [
+  "telemetry/bridge-resume-respects-local-owner.js",
+  "cli/bg-claim-env-dropped.js"
+ ],
+ "ANTHROPIC_AWS_API_KEY": [
+  "api/anthropic-client.js",
+  "auth/start-gateway.js"
+ ],
+ "ANTHROPIC_AWS_BASE_URL": [
+  "api/anthropic-client.js"
+ ],
+ "ANTHROPIC_BASE_URL": [
+  "context/team-memory-sync.js",
+  "settings/global-config-and-gates.js",
+  "core/conversation-engine.js",
+  "api/anthropic-client.js",
+  "git/agent-proxy-download-queue.js",
+  "cli/session-setup.js",
+  "models/total-tokens-reminder.js",
+  "remote/self-hosted.js"
+ ],
+ "ANTHROPIC_BEDROCK_BASE_URL": [
+  "api/anthropic-client.js"
+ ],
+ "ANTHROPIC_BEDROCK_MANTLE_BASE_URL": [
+  "api/anthropic-client.js"
+ ],
+ "ANTHROPIC_BEDROCK_SERVICE_TIER": [
+  "api/anthropic-client.js"
+ ],
+ "ANTHROPIC_CONFIG_DIR": [
+  "plugins/plugin-eval-handler.js"
+ ],
+ "ANTHROPIC_CUSTOM_HEADERS": [
+  "api/anthropic-client.js"
+ ],
+ "ANTHROPIC_DEFAULT_HAIKU_MODEL": [
+  "telemetry/mantle-default-fallback.js"
+ ],
+ "ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION": [
+  "telemetry/mantle-default-fallback.js"
+ ],
+ "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": [
+  "telemetry/mantle-default-fallback.js"
+ ],
+ "ANTHROPIC_FEDERATION_RULE_ID": [
+  "auth/profile-explicit.js"
+ ],
+ "ANTHROPIC_FOUNDRY_API_KEY": [
+  "api/anthropic-client.js"
+ ],
+ "ANTHROPIC_MODEL": [
+  "settings/global-config-and-gates.js",
+  "core/conversation-engine.js",
+  "cli/main.js",
+  "permissions/settings-env-default.js"
+ ],
+ "ANTHROPIC_ORGANIZATION_ID": [
+  "auth/profile-explicit.js"
+ ],
+ "ANTHROPIC_PROFILE": [
+  "auth/profile-explicit.js",
+  "plugins/plugin-eval-handler.js"
+ ],
+ "ANTHROPIC_SMALL_FAST_MODEL": [
+  "core/conversation-engine.js"
+ ],
+ "ANTHROPIC_UNIX_SOCKET": [
+  "settings/non-string-value.js",
+  "telemetry/bridge-resume-respects-local-owner.js"
+ ],
+ "ANTHROPIC_VERTEX_BASE_URL": [
+  "api/anthropic-client.js"
+ ],
+ "ANTHROPIC_WORKSPACE_ID": [
+  "auth/profile-explicit.js"
+ ],
+ "API_FORCE_IDLE_TIMEOUT": [
+  "fs/ca-certs-load.js"
+ ],
+ "APPDATA": [
+  "auth/credential-source.js",
+  "plugins/plugin-eval-handler.js"
+ ],
+ "APP_URL": [
+  "shared/environment.js"
+ ],
+ "AUTOMODE_DECISION_LOG": [
+  "core/conversation-engine.js"
+ ],
+ "AWS_ACCESS_KEY_ID": [
+  "auth/credential-source.js"
+ ],
+ "AWS_BEARER_TOKEN_BEDROCK": [
+  "api/anthropic-client.js"
+ ],
+ "AWS_DEFAULT_REGION": [
+  "auth/credential-source.js"
+ ],
+ "AWS_EXECUTION_ENV": [
+  "shared/environment.js"
+ ],
+ "AWS_LAMBDA_BENCHMARK_MODE": [
+  "vendor/aws-sdk/smithy-protocol.js"
+ ],
+ "AWS_LAMBDA_FUNCTION_NAME": [
+  "shared/environment.js"
+ ],
+ "AWS_LAMBDA_NODEJS_NO_GLOBAL_AWSLAMBDA": [
+  "vendor/aws-sdk/smithy-protocol.js"
+ ],
+ "AWS_LOGIN_CACHE_DIRECTORY": [
+  "vendor/aws-sdk/refresh-token.7583.js"
+ ],
+ "AWS_PROFILE": [
+  "ide/create-credential-chain.js"
+ ],
+ "AWS_REGION": [
+  "auth/credential-source.js",
+  "vendor/aws-sdk/refresh-token.7583.js"
+ ],
+ "AWS_SECRET_ACCESS_KEY": [
+  "auth/credential-source.js"
+ ],
+ "AWS_SESSION_TOKEN": [
+  "auth/credential-source.js"
+ ],
+ "AZURE_ADDITIONALLY_ALLOWED_TENANTS": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_AUTHORITY_HOST": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_CLIENT_CERTIFICATE_PASSWORD": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_CLIENT_CERTIFICATE_PATH": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_CLIENT_ID": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_CLIENT_SECRET": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_FEDERATED_TOKEN_FILE": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_FUNCTIONS_ENVIRONMENT": [
+  "shared/environment.js"
+ ],
+ "AZURE_IDENTITY_DISABLE_MULTITENANTAUTH": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_PASSWORD": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_POD_IDENTITY_AUTHORITY_HOST": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_REGIONAL_AUTHORITY_NAME": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_TENANT_ID": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_TOKEN_CREDENTIALS": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "AZURE_USERNAME": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "BASH_MAX_OUTPUT_LENGTH": [
+  "telemetry/binary-content-persisted.js"
+ ],
+ "BETA_TRACING_ENDPOINT": [
+  "agents/api-system.js"
+ ],
+ "BROWSER": [
+  "agents/attacher-caps.js"
+ ],
+ "BUF_BIGINT_DISABLE": [
+  "shell/sandbox.js"
+ ],
+ "BUGHUNTER_DEV_BUNDLE_B64": [
+  "git/review-remote-precondition-failed.js"
+ ],
+ "BUGHUNTER_FLEET_SIZE": [
+  "context/classifier-disabled-surfaces.js"
+ ],
+ "BUILDKITE": [
+  "shared/environment.js"
+ ],
+ "C9_PID": [
+  "shared/environment.js"
+ ],
+ "C9_USER": [
+  "shared/environment.js"
+ ],
+ "CCR_AGENT_PROXY_TOKEN_FILE_DESCRIPTOR": [
+  "auth/guard-relay-token-descriptor.js",
+  "cli.js"
+ ],
+ "CCR_ON_BRANCH_DEFAULT_GUARD": [
+  "core/conversation-engine.js"
+ ],
+ "CCR_SHR_SSE_HINTS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "CCR_SPAWN_TIMESTAMP_MS": [
+  "mcp/spawn-to-exec-ms.js",
+  "mcp/init-function-end.js"
+ ],
+ "CF_PAGES": [
+  "shared/environment.js"
+ ],
+ "CHOKIDAR_INTERVAL": [
+  "fs/files-directories.js"
+ ],
+ "CHOKIDAR_USEPOLLING": [
+  "fs/files-directories.js"
+ ],
+ "CIRCLECI": [
+  "shared/environment.js"
+ ],
+ "CLAUDE_AFTER_LAST_COMPACT": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_AGENTS_SELECT": [
+  "ui/bg-agent-action.js",
+  "cli/main.js",
+  "ui/repl-screen.js"
+ ],
+ "CLAUDE_AGENT_SDK_CLIENT_APP": [
+  "api/anthropic-client.js"
+ ],
+ "CLAUDE_AGENT_SDK_VERSION": [
+  "settings/global-config-and-gates.js",
+  "mcp/request-user-dialog-response-ignored.js",
+  "telemetry/session-title-generated.js"
+ ],
+ "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": [
+  "models/claude-3-5-sonnet.js"
+ ],
+ "CLAUDE_BG_AUTH_SNAPSHOT_PATH": [
+  "auth/descriptor-direct.js"
+ ],
+ "CLAUDE_BG_BACKEND": [
+  "auth/is-desktop-entrypoint-exempted.js"
+ ],
+ "CLAUDE_BG_CLAIM_AUTH": [
+  "telemetry/bg-adopt-token-lost-respawn.js"
+ ],
+ "CLAUDE_BG_PTY_AUTH": [
+  "shell/run-pty-host.js"
+ ],
+ "CLAUDE_BG_RENDEZVOUS_SOCK": [
+  "agents/attacher-caps.js"
+ ],
+ "CLAUDE_BG_RV_AUTH": [
+  "agents/attacher-caps.js"
+ ],
+ "CLAUDE_BG_SOCKET_TOKENS_PATH": [
+  "shell/run-pty-host.js",
+  "agents/attacher-caps.js",
+  "telemetry/bg-adopt-token-lost-respawn.js"
+ ],
+ "CLAUDE_BG_SOURCE": [
+  "ui/repl-screen.js"
+ ],
+ "CLAUDE_BG_TCC_DISCLAIMED": [
+  "computer-use/chunk-20fbb9ad.js"
+ ],
+ "CLAUDE_BRIDGE_REATTACH_GROUPING": [
+  "remote/init-repl-bridge.js"
+ ],
+ "CLAUDE_BRIDGE_REATTACH_NO_BACKFILL": [
+  "remote/init-repl-bridge.js"
+ ],
+ "CLAUDE_BRIDGE_REATTACH_OUTBOUND_ONLY": [
+  "remote/init-repl-bridge.js"
+ ],
+ "CLAUDE_BRIDGE_REATTACH_OWNER_ACCT": [
+  "remote/init-repl-bridge.js"
+ ],
+ "CLAUDE_BRIDGE_REATTACH_OWNER_ORG": [
+  "remote/init-repl-bridge.js"
+ ],
+ "CLAUDE_BRIDGE_REATTACH_SEQ": [
+  "remote/init-repl-bridge.js"
+ ],
+ "CLAUDE_BRIDGE_REATTACH_SESSION": [
+  "remote/init-repl-bridge.js"
+ ],
+ "CLAUDE_BYTE_STREAM_IDLE_TIMEOUT_MS": [
+  "api/anthropic-client.js"
+ ],
+ "CLAUDE_CHROME_PERMISSION_MODE": [
+  "context/create-chrome-context.js"
+ ],
+ "CLAUDE_CODE_ACCOUNT_UUID": [
+  "context/create-chrome-context.js"
+ ],
+ "CLAUDE_CODE_ACTION": [
+  "settings/global-config-and-gates.js"
+ ],
+ "CLAUDE_CODE_AGENT": [
+  "cli/session-setup.js"
+ ],
+ "CLAUDE_CODE_ALT_SCREEN_FULL_REPAINT": [
+  "shared/chunk-8b876f81.js"
+ ],
+ "CLAUDE_CODE_API_BASE_URL": [
+  "context/team-memory-sync.js"
+ ],
+ "CLAUDE_CODE_API_KEY_FILE_DESCRIPTOR": [
+  "telemetry/bridge-resume-respects-local-owner.js"
+ ],
+ "CLAUDE_CODE_ATTRIBUTION_HEADER": [
+  "auth/claude-desktop-3p.js"
+ ],
+ "CLAUDE_CODE_BLOCKING_LIMIT_OVERRIDE": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_CODE_BRIDGE_MCP_CARRIER": [
+  "remote/self-hosted.js"
+ ],
+ "CLAUDE_CODE_BRIDGE_SESSION_ID": [
+  "remote/chunk-8734517b.js"
+ ],
+ "CLAUDE_CODE_BYOC_ENABLE_DATADOG": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "CLAUDE_CODE_CLASSIFIER_SUMMARY": [
+  "context/classifier-disabled-surfaces.js"
+ ],
+ "CLAUDE_CODE_CONTAINER_ID": [
+  "settings/global-config-and-gates.js",
+  "api/anthropic-client.js"
+ ],
+ "CLAUDE_CODE_COORDINATOR_EXTRA_TOOLS": [
+  "shared/chunk-6cafd643.js"
+ ],
+ "CLAUDE_CODE_COORDINATOR_MODE": [
+  "agents/chunk-f334f2d3.js",
+  "git/coordinator-mode-switched.js"
+ ],
+ "CLAUDE_CODE_CUSTOM_OAUTH_URL": [
+  "auth/oauth-2025-04-20.js"
+ ],
+ "CLAUDE_CODE_DAEMON_COLD_START": [
+  "telemetry/fleet-past-sessions.js"
+ ],
+ "CLAUDE_CODE_DISABLE_AUTO_MEMORY": [
+  "settings/global-config-and-gates.js"
+ ],
+ "CLAUDE_CODE_DISABLE_CLAUDE_MDS": [
+  "cli/session-setup.js"
+ ],
+ "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": [
+  "remote/self-hosted-runner-main.js",
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "CLAUDE_CODE_DISABLE_PRECOMPACT_SKIP": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_CODE_DONT_INHERIT_ENV": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_CODE_ENABLE_APPEND_SUBAGENT_PROMPT": [
+  "agents/agent-summary-skipped.js"
+ ],
+ "CLAUDE_CODE_ENABLE_AWAY_SUMMARY": [
+  "context/ccr-recap-generate.js"
+ ],
+ "CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION": [
+  "core/query-loop.js"
+ ],
+ "CLAUDE_CODE_ENABLE_PROXY_AUTH_HELPER": [
+  "git/agent-proxy-standalone.js"
+ ],
+ "CLAUDE_CODE_ENABLE_TELEMETRY": [
+  "telemetry/agent-proxy-init.js",
+  "telemetry/big-query-export-interval-ms.js",
+  "cli/root-command.js",
+  "context/account-memory-text-not-identified.js"
+ ],
+ "CLAUDE_CODE_ENHANCED_TELEMETRY_BETA": [
+  "agents/api-system.js"
+ ],
+ "CLAUDE_CODE_ENTRYPOINT": [
+  "git/ssh-placeholder.js",
+  "settings/global-config-and-gates.js",
+  "core/conversation-engine.js",
+  "auth/claude-desktop-3p.js",
+  "context/tool-result-clearing-after-idle-server-report.js",
+  "fs/chunk-9b7a3f1c.js",
+  "remote/claude-code-remote.js"
+ ],
+ "CLAUDE_CODE_ENVIRONMENT_KIND": [
+  "auth/guard-runner-review-tokens.js",
+  "settings/non-string-value.js",
+  "remote/turn-handoff-flag-wait.js",
+  "remote/self-hosted.js",
+  "cli/headless-print-mode.js"
+ ],
+ "CLAUDE_CODE_ENVIRONMENT_RUNNER_VERSION": [
+  "remote/turn-handoff-flag-wait.js"
+ ],
+ "CLAUDE_CODE_EXTRA_BODY": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_CODE_EXTRA_METADATA": [
+  "core/system-prompt-blocks.js"
+ ],
+ "CLAUDE_CODE_FORCE_WINDOWS_CREDMAN": [
+  "auth/permission-error.js"
+ ],
+ "CLAUDE_CODE_GATEWAY_TOKEN_FILE_DESCRIPTOR": [
+  "auth/descriptor-direct.js"
+ ],
+ "CLAUDE_CODE_GLOB_HIDDEN": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_CODE_GLOB_NO_IGNORE": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_CODE_HOST_AUTH_ENV_VAR": [
+  "settings/non-string-value.js"
+ ],
+ "CLAUDE_CODE_HOST_AUTH_REFRESH_TIMEOUT_MS": [
+  "cli/headless-print-mode.js"
+ ],
+ "CLAUDE_CODE_HOST_PLATFORM": [
+  "settings/global-config-and-gates.js",
+  "shared/environment.js"
+ ],
+ "CLAUDE_CODE_HOVER_REST": [
+  "cli.js"
+ ],
+ "CLAUDE_CODE_IDLE_THRESHOLD_MINUTES": [
+  "ui/repl-screen.js"
+ ],
+ "CLAUDE_CODE_IDLE_TOKEN_THRESHOLD": [
+  "ui/repl-screen.js"
+ ],
+ "CLAUDE_CODE_JIT_POLICY_AFTER_STARTUP": [
+  "cli.js"
+ ],
+ "CLAUDE_CODE_MAX_OUTPUT_TOKENS": [
+  "settings/global-config-and-gates.js"
+ ],
+ "CLAUDE_CODE_MAX_TURNS": [
+  "models/claude-3-5-sonnet.js"
+ ],
+ "CLAUDE_CODE_MCP_ALLOWLIST_ENV": [
+  "git/ssh-placeholder.js"
+ ],
+ "CLAUDE_CODE_MESSAGING_SOCKET": [
+  "artifacts/foreign-owner.js"
+ ],
+ "CLAUDE_CODE_OAUTH_CLIENT_ID": [
+  "auth/oauth-2025-04-20.js",
+  "auth/auth-login.js"
+ ],
+ "CLAUDE_CODE_OAUTH_REFRESH_TOKEN": [
+  "auth/auth-login.js"
+ ],
+ "CLAUDE_CODE_OAUTH_SCOPES": [
+  "auth/auth-login.js"
+ ],
+ "CLAUDE_CODE_OAUTH_TOKEN": [
+  "settings/global-config-and-gates.js",
+  "telemetry/bridge-resume-respects-local-owner.js",
+  "cli/bg-claim-env-dropped.js",
+  "auth/oauth-storage-warning.js",
+  "telemetry/bg-daemon-spawn-reinstall-wait.js"
+ ],
+ "CLAUDE_CODE_ORGANIZATION_UUID": [
+  "shared/sk-ant-sid.js"
+ ],
+ "CLAUDE_CODE_OTEL_HEADERS_HELPER_DEBOUNCE_MS": [
+  "settings/global-config-and-gates.js"
+ ],
+ "CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE": [
+  "computer-use/native-auto-updater-skipped-unverified-release.js"
+ ],
+ "CLAUDE_CODE_PLUGIN_DIRS": [
+  "cli.js"
+ ],
+ "CLAUDE_CODE_PROJECT_DIR_NAME": [
+  "models/claude-3-5-sonnet.js"
+ ],
+ "CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST": [
+  "settings/non-string-value.js"
+ ],
+ "CLAUDE_CODE_RATE_LIMIT_TIER": [
+  "git/ssh-placeholder.js",
+  "auth/descriptor-direct.js"
+ ],
+ "CLAUDE_CODE_REFUSAL_FALLBACK_CATCH_ALL": [
+  "api/anthropic-client.js"
+ ],
+ "CLAUDE_CODE_REMOTE": [
+  "settings/global-config-and-gates.js",
+  "telemetry/agent-proxy-init.js",
+  "telemetry/bridge-resume-respects-local-owner.js",
+  "git/agent-proxy-download-queue.js",
+  "remote/self-hosted.js",
+  "cli.js"
+ ],
+ "CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE": [
+  "auth/guard-runner-review-tokens.js",
+  "settings/global-config-and-gates.js",
+  "remote/self-hosted.js"
+ ],
+ "CLAUDE_CODE_REMOTE_MEMORY_DIR": [
+  "settings/global-config-and-gates.js",
+  "context/org-memory-writes-setting-changed.js"
+ ],
+ "CLAUDE_CODE_REMOTE_SESSION_ID": [
+  "settings/global-config-and-gates.js",
+  "api/anthropic-client.js",
+  "git/agent-proxy-download-queue.js",
+  "context/not-admin-owned.js",
+  "cli/session-setup.js",
+  "remote/self-hosted.js"
+ ],
+ "CLAUDE_CODE_REMOTE_SESSION_ORIGIN": [
+  "auth/guard-runner-review-tokens.js",
+  "cli.js"
+ ],
+ "CLAUDE_CODE_RESTRICTED": [
+  "models/claude-3-5-sonnet.js",
+  "cli.js"
+ ],
+ "CLAUDE_CODE_SAFE_MODE": [
+  "models/claude-3-5-sonnet.js",
+  "cli/session-setup.js"
+ ],
+ "CLAUDE_CODE_SCRIPT_CAPS": [
+  "git/ssh-placeholder.js"
+ ],
+ "CLAUDE_CODE_SESSION_ACCESS_TOKEN": [
+  "shared/sk-ant-sid.js",
+  "remote/self-hosted-runner-main.js",
+  "cli/main.js"
+ ],
+ "CLAUDE_CODE_SESSION_ID": [
+  "hooks/conversation-reset.js",
+  "remote/self-hosted.js"
+ ],
+ "CLAUDE_CODE_SESSION_KIND": [
+  "models/claude-3-5-sonnet.js",
+  "fs/chunk-86a4e44e.js",
+  "cli.js"
+ ],
+ "CLAUDE_CODE_SHELL": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_CODE_SIMPLE": [
+  "models/claude-3-5-sonnet.js",
+  "cli/session-setup.js",
+  "cli.js"
+ ],
+ "CLAUDE_CODE_SKIP_PROMPT_HISTORY": [
+  "context/team-memory-sync.js"
+ ],
+ "CLAUDE_CODE_SLOW_OPERATION_THRESHOLD_MS": [
+  "fs/gitlab-runner-authentication-token.js"
+ ],
+ "CLAUDE_CODE_SPAWNED_BY_SERVER": [
+  "shared/environment.js"
+ ],
+ "CLAUDE_CODE_SPAWN_TIMESTAMP_MS": [
+  "mcp/init-function-end.js"
+ ],
+ "CLAUDE_CODE_STARTUP_FAILURE_RESULTS": [
+  "cli/stream-json.js"
+ ],
+ "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": [
+  "git/ssh-placeholder.js",
+  "settings/settings-auto-mode-rules-untrusted-source-ignored.js"
+ ],
+ "CLAUDE_CODE_SUBSCRIPTION_TYPE": [
+  "git/ssh-placeholder.js",
+  "auth/descriptor-direct.js"
+ ],
+ "CLAUDE_CODE_SUPERVISED": [
+  "models/claude-3-5-sonnet.js"
+ ],
+ "CLAUDE_CODE_TAGS": [
+  "settings/global-config-and-gates.js"
+ ],
+ "CLAUDE_CODE_TEE_SDK_STDOUT": [
+  "remote/turn-handoff-flag-wait.js"
+ ],
+ "CLAUDE_CODE_TEST_ALLOW_REAL_NETWORK": [
+  "mcp/allowed-warning.js"
+ ],
+ "CLAUDE_CODE_TMPDIR": [
+  "fs/chunk-0b1060fd.js"
+ ],
+ "CLAUDE_CODE_USE_ANTHROPIC_AWS": [
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "CLAUDE_CODE_USE_ANTHROPIC_GOOGLE_CLOUD": [
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "CLAUDE_CODE_USE_BEDROCK": [
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "CLAUDE_CODE_USE_FOUNDRY": [
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "CLAUDE_CODE_USE_MANTLE": [
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "CLAUDE_CODE_USE_POWERSHELL_TOOL": [
+  "plugins/advertised-command-is-offered.js"
+ ],
+ "CLAUDE_CODE_USE_VERTEX": [
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "CLAUDE_CODE_WORKER_EPOCH": [
+  "cli/headless-print-mode.js"
+ ],
+ "CLAUDE_CONFIG_DIR": [
+  "skills/disable-model-invocation.js",
+  "git/ssh-placeholder.js",
+  "models/claude-3-5-sonnet.js",
+  "shared/environment.js",
+  "remote/self-hosted-runner-main.js",
+  "mcp/request-user-dialog-response-ignored.js",
+  "telemetry/bg-adopt-token-lost-respawn.js",
+  "tasks/daemon-main.js",
+  "auth/claude-code-user.js",
+  "auth/permission-error.js",
+  "telemetry/bg-daemon-spawn-reinstall-wait.js"
+ ],
+ "CLAUDE_COWORK_MEMORY_EXTRA_GUIDELINES": [
+  "context/org-memory-writes-setting-changed.js"
+ ],
+ "CLAUDE_COWORK_MEMORY_INDEX_CONTENT": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_FORCE_DISPLAY_SURVEY": [
+  "ui/repl-screen.js"
+ ],
+ "CLAUDE_INTERNAL_ASSISTANT_TEAM_NAME": [
+  "agents/initialize-session-team.js"
+ ],
+ "CLAUDE_INTERNAL_FC_OVERRIDES": [
+  "cli.js"
+ ],
+ "CLAUDE_JOB_DIR": [
+  "fs/backed-up.js",
+  "context/org-memory-writes-setting-changed.js",
+  "ui/repl-screen.js"
+ ],
+ "CLAUDE_LOCAL_OAUTH_API_BASE": [
+  "auth/oauth-2025-04-20.js"
+ ],
+ "CLAUDE_LOCAL_OAUTH_APPS_BASE": [
+  "auth/oauth-2025-04-20.js"
+ ],
+ "CLAUDE_LOCAL_OAUTH_CONSOLE_BASE": [
+  "auth/oauth-2025-04-20.js"
+ ],
+ "CLAUDE_MEMORY_STORES": [
+  "settings/global-config-and-gates.js",
+  "context/org-memory-writes-setting-changed.js"
+ ],
+ "CLAUDE_PTY_HEARTBEAT_MS": [
+  "shell/run-pty-host.js"
+ ],
+ "CLAUDE_PTY_HOST_EXEC": [
+  "shell/run-pty-host.js"
+ ],
+ "CLAUDE_PTY_ORPHAN_CHECK_MS": [
+  "shell/run-pty-host.js"
+ ],
+ "CLAUDE_PTY_RECORD": [
+  "shell/run-pty-host.js"
+ ],
+ "CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX": [
+  "shared/remote-control.js",
+  "cli/session-setup.js",
+  "remote/bridge-main.js"
+ ],
+ "CLAUDE_RUNNER_ACTIVITY_FD": [
+  "remote/turn-handoff-flag-wait.js"
+ ],
+ "CLAUDE_RUNNER_SKIP_GIT_VERIFY": [
+  "git/anthropic-version.js"
+ ],
+ "CLAUDE_RUNNER_USE_GIT_PROXY": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "CLAUDE_SECURESTORAGE_CONFIG_DIR": [
+  "agents/spawn-teammate.js",
+  "auth/claude-code-user.js"
+ ],
+ "CLAUDE_SESSION_INGRESS_TOKEN_FILE": [
+  "shared/sk-ant-sid.js"
+ ],
+ "CLAUDE_SLOW_FIRST_BYTE_MS": [
+  "core/conversation-engine.js"
+ ],
+ "CLAUDE_SSH_DAEMON_CHILD": [
+  "shared/environment.js"
+ ],
+ "CLAUDE_SSH_RUN_DIR": [
+  "shared/environment.js"
+ ],
+ "CLAUDE_STREAM_IDLE_TIMEOUT_MS": [
+  "api/anthropic-client.js"
+ ],
+ "CLAUDE_TMPDIR": [
+  "core/conversation-engine.js",
+  "fs/chunk-0b1060fd.js"
+ ],
+ "CLAUDE_TRUSTED_DEVICE_TOKEN": [
+  "remote/sessions-elevated-auth-disable-proactive-enrollment.js"
+ ],
+ "CLIPBOARD_NAPI_NODE_PATH": [
+  "terminal/wl-copy.js"
+ ],
+ "CLOUDSDK_CONFIG": [
+  "auth/credential-source.js"
+ ],
+ "CLOUD_ML_REGION": [
+  "models/claude-3-5-sonnet.js"
+ ],
+ "CLOUD_RUN_JOB": [
+  "auth/credential-source.js"
+ ],
+ "CODER": [
+  "shared/environment.js"
+ ],
+ "CODER_WORKSPACE_NAME": [
+  "shared/environment.js"
+ ],
+ "CODESPACES": [
+  "shared/environment.js"
+ ],
+ "COMSPEC": [
+  "shared/environment.js"
+ ],
+ "COREPACK_ENABLE_AUTO_PIN": [
+  "cli.js"
+ ],
+ "CURSOR_TRACE_ID": [
+  "shared/environment.js",
+  "terminal/aria-preserve-whitespace.js",
+  "ui/scroll-speed-set.js"
+ ],
+ "ConEmuANSI": [
+  "shared/environment.js"
+ ],
+ "ConEmuPID": [
+  "shared/environment.js"
+ ],
+ "ConEmuTask": [
+  "shared/environment.js"
+ ],
+ "DAYTONA_WS_ID": [
+  "shared/environment.js"
+ ],
+ "DEBUG": [
+  "auth/get-bearer-token-provider.js",
+  "fs/content-encoding.js"
+ ],
+ "DEBUG_AUTH": [
+  "auth/credential-source.js"
+ ],
+ "DENO_DEPLOYMENT_ID": [
+  "shared/environment.js"
+ ],
+ "DETECT_GCP_RETRIES": [
+  "auth/credential-source.js"
+ ],
+ "DEVPOD": [
+  "shared/environment.js"
+ ],
+ "DEVPOD_WORKSPACE_UID": [
+  "shared/environment.js"
+ ],
+ "DISABLE_AUTOUPDATER": [
+  "settings/global-config-and-gates.js"
+ ],
+ "DISABLE_COMPACT": [
+  "settings/global-config-and-gates.js",
+  "core/conversation-engine.js",
+  "context/hard-limit.js",
+  "telemetry/reactive-compact-remote.js",
+  "ui/tool-message-rendering.js",
+  "ui/unknown-model.js",
+  "ui/repl-screen.js"
+ ],
+ "DISABLE_ERROR_REPORTING": [
+  "remote/self-hosted-runner-main.js",
+  "artifacts/cowritten-artifact-html.js",
+  "auth/allowed-taints-clean.js"
+ ],
+ "DISABLE_GROWTHBOOK": [
+  "telemetry/bridge-resume-respects-local-owner.js",
+  "remote/self-hosted-runner-main.js"
+ ],
+ "DISABLE_INSTALLATION_CHECKS": [
+  "computer-use/native-auto-updater-skipped-unverified-release.js",
+  "telemetry/version-lock-acquired.js",
+  "fs/npm-global.js",
+  "ui/repl-screen.js"
+ ],
+ "DISABLE_TELEMETRY": [
+  "remote/self-hosted-runner-main.js",
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "DISPLAY": [
+  "terminal/wl-copy.js"
+ ],
+ "DO_NOT_TRACK": [
+  "remote/self-hosted-runner-main.js",
+  "artifacts/cowritten-artifact-html.js"
+ ],
+ "DYNO": [
+  "shared/environment.js"
+ ],
+ "ENABLE_CLAUDEAI_MCP_SERVERS": [
+  "mcp/claudeai-mcp-eligibility.js"
+ ],
+ "ENABLE_ENHANCED_TELEMETRY_BETA": [
+  "agents/api-system.js"
+ ],
+ "ENABLE_TOOL_SEARCH": [
+  "core/conversation-engine.js",
+  "mcp/tool-search-unsupported-models.js"
+ ],
+ "FLY_APP_NAME": [
+  "shared/environment.js"
+ ],
+ "FLY_MACHINE_ID": [
+  "shared/environment.js"
+ ],
+ "FORCE_CODE_TERMINAL": [
+  "core/conversation-engine.js"
+ ],
+ "FORCE_COLOR": [
+  "core/conversation-engine.js"
+ ],
+ "FUNCTION_NAME": [
+  "auth/credential-source.js"
+ ],
+ "FUNCTION_TARGET": [
+  "auth/credential-source.js"
+ ],
+ "GAE_MODULE_NAME": [
+  "auth/credential-source.js"
+ ],
+ "GAE_SERVICE": [
+  "auth/credential-source.js"
+ ],
+ "GCE_METADATA_HOST": [
+  "auth/credential-source.js"
+ ],
+ "GCE_METADATA_IP": [
+  "auth/credential-source.js"
+ ],
+ "GCLOUD_PROJECT": [
+  "auth/credential-source.js"
+ ],
+ "GH_ENTERPRISE_TOKEN": [
+  "context/team-memory-sync.js"
+ ],
+ "GH_HOST": [
+  "context/team-memory-sync.js"
+ ],
+ "GH_TOKEN": [
+  "context/team-memory-sync.js"
+ ],
+ "GITHUB_ACTIONS": [
+  "settings/global-config-and-gates.js",
+  "settings/settings-auto-mode-rules-untrusted-source-ignored.js",
+  "shared/environment.js"
+ ],
+ "GITHUB_ACTION_PATH": [
+  "git/ssh-placeholder.js",
+  "settings/global-config-and-gates.js"
+ ],
+ "GITHUB_ENTERPRISE_TOKEN": [
+  "context/team-memory-sync.js"
+ ],
+ "GITHUB_ENV": [
+  "git/ssh-placeholder.js"
+ ],
+ "GITHUB_EVENT_NAME": [
+  "settings/global-config-and-gates.js"
+ ],
+ "GITHUB_EVENT_PATH": [
+  "git/ssh-placeholder.js"
+ ],
+ "GITHUB_TOKEN": [
+  "context/team-memory-sync.js"
+ ],
+ "GITHUB_WORKSPACE": [
+  "git/ssh-placeholder.js"
+ ],
+ "GITLAB_CI": [
+  "shared/environment.js"
+ ],
+ "GITPOD_WORKSPACE_ID": [
+  "shared/environment.js"
+ ],
+ "GIT_CONFIG_COUNT": [
+  "remote/self-hosted-runner-main.js",
+  "fs/chunk-0b1060fd.js"
+ ],
+ "GIT_CONFIG_GLOBAL": [
+  "remote/self-hosted-runner-main.js",
+  "git/agent-proxy-download-queue.js"
+ ],
+ "GIT_SSH_COMMAND": [
+  "remote/self-hosted-runner-main.js",
+  "git/rev-parse.js"
+ ],
+ "GNOME_TERMINAL_SERVICE": [
+  "shared/environment.js"
+ ],
+ "GOOGLE_APPLICATION_CREDENTIALS": [
+  "auth/credential-source.js"
+ ],
+ "GOOGLE_CLOUD_PROJECT": [
+  "shared/environment.js",
+  "auth/credential-source.js"
+ ],
+ "GOOGLE_CLOUD_QUOTA_PROJECT": [
+  "auth/credential-source.js"
+ ],
+ "GOOGLE_CLOUD_WORKSTATIONS": [
+  "shared/environment.js"
+ ],
+ "GRACEFUL_FS_PLATFORM": [
+  "fs/chunk-475c6783.js"
+ ],
+ "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "GRPC_EXPERIMENTAL_ENABLE_OUTLIER_DETECTION": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "GRPC_NODE_TRACE": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "GRPC_NODE_USE_ALTERNATIVE_RESOLVER": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "GRPC_NODE_VERBOSITY": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "GRPC_SSL_CIPHER_SUITES": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "GRPC_TRACE": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "GRPC_VERBOSITY": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "HOME": [
+  "remote/self-hosted-runner-main.js",
+  "auth/credential-source.js"
+ ],
+ "HTTPS_PROXY": [
+  "shared/proxy-authorization.js",
+  "remote/self-hosted-runner-main.js",
+  "git/agent-proxy-download-queue.js",
+  "auth/credential-source.js",
+  "git/rev-parse.js"
+ ],
+ "HTTP_PROXY": [
+  "shared/proxy-authorization.js",
+  "auth/credential-source.js"
+ ],
+ "INK_SCREEN_READER": [
+  "terminal/ink-renderer.js"
+ ],
+ "INTELLIJ_TERMINAL_COMMAND_BLOCKS": [
+  "terminal/aria-preserve-whitespace.js"
+ ],
+ "INTELLIJ_TERMINAL_COMMAND_BLOCKS_REWORKED": [
+  "terminal/aria-preserve-whitespace.js"
+ ],
+ "IS_SANDBOX": [
+  "settings/global-config-and-gates.js",
+  "auth/is-desktop-entrypoint-exempted.js"
+ ],
+ "JAVA_TOOL_OPTIONS": [
+  "shell/sandbox.js"
+ ],
+ "KITTY_WINDOW_ID": [
+  "shared/environment.js"
+ ],
+ "KONSOLE_VERSION": [
+  "shared/environment.js"
+ ],
+ "KUBERNETES_SERVICE_HOST": [
+  "shared/environment.js"
+ ],
+ "K_CONFIGURATION": [
+  "auth/credential-source.js"
+ ],
+ "K_SERVICE": [
+  "shared/environment.js",
+  "auth/credential-source.js"
+ ],
+ "LOCALAPPDATA": [
+  "computer-use/native-auto-updater-skipped-unverified-release.js",
+  "fs/node-modules.js"
+ ],
+ "MAX_THINKING_TOKENS": [
+  "settings/global-config-and-gates.js",
+  "cli/session-setup.js"
+ ],
+ "MCP_CLIENT_SECRET": [
+  "auth/mcp-oauth-flow-success.f313.js",
+  "auth/mcp-oauth-flow-success.ce3f.js"
+ ],
+ "METADATA_SERVER_DETECTION": [
+  "auth/credential-source.js"
+ ],
+ "MSYSTEM": [
+  "shared/environment.js",
+  "git/utf-8.js"
+ ],
+ "NETLIFY": [
+  "shared/environment.js"
+ ],
+ "NODE_DEBUG": [
+  "mcp/allowed-warning.js",
+  "fs/chunk-475c6783.js"
+ ],
+ "NODE_EXTRA_CA_CERTS": [
+  "shell/sandbox.js",
+  "settings/config-read-failed.js"
+ ],
+ "NODE_OPTIONS": [
+  "models/claude-3-5-sonnet.js",
+  "cli.js"
+ ],
+ "NO_PROXY": [
+  "shared/proxy-authorization.js",
+  "auth/credential-source.js",
+  "fs/content-encoding.js",
+  "auth/start-gateway.js"
+ ],
+ "NoDefaultCurrentDirectoryInExePath": [
+  "mcp/request-user-dialog-response-ignored.js",
+  "cli/main.js",
+  "cli.js"
+ ],
+ "OSTYPE": [
+  "context/tool-cgroup-exclude-classes.js"
+ ],
+ "OTEL_EXPORTER_OTLP_ENDPOINT": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "OTEL_EXPORTER_OTLP_HEADERS": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "OTEL_EXPORTER_OTLP_INSECURE": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE": [
+  "telemetry/big-query-export-interval-ms.js"
+ ],
+ "OTEL_EXPORTER_PROMETHEUS_HOST": [
+  "vendor/opentelemetry/target-info.js"
+ ],
+ "OTEL_EXPORTER_PROMETHEUS_PORT": [
+  "vendor/opentelemetry/target-info.js"
+ ],
+ "OTEL_LOGS_EXPORT_INTERVAL": [
+  "settings/global-config-and-gates.js"
+ ],
+ "OTEL_LOG_RAW_API_BODIES": [
+  "core/conversation-engine.js"
+ ],
+ "OTEL_LOG_TOOL_CONTENT": [
+  "settings/global-config-and-gates.js"
+ ],
+ "P4PORT": [
+  "fs/chunk-ce5d00cd.js"
+ ],
+ "PATH": [
+  "git/ssh-placeholder.js",
+  "shared/environment.js",
+  "shell/sandbox.js",
+  "context/beta-agent-toolset20260401.js",
+  "remote/self-hosted-runner-main.js",
+  "context/tool-cgroup-exclude-classes.js"
+ ],
+ "PATHEXT": [
+  "shared/environment.js",
+  "shell/sandbox.js",
+  "context/tool-cgroup-exclude-classes.js"
+ ],
+ "PROJECT_DOMAIN": [
+  "shared/environment.js"
+ ],
+ "ProgramData": [
+  "shell/sandbox.js",
+  "auth/get-bearer-token-provider.js"
+ ],
+ "ProgramFiles": [
+  "auth/get-bearer-token-provider.js"
+ ],
+ "RAILWAY_ENVIRONMENT_NAME": [
+  "shared/environment.js"
+ ],
+ "RAILWAY_SERVICE_NAME": [
+  "shared/environment.js"
+ ],
+ "RENDER": [
+  "shared/environment.js"
+ ],
+ "REPL_ID": [
+  "shared/environment.js"
+ ],
+ "REPL_SLUG": [
+  "shared/environment.js"
+ ],
+ "RUNNER_ENVIRONMENT": [
+  "settings/global-config-and-gates.js"
+ ],
+ "RUNNER_OS": [
+  "settings/global-config-and-gates.js"
+ ],
+ "SDK_NATIVE_BIN": [
+  "mcp/request-user-dialog-response-ignored.js"
+ ],
+ "SELF_HOSTED_RUNNER_BASE_DIR": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_CHECKOUT_HOOK_TIMEOUT_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_CLIENT_LABEL": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_CONFIGURE_GIT": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_CONFINE_REPO_SETTINGS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_DEBUG_DIR": [
+  "remote/self-hosted-runner-orchestrator-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_DEBUG_TOKEN_DIR": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_DEFER_SHUTDOWN_MAX_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_DIFF_FINDS_NESTED_REPOSITORY": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_DRAIN_GRACE_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_DRAIN_MARKER_FILE": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_DRAIN_WAIT_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_ENVIRONMENT_SECRET": [
+  "remote/self-hosted-runner-orchestrator-main.js",
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_EXEC_PATH": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_HEALTH_PORT": [
+  "remote/self-hosted-runner-orchestrator-main.js",
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_HOOKS_DIR": [
+  "remote/self-hosted-runner-orchestrator-main.js",
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_HOST_CONFIG_DIR": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_HOST_CONFIG_SNAPSHOT": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_IDLE_SHUTDOWN_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_LOCK_TO_ACCOUNT": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_LOG_FILE": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_MAX_LIFETIME_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_POOL_SECRET": [
+  "remote/self-hosted-runner-orchestrator-main.js",
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_POST_SESSION_HOOK_TIMEOUT_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_PUSH_OUTCOME_ON_RELEASE": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_REMOVE_SESSION_STATE": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_RETIRE_AT": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_SERVER_AUTO_MODE_LISTS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_SESSION_IDLE_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_SESSION_STOP_GRACE_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_SIGKILL_TIMEOUT_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_STARTUP_TIMEOUT_MS": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SELF_HOSTED_RUNNER_TRUST_WORKSPACE": [
+  "remote/self-hosted-runner-main.js"
+ ],
+ "SESSIONNAME": [
+  "shared/environment.js"
+ ],
+ "SESSION_INGRESS_URL": [
+  "core/conversation-engine.js",
+  "remote/self-hosted.js"
+ ],
+ "SHELL": [
+  "shared/environment.js",
+  "shell/chunk-8eebd6c6.js"
+ ],
+ "SLASH_COMMAND_TOOL_CHAR_BUDGET": [
+  "core/conversation-engine.js"
+ ],
+ "SPACE_CREATOR_USER_ID": [
+  "shared/environment.js"
+ ],
+ "SRT_DEBUG": [
+  "fs/chunk-0b1060fd.js"
+ ],
+ "SSH_CLIENT": [
+  "shared/environment.js"
+ ],
+ "SSH_CONNECTION": [
+  "shared/environment.js"
+ ],
+ "SSH_TTY": [
+  "shared/environment.js"
+ ],
+ "SSL_CERT_FILE": [
+  "git/agent-proxy-download-queue.js"
+ ],
+ "STY": [
+  "shared/environment.js"
+ ],
+ "SWE_BENCH_INSTANCE_ID": [
+  "settings/global-config-and-gates.js"
+ ],
+ "SWE_BENCH_RUN_ID": [
+  "settings/global-config-and-gates.js"
+ ],
+ "SWE_BENCH_TASK_ID": [
+  "settings/global-config-and-gates.js"
+ ],
+ "SystemRoot": [
+  "shell/sandbox.js"
+ ],
+ "TERM": [
+  "shared/environment.js"
+ ],
+ "TERMINAL_EMULATOR": [
+  "shared/environment.js"
+ ],
+ "TERMINATOR_UUID": [
+  "shared/environment.js"
+ ],
+ "TERM_PROGRAM": [
+  "shared/environment.js"
+ ],
+ "TEST_GRACEFUL_FS_GLOBAL_PATCH": [
+  "fs/chunk-475c6783.js"
+ ],
+ "TILIX_ID": [
+  "shared/environment.js"
+ ],
+ "TMUX": [
+  "shared/environment.js"
+ ],
+ "USER": [
+  "auth/claude-code-user.js"
+ ],
+ "VERCEL": [
+  "shared/environment.js"
+ ],
+ "VSCODE_GIT_ASKPASS_MAIN": [
+  "shared/environment.js"
+ ],
+ "VTE_VERSION": [
+  "shared/environment.js"
+ ],
+ "VisualStudioVersion": [
+  "shared/environment.js"
+ ],
+ "WAYLAND_DISPLAY": [
+  "terminal/wl-copy.js"
+ ],
+ "WEBSITE_SITE_NAME": [
+  "shared/environment.js"
+ ],
+ "WEBSITE_SKU": [
+  "shared/environment.js"
+ ],
+ "WINDIR": [
+  "computer-use/bad-args.js"
+ ],
+ "WSL_DISTRO_NAME": [
+  "shared/environment.js"
+ ],
+ "WT_SESSION": [
+  "telemetry/render-glyph-cardinality.js",
+  "shared/environment.js",
+  "terminal/ink-renderer.js"
+ ],
+ "XDG_CONFIG_HOME": [
+  "remote/self-hosted-runner-main.js",
+  "plugins/plugin-eval-handler.js"
+ ],
+ "XDG_RUNTIME_DIR": [
+  "ide/create-lsp-client.js",
+  "plugins/plugin-eval-handler.js"
+ ],
+ "XTERM_VERSION": [
+  "shared/environment.js"
+ ],
+ "ZELLIJ": [
+  "terminal/ink-renderer.js",
+  "terminal/aria-preserve-whitespace.js",
+  "telemetry/bg-attach-outcome.js",
+  "ui/repl-screen.js"
+ ],
+ "__CFBundleIdentifier": [
+  "shared/environment.js",
+  "cli/main.js"
+ ],
+ "all_proxy": [
+  "remote/self-hosted-runner-main.js",
+  "git/rev-parse.js"
+ ],
+ "gcloud_project": [
+  "auth/credential-source.js"
+ ],
+ "google_application_credentials": [
+  "auth/credential-source.js"
+ ],
+ "google_cloud_project": [
+  "auth/credential-source.js"
+ ],
+ "grpc_proxy": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "http_proxy": [
+  "vendor/grpc/proto3-optional.js",
+  "shared/proxy-authorization.js",
+  "auth/credential-source.js"
+ ],
+ "https_proxy": [
+  "vendor/grpc/proto3-optional.js",
+  "shared/proxy-authorization.js",
+  "remote/self-hosted-runner-main.js",
+  "auth/credential-source.js",
+  "git/rev-parse.js"
+ ],
+ "no_grpc_proxy": [
+  "vendor/grpc/proto3-optional.js"
+ ],
+ "no_proxy": [
+  "vendor/grpc/proto3-optional.js",
+  "shared/proxy-authorization.js",
+  "auth/credential-source.js",
+  "fs/content-encoding.js",
+  "auth/start-gateway.js"
+ ]
+}

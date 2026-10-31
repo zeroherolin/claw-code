@@ -1,0 +1,99 @@
+// darwin/shared/path-rejected.js — Claude Code 2.1.310（darwin）模块 chunk-xfc6fyxr.js
+import { d, v } from "../telemetry/anthropic-workspace-id.js";
+import { X } from "./chunk-57ff8cc1.js";
+import { In } from "../fs/node-modules.js";
+import { i } from "./environment.js";
+import { t } from "../fs/gitlab-runner-authentication-token.js";
+import { d6e, ggn } from "./project-docs.js";
+import { bqs, $9n, PHe, $Ge, UGe, Kun } from "../fs/file-upload.js";
+import { f } from "./chunk-2fe3b2b7.js";
+import { Crr, Wt } from "../settings/global-config-and-gates.js";
+import { Xb } from "../shell/chunk-8eebd6c6.js";
+import { yet } from "../context/org-memory-writes-setting-changed.js";
+import { J8e } from "./not-regular.js";
+import { bx } from "./chunk-c60ee8b6.js";
+import { o, E, u } from "../vendor/zod/string-format.js";
+import { et } from "./chunk-061dbb8e.js";
+import { basename as z, join as B, sep as k } from "path";
+var y = /* @__PURE__ */ new Set(["x-upload-token", "content-type"]), A = 4096, P = 12e4, D = 4096, U = f(() => u({ sha256: o(), size: E() })), F = { 400: "put_hash_mismatch", 403: "put_refused", 409: "put_already_used", 410: "put_expired", 413: "put_size_mismatch", 429: "put_busy", 503: "put_busy" }, C = 2, O = 2e3, x = 1e4;
+async function T(e, a, p, h, n) {
+  let _ = Crr(e.url), c = _ === void 0 ? void 0 : new URL(e.url);
+  if (_ === void 0 || c === void 0 || c.search !== "" || c.hash !== "" || !h.endsWith("/") || !c.pathname.startsWith(h) || !/^[A-Za-z0-9_-]{1,256}$/.test(c.pathname.slice(h.length))) return "put_url_refused";
+  let s = { "content-type": "application/octet-stream" };
+  for (let [l, r] of Object.entries(e.headers)) {
+    if (!y.has(l.toLowerCase()) || r.length > A || /[^\x20-\x7e]/.test(r)) return "put_header_refused";
+    s[l.toLowerCase()] = r;
+  }
+  try {
+    for (let l = 0; ; l++) {
+      let r = await Wt.put(`/${c.pathname.slice(1)}`, a, { auth: "none", baseUrl: _, headers: s, maxRedirects: 0, maxBodyLength: a.length, maxContentLength: D, timeout: P, signal: n, validateStatus: () => true });
+      if (!r.ok) return r.reason === "essential-traffic-only" ? "essential_traffic" : "egress_blocked";
+      if (r.status === 200) {
+        let b = U().safeParse(r.data);
+        return b.success && b.data.sha256 === p && b.data.size === a.length ? void 0 : "put_bad_answer";
+      }
+      let m = F[r.status] ?? "put_failed";
+      if (m !== "put_busy" || l === C) return m;
+      let R = Number(r.response.headers["retry-after"]);
+      if (await X(Number.isFinite(R) && R >= 0 ? Math.min(R * 1e3, x) : O, n), n.aborted) return "canceled";
+    }
+  } catch (l) {
+    if (n.aborted) return "canceled";
+    return t(`[file inputs] upload threw: ${d(l)}`, { level: "error" }), v(l) === "ERR_BAD_RESPONSE" ? "put_bad_answer" : "put_network";
+  }
+}
+function LUn({ screen: e, maxFileBytes: a, maxTotalBytes: p, uploadPathPrefix: h, namesResolvedPaths: n = false }) {
+  return { async hash(_, c) {
+    let s = [], l = 0;
+    for (let r of _) {
+      if (c.aborted) return [...s, { path: r, code: "canceled" }];
+      let m = await eTr(r, e, a);
+      if ("code" in m) return [...s, n ? m : { path: r, code: m.code }];
+      if (l += m.buf.length, l > p) return [...s, { path: r, code: "too_large_total" }];
+      s.push({ path: r, name: m.name, size: m.buf.length, sha256: m.sha256 });
+    }
+    return s;
+  }, async put(_, c) {
+    let s = [], l = 0;
+    for (let { path: r, sha256: m, url: R, headers: b } of _) {
+      if (c.aborted) return [...s, { path: r, code: "canceled" }];
+      let g = await eTr(r, e, a);
+      if ("code" in g) return [...s, g.code === "resolves_elsewhere" ? { path: r, code: "changed" } : g];
+      if (l += g.buf.length, l > p) return [...s, { path: r, code: "too_large_total" }];
+      if (g.sha256 !== m) return [...s, { path: r, code: "changed" }];
+      let S = await T({ url: R, headers: b }, g.buf, m, h, c);
+      if (S !== void 0) return [...s, { path: r, code: S }];
+      s.push({ path: r, ok: true });
+    }
+    return s;
+  } };
+}
+function H(e, a) {
+  let p = Xb(e);
+  if (p === null) return true;
+  return e !== a && w(p) !== w(a) && !(i.CLAUDE_CODE_REMOTE === true && Kun(p, a, { product: d6e, attach: ggn }));
+}
+function w(e) {
+  return yet(In(e.length > 1 && e.endsWith(k) ? e.slice(0, -1) : e)).replace(/^[a-z]:/, (a) => a.toUpperCase());
+}
+async function FSo(e, a, { fromChat: p = false } = {}) {
+  return await PHe(e, a) || !p && [e, a].some((h) => $9n(h) || bqs(h));
+}
+async function eTr(e, a, p, { followsLinks: h = false } = {}) {
+  let n = await a(e);
+  if (n === void 0) return { path: e, code: "path_rejected" };
+  if (n.requiredDigest === void 0 && await FSo(e, n.realPath, n)) return t("[file inputs] a path was rejected: a credential, or Claude's own"), { path: e, code: "path_rejected" };
+  if (!h && H(e, n.realPath) && !(n.requiredDigest !== void 0 && Xb(e) === B(bx(), z(n.realPath)))) return { path: e, code: "resolves_elsewhere", resolved: n.realPath };
+  let _ = await $Ge(n.realPath);
+  if (J8e.test(_)) return { path: e, code: "name_direction" };
+  let c = await UGe(n.realPath, p);
+  if (!("buf" in c)) return { path: e, code: c.refusal };
+  let s = et(c.buf);
+  if (n.requiredDigest !== void 0 && s !== n.requiredDigest) return { path: e, code: "path_rejected" };
+  return { buf: c.buf, name: _, sha256: s };
+}
+export {
+  FSo,
+  LUn,
+  eTr
+};

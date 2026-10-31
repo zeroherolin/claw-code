@@ -1,0 +1,104 @@
+// linux/agents/cleanup-session-teams.js — Claude Code 2.1.310（linux）模块 chunk-vtxsbnsh.js
+import { D6n, Z0o, uze, MS, bFr, KTe, eNo, SFr, j7e, jcn, wFr, Wcn, Gcn, tNo, dRi, nNo } from "./swarm-team-file-update.js";
+import "../shared/chunk-bfd2df5f.js";
+import "./in-process-teammate.32be.js";
+import "../git/ssh-placeholder.js";
+import "../shared/chunk-537f65d6.js";
+import "../mcp/toolbox-mcp-server-id.js";
+import "../context/fetch-project-timeline.js";
+import "../mcp/claude-browser.js";
+import "../shared/chunk-f98598c3.js";
+import "../shared/chunk-6ae01e90.js";
+import "../settings/settings-auto-mode-rules-untrusted-source-ignored.js";
+import "../shell/spawn-error.js";
+import "../settings/workflow-launch-exec.js";
+import "../fs/chunk-9b7a3f1c.js";
+import "../models/total-tokens-reminder.js";
+import "../models/claude-mythos-preview.js";
+import "../shell/invalid-type.js";
+import "../permissions/quota-auto-resume-disabled.js";
+import "../permissions/classifier-transcript-too-long.js";
+import "../plugins/skills-dir.js";
+import "../shared/chunk-1b1c4439.js";
+import "../fs/chunk-86be9585.js";
+import "../mcp/always-allow.js";
+import "../mcp/chunk-0e2a1db6.js";
+import "../terminal/chunk-3ca478a4.js";
+import "../fs/ca-certs-load.js";
+import "../fs/content-encoding.js";
+import "../remote/self-hosted.js";
+import "../shared/sk-ant-sid.js";
+import "../auth/descriptor-direct.js";
+import "../remote/moved-directory.js";
+import "../auth/profile-explicit.js";
+import "../shared/chunk-2fe3b2b7.js";
+import "../fs/chunk-475c6783.js";
+import "../shared/chunk-cc3baac1.js";
+import "../git/utf-8.js";
+import "../fs/tempdir-owner-mismatch.js";
+import "../fs/async-hooks.7959.js";
+import "../shared/chunk-d4196a83.js";
+import "../shared/async-hooks.9e79.js";
+import "../git/utf8-keep-bom.js";
+import "../shared/chunk-4563156b.js";
+import "../plugins/chunk-0a4c51cf.js";
+import "../shared/chunk-1f805b50.js";
+import "../shared/chunk-8eee6836.js";
+import "../git/chunk-c16cb6b4.js";
+import "../context/tool-cgroup-exclude-classes.js";
+import "../fs/utf-8.aa9a.js";
+import "../shell/chunk-8eebd6c6.js";
+import "../context/utf-8.js";
+import "../fs/not-utf8.js";
+import "../context/tool-result.js";
+import "../fs/utf-8.8f8e.js";
+import "../shell/chunk-fea9c492.js";
+import "../shared/chunk-8bf008d9.js";
+import "../artifacts/chunk-a6c9d164.js";
+import "../shared/async-hooks.5238.js";
+import "../telemetry/chunk-9d6962d2.js";
+import "../shared/chunk-6da6c5a3.js";
+import "../mcp/init-function-end.js";
+import "../shared/chunk-86ecf3aa.js";
+import "../remote/local-agent.js";
+import "../telemetry/chunk-9097a12b.js";
+import "../shared/chunk-de56f88d.js";
+import "../shared/environment.js";
+import "../fs/chunk-ce5d00cd.js";
+import "../auth/oauth-2025-04-20.js";
+import "../artifacts/cowritten-artifact-html.js";
+import "../fs/gitlab-runner-authentication-token.js";
+import "../shared/chunk-d2c47492.js";
+import "../fs/backed-up.js";
+import "../context/not-admin-owned.js";
+import "../shared/chunk-3b9c376b.js";
+import "../shared/chunk-0870a9b4.js";
+import "../models/claude-3-5-sonnet.js";
+import "../fs/node-modules.js";
+import "../shared/chunk-37dd5dd4.js";
+import "../telemetry/anthropic-workspace-id.js";
+import "../shared/chunk-57ff8cc1.js";
+import "../fs/chunk-86a4e44e.js";
+import "./third-party.js";
+import "../remote/chunk-95151620.js";
+import "../fs/async-hooks.93b1.js";
+import "../shared/chunk-50219e50.js";
+import "../cli/chunk-af2447be.js";
+export {
+  dRi as cleanupSessionTeams,
+  uze as getTeamFilePath,
+  bFr as logTeamFileWriteFailure,
+  MS as readTeamFileAsync,
+  nNo as recordSpawnedTeammatePane,
+  tNo as registerTeamForSessionCleanup,
+  jcn as removeMemberByAgentId,
+  eNo as removeTeamMember,
+  j7e as removeTeammateFromTeamFile,
+  Z0o as sanitizeAgentName,
+  D6n as sanitizeName,
+  Gcn as setMemberActive,
+  wFr as setMemberMode,
+  Wcn as syncTeammateMode,
+  KTe as updateTeamFile,
+  SFr as writeTeamFileAsync
+};

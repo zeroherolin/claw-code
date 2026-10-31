@@ -1,0 +1,390 @@
+// darwin/remote/local-session.js — Claude Code 2.1.310（darwin）模块 chunk-4nva8bz9.js
+import { pdi, QY } from "../shell/invalid-type.js";
+import { Br, Sg } from "../shared/chunk-3b9c376b.js";
+import { L } from "../context/not-admin-owned.js";
+import { Pe } from "../shared/chunk-57ff8cc1.js";
+import { t } from "../fs/gitlab-runner-authentication-token.js";
+import { I } from "../shared/chunk-d2c47492.js";
+import { St } from "../artifacts/cowritten-artifact-html.js";
+import { Te } from "../models/total-tokens-reminder.js";
+import { rr } from "../artifacts/chunk-a6c9d164.js";
+import { sy, wZ, xVt, pkt, hrt, So, yrt, fkt, sse, _rt, gM, X4, J4, mkt, Aor, PVt, Tbn, Srt, IVt } from "../agents/session-stable-address.js";
+import { oc } from "../agents/in-process-teammate.32be.js";
+import { g, m, p } from "../telemetry/chunk-9d6962d2.js";
+import { W_, Xa, PRe, Zue } from "../fs/reply-across-default-dirs.js";
+import { yxr, lko, GHr } from "../core/conversation-engine.js";
+import { Cn } from "../git/bridge-child-tool-diff.js";
+import { ya } from "../telemetry/harbor-kite-win.js";
+import { Nyt, $4n, U4n, ocn, B4n, scn, S1t, vQe } from "./fetch-failed.js";
+import { Hb } from "../agents/swarm-team-file-update.js";
+var we = { "remote-control": ["allow_remote_control"], cloud: ["allow_remote_sessions"], unknown: ["allow_remote_control", "allow_remote_sessions"] }, re = { featureLabel: "Remote Control and Cloud sessions", verb: "are" }, ae = "No organization policy allows sends to this kind of session, so it can't be shown as permitted.";
+function tHn(e) {
+  if (Te() !== "firstParty" || St()) return { cause: "residency" };
+  if (pdi()) return null;
+  let n = import.meta.require("../cli/admit-cached-response.js"), i = we[e], s = [];
+  for (let d of i) {
+    let { featureLabel: l, verb: c } = n.policyKeyLabel(d), u = n.policyDeniedReason(d, l, c);
+    if (u === null) return null;
+    s.push(u);
+  }
+  let [o] = i;
+  if (o === void 0) return { cause: "policy", reason: ae };
+  let { logOrgPolicyDenied: a } = import.meta.require("../shared/log-org-policy-denied.js");
+  return a(o, "tool"), { cause: "policy", reason: (e === "unknown" && s.length > 1 ? n.policyDeniedReason(o, re.featureLabel, re.verb) ?? s[0] : s[0]) ?? ae };
+}
+function ect(e, n, i) {
+  let s = So(n);
+  e((o) => {
+    let a = Object.hasOwn(o.sendMessagePins, s) ? o.sendMessagePins[s] : void 0, r = a !== void 0 && pkt(a.id) && !pkt(i.id) && (i.claimedSessionIds ?? []).some((d) => xVt(d) === a.id) ? a.id : i.id;
+    return a?.id === r && a.sock === i.sock ? o : { ...o, sendMessagePins: { ...o.sendMessagePins, [s]: { id: r, name: n, ref: Srt(i.kind, r), ...i.sock !== void 0 && { sock: i.sock } } } };
+  });
+}
+var pSr = "Note: messaging a new session for the first time under a previously used name (was it restarted?)";
+function nHn(e, n) {
+  return `
+A session on this machine now named '${n}' reports '${e}' as one of its former names — if that is the session you meant, it goes by '${n}' now (a rename, not a stop).`;
+}
+function j_s(e) {
+  return ` A session now named '${e}' reports it as a former name (renamed).`;
+}
+var sdo = "Note: another live session record on this machine currently claims this session's identity (the same conversation open in two places, or a record impersonating it). This went to the socket confirmed earlier in this conversation; if that is unexpected, check with the user before sending it anything sensitive.", ido = "Note: this session has restarted since this conversation last reached it (same session, new process). If you were not expecting that, check with the user before sending it anything sensitive.", c9e = "another Claude session on this machine";
+function XXt(e, n, i) {
+  if (e === void 0) return { message: "", display: "" };
+  let s = n && W_(n) || "an agent in this session";
+  return i.oneWay ? { message: "; sent under this session's address, not this agent's", display: ` (sent by ${s}, under this session's name)` } : { message: "; sent under this session's address: any reply will be delivered to this session's main conversation, not to this agent", display: ` (sent by ${s}; replies go to the main conversation)` };
+}
+function rHn(e) {
+  return e === "cloud" ? "a Claude session running in the cloud" : "a Claude session on another machine, over Remote Control";
+}
+var fSr = "; accepted by the server for that session, but delivery is not confirmed: it has not reported that it can receive cross-session messages and may be on an older version that cannot", Ae = " (accepted by the server; delivery not confirmed, that session may be on an older version)", Me = "; in that session's inbox, not yet read by its Claude — a [Cross-session delivery notice] follows if that session holds it (usually a different permission mode) or refuses it", Le = "; in that session's inbox, not yet read by its Claude — that session may hold it (usually a different permission mode) or refuse it, and with no inbox bound here nothing reports back, so never treat silence as agreement";
+function ado(e) {
+  return e ? Me : Le;
+}
+var mSr = "; not confirmed read — that session may hold it (usually a different permission mode) or refuse it, and this route reports nothing back", gSr = " (that session's settings decide delivery; no read receipt)";
+function ldo(e) {
+  return e ? { message: fSr, display: Ae } : { message: "", display: "" };
+}
+function GIt(e) {
+  return `${e.alsoListedRemotely ? "; it is also connected via Remote Control" : ""}${e.remoteNamesakeClaimedLocally ? `; a Remote Control or cloud session also named '${e.displayName}' is registered to a session on this machine` : ""}${e.searchTruncated ? le : ""}`;
+}
+function hSr(e, n, i = "live session", s = "delivery") {
+  return de(e, `. ${s === "subscription" ? "The subscription" : "This"} went to the one this conversation confirmed; to switch, re-send with that ${i === "agent" ? "agent" : "session"}'s 'name [ref]'${n}.`, i);
+}
+function ySr(e, n = "live session", i = "delivery") {
+  return de(e, `; ${i === "subscription" ? "the subscription" : "this"} went to the one confirmed earlier in this conversation.`, n);
+}
+function de(e, n, i) {
+  let s = e.previouslyPinned ? `
+${pSr}` : e.restartedSincePin ? `
+${ido}` : e.identityContested ? `
+${sdo}` : "", o = e.sameNamedSiblings ? `
+Note: ${e.sameNamedSiblings} other ${I(e.sameNamedSiblings, `${i} is`, `${i}s are`)} also named '${e.displayName}'${n}` : "";
+  return `${s}${o}`;
+}
+function oHn(e) {
+  return `${e.offline ? Ee : ""}${e.remoteNamesakeClaimedLocally ? `; another session also named '${e.displayName}' is registered to a session on this machine` : ""}${e.searchTruncated ? le : ""}`;
+}
+var Ee = "; it is offline right now — delivery is queued until that machine reconnects";
+function ddo(e) {
+  return e.localUnavailable && !e.bridgeUnavailable && !e.cloudUnavailable ? "the sessions on this machine could not be listed just now" : e.localUnavailable ? "this machine's and your account's other sessions could not all be checked just now" : "your account's other sessions could not be checked just now";
+}
+function cdo(e) {
+  return `A session on this machine now claims to be '${e}', which was confirmed earlier as a session elsewhere`;
+}
+var le = "; your session list was too long to check completely, so a same-named session beyond what was searched would not have been seen", zIt = `
+Your session list was too long to check completely, so a session by that name may exist beyond what was searched.`, udo = "your session list was too long to check completely";
+async function JXt(e, n, i, s, o, a) {
+  await Nyt({ refresh: true, credentials: a });
+  let r = So(n), d = oc(s.teamContext), l = null;
+  if (PVt(n)) return { kind: "not-found", closest: [] };
+  if (typeof i === "string") {
+    if (n === sy) return { kind: "main" };
+    let y = s.teamContext?.teammates ?? {}, R = Object.entries(y).find(([, v]) => v.name === n), x = Sg(n) ?? Sg(r), b = R || x ? void 0 : s.agentNameRegistry.get(n), _ = x ?? b;
+    if (_) return X(s, _, n);
+    if (R) return { kind: "mailbox", recipientName: n, memberAgentId: R[0], memberIdentitySource: "team-context" };
+    let ne = X4(n);
+    if (d) {
+      if (n === Xa) return { kind: "mailbox", recipientName: n };
+      if (l = await Hb(d, o), ne === null && l !== null) {
+        let v = _rt(l, sse(s)).find((h) => h.name === n);
+        if (v !== void 0) return { kind: "mailbox", recipientName: n, memberAgentId: v.agentId, memberIdentitySource: "roster" };
+      }
+    }
+    let Ne = sse(s), z = Object.entries(y).find(([v, h]) => (fkt({ name: h.name, agentId: v }, Ne) || !yrt(h.name)) && So(h.name) === r);
+    if (z !== void 0) return { kind: "mailbox", recipientName: z[1].name, memberAgentId: z[0], memberIdentitySource: "team-context" };
+    for (let [v, h] of s.agentNameRegistry) if (!yrt(v) && So(v) === r) return X(s, h, v);
+    let T = ne;
+    if (T) {
+      let [v, h] = await Promise.all([yxr(), vQe(e, a)]), E = v.sessions, W = await ce(e, s.sendMessagePins, So(T.name), h, r, lko(e), a), { rows: G, unavailable: Se } = W, P = J4(s, { teamFile: l, sessions: E, cloud: h.sessions, bridge: G }), w = So(T.name), se = (C, K, _e, xe) => {
+        let U = j(C, s);
+        return U.kind === "local-session" || U.kind === "cloud-session" ? { ...U, ...J(U, w, K, { socksMirroredRemotely: ye(E, h, _e), searchTruncated: h.truncated === true || xe }, s.sendMessagePins) } : U;
+      }, ie = me(P, w, T.ref);
+      if (ie) return se(ie, P, G, W.truncated);
+      let te = Se, oe = W.truncated;
+      if (G === void 0) {
+        let C = await H(e, h, r, a);
+        if (te = C.unavailable, oe = C.truncated, C.rows.length > 0) {
+          P = J4(s, { teamFile: l, sessions: E, cloud: h.sessions, bridge: C.rows });
+          let K = me(P, w, T.ref);
+          if (K) return se(K, P, C.rows, C.truncated);
+        }
+      }
+      return { ...O(w, P), ...be(w, E, P, s.sendMessagePins), ...fe(h, te, v.unavailable, { remoteTruncated: oe }), ...N(s.sendMessagePins, [w], IVt(E)) };
+    }
+  }
+  if (typeof i !== "string") {
+    if (i.type === "shutdown_response") return { kind: "mailbox", recipientName: n };
+    if (n !== Xa && gM(n)) return O(So(n), J4(s, { teamFile: null, sessions: [] }), (b) => b.kind === "teammate");
+    if (!d) return { kind: "mailbox", recipientName: n };
+    if (n === Xa) return { kind: "mailbox", recipientName: n };
+    let y = Object.entries(s.teamContext?.teammates ?? {}).filter(([b, _]) => fkt({ name: _.name, agentId: b }, sse(s)) || !yrt(_.name)), R = y.find(([, b]) => b.name === n);
+    if (R) return { kind: "mailbox", recipientName: n, memberAgentId: R[0], memberIdentitySource: "team-context" };
+    if (l = await Hb(d, o), X4(n) === null && l !== null) {
+      let b = _rt(l, sse(s)).find((_) => _.name === n);
+      if (b !== void 0) return { kind: "mailbox", recipientName: n, memberAgentId: b.agentId, memberIdentitySource: "roster" };
+    }
+    let x = y.find(([, b]) => So(b.name) === r);
+    if (x !== void 0) return { kind: "mailbox", recipientName: x[1].name, memberAgentId: x[0], memberIdentitySource: "team-context" };
+    if (X4(n) === null && l !== null) {
+      let b = Aor(_rt(l, sse(s)), n);
+      if (b !== void 0) return { kind: "mailbox", recipientName: b.name, displayName: n, memberAgentId: b.agentId, memberIdentitySource: "roster" };
+    }
+    if (l === null) return { kind: "mailbox", recipientName: n };
+    return O(r, J4(s, { teamFile: l, sessions: [] }), (b) => b.kind === "teammate");
+  }
+  if (d && l === null) {
+    if (gM(n)) return O(r, J4(s, { teamFile: l, sessions: [] }));
+    return { kind: "mailbox", recipientName: n };
+  }
+  let [c, u] = await Promise.all([yxr(), vQe(e, a)]), f = c.sessions, q = await ce(e, s.sendMessagePins, r, u, r, lko(e), a), { rows: S, unavailable: F, truncated: Y } = q, Q = IVt(f), V = () => ({ cloudUnavailable: he(u.unavailable), bridgeUnavailable: F, localClaimedRemoteBodies: Q, bridgeSettled: S !== void 0, localUnavailable: c.unavailable, socksMirroredRemotely: ye(f, u, S), searchTruncated: u.truncated === true || Y }), k = J4(s, { teamFile: l, sessions: f, cloud: u.sessions, bridge: S }), M = k.byName.get(r)?.length === 1 ? k.byName.get(r)[0] : void 0, Z = A(s.sendMessagePins, r), Ie = M !== void 0 && Z !== void 0 && Object.hasOwn(s.sendMessagePins, r) && Re(s.sendMessagePins[r], M), Ce = M !== void 0 && (M.kind === "session" || M.kind === "cloud-session") && Z !== "agent" && !Ie;
+  if (S === void 0 && Ce) {
+    let y = await H(e, u, r, a);
+    S = y.rows, F = y.unavailable, Y = y.truncated, k = J4(s, { teamFile: l, sessions: f, cloud: u.sessions, bridge: y.rows });
+  }
+  let ee = ue(k, r, n, s, V());
+  if (ee) return ee;
+  if (S === void 0) {
+    let y = await H(e, u, r, a);
+    if (S = y.rows, F = y.unavailable, Y = y.truncated, y.rows.length > 0) {
+      k = J4(s, { teamFile: l, sessions: f, cloud: u.sessions, bridge: y.rows });
+      let R = ue(k, r, n, s, V());
+      if (R) return R;
+    }
+  }
+  return Be(k, r, s, V()) ?? { ...O(r, k), ...be(r, f, k, s.sendMessagePins), ...fe(u, F, c.unavailable, { remoteTruncated: Y }), ...N(s.sendMessagePins, [r], Q) };
+}
+function Ue(e, n, i) {
+  let s = A(e, n);
+  if (s !== "cloud" && s !== "remote-control") return;
+  let o = e[n];
+  return i.has(rr(o.id)) ? o.name : void 0;
+}
+function Oe(e, n) {
+  let i = n[0];
+  if (i === void 0 || i.length < 3) return n;
+  let s = Object.keys(e).filter((o) => o !== i && o.startsWith(i) && !n.includes(o));
+  return s.length === 0 ? n : [...n, ...s];
+}
+function N(e, n, i) {
+  for (let s of Oe(e, n)) {
+    let o = Ue(e, s, i);
+    if (o !== void 0) return { pinnedIdentityClaimedLocally: o };
+  }
+  return {};
+}
+function A(e, n) {
+  let i = Object.hasOwn(e, n) ? e[n] : void 0;
+  if (i === void 0) return;
+  if (Sg(i.id) !== null) return "agent";
+  if (i.id.startsWith("cse_")) return "cloud";
+  return rr(i.id) !== i.id ? "remote-control" : "local";
+}
+async function ce(e, n, i, s, o, a, r) {
+  let d = a?.rows;
+  if (!De(n, i, s.sessions, d)) return { rows: d, unavailable: void 0, truncated: a !== void 0 && a.truncated };
+  let l = await H(e, s, o, r);
+  return { rows: l.unavailable === void 0 || d === void 0 ? l.rows : d, unavailable: l.unavailable, truncated: l.unavailable === void 0 || a === void 0 ? l.truncated : a.truncated };
+}
+function De(e, n, i, s) {
+  let o = A(e, n);
+  if (o !== "remote-control" && o !== "cloud") return false;
+  let a = rr(e[n].id);
+  if (i.some((r) => rr(r.id) === a)) return false;
+  return s === void 0 || !s.some((r) => rr(r.id) === a);
+}
+function D(e) {
+  return { ...e.cloudUnavailable && { cloudUnavailable: e.cloudUnavailable }, ...e.bridgeUnavailable && { bridgeUnavailable: e.bridgeUnavailable }, ...e.localUnavailable && { localUnavailable: true }, ...e.searchTruncated && { searchTruncated: true } };
+}
+function ue(e, n, i, s, o) {
+  let a = mkt(e.byName, n, i);
+  if (a) {
+    if (a.kind === "ambiguous") {
+      let r = e.byName.get(n), d = ve(s.sendMessagePins, n, r, i, o);
+      if (d) return ke(d, r, s, n, e, o);
+      let l = N(s.sendMessagePins, [n], o.localClaimedRemoteBodies), c = r[0], u = A(s.sendMessagePins, n);
+      if (r.length === 1 && (c.kind === "session" || c.kind === "cloud-session" || c.kind === "bridge-session") && !o.cloudUnavailable && o.bridgeSettled && !o.bridgeUnavailable && !o.localUnavailable && l.pinnedIdentityClaimedLocally === void 0 && u !== "agent" && !c.derivedName) {
+        let f = j(c, s);
+        if (f.kind === "local-session" || f.kind === "cloud-session") return { ...f, exactUnique: true, ...u !== void 0 && { previouslyPinned: true }, ...J(f, n, e, o, s.sendMessagePins) };
+      }
+      return { ...B(r, "exact"), ...D(o), ...l };
+    }
+    return j(a.candidate, s);
+  }
+  return;
+}
+function Be(e, n, i, s) {
+  if (n.length >= 3) {
+    let o = [...e.byName.keys()].filter((a) => a.startsWith(n));
+    if (o.length === 1) {
+      let a = mkt(e.byName, o[0]), r = A(i.sendMessagePins, n), d = N(i.sendMessagePins, [n], s.localClaimedRemoteBodies).pinnedIdentityClaimedLocally !== void 0;
+      if (r !== void 0 && r !== "agent" || d) {
+        let l = e.byName.get(o[0]);
+        return p("send_message_prefix_match", r !== void 0 && r !== "agent" ? "typed_name_pinned" : "prefix_of_claimed_pin"), { ...B(a.kind === "one" ? [a.candidate] : l, "prefix"), ...D(s), ...N(i.sendMessagePins, [n, o[0]], s.localClaimedRemoteBodies) };
+      }
+      if (a.kind === "ambiguous") {
+        let l = e.byName.get(o[0]), c = ve(i.sendMessagePins, o[0], l, void 0, s, true);
+        if (c) return g("send_message_prefix_match", { input_len: n.length, index_size: e.candidates.length, pinned: 1 }), ke(c, l, i, o[0], e, s);
+        if (l.length === 1) p("send_message_prefix_match", "confirm_required");
+        else m("send_message_prefix_match", "ambiguous_name");
+        return { ...B(l, "prefix"), ...D(s), ...N(i.sendMessagePins, [n, o[0]], s.localClaimedRemoteBodies) };
+      }
+      if (s.cloudUnavailable || s.bridgeUnavailable || s.localUnavailable) return p("send_message_prefix_match", s.cloudUnavailable || s.bridgeUnavailable ? "remote_unsearched" : "local_unsearched"), { ...B([a.candidate], "prefix"), ...D(s), ...N(i.sendMessagePins, [n, o[0]], s.localClaimedRemoteBodies) };
+      return g("send_message_prefix_match", { input_len: n.length, index_size: e.candidates.length, ...s.searchTruncated && { search_truncated: true } }), j(a.candidate, i);
+    }
+    if (o.length > 1) return m("send_message_prefix_match", "ambiguous_prefix"), { ...D(s), ...N(i.sendMessagePins, [n, ...o], s.localClaimedRemoteBodies), ...B(o.flatMap((a) => {
+      let r = e.byName.get(a), d = mkt(e.byName, a);
+      return d?.kind === "one" ? [d.candidate] : r;
+    }), "prefix") };
+  }
+  return;
+}
+function me(e, n, i) {
+  let s = e.byName.get(n) ?? [], o = mkt(e.byName, n);
+  return (o?.kind === "one" ? [o.candidate] : s).find((r) => r.ref === i);
+}
+async function H(e, n, i, s) {
+  if (ya()) {
+    let o = !S1t(n.unavailable), a = $4n(e, s), r = await Pe(a, ge);
+    if (r === void 0) {
+      if (t(`[bridge:resolve] "${i}": Remote Control population not ready within ${ge}ms (cold) — not searched, disclosing a hedge`, { level: "warn" }), o) a.then((l) => ocn(e, l, scn(l.rows, n.sessions)));
+      return { rows: [], unavailable: "timeout", truncated: false };
+    }
+    if (r.failed || r.identityKey !== null && !U4n(r)) return t(`[bridge:resolve] "${i}": Remote Control walk ${r.failed ? "failed" : "ran under a previous handle"} (cold) — not searched, disclosing a hedge`, { level: "warn" }), { rows: [], unavailable: "fetch_failed", truncated: false };
+    let d = scn(r.rows, n.sessions);
+    if (o) ocn(e, r, d);
+    else B4n(e, r);
+    return t(`[bridge:resolve] "${i}": ${r.rows.length} Remote Control rows, ${d.length} listed (cold${o ? ", recorded" : ", not recorded — cloud list failed"})`), { rows: d, unavailable: void 0, truncated: r.truncated === true };
+  }
+  return { rows: [], unavailable: void 0, truncated: false };
+}
+function he(e) {
+  return S1t(e) ? e : void 0;
+}
+function fe(e, n, i, { remoteTruncated: s }) {
+  return { cloudUnavailable: he(e.unavailable), ...n !== void 0 && { bridgeUnavailable: n }, ...i && { localUnavailable: true }, ...(e.truncated === true || s) && { searchTruncated: true } };
+}
+function X(e, n, i) {
+  let s = e.tasks[n];
+  if (Cn(s) && !GHr(s)) {
+    if (s.status === "running") return { kind: "agent-live", agentId: n, agentName: i };
+    if (s.stoppedByUser) return { kind: "agent-stopped-by-user", agentName: i };
+    return { kind: "agent-stopped", agentId: n, status: s.status, agentName: i };
+  }
+  return { kind: "agent-evicted", agentId: n, agentName: i };
+}
+function j(e, n) {
+  switch (e.kind) {
+    case "main":
+      return { kind: "main" };
+    case "teammate":
+      return { kind: "mailbox", recipientName: e.name, memberAgentId: e.id, memberIdentitySource: e.where === "in-process" ? "team-context" : "roster" };
+    case "subagent":
+      return X(n, Br(e.id), e.name);
+    case "session":
+      return { kind: "local-session", sock: e.sock, pinId: Tbn(e), ...e.claimedSessionIds !== void 0 && { claimedSessionIds: e.claimedSessionIds }, displayName: e.name, ...e.hostSessionId !== void 0 && { hostSessionId: e.hostSessionId } };
+    case "cloud-session":
+    case "bridge-session":
+      return { kind: "cloud-session", via: e.where === "cloud" ? "cloud" : "remote-control", refKind: e.kind, sessionId: e.id, displayName: e.name, ...e.offline && { offline: true }, ...e.reportsInbound && { reportsInbound: true }, ...e.inboundReportUnavailable && { inboundReportUnavailable: true } };
+  }
+}
+var pe = 3, ge = 5e3;
+function B(e, n) {
+  return { kind: "ambiguous", candidates: e.slice(0, pe), total: e.length, matchedBy: n };
+}
+function be(e, n, i, s) {
+  if (!wZ()) return {};
+  let o = n.filter((c) => hrt(c) && c.sessionId !== void 0 && c.formerNames?.some((u) => u.sessionId === c.sessionId && So(u.name) === e));
+  if (o.length !== 1) return {};
+  let a = o[0];
+  if (n.filter((c) => hrt(c) && Zue(c.sock, a.sock)).length !== 1) return {};
+  let d = i.candidates.find((c) => c.kind === "session" && c.sock !== void 0 && PRe(c.sock, a.sock));
+  if (d === void 0 || X4(d.name) !== null || gM(d.name) || (i.byName.get(So(d.name))?.length ?? 0) !== 1) return {};
+  let l = Object.hasOwn(s, e) ? s[e] : void 0;
+  if (l !== void 0 && l.id !== Tbn(d)) return {};
+  return { renamedTo: d };
+}
+function O(e, n, i) {
+  let s = i ? n.candidates.filter(i) : n.candidates, o = L(s.map((r) => So(r.name)));
+  return { kind: "not-found", closest: QY(e, o, pe).map((r) => s.find((d) => So(d.name) === r)) };
+}
+function ve(e, n, i, s, o, a = false) {
+  let r = Object.hasOwn(e, n) ? e[n] : void 0;
+  if (r === void 0) return;
+  let d = A(e, n);
+  if (d === "agent") return;
+  let l = d !== "local";
+  if (l && o.localClaimedRemoteBodies.has(rr(r.id))) return;
+  if (d === "cloud" && o.cloudUnavailable || d === "remote-control" && o.bridgeUnavailable || d === "local" && o.localUnavailable || a && (o.cloudUnavailable || o.bridgeUnavailable || o.localUnavailable)) return;
+  let c = i.filter((f) => (l ? f.kind === "cloud-session" || f.kind === "bridge-session" : f.kind === "session") && f.where !== "in-process"), u = c.find((f) => Tbn(f) === r.id) ?? c.find((f) => Re(r, f));
+  if (u === void 0) {
+    if (!(l && o.searchTruncated)) p("send_message_pin", "stale");
+    return;
+  }
+  if (s !== void 0 && u.name !== s && i.some((f) => f.name === s)) return;
+  return g("send_message_pin"), u;
+}
+function ke(e, n, i, s, o, a) {
+  let r = j(e, i);
+  if (r.kind !== "local-session" && r.kind !== "cloud-session") return r;
+  let d = Object.hasOwn(i.sendMessagePins, s) ? i.sendMessagePins[s] : void 0, c = r.kind === "local-session" && d !== void 0 && d.id !== r.pinId && d.sock !== void 0 && PRe(d.sock, r.sock) && pkt(d.id) && !pkt(r.pinId) ? { ...r, pinId: d.id, identityContested: true } : r;
+  return { ...c, ...n.length > 1 && { sameNamedSiblings: n.length - 1 }, ...J(c, s, o, a, i.sendMessagePins) };
+}
+function ye(e, n, i) {
+  let s = /* @__PURE__ */ new Set([...n.sessions.map((o) => rr(o.id)), ...(i ?? []).map((o) => rr(o.id))]);
+  return new Set(e.flatMap((o) => o.bridgeSessionId !== void 0 && s.has(rr(o.bridgeSessionId)) ? [o.sock] : []));
+}
+function Re(e, n) {
+  if (Tbn(n) === e.id) return true;
+  if (e.sock === void 0 || n.kind !== "session" || n.sock === void 0 || !PRe(n.sock, e.sock)) return false;
+  return !pkt(e.id) || n.stableId === void 0 && (n.claimedSessionIds ?? []).some((i) => xVt(i) === e.id);
+}
+function J(e, n, i, s, o) {
+  let a = Object.hasOwn(o, n) ? o[n] : void 0;
+  return { ...e.kind === "local-session" && a?.sock !== void 0 && a.id === e.pinId && !PRe(a.sock, e.sock) && { restartedSincePin: true }, ...e.kind === "local-session" && s.socksMirroredRemotely.has(e.sock) && { alsoListedRemotely: true }, ...[...i.remoteNamesClaimedLocally.get(n) ?? []].some((r) => e.kind !== "local-session" || r !== e.sock) && { remoteNamesakeClaimedLocally: true }, ...s.searchTruncated && { searchTruncated: true } };
+}
+export {
+  GIt,
+  JXt,
+  XXt,
+  ado,
+  c9e,
+  cdo,
+  ddo,
+  ect,
+  fSr,
+  gSr,
+  hSr,
+  ido,
+  j_s,
+  ldo,
+  mSr,
+  nHn,
+  oHn,
+  pSr,
+  rHn,
+  sdo,
+  tHn,
+  udo,
+  ySr,
+  zIt
+};

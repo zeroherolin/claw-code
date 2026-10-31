@@ -1,0 +1,43 @@
+// linux/shared/chunk-21cde607.js — Claude Code 2.1.310（linux）模块 chunk-ajn1cnw7.js
+import { Z } from "../artifacts/same-account.js";
+import { randomUUID as s } from "crypto";
+var m = 256;
+function W0n(e = s(), t) {
+  if (t !== void 0) {
+    let o = Z().laneNoticeSlugs;
+    o.set(e, t), r(o);
+  }
+  return e;
+}
+function WEs(e) {
+  return Z().laneNoticeSlugs.get(e);
+}
+function GEs(e, t, o) {
+  let n = Z(), i = Date.now();
+  if (e !== void 0) n.commentReads.set(e, { slug: t, ownWordsOnly: o }), r(n.commentReads);
+  if (n.commentReadAtBySlug.delete(t), n.commentReadAtBySlug.set(t, i), r(n.commentReadAtBySlug) || !o) n.lastOthersCommentReadAt = i;
+}
+function zEs(e) {
+  return Z().commentReads.get(e);
+}
+function G0n(e, t) {
+  for (let [o, n] of Z().commentReadAtBySlug) if (o !== e && !(Number.isFinite(t) && n < t)) return true;
+  return false;
+}
+function z0n() {
+  return Z().lastOthersCommentReadAt;
+}
+function r(e) {
+  if (e.size <= m) return false;
+  let t = e.keys().next().value;
+  if (t !== void 0) e.delete(t);
+  return true;
+}
+export {
+  G0n,
+  GEs,
+  W0n,
+  WEs,
+  z0n,
+  zEs
+};

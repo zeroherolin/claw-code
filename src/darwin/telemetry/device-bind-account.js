@@ -1,0 +1,175 @@
+// darwin/telemetry/device-bind-account.js — Claude Code 2.1.310（darwin）模块 chunk-d6cyen5k.js
+import { c } from "../agents/third-party.js";
+import { R, d } from "./anthropic-workspace-id.js";
+import { Vt } from "../shared/chunk-3b9c376b.js";
+import { L } from "../context/not-admin-owned.js";
+import { a } from "./chunk-9097a12b.js";
+import { g, p, po } from "./chunk-9d6962d2.js";
+import { dy, Af, t } from "../fs/gitlab-runner-authentication-token.js";
+import { oI } from "./flag-off.js";
+import { bhe, Aht } from "../context/team-memory-sync.js";
+import { UZt, But, L8e, eBe, dAs, k$n, jut } from "../auth/device-key-store.js";
+import { wyo, Eyo } from "../shared/chunk-945711c0.js";
+import { eve } from "../remote/allow-remote-sessions.js";
+import { tve } from "../shared/launched-from-home.js";
+var Z1e = "creg_", w = Buffer.from("anthropic.ccr.create_session_bind.v1", "utf8");
+function mB(e) {
+  if (!Vt(e)) throw new R(`deviceBind: malformed UUID '${e}'`, "deviceBind: malformed UUID");
+  return Buffer.from(e.replace(/-/g, ""), "hex");
+}
+function P(e, n, i, r) {
+  let s = Buffer.alloc(w.length + 48 + 8), o = 0;
+  return o += w.copy(s, o), o += mB(e).copy(s, o), o += mB(n).copy(s, o), o += mB(i).copy(s, o), s.writeBigUInt64BE(BigInt(r), o), s;
+}
+async function S(e, n, i, r) {
+  let s = Date.now(), o = await r.sign(P(e, n, i, s));
+  return { deviceUUID: i, kid: Z1e + i, signature: o.toString("base64"), issuedAt: new Date(s).toISOString(), signedOver: { orgUuid: e, accountUuid: n, issuedAtMs: s } };
+}
+var A = Buffer.from("anthropic.ccr.session_bind.v1", "utf8"), E = "00000000-0000-0000-0000-000000000000";
+function T({ orgUuid: e, accountUuid: n, sessionUuid: i, expectedCurrentDeviceUuid: r, newDeviceUuid: s, issuedAtMs: o }) {
+  let u = Buffer.alloc(A.length + 80 + 8), f = 0;
+  return f += A.copy(u, f), f += mB(e).copy(u, f), f += mB(n).copy(u, f), f += mB(i).copy(u, f), f += mB(r ?? E).copy(u, f), f += mB(s).copy(u, f), u.writeBigUInt64BE(BigInt(o), f), u;
+}
+async function yyo({ orgUuid: e, accountUuid: n, sessionUuid: i, deviceUUID: r, key: s, now: o = Date.now }) {
+  let u = o(), f = await s.sign(T({ orgUuid: e, accountUuid: n, sessionUuid: i, expectedCurrentDeviceUuid: void 0, newDeviceUuid: r, issuedAtMs: u }));
+  return { deviceUUID: r, kid: Z1e + r, signature: f.toString("base64"), issuedAt: new Date(u).toISOString() };
+}
+var H = Buffer.from("anthropic.ccr.tool_host_link.v1", "utf8"), O = Buffer.from("anthropic.ccr.tool_host_link.v2", "utf8"), x = /^[a-z0-9_.]{1,48}$/, F = 8;
+function N(e) {
+  return Buffer.concat([H, ...b(e), U(e.issuedAtMs)]);
+}
+function Ikr(e) {
+  let n = L(e).sort();
+  return e.length >= 1 && e.length <= F && e.every((i) => x.test(i)) && n.length === e.length && n.every((i, r) => i === e[r]) ? n : void 0;
+}
+function M(e, n) {
+  if (Ikr(n) === void 0) throw new R("deviceBind: tool-host link capabilities must be 1 to 8 sorted, distinct names of a-z, 0-9, _ and .", "deviceBind: malformed link capabilities");
+  return Buffer.concat([O, ...b(e), _(n.length), ...n.flatMap((i) => {
+    let r = Buffer.from(i, "ascii");
+    return [_(r.length), r];
+  }), U(e.issuedAtMs)]);
+}
+async function _yo({ orgUuid: e, accountUuid: n, sessionUuid: i, deviceUUID: r, request: s, capabilities: o, key: u, now: f = Date.now }) {
+  let h = f(), B = { orgUuid: e, accountUuid: n, sessionUuid: i, deviceUuid: r, request: s, issuedAtMs: h }, l = await u.sign(o === void 0 ? N(B) : M(B, o));
+  return { deviceUUID: r, kid: Z1e + r, signature: l.toString("base64"), issuedAt: new Date(h).toISOString() };
+}
+var C = Buffer.from("anthropic.ccr.tool_host_resume.v1", "utf8");
+function K(e, n) {
+  let i = Buffer.from(n, "utf8");
+  if (i.length === 0 || i.length > 65535) throw new R("deviceBind: tool-host resume nonce must be 1 to 65535 bytes", "deviceBind: malformed resume nonce");
+  return Buffer.concat([C, ...b(e), _(i.length), i, U(e.issuedAtMs)]);
+}
+async function Syo({ deviceUUID: e, nonce: n, key: i, now: r = Date.now, ...s }) {
+  let o = r(), u = await i.sign(K({ ...s, deviceUuid: e, issuedAtMs: o }, n));
+  return { deviceUUID: e, kid: Z1e + e, signature: u.toString("base64"), issuedAt: new Date(o).toISOString() };
+}
+async function q() {
+  return (await I()).ok;
+}
+async function I() {
+  let { trustedDeviceTokenForBind: e } = await import("../auth/clear-trusted-device-token.js");
+  return e(void 0);
+}
+async function FZt(e) {
+  if (e.launchedFromHome === void 0) await bhe();
+  if ((e.launchedFromHome ?? Aht)()) return Af("launched_from_home");
+  let n;
+  try {
+    n = (e.isEgressAllowed ?? eve)();
+  } catch {
+    n = false;
+  }
+  if (!n) return Af("egress");
+  let i = wyo({ storedAccountUuid: e.accountUuid, hostAccountUuid: await (e.getHostAccountUuid ? e.getHostAccountUuid() : Eyo(e.credentials)) });
+  if (i.status === "missing") return Af("account");
+  if (i.status === "mismatch") return Af("account_mismatch");
+  return await (e.hasDeviceProof ?? q)().catch(() => false) ? dy({ accountUuid: i.accountUuid, source: i.source }) : Af("no_device_proof");
+}
+async function nAi(e) {
+  let n = e.isEnabled ?? oI;
+  try {
+    if (!await n()) return Af("gate");
+  } catch (l) {
+    return Af(y("gate", l));
+  }
+  let i = "no_device_proof", r = await FZt({ ...e, hasDeviceProof: e.hasDeviceProof ?? (async () => {
+    let l = await I();
+    if (!l.ok && l.error !== "not_given") i = l.error;
+    return l.ok;
+  }) });
+  if (!r.ok) {
+    let l = V(r.error);
+    return r.error === "no_device_proof" ? Af(i) : l;
+  }
+  a("tengu_device_bind_account", { source: c(r.value.source) });
+  let { accountUuid: s } = r.value, o = e.displayName ?? jut(), u = false, f = async (l) => {
+    try {
+      return dy(await UZt(s, o, e.credentials, { relearn: l }));
+    } catch (m) {
+      if (!(m instanceof eBe) || e.confirmReenroll === void 0 || u) return Af(y("register", m));
+      return u = true, await j(e.confirmReenroll) ? h(m.refusedPublicKey) : Af(y("register", m));
+    }
+  }, h = async (l) => {
+    try {
+      return dy(await po("device_reenroll", () => dAs(s, o, l, e.credentials), W));
+    } catch (m) {
+      return Af(y("register", m));
+    }
+  }, B = async (l) => {
+    let m = await f(l);
+    if (!m.ok) return m;
+    let { deviceUUID: D, key: k } = m.value;
+    return dy({ deviceUUID: D, held: { accountUuid: s, rowPk: D, key: k }, sign: async () => {
+      try {
+        let v = await S(e.orgUuid, s, D, k);
+        return g("device_bind"), v;
+      } catch (v) {
+        y("sign", v);
+        return;
+      }
+    }, reregister: async () => (await k$n(s, e.credentials).catch((v) => {
+      t(`[deviceBind] could not forget the cached device id: ${v instanceof Error ? v.message : String(v)}`);
+    }), B(true)) });
+  };
+  return B(false);
+}
+function b({ orgUuid: e, accountUuid: n, sessionUuid: i, deviceUuid: r, request: s }) {
+  let o = Buffer.from(s.workId, "utf8"), u = Buffer.from(s.environmentId, "utf8");
+  if (o.length === 0 || u.length === 0 || o.length > 65535 || u.length > 65535) throw new R("deviceBind: tool-host link request ids must be 1 to 65535 bytes", "deviceBind: malformed link request");
+  return [mB(e), mB(n), mB(i), mB(r), _(o.length), o, _(u.length), u];
+}
+function _(e) {
+  let n = Buffer.alloc(2);
+  return n.writeUInt16BE(e), n;
+}
+function U(e) {
+  let n = Buffer.alloc(8);
+  return n.writeBigUInt64BE(BigInt(e)), n;
+}
+function V(e) {
+  return a("tengu_device_bind_skipped", { reason: c(e), ...tve(e) }), Af(e);
+}
+async function j(e) {
+  try {
+    let n = await e();
+    return a("tengu_device_reenroll", { confirmed: n, prompt_failed: false }), n;
+  } catch (n) {
+    return t(`[deviceBind] could not ask whether to register this machine again: ${d(n)}`), a("tengu_device_reenroll", { confirmed: false, prompt_failed: true }), false;
+  }
+}
+function W(e) {
+  return e instanceof R && e.errorClass || "unexpected_error";
+}
+function y(e, n) {
+  return a("tengu_device_bind_failed", { phase: c(e), limit_reached: n instanceof But, registration_unavailable: n instanceof L8e, revoked: n instanceof eBe }), p("device_bind", n instanceof R && n.errorClass || e), t(`[deviceBind] continuing unbound: ${n instanceof Error ? n.message : String(n)}`), n instanceof But ? "limit_reached" : n instanceof L8e ? "registration_unavailable" : n instanceof eBe ? "device_revoked" : n instanceof R && n.errorClass === "no_keychain" ? "no_keychain" : e;
+}
+export {
+  FZt,
+  Ikr,
+  Syo,
+  Z1e,
+  _yo,
+  mB,
+  nAi,
+  yyo
+};

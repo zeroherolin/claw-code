@@ -1,0 +1,60 @@
+// darwin/git/chunk-9fb98d80.js — Claude Code 2.1.310（darwin）模块 chunk-fka87v87.js
+import { Er } from "./chunk-c16cb6b4.js";
+import { Vj } from "./ssh-placeholder.js";
+function Ays(e, n = false) {
+  return (!n ? `if [ -n "\${GH_TOKEN:-}\${GITHUB_TOKEN:-}\${GH_ENTERPRISE_TOKEN:-}\${GITHUB_ENTERPRISE_TOKEN:-}" ]; then
+  exec '${e}' "$@"
+fi
+` : `case "\${GH_TOKEN:-}" in ''|'${Vj}') ;; *) exec '${e}' "$@" ;; esac
+case "\${GITHUB_TOKEN:-}" in ''|'${Vj}') ;; *) exec '${e}' "$@" ;; esac
+if [ -n "\${GH_ENTERPRISE_TOKEN:-}\${GITHUB_ENTERPRISE_TOKEN:-}" ]; then
+  exec '${e}' "$@"
+fi
+`) + `host="\${GH_HOST:-}"
+repo="\${GH_REPO:-}"
+prev=''
+for a in "$@"; do
+  if [ "$prev" = '--hostname' ]; then host="$a"; prev=''; continue; fi
+  if [ "$prev" = '--repo' ]; then repo="$a"; prev=''; continue; fi
+  case "$a" in
+    --hostname) prev='--hostname' ;;
+    --hostname=*) host="\${a#--hostname=}" ;;
+    -R|--repo) prev='--repo' ;;
+    --repo=*) repo="\${a#--repo=}" ;;
+    -R=*) repo="\${a#-R=}" ;;
+    -R?*) repo="\${a#-R}" ;;
+  esac
+done
+# Hostnames are case-insensitive — normalize before every compare.
+host="$(printf %s "$host" | tr '[:upper:]' '[:lower:]')"
+if [ -n "$host" ] && [ "$host" != '${Er}' ]; then
+  exec '${e}' "$@"
+fi
+# A -R/--repo/GH_REPO [HOST/]OWNER/REPO (or URL) carries its own host
+# and overrides the checkout. Otherwise repo-scoped commands resolve
+# their target from the checkout remote, not GH_HOST — treat a
+# non-github.com origin as a GHE signal. An EXPLICIT github.com host
+# above skips the origin probe: it must not be kicked off the relay
+# by the checkout heuristic.
+rhost=''
+if [ -n "$repo" ]; then
+  case "$repo" in
+    *://*) rhost="\${repo#*://}"; rhost="\${rhost%%/*}"; rhost="\${rhost##*@}"; rhost="\${rhost%%:*}" ;;
+    */*/*) rhost="\${repo%%/*}" ;;
+  esac
+elif [ -z "$host" ]; then
+  origin="$(git config --get remote.origin.url 2>/dev/null || true)"
+  case "$origin" in
+    *://*) rhost="\${origin#*://}"; rhost="\${rhost%%/*}"; rhost="\${rhost##*@}"; rhost="\${rhost%%:*}" ;;
+    *@*:*) rhost="\${origin#*@}"; rhost="\${rhost%%:*}" ;;
+  esac
+fi
+rhost="$(printf %s "$rhost" | tr '[:upper:]' '[:lower:]')"
+if [ -n "$rhost" ] && [ "$rhost" != '${Er}' ]; then
+  exec '${e}' "$@"
+fi
+`;
+}
+export {
+  Ays
+};

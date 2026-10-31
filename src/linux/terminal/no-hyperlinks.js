@@ -1,0 +1,126 @@
+// linux/terminal/no-hyperlinks.js — Claude Code 2.1.310（linux）模块 chunk-ykrqc7ar.js
+import { ku } from "../context/not-admin-owned.js";
+import { L3r } from "../fs/content-encoding.js";
+import { Ce, x, Fe } from "../vendor/react/chunk-0b0bf45d.js";
+var y = x(function(k, I) {
+  var N = Fe("os"), f = Fe("tty"), o = L3r(), { env: t } = process, i;
+  if (o("no-color") || o("no-colors") || o("color=false") || o("color=never")) i = 0;
+  else if (o("color") || o("colors") || o("color=true") || o("color=always")) i = 1;
+  if ("FORCE_COLOR" in t) if (t.FORCE_COLOR === "true") i = 1;
+  else if (t.FORCE_COLOR === "false") i = 0;
+  else i = t.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(t.FORCE_COLOR, 10), 3);
+  function E(r) {
+    if (r === 0) return false;
+    return { level: r, hasBasic: true, has256: r >= 2, has16m: r >= 3 };
+  }
+  function T(r, n) {
+    if (i === 0) return 0;
+    if (o("color=16m") || o("color=full") || o("color=truecolor")) return 3;
+    if (o("color=256")) return 2;
+    if (r && !n && i === void 0) return 0;
+    let e = i || 0;
+    if (t.TERM === "dumb") return e;
+    if ("CI" in t) {
+      if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "GITHUB_ACTIONS", "BUILDKITE"].some((u) => u in t) || t.CI_NAME === "codeship") return 1;
+      return e;
+    }
+    if ("TEAMCITY_VERSION" in t) return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(t.TEAMCITY_VERSION) ? 1 : 0;
+    if (t.COLORTERM === "truecolor") return 3;
+    if ("TERM_PROGRAM" in t) {
+      let u = parseInt((t.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
+      switch (t.TERM_PROGRAM) {
+        case "iTerm.app":
+          return u >= 3 ? 3 : 2;
+        case "Apple_Terminal":
+          return 2;
+      }
+    }
+    if (/-256(color)?$/i.test(t.TERM)) return 2;
+    if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(t.TERM)) return 1;
+    if ("COLORTERM" in t) return 1;
+    return e;
+  }
+  function S(r) {
+    let n = T(r, r && r.isTTY);
+    return E(n);
+  }
+  I.exports = { supportsColor: S, stdout: E(T(true, f.isatty(1))), stderr: E(T(true, f.isatty(2))) };
+});
+var h = x(function(v, _) {
+  var M = y(), c = L3r();
+  function C(r) {
+    if (/^\d{3,4}$/.test(r)) {
+      let e = /(\d{1,2})(\d{2})/.exec(r) || [];
+      return { major: 0, minor: parseInt(e[1], 10), patch: parseInt(e[2], 10) };
+    }
+    let n = (r || "").split(".").map((e) => parseInt(e, 10));
+    return { major: n[0], minor: n[1], patch: n[2] };
+  }
+  function m(r) {
+    let { CI: n, FORCE_HYPERLINK: e, NETLIFY: u, TEAMCITY_VERSION: p, TERM_PROGRAM: l, TERM_PROGRAM_VERSION: d, VTE_VERSION: a, TERM: R } = process.env;
+    if (e) return !(e.length > 0 && parseInt(e, 10) === 0);
+    if (c("no-hyperlink") || c("no-hyperlinks") || c("hyperlink=false") || c("hyperlink=never")) return false;
+    if (c("hyperlink=true") || c("hyperlink=always")) return true;
+    if (u) return true;
+    if (!M.supportsColor(r)) return false;
+    if (r && !r.isTTY) return false;
+    if ("WT_SESSION" in process.env) return true;
+    if (n) return false;
+    if (p) return false;
+    if (l) {
+      let s = C(d || "");
+      switch (l) {
+        case "iTerm.app":
+          if (s.major === 3) return s.minor >= 1;
+          return s.major > 3;
+        case "WezTerm":
+          return s.major >= 20200620;
+        case "vscode":
+          return s.major > 1 || s.major === 1 && s.minor >= 72;
+        case "ghostty":
+          return true;
+      }
+    }
+    if (a) {
+      if (a === "0.50.0") return false;
+      let s = C(a);
+      return s.major > 0 || s.minor >= 50;
+    }
+    switch (R) {
+      case "alacritty":
+        return true;
+    }
+    return false;
+  }
+  _.exports = { supportsHyperlink: m, stdout: m(process.stdout), stderr: m(process.stderr) };
+});
+var O = Ce(h(), 1);
+var L = ["ghostty", "Hyper", "kitty", "alacritty", "iTerm.app", "iTerm2", "WarpTerminal"];
+function GUe(r) {
+  let n = ku()?.hyperlinks;
+  if (n !== void 0) return n;
+  if ("FORCE_HYPERLINK" in (r?.env ?? process.env)) return r?.stdoutSupported ?? O.default.supportsHyperlink(process.stdout);
+  return;
+}
+function uw(r) {
+  let n = GUe(r);
+  if (n !== void 0) return n;
+  let e = r?.env ?? process.env;
+  if (r?.stdoutSupported ?? O.default.supportsHyperlink(process.stdout)) return true;
+  let p = e.TERM_PROGRAM;
+  if (p && L.includes(p)) return true;
+  if (e.TERMINAL_EMULATOR === "JetBrains-JediTerm") return true;
+  if (e.WT_SESSION && p !== "tmux" && !e.TMUX) return true;
+  if (p === "tmux") {
+    let [a, R] = (e.TERM_PROGRAM_VERSION ?? "").split("."), s = parseInt(a ?? "", 10), A = parseInt(R ?? "", 10);
+    if (s > 3 || s === 3 && A >= 4) return true;
+  }
+  let l = e.LC_TERMINAL;
+  if (l && L.includes(l)) return true;
+  if (e.TERM?.includes("kitty")) return true;
+  return false;
+}
+export {
+  GUe,
+  uw
+};

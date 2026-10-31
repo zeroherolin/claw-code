@@ -1,0 +1,877 @@
+// darwin/remote/unenrolled-trusted-device.js — Claude Code 2.1.310（darwin）模块 chunk-h3pwvj4g.js
+import { Xwe } from "../fs/utf-8.8af2.js";
+import "../shared/chunk-3b9c376b.js";
+import "../fs/async-hooks.93b1.js";
+import { Wr } from "../context/not-admin-owned.js";
+import "../fs/chunk-86a4e44e.js";
+import { S } from "../agents/third-party.js";
+import "../telemetry/anthropic-workspace-id.js";
+import "../shared/chunk-57ff8cc1.js";
+import "../fs/node-modules.js";
+import "../shared/chunk-37dd5dd4.js";
+import "../models/claude-3-5-sonnet.js";
+import "../auth/oauth-2025-04-20.js";
+import "../shell/chunk-fea9c492.js";
+import "../shared/chunk-0870a9b4.js";
+import "../shared/environment.js";
+import { t } from "../fs/gitlab-runner-authentication-token.js";
+import "../shared/chunk-50219e50.js";
+import "../fs/backed-up.js";
+import "../shared/chunk-d2c47492.js";
+import { l } from "../artifacts/cowritten-artifact-html.js";
+import "../fs/chunk-ce5d00cd.js";
+import "../shared/chunk-59ffb646.js";
+import "../terminal/xterm-ghostty.js";
+import "../cli/chunk-af2447be.js";
+import { a } from "../telemetry/chunk-9097a12b.js";
+import "../telemetry/chunk-9d6962d2.js";
+import "../shared/chunk-2fe3b2b7.js";
+import "../models/total-tokens-reminder.js";
+import "../mcp/allowed-warning.js";
+import "../shell/invalid-type.js";
+import "../shared/chunk-4563156b.js";
+import "../fs/utf-8.8f8e.js";
+import "../fs/chunk-475c6783.js";
+import "../plugins/chunk-0a4c51cf.js";
+import "./local-agent.js";
+import "../shared/chunk-8eee6836.js";
+import "../permissions/classifier-transcript-too-long.js";
+import "../permissions/quota-auto-resume-disabled.js";
+import "../shared/chunk-1b1c4439.js";
+import "../terminal/chunk-3ca478a4.js";
+import "../mcp/chunk-0e2a1db6.js";
+import "../mcp/always-allow.js";
+import "../plugins/skills-dir.js";
+import "../git/chunk-c16cb6b4.js";
+import "../fs/chunk-86be9585.js";
+import "../shared/async-hooks.5238.js";
+import "../shell/chunk-8eebd6c6.js";
+import "../context/utf-8.js";
+import "../fs/utf-8.aa9a.js";
+import "../git/utf-8.js";
+import "../artifacts/chunk-a6c9d164.js";
+import "../shared/async-hooks.9e79.js";
+import "../context/tool-cgroup-exclude-classes.js";
+import "../git/utf8-keep-bom.js";
+import "../shared/chunk-d4196a83.js";
+import "../fs/tempdir-owner-mismatch.js";
+import "../fs/async-hooks.7959.js";
+import "../settings/workflow-launch-exec.js";
+import "../fs/chunk-9b7a3f1c.js";
+import "../settings/settings-auto-mode-rules-untrusted-source-ignored.js";
+import "./moved-directory.js";
+import "../mcp/init-function-end.js";
+import "../shell/spawn-error.js";
+import "../fs/content-encoding.js";
+import "../auth/descriptor-direct.js";
+import "./self-hosted.js";
+import "../fs/ca-certs-load.js";
+import { gn, Re } from "../settings/global-config-and-gates.js";
+import "../shared/chunk-f98598c3.js";
+import "../auth/permission-error.js";
+import "../auth/claude-code-user.js";
+import "../shell/find-generic-password.js";
+import "../shared/async-hooks.b037.js";
+import "../settings/ax-sr-suggestion-nav.js";
+import "../auth/profile-explicit.js";
+import "../fs/chunk-b6c2193e.js";
+import "../fs/chunk-21654dda.js";
+import "../context/fetch-project-timeline.js";
+import "../mcp/toolbox-mcp-server-id.js";
+import "../mcp/claude-browser.js";
+import "../fs/reply-across-default-dirs.js";
+import "../telemetry/chunk-b109a1d6.js";
+import "../telemetry/chunk-addb1ac7.js";
+import "../agents/chunk-44729602.js";
+import "../git/get-url.js";
+import "../shared/chunk-dda594a8.js";
+import "../shared/chunk-46ffe22f.js";
+import "../artifacts/cobalt-plinth-lovage.js";
+import "../computer-use/chunk-217335d0.js";
+import "../workflows/chunk-a1595c7e.js";
+import "../agents/session-stable-address.js";
+import "../agents/in-process-teammate.32be.js";
+import "../shared/chunk-537f65d6.js";
+import "../git/ssh-placeholder.js";
+import "../api/anthropic-client.js";
+import "../shared/chunk-3a99f127.js";
+import "../auth/auth-launcher-host-login.js";
+import "../permissions/turn-abort.js";
+import { Fv, Uk } from "../shared/remote-control.js";
+import "../auth/claude-desktop-3p.js";
+import "../auth/env-quad.js";
+import "../shared/chunk-653a48cc.js";
+import { sjt } from "../telemetry/bridge-resume-respects-local-owner.js";
+import { Ex } from "../telemetry/org-policy-denied.js";
+import "../tools/tool-result-persisted.js";
+import { vjn } from "./bridge-transcript-deferral.js";
+import "../shell/async-hooks.js";
+import "./bridge-message-received.js";
+import { k_e, N6e } from "../shell/bridge-folder-already-served.js";
+import { Xwt, v_e, DZn, pzr } from "./sessions-elevated-auth-disable-proactive-enrollment.js";
+import "../permissions/light-daltonized.js";
+import "../terminal/chunk-2969c20f.js";
+import "../terminal/wl-copy.js";
+import "../terminal/aria-preserve-whitespace.js";
+import "../shared/chunk-be0ce119.js";
+import { w } from "../ui/chunk-0ed4c357.js";
+import "../fs/files-directories.js";
+import "../workflows/chunk-5e65bb82.js";
+import "../fs/chunk-22456fe2.js";
+import "../settings/chunk-9121eb73.js";
+import "../shared/chunk-4ef913a6.js";
+import "../telemetry/focus-events.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.js";
+import "../fs/read-failed.js";
+import "../terminal/ink-renderer.js";
+import "../shared/chunk-bdfeb227.js";
+import "../shared/utf-8.js";
+import "../cli/chunk-0b672c58.js";
+import "../shell/content-scan-transient.js";
+import "../telemetry/remote-tool-restart-adoption-unroutable.js";
+import "../shared/chunk-b5e358e4.js";
+import "../terminal/cell-segmenter-factory.js";
+import "../terminal/chunk-e4c40fed.js";
+import "../shared/chunk-10142731.js";
+import "../context/chunk-5971c749.js";
+import "../telemetry/terminal-nonblocking-stdout.js";
+import "../shared/chunk-db96ab2d.js";
+import "../terminal/no-hyperlinks.js";
+import { ve } from "../ui/chunk-067d565d.js";
+import "../shared/chunk-9bbd1b38.js";
+import "../shared/chunk-d52cd1ac.js";
+import "../shared/chunk-76877d92.js";
+import "../permissions/caps-lock.js";
+import "../telemetry/keybinding-customization-release.js";
+import "../shared/action-not-found.c239.js";
+import "../ui/chunk-6c28faa3.js";
+import { we } from "../ui/keybinding-auto-hints.js";
+import { q } from "../context/chunk-e2302e3b.js";
+import "../shared/action-not-found.e210.js";
+import "../shared/chunk-bdaaea45.js";
+import "../shared/chunk-6dcf946b.js";
+import "../ui/chunk-9e5020d7.js";
+import "../shared/chunk-4e9374d4.js";
+import "../terminal/left-arrow-blocked.js";
+import "../shared/chunk-9e685b7f.js";
+import { K, Gn } from "../shared/chunk-e4a3aa33.js";
+import { ka } from "../shared/above-prompt-select.js";
+import "../shared/chunk-f81ec543.js";
+import "../ui/aria-hidden.aa9d.js";
+import "../telemetry/select-stray-click-dropped.js";
+import "../shared/chunk-5fdd9e73.js";
+import { sn } from "../ui/truncate-end.fba9.js";
+import "../shared/chunk-3eb5aefc.js";
+import "../shared/xterm-ghostty.js";
+import "../ui/aria-label.132c.js";
+import "../shared/chunk-36233614.js";
+import "../ui/chunk-4425ad7b.js";
+import "../shared/chunk-4f9a38d5.js";
+import "../telemetry/image-resize-fallback.js";
+import "../computer-use/chunk-c206db8f.js";
+import { Wlt } from "../shared/chunk-4837e50a.js";
+import "../shared/chunk-471874cc.js";
+import "../fs/chunk-dacd9872.js";
+import "../tasks/bridge-ingress-demoted.js";
+import "../shared/file-attachments.js";
+import "../context/team-memory-sync.js";
+import "../commands/aria-preserve-whitespace.js";
+import "../core/conversation-engine.js";
+import "../tools/device-session-limit.js";
+import "../permissions/peer-too-old.js";
+import "../context/tool-result-clearing-after-idle-server-report.js";
+import "./live-shared-artifact-sensitive-delta.js";
+import "../plugins/chunk-c198f87f.js";
+import "../settings/built-in.js";
+import "../settings/chunk-10c0eeb6.js";
+import "../shared/project-docs.js";
+import "../shared/chunk-e1c578e0.js";
+import "../shell/chunk-fc32a44c.js";
+import "../permissions/chunk-42a3174d.js";
+import "../context/stream-no-events-fallback-warning.js";
+import "../context/tool-use-id.js";
+import "../agents/chunk-5531d42a.js";
+import "../models/model-capability-off-from-client-data.js";
+import "../artifacts/same-account.js";
+import "../artifacts/read-shared-artifact.js";
+import "../models/ccr-unsupported-default-mode-ignored.js";
+import "../workflows/managed-settings.js";
+import "../permissions/max-thinking-tokens.js";
+import "../shared/chunk-6ea667ee.js";
+import "../agents/chunk-25f20db5.js";
+import "../context/org-memory-writes-setting-changed.js";
+import "../context/chunk-4d91d9f0.js";
+import "../git/chunk-86d270cc.js";
+import "../mcp/tool-search-unsupported-models.js";
+import "../plugins/not-found.js";
+import "../shared/chunk-16f9cd1b.js";
+import "../shared/chunk-53e41b56.js";
+import "../plugins/entry-refused.js";
+import "../permissions/frontmatter-grant-withheld.js";
+import "../agents/in-process-teammate.9720.js";
+import "../vendor/highlight/file-path.js";
+import "../fs/cowork-plugins.js";
+import "../artifacts/utf-8.js";
+import "../fs/redirected-statement.js";
+import "../shell/tree-sitter-parse-abort.js";
+import "../shared/chunk-22f77b65.js";
+import "../web/chunk-16fa3a7e.js";
+import "../permissions/bot-protected-tengu-atomic-magpie.js";
+import "./chunk-7e620e0d.js";
+import "../tools/structured-output-tool.js";
+import "../mcp/chunk-7d9731c1.js";
+import "../mcp/chunk-4d80773e.js";
+import "../fs/chunk-0b1060fd.js";
+import "../shell/sandbox.js";
+import "../shared/proxy-authorization.js";
+import "../fs/unadoptable-session-id.js";
+import "../fs/file-upload.js";
+import "../settings/non-string-value.js";
+import "../fs/attach-journal.js";
+import "../shared/chunk-de64395b.js";
+import "../telemetry/flag-off.js";
+import "../mcp/mcp-drive-file-reference-upload.js";
+import "../telemetry/chunk-fd172998.js";
+import "../tools/memory-write-tool.js";
+import "../plugins/claudeai-plugins-sync-enabled.js";
+import "../settings/gable-onyx-sluice.js";
+import "../mcp/cobalt-plinth-sedge.js";
+import "../shared/chunk-0542336f.js";
+import "../artifacts/artifact-share-status.js";
+import "../shared/chunk-5f244a2f.js";
+import "../context/projects-thread-reply-lead-killswitch.js";
+import "../shared/forwarded-user-turns.js";
+import "../core/system-prompt-blocks.js";
+import "../settings/attribution-project.js";
+import "../telemetry/chunk-cb9c99f9.js";
+import "../shared/chunk-b5845da6.js";
+import "./bridge-outcome-branch-dropped.js";
+import "../context/account-memory-text-not-identified.js";
+import "../telemetry/service-error-detail-not-plain.js";
+import "../mcp/spawn-to-exec-ms.js";
+import "../shared/chunk-7a8599f4.js";
+import "../vendor/zod/tool-use.js";
+import "../shell/chunk-e0b62862.js";
+import "../shared/chunk-77f14287.js";
+import "../telemetry/harbor-kite-pacing-off.js";
+import "../permissions/subagent-output-flagged.js";
+import "../agents/web-fetch.js";
+import "../telemetry/harbor-kite-win.js";
+import "../telemetry/session-name-uniqueness.js";
+import "../auth/wif-user-oauth-refresh-race-resolved.js";
+import "../telemetry/gzip-request-body-latch-cleared.js";
+import "../shared/chunk-49d7e3e2.js";
+import "../shared/chunk-4bbbe120.js";
+import "../shared/chunk-6adae81c.js";
+import "../auth/allowed-taints-clean.js";
+import "../telemetry/dd-evp-origin-version.js";
+import "./claude-code-error-tracking.js";
+import "../fs/ccr-left-running-programs-note.js";
+import "../git/bridge-child-tool-diff.js";
+import "../tasks/continued-in.js";
+import "../shared/chunk-b2bcd1a3.js";
+import "../telemetry/chunk-1bb3c64e.js";
+import "../hooks/tool-name.js";
+import "../commands/claude-code.js";
+import "../plugins/plugin-command-source-refresh.js";
+import "../settings/shared-if-writable.js";
+import "../plugins/chunk-238ac5cd.js";
+import "../context/chunk-a8653d40.js";
+import "../shared/chunk-f0176518.js";
+import "../workflows/workflow-size-guideline-change.js";
+import "../mcp/copy-failed.js";
+import "../telemetry/chunk-d4426fa7.js";
+import "../git/config-unreadable.js";
+import "../mcp/third-party.js";
+import "../plugins/plugin-enabled-for-session.js";
+import "./chunk-c3e8b741.js";
+import "../git/plugin-directory-catalog-load.js";
+import "../agents/tool-use-id.js";
+import "../telemetry/tab-read-sep.js";
+import "../shared/chunk-e9b94e10.js";
+import "../plugins/plugin-function-hooks-pane-ask.js";
+import "../agents/api-system.js";
+import "../shared/too-long.js";
+import "../models/auto-mode-config.js";
+import "../shared/chunk-f0d2d1c6.js";
+import "../shared/not-json.js";
+import "../fs/chunk-fce4a4b4.js";
+import "../shared/network-device.js";
+import "./chunk-8d3e7b64.js";
+import "../shared/chunk-ec79692e.js";
+import "../shared/chunk-39180da8.js";
+import "../agents/agent-retry-status.js";
+import "../agents/chunk-93a99f2c.js";
+import "../context/envelope-pinned-id.js";
+import "../shared/general-purpose.js";
+import "../agents/swarm-team-file-update.js";
+import "../shared/session-activity-parked-exceeds-refcount.js";
+import "../plugins/unsubscribe-pr-activity.js";
+import "../auth/policy-limits-principal-changed.js";
+import "../settings/settings-change-staged.js";
+import "./chunk-8734517b.js";
+import "../workflows/workflow-subagent.js";
+import "../telemetry/mcp-sdk-generation.js";
+import "../mcp/claudeai-mcp-eligibility.js";
+import "../mcp/declared-tools-dropped-at-compaction.js";
+import "../telemetry/chunk-164c8a46.js";
+import "../telemetry/reactive-compact-remote.js";
+import "../telemetry/binary-content-persisted.js";
+import "../agents/chunk-e7d109ea.js";
+import "../commands/skill-bundled-extract.js";
+import "../telemetry/fleet-past-sessions.js";
+import "../permissions/agent-memory.js";
+import "../telemetry/bg-roster-parse-failed.js";
+import "./anthropic-client-request-reason.js";
+import "../git/needs-reply.js";
+import "../permissions/chunk-f7872d86.js";
+import "../shared/chunk-bb143d83.js";
+import "./bridge-project-files-write.js";
+import "../commands/command-web-setup.js";
+import "../telemetry/pewter-owl-model.js";
+import "../telemetry/kairos-brief-stop-hook-text.js";
+import "../shared/create-from-type.js";
+import "../fs/utf-8.0ed0.js";
+import "../telemetry/kairos-push-notifications.js";
+import "../shell/chunk-23a29f4d.js";
+import "../context/kairos-cron-durable.js";
+import "../chrome/chrome-open-url.js";
+import "../shared/chunk-e97d1551.js";
+import "../telemetry/chunk-04e1acdf.js";
+import "../shared/chunk-eb4cd166.js";
+import "../git/coordinator-mode-switched.js";
+import "../artifacts/chunk-59598412.js";
+import "../fs/chunk-b6b2e102.js";
+import "../vendor/mcp-sdk/chunk-384e0b2c.js";
+import "../git/git-repository.js";
+import "../ide/gitdir-outside-modules.js";
+import "../git/no-descriptor-listing.js";
+import "../terminal/chunk-4c553df7.js";
+import "../vendor/highlight/plugin-hljs-languages.js";
+import "../design/allow-design-sync.js";
+import "../shared/needs-reconnect.js";
+import "../permissions/needs-reconnect.1db4.js";
+import "../shared/chunk-26f5a8ce.js";
+import "../telemetry/tool-result.js";
+import "../permissions/session-inbox.js";
+import "../hooks/plugin-function-hooks-switch-followed.js";
+import "../settings/chunk-ea11cbf9.js";
+import "./fetch-failed.js";
+import "../shared/vim-insert-remap.js";
+import { aPt } from "../fs/chunk-fd55ffe7.js";
+import "../ui/truncate-start.js";
+import { jX } from "./remote-callout.js";
+import "../shared/chunk-cc13967f.js";
+import "../artifacts/workshop-build-started.js";
+import "../shared/chunk-5a9b74de.js";
+import "../shared/chunk-c663f07c.js";
+import "../artifacts/chunk-bc4d286f.js";
+import "../artifacts/cobalt-plinth-samphire.js";
+import "../mcp/artifact-mcp-wire-tools-list.js";
+import "../artifacts/cobalt-plinth-comfrey.js";
+import "../artifacts/workshop-decisions.c3e2.js";
+import "../shared/read-file.js";
+import "../shared/session-id.js";
+import "../artifacts/artifact-roster-refresh.js";
+import "../auth/api-metrics-opt-out-check.js";
+import "../auth/grove-print-viewed.js";
+import "../artifacts/store-unavailable.9d8d.js";
+import "../auth/user-oauth.js";
+import "../telemetry/quota-auto-resume-cancelled.js";
+import "../shared/deep-link.js";
+import "../cli/tty-stream-error.js";
+import "./managed-settings-security-dialog-accepted.js";
+import "../api/not-signed-in.js";
+import "../auth/account-change.js";
+import "../shared/chunk-b576bb30.js";
+import "../auth/client-data-cache-key.js";
+import "../ui/tmux-buffer.js";
+import "../ui/chunk-03aae52e.js";
+import "../ui/chunk-f1f68858.js";
+import "../ui/ink-box.js";
+import "../ui/flex-start.dc41.js";
+import "../ui/chunk-1805a6ba.js";
+import "../ui/bedrock-setup-complete.js";
+import "../ui/chunk-783db08b.js";
+import "../telemetry/mantle-default-fallback.js";
+import "../ui/truncate-end.b3f5.js";
+import "../vendor/highlight/built-in.js";
+import "../vendor/highlight/meta-keyword.js";
+import "../ui/chunk-eb304a9e.js";
+import "../shell/built-in.js";
+import "../ui/aria-hidden.3bf7.js";
+import "../shared/chunk-77fac4e4.js";
+import "../terminal/list-item.js";
+import "../plugins/chunk-277dadac.js";
+import "../shared/chunk-fcaa80aa.js";
+import "../settings/tips-org-tips-file-load.js";
+import "../shared/active-time-ledger.js";
+import "../ui/aria-hidden.8741.js";
+import "../fs/chunk-d22723dd.js";
+import "../ui/in-progress.js";
+import "../context/not-a-retry-status.js";
+import "../ui/aria-hidden.c79b.js";
+import "../shared/chunk-e692f372.js";
+import "../shared/chunk-d20db2fd.js";
+import "../ui/spinner-stall-cleared.js";
+import "../ui/oauth-console-selected.js";
+import "../ui/vertex-setup-complete.js";
+import "../ui/chord-started.js";
+import "../shared/chunk-258385dc.js";
+import "../shared/chunk-bbf114e1.js";
+import "../mcp/mcp-discovery-cache.js";
+import "../shared/policy-blocked.js";
+import "../shared/chunk-f51cb704.js";
+import "../telemetry/fleet-nudge-state.js";
+import "../shared/chunk-7f9e9b1d.js";
+import "../workflows/local-workflow.d406.js";
+import "../artifacts/template-instance.js";
+import "../artifacts/ws-status-note.js";
+import "../artifacts/artifact-comment-reply.js";
+import "../tasks/artifact-changed.js";
+import "../shared/chunk-0988af03.js";
+import "../artifacts/artifact-comment-monitor.js";
+import "../fs/mcp-tasks.js";
+import "../telemetry/dead-probe-adopt-ticks-token.js";
+import "../agents/refusal-fallback-latch-reset.js";
+import "../context/classifier-disabled-surfaces.js";
+import "../permissions/auto-mode-config.js";
+import "../settings/not-due.js";
+import "../shared/prompt-suggestion-back-off-end.js";
+import "../context/chunk-eed947c0.js";
+import "../plugins/chunk-5856c8d1.js";
+import "../shared/chunk-0d99bfe1.js";
+import "../ui/chunk-4e0282c8.js";
+import "../shared/managed-settings-security.js";
+import "../shared/chunk-1d395236.js";
+import "../shared/chunk-72c4b78c.js";
+import "../settings/chunk-1fd38b27.js";
+import "../auth/api-key.js";
+import "../auth/lane-unavailable.js";
+import "../shell/prompt-input-exit.js";
+import { EPe, bwe } from "./gateway-cert-mismatch.js";
+import { kQr } from "../ui/repl-screen.js";
+import "../shared/chunk-453aa70d.js";
+import "../ui/chunk-7b6068da.js";
+import "../workflows/adopt-exit-handoff.js";
+import "../shared/needs-auth.aacf.js";
+import "../shared/chunk-259e511a.js";
+import "../auth/oauth-storage-warning.js";
+import "../terminal/notification-method-used.js";
+import "../ui/chunk-016cd846.js";
+import "../shared/chunk-a962cf3e.js";
+import "../ui/chunk-0a333db6.js";
+import "../ui/aria-hidden.4e7d.js";
+import "../shared/chunk-171a4ff3.js";
+import "../shared/chunk-473cbb92.js";
+import "../shared/chunk-d08b9350.js";
+import "../ui/chunk-e2c1cf01.js";
+import "../ui/chunk-1ff74795.js";
+import "../shared/chunk-9faca596.js";
+import "../shell/chunk-7372ca27.js";
+import "../shared/chunk-c602eee2.js";
+import "../shared/chunk-15efe309.js";
+import "../telemetry/chunk-56c542d7.js";
+import { e, r } from "../vendor/react/chunk-40234545.js";
+import "../shared/chunk-de828546.js";
+import "../telemetry/prompt-suggestion-init.js";
+import "../shared/chunk-d55dd270.js";
+import { VW } from "./bridge-failed.js";
+import "../shared/chunk-0601e8a7.js";
+import "../shared/chunk-93fd0c36.js";
+import "../terminal/chunk-8f019bac.js";
+import "../shared/no-backup.js";
+import "../auth/served-applies.js";
+import "../shared/chunk-8167ce6a.js";
+import { C7t } from "../telemetry/rc-permission-nudge.js";
+import "../cli/chunk-631c0fd0.js";
+import "../ide/chunk-2bb82cbe.js";
+import "../context/ccr-recap-generate.js";
+import "../mcp/monitor-ws.js";
+import "../workflows/remote-agent.js";
+import "../shared/chunk-93d557e4.js";
+import "../terminal/chunk-204c4d01.js";
+import "../shared/chunk-ed9e66c6.js";
+import "../workflows/chunk-89ff2d95.js";
+import "../plugins/mcpb-needs-config.js";
+import "../shared/chunk-5a5434c5.js";
+import "../vendor/marked/absent-but-marked.js";
+import "../agents/chunk-46f56dee.js";
+import "../mcp/artifact-summon-arm-emit.js";
+import "../shared/chunk-21cde607.js";
+import "../cli/chunk-29c07bf4.js";
+import "../shared/chunk-9b73b6ad.js";
+import "../permissions/chunk-88685f75.js";
+import "../shared/chunk-c76f3544.js";
+import "../vendor/chalk/chunk-24ee1a9d.js";
+import "../agents/lantern-wick-release-by-model.js";
+import "../telemetry/chunk-2515359b.js";
+import "../shared/chunk-9e8feed3.js";
+import "../shared/chunk-d2d8af65.js";
+import "../shell/clipboard-read.js";
+import "../tools/chunk-69cf9f3c.js";
+import "../mcp/project-approval.js";
+import "../telemetry/cobalt-plinth-damson.js";
+import "./invalid-url.js";
+import "../fs/compiled-roots.js";
+import "../permissions/auto-mode.js";
+import "../shared/chunk-c201e157.js";
+import "../shared/action-not-found.4cf4.js";
+import "../agents/in-process-teammate.b77f.js";
+import "../shared/chunk-1b66b4d6.js";
+import "../agents/chunk-1782da8d.js";
+import "../shared/chunk-ab773be5.js";
+import "../shared/chunk-2c491c49.js";
+import "../agents/chunk-7daf58a0.js";
+import "../shared/chunk-dacc950e.js";
+import "../shared/chunk-2d0a0ef6.js";
+import "../telemetry/chunk-ce222b3e.js";
+import "../fs/chunk-81d6ccfe.js";
+import "../shared/project-read.js";
+import "../telemetry/started-after-init-empty.js";
+import "../shared/chunk-6fb6a920.js";
+import "../shared/chunk-ceeef64e.js";
+import "../ide/needs-auth.js";
+import "../telemetry/chunk-63c0e0aa.js";
+import { P, y, j } from "../vendor/react/chunk-9a0b1ced.js";
+import "../shared/chunk-8485aee7.js";
+import "../shared/chunk-767f1b52.js";
+import "../mcp/chunk-a5cd39f7.js";
+import "../plugins/plugin-remote-fetch.js";
+import "../shared/aarch64-unknown-linux-musl.js";
+import "../permissions/swarm-sandbox-permission-request.js";
+import "../shared/chunk-bfd2df5f.js";
+import "../shell/chunk-88b36f19.js";
+import "../shared/chunk-a2f0327b.js";
+import "../shared/chunk-052ccb69.js";
+import "../shared/chunk-cbf69fda.js";
+import "../shared/chunk-669ef766.js";
+import "../permissions/not-found.js";
+import "../plugins/chunk-53f86049.js";
+import "../shared/chunk-b7346a10.js";
+import "../mcp/mcp-task-worker-wake.js";
+import "../shared/chunk-e30378d4.js";
+import "../telemetry/chunk-cbe4ae1f.js";
+import "../shared/chunk-810598ee.js";
+import "../shared/chunk-c60ee8b6.js";
+import "../shared/chunk-b7194706.js";
+import "../shared/chunk-5e774940.js";
+import "../shell/chunk-57b85523.js";
+import "../shared/chunk-a5f59e6a.js";
+import "../shared/chunk-51932285.js";
+import "../context/session-state-changed.js";
+import "../shared/chunk-82eb5142.js";
+import "../shared/chunk-3484f8f6.js";
+import "../shared/chunk-53dd95bc.js";
+import "../shared/chunk-725c984c.js";
+import "../settings/chunk-b0c789b9.js";
+import "../shared/chunk-a8015993.js";
+import "../shared/chunk-f01c3cc7.js";
+import "../shared/dev-mods.js";
+import "../mcp/mcp-answer-stream-ended.js";
+import "../shared/chunk-9f5e078b.js";
+import "../telemetry/stop-hook-removed.js";
+import "../shared/chunk-fe849e7d.js";
+import "../permissions/chunk-a168e9f4.js";
+import "../git/not-link.js";
+import "../models/fable-5-1-prompt-bundle.js";
+import "../auth/oauth-automatic-redirect.js";
+import "../ide/opener-missing.js";
+import "../context/other-server.js";
+import "../shared/chunk-cb51a297.js";
+import "../shared/chunk-c564b685.js";
+import "../agents/chunk-f334f2d3.js";
+import "../shared/chunk-b09058c6.js";
+import "../auth/none-at-claim.js";
+import "../shared/chunk-37f396c1.js";
+import "../shared/chunk-339a284e.js";
+import "../shared/chunk-e9fc3352.js";
+import "../shared/chunk-7e745eb7.js";
+import "../api/control-response.js";
+import "../hooks/async-hooks.js";
+import "../shared/chunk-3309934d.js";
+import "../shared/chunk-23ad546c.js";
+import "../mcp/chunk-d6e9c05b.js";
+import "../shared/chunk-7c8c6c5a.js";
+import "../shared/chunk-67236fa7.js";
+import "../shared/allow-bundled-skills.js";
+import "../shared/chunk-cb8096b1.js";
+import "../shared/chunk-d1292a44.js";
+import "../shared/chunk-6ae01e90.js";
+import "../models/claude-mythos-preview.js";
+import "../shared/sk-ant-sid.js";
+import "../shared/chunk-cc3baac1.js";
+import "../shared/chunk-1f805b50.js";
+import "../fs/not-utf8.js";
+import "../context/tool-result.js";
+import "../shared/chunk-8bf008d9.js";
+import "../vendor/aws-sdk/chunk-d15f3977.js";
+import "../shared/chunk-6da6c5a3.js";
+import "../shared/chunk-86ecf3aa.js";
+import { z } from "../shared/chunk-be29de51.js";
+import { b } from "../vendor/react/chunk-0b0bf45d.js";
+import "./chunk-95151620.js";
+j();
+function jn(ae) {
+  return ae.replBridgeConnected;
+}
+function Sn(Oe) {
+  return Oe.replBridgeEnabled;
+}
+function Tn(W) {
+  return W.replBridgeOutboundOnly;
+}
+function On() {
+  let Y = gn();
+  return Y && { accountUuid: Y.accountUuid, organizationUuid: Y.organizationUuid };
+}
+function An() {
+  return Wr();
+}
+function Ln(L) {
+  return L.remoteDialogSeen ? L : { ...L, remoteDialogSeen: true };
+}
+function Pn(Xn) {
+  return Xn.replBridgeSessionUrl;
+}
+function Fn(Hn) {
+  return Hn.replBridgeConnectUrl;
+}
+function Un(zn) {
+  return zn.replBridgeSessionActive;
+}
+function Nn(ce) {
+  if (!ce.replBridgeEnabled && ce.replBridgeError === void 0) {
+    return ce;
+  }
+  return { ...ce, replBridgeEnabled: false, replBridgeExplicit: false, replBridgeOutboundOnly: false, replBridgeError: void 0, replBridgeErrorKind: void 0, replBridgeSessionGroupingId: void 0, notifications: Wlt(ce.notifications, VW) };
+}
+function qn(Wn) {
+  return !Wn;
+}
+function Qn(Yn) {
+  return Yn.length > 0;
+}
+function Vn($n, Kn) {
+  return e(n, { children: $n }, Kn);
+}
+function Jn(Ae) {
+  return e(sn.Item, { label: Ae.label, meta: Ae.meta }, Ae.key);
+}
+var Le = "Remote Control is already connected — a session's Project is fixed when it's created. Disconnect first, then re-run /remote-control --project to start a new session in the Project.";
+function ze(f) {
+  let C = w(25), { onDone: o, name: c, sessionGroupingId: p, context: d } = f, x = Gn(), re = K(jn), u = K(Sn), te = K(Tn), [F, ie] = y(false), [h, i] = y(false), [U] = y(On), [N] = y(An), G;
+  if (C[0] !== d?.dialogStore || C[1] !== d?.requestDialog || C[2] !== d?.storageV5 || C[3] !== c || C[4] !== o || C[5] !== p || C[6] !== x) G = function D2() {
+    if (C7t(d?.storageV5), kQr()) {
+      let se = d?.requestDialog;
+      if (!se) {
+        o("Remote Control asks for a one-time confirmation before it's first enabled, and this session can't show it. Run /remote-control from an interactive Claude Code session.", { display: "system" });
+        return;
+      }
+      let ye = d?.dialogStore;
+      if (ye && aPt(ye.getState(), jX.kind)) {
+        o("", { display: "system" });
+        return;
+      }
+      x((Q) => Q.replBridgeInitialName === c && Q.replBridgeSessionGroupingId === p ? Q : { ...Q, replBridgeInitialName: c, replBridgeSessionGroupingId: p }), o("", { display: "system" });
+      let E = he(gn());
+      se(jX, {}, { place: "under" }).then((V) => {
+        let J = V === "enable" && he(gn()) === E;
+        if (V === "enable" && !J) t("[bridge:repl] Remote Control callout answered under a different account than it was asked for — not enabling");
+        if (J) Re(Ln, d?.storageV5), a("tengu_bridge_command", { action: S("connect") });
+        x((m) => {
+          if (J) {
+            return m.replBridgeEnabled && m.replBridgeExplicit && !m.replBridgeOutboundOnly ? m : { ...m, replBridgeEnabled: true, replBridgeExplicit: true, replBridgeOutboundOnly: false };
+          }
+          return m.replBridgeInitialName === void 0 && m.replBridgeSessionGroupingId === void 0 ? m : { ...m, replBridgeInitialName: void 0, replBridgeSessionGroupingId: void 0 };
+        });
+      }).catch(l);
+      return;
+    }
+    a("tengu_bridge_command", { action: S("connect") });
+    let M = false;
+    if (x((k) => {
+      if (k.replBridgeEnabled && !k.replBridgeOutboundOnly) {
+        if (p !== void 0) M = true;
+        return k;
+      }
+      return { ...k, replBridgeEnabled: true, replBridgeExplicit: true, replBridgeOutboundOnly: false, replBridgeInitialName: c, replBridgeSessionGroupingId: p };
+    }), M) {
+      o(Le, { display: "system" });
+      return;
+    }
+    o("", { display: "system" });
+  }, C[0] = d?.dialogStore, C[1] = d?.requestDialog, C[2] = d?.storageV5, C[3] = c, C[4] = o, C[5] = p, C[6] = x, C[7] = G;
+  else G = C[7];
+  let D = G, v;
+  if (C[8] !== d?.credentials || C[9] !== D || C[10] !== o || C[11] !== re || C[12] !== u || C[13] !== te) v = () => {
+    if ((re || u) && !te) {
+      ie(true);
+      return;
+    }
+    let X = false;
+    return (async () => {
+      let T = await fe(d?.credentials);
+      if (X) {
+        return;
+      }
+      if (T?.kind === "error") {
+        a("tengu_bridge_command", { action: S("preflight_failed") }), o(T.message, { display: "system" });
+        return;
+      }
+      if (T?.kind === "unenrolled-trusted-device") {
+        a("tengu_bridge_command", { action: S("preflight_login_for_enrollment") }), i(true);
+        return;
+      }
+      D();
+    })(), () => {
+      X = true;
+    };
+  }, C[8] = d?.credentials, C[9] = D, C[10] = o, C[11] = re, C[12] = u, C[13] = te, C[14] = v;
+  else v = C[14];
+  let H;
+  if (C[15] === b) H = [], C[15] = H;
+  else H = C[15];
+  if (P(v, H), F) {
+    let B;
+    if (C[16] !== o || C[17] !== p) B = e(Te, { onDone: o, sessionGroupingId: p }), C[16] = o, C[17] = p, C[18] = B;
+    else B = C[18];
+    return B;
+  }
+  if (h) {
+    if (!d) {
+      return o("Your organization requires Trusted Devices for Remote Control, but this device is not enrolled. Please run `/login` in Claude Code to enroll this device.", { display: "system" }), null;
+    }
+    let B;
+    if (C[19] !== d || C[20] !== D || C[21] !== o || C[22] !== U || C[23] !== N) B = e(bwe, { startingMessage: "Sign in to enroll this device for Remote Control.", onDone: async (O, le, de) => {
+      let I = await EPe(d, O, { setAppState: de, awaitEnrollment: true, previousAccount: U, previousGatewayAuth: N });
+      if (I.gatewayLoginError !== void 0 || I.relaunching) {
+        o(I.gatewayLoginError, I.gatewayLoginError !== void 0 ? { display: "system" } : void 0);
+        return;
+      }
+      if (!O) {
+        a("tengu_bridge_command", { action: S("preflight_login_canceled") }), o("Sign-in canceled. Run /remote-control after enrolling this device.", { display: "system" });
+        return;
+      }
+      let A = await fe(d?.credentials);
+      if (A?.kind === "error") {
+        o(A.message, { display: "system" });
+        return;
+      }
+      if (A?.kind === "unenrolled-trusted-device") {
+        a("tengu_bridge_command", { action: S("preflight_enrollment_did_not_complete") }), o("Signed in, but device enrollment didn't complete. Run /remote-control again, or check the debug log for [trusted-device] messages.", { display: "system" });
+        return;
+      }
+      D();
+    } }), C[19] = d, C[20] = D, C[21] = o, C[22] = U, C[23] = N, C[24] = B;
+    else B = C[24];
+    return B;
+  }
+  return null;
+}
+function Te(f) {
+  let i = w(65), { onDone: o, sessionGroupingId: c } = f;
+  ka("bridge-disconnect-dialog");
+  let p = Gn(), d = K(Pn), x = K(Fn), re = K(Un), [u, te] = y(false), [F, ie] = y(""), h = re ? d : x, U, N;
+  if (i[0] !== h || i[1] !== u) U = () => {
+    if (!u || !h) {
+      ie("");
+      return;
+    }
+    Xwe(h, { type: "utf8", errorCorrectionLevel: "L", small: true }).then(ie).catch(() => ie(""));
+  }, N = [u, h], i[0] = h, i[1] = u, i[2] = U, i[3] = N;
+  else U = i[2], N = i[3];
+  P(U, N);
+  let C;
+  if (i[4] !== o || i[5] !== p) C = function G2() {
+    p(Nn), a("tengu_bridge_command", { action: S("disconnect") }), o(N6e, { display: "system" });
+  }, i[4] = o, i[5] = p, i[6] = C;
+  else C = i[6];
+  let G = C, se;
+  if (i[7] === b) se = function ye2() {
+    te(qn);
+  }, i[7] = se;
+  else se = i[7];
+  let ye = se, Q;
+  if (i[8] !== o) Q = function E2() {
+    o(void 0, { display: "skip" });
+  }, i[8] = o, i[9] = Q;
+  else Q = i[9];
+  let E = Q, V;
+  if (i[10] !== G) V = { key: "disconnect", run: G, label: "Disconnect this session" }, i[10] = G, i[11] = V;
+  else V = i[11];
+  const J = u ? "Hide QR code" : "Show QR code";
+  let m;
+  if (i[12] !== u) m = u ? [] : ["Scan with your phone to open this session"], i[12] = u, i[13] = m;
+  else m = i[13];
+  let M;
+  if (i[14] !== J || i[15] !== m) M = { key: "qr", run: ye, label: J, meta: m }, i[14] = J, i[15] = m, i[16] = M;
+  else M = i[16];
+  let k;
+  if (i[17] !== E) k = { key: "continue", run: E, label: "Continue" }, i[17] = E, i[18] = k;
+  else k = i[18];
+  let D;
+  if (i[19] !== k || i[20] !== V || i[21] !== M) D = [V, M, k], i[19] = k, i[20] = V, i[21] = M, i[22] = D;
+  else D = i[22];
+  let v = D, X, T, H, B, O, le, de, I, A, ae;
+  if (i[23] !== h || i[24] !== E || i[25] !== F || i[26] !== c || i[27] !== u) {
+    let Oe = F ? F.split(`
+`).filter(Qn) : [];
+    T = we;
+    I = "Remote Control";
+    A = E;
+    ae = true;
+    X = s;
+    H = "column";
+    B = 1;
+    if (i[38] !== c) O = c !== void 0 && e(n, { children: "A session's Project is fixed when it's created — disconnect first, then re-run /remote-control --project to start a new one." }), i[38] = c, i[39] = O;
+    else O = i[39];
+    const W2 = h ? ` and at ${h}` : " and claude.ai/code";
+    if (i[40] !== W2) le = r(n, { children: ["This session is available in the Claude mobile app", W2, "."] }), i[40] = W2, i[41] = le;
+    else le = i[41];
+    de = u && Oe.length > 0 && e(s, { flexDirection: "column", children: Oe.map(Vn) });
+    i[23] = h, i[24] = E, i[25] = F, i[26] = c, i[27] = u, i[28] = X, i[29] = T, i[30] = H, i[31] = B, i[32] = O, i[33] = le, i[34] = de, i[35] = I, i[36] = A, i[37] = ae;
+  } else X = i[28], T = i[29], H = i[30], B = i[31], O = i[32], le = i[33], de = i[34], I = i[35], A = i[36], ae = i[37];
+  const W = v.length, Y = v.length - 1;
+  let L, _e;
+  if (i[42] !== v) L = (Mn) => v[Mn]?.run(), _e = v.map(Jn), i[42] = v, i[43] = L, i[44] = _e;
+  else L = i[43], _e = i[44];
+  let be;
+  if (i[45] !== v.length || i[46] !== Y || i[47] !== L || i[48] !== _e) be = e(sn, { visibleCount: W, defaultFocusIndex: Y, wrap: true, declineHomeEnd: true, onSelect: L, children: _e }), i[45] = v.length, i[46] = Y, i[47] = L, i[48] = _e, i[49] = be;
+  else be = i[49];
+  let We;
+  if (i[50] === b) We = e(n, { dimColor: true, children: r(ve, { children: [e(q, { chord: "enter", action: "select" }), e(q, { chord: "escape", action: "continue" })] }) }), i[50] = We;
+  else We = i[50];
+  let De;
+  if (i[51] !== X || i[52] !== H || i[53] !== B || i[54] !== O || i[55] !== le || i[56] !== de || i[57] !== be) De = r(X, { flexDirection: H, gap: B, children: [O, le, de, be, We] }), i[51] = X, i[52] = H, i[53] = B, i[54] = O, i[55] = le, i[56] = de, i[57] = be, i[58] = De;
+  else De = i[58];
+  let Ye;
+  if (i[59] !== T || i[60] !== I || i[61] !== A || i[62] !== ae || i[63] !== De) Ye = e(T, { title: I, onCancel: A, hideInputGuide: ae, children: De }), i[59] = T, i[60] = I, i[61] = A, i[62] = ae, i[63] = De, i[64] = Ye;
+  else Ye = i[64];
+  return Ye;
+}
+async function fe(f) {
+  let o = await sjt();
+  if (o) {
+    if (o.orgPolicyDenied) Ex("allow_remote_control", "slash_command");
+    return { kind: "error", message: o.reason };
+  }
+  let c = await vjn();
+  if (c) return { kind: "error", message: c };
+  if (!(z() && f !== void 0 ? await Uk(f) : Fv())) return { kind: "error", message: k_e };
+  if (await pzr(f), await DZn()) {
+    if (v_e()) return { kind: "error", message: Xwt };
+    return { kind: "unenrolled-trusted-device" };
+  }
+  return t("[bridge] Prerequisites passed, enabling bridge"), null;
+}
+async function To(f, o, c) {
+  let p, x = c.trim() || void 0;
+  return e(ze, { onDone: f, name: x, sessionGroupingId: p, context: o });
+}
+function he(f) {
+  return f && `${f.accountUuid}/${f.organizationUuid || ""}`;
+}
+export {
+  To as call
+};

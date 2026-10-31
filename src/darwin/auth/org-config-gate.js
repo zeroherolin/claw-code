@@ -1,0 +1,552 @@
+// darwin/auth/org-config-gate.js — Claude Code 2.1.310（darwin）模块 chunk-7bw6nb4q.js
+import { ye } from "../context/not-admin-owned.js";
+import { c, ce } from "../agents/third-party.js";
+import { R } from "../telemetry/anthropic-workspace-id.js";
+import { X, Pe } from "../shared/chunk-57ff8cc1.js";
+import { t } from "../fs/gitlab-runner-authentication-token.js";
+import { l } from "../artifacts/cowritten-artifact-html.js";
+import { UEt, nl, B_, ua, Ng, np, LLe, znr, gn, EL, rKe, JV, Ti, SH, EH } from "../settings/global-config-and-gates.js";
+import { i } from "../shared/environment.js";
+import { Zs } from "../telemetry/chunk-9097a12b.js";
+import { jr, zt, da } from "../telemetry/chunk-9d6962d2.js";
+import { Rse, qb, xse, RS, rd } from "../shell/invalid-type.js";
+import { Te, op } from "../models/total-tokens-reminder.js";
+import { yZn, nZs } from "./env-quad.js";
+import { gY, NQs, Pzo, Nzo, I6e, Ly, Nhn } from "./policy-limits-principal-changed.js";
+import { epn, jqs } from "../shell/sandbox.js";
+import { ire } from "../hooks/plugin-function-hooks-switch-followed.js";
+import { kNn, kN, c8e } from "../remote/managed-settings-security-dialog-accepted.js";
+import { eXt, Jso, Qso } from "../shared/chunk-c4549158.js";
+import { zB } from "../telemetry/started-after-init-empty.js";
+import { YSn, t5o } from "../telemetry/org-config-required.js";
+import { Ee } from "../shared/chunk-fee3c428.js";
+var Q = 6e5;
+function Z(e, n) {
+  if (n.tierVerifiedAtMs === void 0 || n.tier === null) return { tier: n.tier, credentialShape: n.credentialShape };
+  let o = n.nowMs ?? Date.now(), r = n.tierVerifiedAtMs === null ? null : o - n.tierVerifiedAtMs;
+  if (r !== null && r >= -Q && r <= e.graceTtlHours * 60 * 60 * 1e3) return { tier: n.tier, credentialShape: n.credentialShape };
+  return { tier: null, credentialShape: n.credentialShape === "stored_login" ? "untiered_login" : n.credentialShape };
+}
+function h(e, n) {
+  if (n.provider !== "firstParty") return { candidate: false, exclusion: "provider" };
+  if (!n.firstPartyBaseUrl) return { candidate: false, exclusion: "base_url" };
+  if (n.authRecoveryCommand) return { candidate: false, exclusion: "auth_command" };
+  let o = Z(e, n);
+  switch (o.credentialShape) {
+    case "stored_login":
+    case "untiered_login":
+      break;
+    case "api_key":
+    case "env_token_only":
+    case "key_helper_only":
+    case "none":
+      return { candidate: false, exclusion: "credential_shape" };
+  }
+  let r = YSn(o.tier) || o.credentialShape !== "untiered_login" || n.storedLoginOrigin !== true ? o.tier : e.plans[0] ?? "team";
+  if (!YSn(r)) return { candidate: false, exclusion: "tier_unknown" };
+  if (!e.enabled) return { candidate: false, exclusion: "flag_off" };
+  if (!e.plans.includes(r)) return { candidate: false, exclusion: "tier_not_in_plans" };
+  if (n.hostToken === true && !e.hostTokens) return { candidate: false, exclusion: "host_token" };
+  if (!Qso(e, n.bucket)) return { candidate: false, exclusion: "rollout_percent" };
+  return { candidate: true, tier: r };
+}
+var ee = 36e5;
+function L(e, n) {
+  if (e.exemptReasons.includes(n)) return true;
+  return n === "refused_not_entitled" && !e.refuseNotEntitled;
+}
+function te(e, n) {
+  if (t5o(e.reason) === "fetched") return "fetched";
+  if (!e.hasAdmittedCache) return "no";
+  if (e.admittedCacheAgeMs === void 0 || e.admittedCacheAgeMs < 0) return "no";
+  return e.admittedCacheAgeMs <= n * ee ? "cached" : "no";
+}
+function S(e) {
+  let { flag: n, candidacy: o, surface: r } = e, a = e.blockedMs ?? 0;
+  if (!n.enabled || !o.candidate) return { verdict: "pass", blockedMs: a, surface: r };
+  let d = [["policy", e.policy], ["settings", e.settings]], u = false;
+  for (let [f, m] of d) {
+    if (t5o(m.reason) !== "refused") continue;
+    if (L(n, m.reason)) {
+      u = true;
+      continue;
+    }
+    return { verdict: "refused", reason: m.reason, resource: f, blockedMs: a, surface: r };
+  }
+  let s = false, g;
+  for (let [f, m] of d) {
+    let _ = te(m, n.graceTtlHours);
+    if (_ === "fetched") continue;
+    if (_ === "cached") {
+      s = true;
+      continue;
+    }
+    if (L(n, m.reason)) {
+      u = true;
+      continue;
+    }
+    if (g === void 0 || g[1].reason === "unavailable_pending" && m.reason !== "unavailable_pending") g = [f, m];
+  }
+  if (g !== void 0) return { verdict: "blocked", reason: g[1].reason, resource: g[0], blockedMs: a, surface: r };
+  return { verdict: u ? "pass_exempt" : s ? "pass_cached" : "pass", blockedMs: a, surface: r };
+}
+function ne(e) {
+  if (e.hasOAuthToken && e.oauthEffective) return e.subscriptionType === null ? "untiered_login" : "stored_login";
+  if (e.apiKeyEnv) return "api_key";
+  if (e.envToken) return "env_token_only";
+  if (e.keyHelper) return "key_helper_only";
+  return "none";
+}
+function k() {
+  try {
+    switch (ua().source) {
+      case "claude.ai":
+        return nl();
+      case "CCR_OAUTH_TOKEN_FILE":
+      case "CLAUDE_CODE_OAUTH_TOKEN_FILE_DESCRIPTOR":
+        return nl() && EL();
+      default:
+        return false;
+    }
+  } catch {
+    return true;
+  }
+}
+function re() {
+  try {
+    return nl();
+  } catch {
+    return false;
+  }
+}
+function oe() {
+  let e = np();
+  return ne({ hasOAuthToken: e, oauthEffective: e && re(), subscriptionType: LLe(), apiKeyEnv: !!i.ANTHROPIC_API_KEY, envToken: B_() !== void 0, keyHelper: Ng() !== void 0 });
+}
+function v(e) {
+  let n = oe(), o = k();
+  return { provider: Te(), firstPartyBaseUrl: op(), authRecoveryCommand: e.authRecoveryCommand, tier: LLe(), credentialShape: n, storedLoginOrigin: o, hostToken: n === "stored_login" && !o, tierVerifiedAtMs: znr(), nowMs: Date.now(), bucket: Jso(EH()) };
+}
+function y(e, n) {
+  let o = e?.[n];
+  return typeof o === "string" ? o : void 0;
+}
+function H(e, n) {
+  let o = e?.[n];
+  return typeof o === "number" ? o : void 0;
+}
+function ie(e, n) {
+  let o = H(n, "policy_cache_age_ms"), r = e?.hadCache === true || e?.source === "cache", a = { hasAdmittedCache: r, admittedCacheAgeMs: r ? o : void 0 };
+  if (y(n, "policy_ineligible_reason") !== void 0 || e?.source === "ineligible") return { ...a, reason: "not_attempted" };
+  let d = y(n, "policy_load_state");
+  if (d === "succeeded" || n?.policy_live_verdict === true || e?.source === "fetch") return { ...a, reason: "ok" };
+  if (e?.source === "none") return { ...a, reason: "none_configured" };
+  if (d === "in_flight" || d === "not_started" || d === void 0 && e === void 0) return { ...a, reason: "unavailable_pending" };
+  let u = y(n, "policy_server_error_code"), s = y(n, "policy_server_auth_denial"), g = H(n, "policy_http_status");
+  return { ...a, reason: b(y(n, "policy_error_code"), y(n, "policy_credential_state"), g, y(n, "policy_server_error_type"), yZn.find((f) => f === u), nZs.find((f) => f === s)), httpStatus: g };
+}
+function F(e) {
+  return e === 429 || e === 408 || e === 409 || e === 425;
+}
+function A(e) {
+  return e === "other" ? void 0 : e;
+}
+function q(e, n, o) {
+  return e === "dead" && Pzo(n, o) !== "organization";
+}
+function U(e, n, o, r) {
+  if (A(n) === void 0) return;
+  let a = Pzo(o, r);
+  if (a === "organization") return "refused_not_entitled";
+  if (a === "credential") return "refused_credential";
+  if (e === 404) return "none_configured";
+  if (e === 401 || e === void 0) return;
+  if (e === 403) return "refused_not_entitled";
+  if (F(e) || e >= 500) return;
+  return "unavailable_server";
+}
+function b(e, n, o, r, a, d) {
+  if (q(n, a, d)) return "refused_credential";
+  let u = A(r), s = U(o, u, a, d);
+  if (s !== void 0 && (e === "auth_failed" || e === "request_failed")) return s;
+  switch (e) {
+    case "auth_failed":
+      if (n === "dead") return "refused_credential";
+      if (o === 401) return "unavailable_credential_refresh";
+      if (o === 403) return "blocked_by_intermediary";
+      if (o === void 0 && u === void 0) return n === void 0 ? "client_no_credentials" : "unavailable_credential_refresh";
+      return "refused_not_entitled";
+    case "timeout":
+      return "unavailable_timeout";
+    case "network_error":
+      return "unavailable_connect";
+    case "request_failed":
+      if (F(o)) return "unavailable_rate_limited";
+      if (o === 304 || o === 404) return "blocked_by_intermediary";
+      return o === void 0 ? "unavailable_connect" : "unavailable_server";
+    case "spurious_304":
+    case "stale_tunnel_credential":
+      return "unavailable_server";
+    case "parse_failed":
+      return "blocked_by_intermediary";
+    case "session_changed":
+    case void 0:
+      return "unavailable_pending";
+    default:
+      return "client_error";
+  }
+}
+var W = () => jqs(), ae = Ee({ read: W }, (e) => {
+  e.read = W;
+});
+function w() {
+  let e = false;
+  try {
+    e = RS() !== null;
+  } catch {
+    e = false;
+  }
+  let n;
+  try {
+    n = e ? ae.read() : void 0;
+  } catch {
+    n = void 0;
+  }
+  return { present: e, ageMs: n };
+}
+var se = /* @__PURE__ */ new Set(["sandboxed_entrypoint", "claude_tag", "hermetic_remote_session"]);
+function T(e, n, o, r = { present: false, ageMs: void 0 }, a = false) {
+  let d = r.present || e?.hadCache === true || e?.source === "cache" || n?.state === "stale_cache", u = { hasAdmittedCache: d, admittedCacheAgeMs: d ? r.ageMs : void 0 }, s = o ?? (n?.state === "ineligible" ? n.reason : void 0);
+  if (s !== void 0 || e?.source === "ineligible") return { ...u, reason: s !== void 0 && se.has(s) && !a ? "not_required" : "not_attempted" };
+  if (n?.state === "ok") return { ...u, reason: n.hasSettings ? "ok" : "none_configured" };
+  if (e?.source === "fetch") return { ...u, reason: "ok" };
+  if (e?.source === "none") return { ...u, reason: "none_configured" };
+  if (n?.state === "failed" || n?.state === "stale_cache") return { ...u, reason: de(n.failure.errorKind, n.failure.httpStatus, n.failure.serverErrorType, n.failure.credentialState, n.failure.serverErrorCode, n.failure.serverAuthDenial, n.failure.noResponse), httpStatus: n.failure.httpStatus };
+  if (e?.source === "error" || e?.source === "rejected") return { ...u, reason: "client_error" };
+  return { ...u, reason: "unavailable_pending" };
+}
+function de(e, n, o, r, a, d, u) {
+  if (q(r, a, d)) return "refused_credential";
+  let s = A(o), f = U(n ?? (e === "http_401" ? 401 : e === "http_403" ? 403 : void 0), s, a, d);
+  if (f !== void 0 && (e === "http_401" || e === "http_403" || e === "http_4xx")) return f;
+  switch (e) {
+    case "http_401":
+      return r === "dead" ? "refused_credential" : "unavailable_credential_refresh";
+    case "profile_credential_error":
+      return "refused_credential";
+    case "http_403":
+      return r === "dead" ? "refused_credential" : "blocked_by_intermediary";
+    case "parse_error":
+      return "blocked_by_intermediary";
+    case "http_4xx":
+      if (F(n)) return "unavailable_rate_limited";
+      return "blocked_by_intermediary";
+    case "ruled_empty":
+      return "unavailable_settings_unusable";
+    case "http_5xx":
+      return "unavailable_server";
+    case "timeout":
+      return "unavailable_timeout";
+    case "network_error":
+      return "unavailable_connect";
+    case "no_auth_available":
+    case "api_key_not_sent":
+      return "client_no_credentials";
+    case "unknown_error":
+      if (n === 304) return "blocked_by_intermediary";
+      return u === true ? "unavailable_connect" : "client_error";
+    default:
+      return "client_error";
+  }
+}
+function ue() {
+  return ye() ? "noninteractive" : "startup";
+}
+function ge(e, n, o, r, a, d = "fallback", u = { present: false, ageMs: void 0 }, s = false, g) {
+  let f = h(e, n), m = h({ ...e, enabled: true, plans: ["team", "enterprise"], percent: 100 }, n), _ = ie(o.policy, o.policyGateFields), G = T(o.settings, r, a, u, s), I = { flag: { ...e, enabled: true, plans: ["team", "enterprise"], percent: 100 }, candidacy: m, policy: _, settings: G, surface: ue() }, E = S(I);
+  return { decision: c(E.verdict), decision_reason: ce(E.reason), decision_resource: ce(E.resource), surface: c(E.surface), blocked_ms: 0, candidate_if_armed: m.candidate, exclusion_if_armed: ce(m.candidate ? void 0 : m.exclusion), candidate_now: f.candidate, exclusion_now: ce(f.candidate ? void 0 : f.exclusion), flag_enabled: e.enabled, flag_source: c(d), flag_percent: e.percent, grace_ttl_hours: e.graceTtlHours, tier: ce(Ce(n.tier)), credential_shape: c(n.credentialShape), policy_reason: c(_.reason), policy_has_cache: _.hasAdmittedCache, policy_cache_age_ms: _.admittedCacheAgeMs, settings_reason: c(G.reason), settings_has_cache: G.hasAdmittedCache, settings_cache_age_ms: G.admittedCacheAgeMs, ...fe(I, g) };
+}
+function fe(e, n) {
+  if (n === void 0) return {};
+  try {
+    let o = n();
+    return { settings_stored_copy: c(o.settings.storedCopy), policy_stored_copy: c(o.policy.storedCopy), settings_live_signed: c(o.settings.liveSigned), policy_live_signed: c(o.policy.liveSigned), decision_if_strict: c(le(e, o)) };
+  } catch (o) {
+    return l(new R(`org-config gate: the signature facts threw (${gY(o)})`, "org-config gate: the signature facts threw")), {};
+  }
+}
+function le(e, n) {
+  let o = N(e, n, true), r = N(e, n, false);
+  return o === r ? o : "pending";
+}
+function N(e, n, o) {
+  return S({ ...e, policy: z(e.policy, n.policy, o), settings: z(e.settings, n.settings, o) }).verdict;
+}
+function z(e, { storedCopy: n }, o) {
+  return n === "trusted" || n === "not_read" || n === "pending" && o ? e : { ...e, hasAdmittedCache: false, admittedCacheAgeMs: void 0 };
+}
+function $gs(e) {
+  NQs((n) => {
+    let { flag: o, source: r } = eXt();
+    return ge(o, v(e), n, qb(), Rse(), r, w(), k(), e.readSignatureFacts);
+  }, e.settle === void 0 ? void 0 : pe(e.settle, me));
+}
+var me = 35e3;
+function pe(e, n) {
+  return () => Promise.race([e().catch(() => {
+  }), X(n, void 0, { unref: true })]);
+}
+function Ce(e) {
+  switch (e) {
+    case "max":
+    case "pro":
+    case "team":
+    case "enterprise":
+      return e;
+    default:
+      return;
+  }
+}
+function _e(e) {
+  let n = { hasAdmittedCache: e.hasCache, admittedCacheAgeMs: e.hasCache ? e.cacheAgeMs : void 0 };
+  if (!e.eligible) return { ...n, reason: "not_attempted" };
+  let o = !e.loadFromEarlierGeneration;
+  if (e.liveVerdict || o && e.loadState === "succeeded") return { ...n, reason: "ok" };
+  let r = e.latestLoad;
+  if (r !== void 0) return r.succeeded ? { ...n, reason: "ok" } : { ...n, reason: b(r.errorCode, r.credentialState, r.httpStatus, r.serverErrorType, r.serverErrorCode, r.serverAuthDenial), httpStatus: r.httpStatus };
+  if (!o) return { ...n, reason: "unavailable_pending" };
+  if (e.loadState === "not_started" || e.loadState === "in_flight") {
+    let a = e.loadLastAttempt;
+    return a === void 0 ? { ...n, reason: "unavailable_pending" } : { ...n, reason: b(a.errorCode, "unknown", a.httpStatus, a.serverErrorType, a.serverErrorCode, a.serverAuthDenial), httpStatus: a.httpStatus };
+  }
+  return { ...n, reason: b(e.loadErrorCode, e.loadCredentialState, e.loadHttpStatus, e.loadServerErrorType, e.loadServerErrorCode, e.loadServerAuthDenial), httpStatus: e.loadHttpStatus };
+}
+function he() {
+  return _e(Nzo());
+}
+function Wso() {
+  return T(void 0, qb(), Rse(), w(), k());
+}
+function V() {
+  return { policy: he(), settings: Wso() };
+}
+function K(e, n) {
+  let o = n === void 0 ? void 0 : e[n].httpStatus, r = gn()?.organizationName;
+  return { organizationName: r === void 0 || r === null ? void 0 : rd(r), httpStatus: o };
+}
+var j = "api.anthropic.com/api/claude_code/policy_limits and api.anthropic.com/api/claude_code/settings";
+function p(e) {
+  let n = e.organizationName !== void 0 ? rd(e.organizationName).trim() : "";
+  return n !== "" ? n : "Your organization";
+}
+function C(e) {
+  return e.requestId !== void 0 ? ` Request id: ${rd(e.requestId)}.` : "";
+}
+function B(e, n = {}) {
+  if (e.verdict === "pass" || e.verdict === "pass_cached" || e.verdict === "pass_exempt") return;
+  switch (e.reason) {
+    case "refused_credential":
+      return "Your Claude session has expired. Sign in again to continue (claude auth login).";
+    case "refused_not_entitled":
+      return `${p(n)} doesn't allow Claude Code for this account. Ask an admin of your organization, or sign in with a different account (claude auth login).${C(n)}`;
+    case "refused_other":
+      return `${p(n)} refused this session's organization settings${n.httpStatus !== void 0 ? ` (HTTP ${n.httpStatus})` : ""}. Sign in again, or ask an admin of your organization.${C(n)}`;
+    case "blocked_by_intermediary":
+      return `Claude Code couldn't load your organization's settings: the reply came from a network proxy, not Anthropic${n.httpStatus !== void 0 ? ` (HTTP ${n.httpStatus}, no request id)` : ""}. ${p(n)} requires these settings before a session can start. Ask IT to allow HTTPS to ${j}, then retry.`;
+    case "unavailable_timeout":
+      return `Claude Code couldn't load your organization's settings (timed out). ${p(n)} requires them before a session can start. Retrying; check https://status.anthropic.com if this persists.${C(n)}`;
+    case "unavailable_connect":
+      return `Claude Code couldn't reach Anthropic to load your organization's settings (could not connect). ${p(n)} requires them before a session can start. Check your network connection and retry; if you are on a corporate network, ask IT to allow HTTPS to ${j}.`;
+    case "unavailable_server":
+      return `Claude Code couldn't load your organization's settings: Anthropic returned an error${n.httpStatus !== void 0 ? ` (HTTP ${n.httpStatus})` : ""}. ${p(n)} requires them before a session can start. Retrying; check https://status.anthropic.com if this persists.${C(n)}`;
+    case "unavailable_rate_limited":
+      return `Claude Code couldn't load your organization's settings: Anthropic asked it to retry shortly${n.httpStatus !== void 0 ? ` (HTTP ${n.httpStatus})` : ""}. ${p(n)} requires them before a session can start. Retrying; check https://status.anthropic.com if this persists.${C(n)}`;
+    case "unavailable_credential_refresh":
+      return e.surface === "noninteractive" ? `Claude Code couldn't verify your sign-in with Anthropic yet (its sign-in token was still being refreshed, often by another Claude Code process), so it couldn't load your organization's settings. ${p(n)} requires them before a session can start. Run the command again; if this persists, sign in again (claude auth login).${C(n)}` : `Claude Code couldn't verify your sign-in with Anthropic yet, so it couldn't load your organization's settings. ${p(n)} requires them before a session can start. Retrying; if this persists, sign in again (claude auth login).${C(n)}`;
+    case "unavailable_pending":
+      return `Claude Code is still loading your organization's settings. ${p(n)} requires them before a session can start; this usually takes a few seconds.`;
+    case "unavailable_settings_unusable":
+      return `Claude Code couldn't apply your organization's managed settings: none of the settings the server returned could be applied as written. ${p(n)} requires them before a session can start. Ask your administrator to fix the published settings, then retry.${C(n)}`;
+    case "client_no_credentials":
+    case "client_error":
+      return `Claude Code couldn't load your organization's settings because of an internal error. ${p(n)} requires them before a session can start. Retry, and if this persists report it with /bug.${C(n)}`;
+    case "not_attempted":
+      return `Claude Code does not load your organization's settings in the mode this session was launched in, and ${p(n)} requires them before a session can start. If CLAUDE_CODE_ENTRYPOINT or a remote-session variable is set in your environment, unset it and start Claude Code again; otherwise sign in again (claude auth login).`;
+    case "ok":
+    case "none_configured":
+    case "not_required":
+    case void 0:
+      return;
+  }
+}
+function Vfe(e) {
+  return e.verdict === "blocked" || e.verdict === "refused";
+}
+function Ugs(e) {
+  return e.verdict === "refused" ? "org_config_refused" : "org_config_required_unavailable";
+}
+function Gso(e) {
+  return e.verdict === "refused" || e.reason === "not_attempted" || e.reason === "client_no_credentials" || e.reason === "unavailable_credential_refresh";
+}
+function Oe() {
+  let e = () => {
+  };
+  return { recorded: new Promise((o) => {
+    e = xse(() => {
+      e(), o();
+    });
+  }), dispose: e };
+}
+var Se = { kickPolicy: I6e, policySettled: Ly, settingsSettled: kN, pendingConsentDialog: kNn, nextSettingsOutcome: Oe, now: () => performance.now() };
+async function ve(e, n = Se) {
+  let o = n.now();
+  try {
+    n.kickPolicy();
+  } catch (a) {
+    l(new R(`org-config gate: the policy kick threw (${gY(a)})`, "org-config gate: the policy kick threw"));
+  }
+  await Pe(Promise.all([n.policySettled().catch(() => {
+  }), n.settingsSettled().catch(() => {
+  })]), e);
+  let r = n.pendingConsentDialog();
+  if (r !== null) {
+    let a = n.nextSettingsOutcome();
+    try {
+      await r.catch(() => {
+      }), await Pe(Promise.all([n.settingsSettled().catch(() => {
+      }), a.recorded]), e);
+    } finally {
+      a.dispose();
+    }
+  }
+  return Math.max(0, Math.round(n.now() - o));
+}
+function x(e) {
+  if (e.readFlag !== void 0) return { flag: e.readFlag(), source: e.readFlagSource?.() ?? "override" };
+  return eXt();
+}
+function O(e, n, o, r) {
+  return { decision: { verdict: "pass", blockedMs: 0, surface: r }, message: void 0, flag: e, flagSource: n, candidacy: o, armed: false, context: {}, attempt: 0, decidedWithoutWaiting: true, outcomes: void 0 };
+}
+var P = { candidate: false, exclusion: "flag_off" };
+function be(e, n, o) {
+  return e !== "fallback" || !o() || n();
+}
+function QYt(e) {
+  let { flag: n, source: o } = x(e);
+  if (!n.enabled && be(o, e.isFlagFetchHeld ?? ZYt, e.isFlagCacheEmpty ?? JV)) return O(n, o, P, e.surface);
+  let r = h(n, (e.readCandidateInputs ?? v)({ authRecoveryCommand: e.authRecoveryCommand }));
+  if (!n.enabled || !r.candidate) return O(n, o, r, e.surface);
+  return D(e, n, o, r, 0, 0, { report: false, decidedWithoutWaiting: true });
+}
+async function Bgs(e) {
+  let n = e.isFlagFetchHeld ?? ZYt, o = e.isFlagCacheEmpty ?? JV, r = QYt(e);
+  if (qso(r, n, o)) await Yso(e.fetchFlag), r = QYt(e);
+  if (!r.armed || r.outcomes === void 0) return r;
+  if (r = await zso(r, () => QYt(e), e.primeSettingsCacheAge), !r.armed || r.outcomes === void 0) return r;
+  if (!Vfe(r.decision)) return await (e.report ?? oIt)(r, r.outcomes), r;
+  let { flag: a, flagSource: d } = r, [u] = await Promise.all([(e.settle ?? ve)(a.budgetMs), Kso(d, n, o) ? vyr(a.budgetMs, e.fetchFlag) : void 0]), s = x(e);
+  if (!s.flag.enabled) return O(s.flag, s.source, P, e.surface);
+  let g = h(s.flag, (e.readCandidateInputs ?? v)({ authRecoveryCommand: e.authRecoveryCommand }));
+  if (!g.candidate) return O(s.flag, s.source, g, e.surface);
+  return D(e, s.flag, s.source, g, u, 0, { report: true, decidedWithoutWaiting: false });
+}
+async function zso(e, n, o = ke) {
+  if (!e.armed || e.outcomes === void 0 || !Vfe(e.decision) || !Ge(e.outcomes)) return e;
+  return await o(), n();
+}
+function Ge(e) {
+  return e.settings.hasAdmittedCache && e.settings.admittedCacheAgeMs === void 0;
+}
+async function ke() {
+  await epn().then(() => {
+    return;
+  }, () => {
+    return;
+  });
+}
+function Vso(e, n, o = 1) {
+  let { flag: r, source: a } = x(e);
+  if (!r.enabled) return O(r, a, P, e.surface);
+  let d = h(r, (e.readCandidateInputs ?? v)({ authRecoveryCommand: e.authRecoveryCommand }));
+  if (!d.candidate) return O(r, a, d, e.surface);
+  return D(e, r, a, d, n, o, { report: true, decidedWithoutWaiting: false });
+}
+function D(e, n, o, r, a, d, u) {
+  let s = (e.readOutcomes ?? V)(), g = S({ flag: n, candidacy: r, policy: s.policy, settings: s.settings, surface: e.surface, blockedMs: a }), f = (e.readContext ?? K)(s, g.resource), m = { decision: g, message: B(g, f), flag: n, flagSource: o, candidacy: r, armed: true, context: f, attempt: d, decidedWithoutWaiting: u.decidedWithoutWaiting, outcomes: s };
+  if (u.report) (e.report ?? oIt)(m, s);
+  return m;
+}
+function oIt(e, n, o) {
+  let { decision: r, flag: a, candidacy: d } = e, u = Zs("tengu_org_config_gate", { decision: c(r.verdict), decision_reason: ce(r.reason), decision_resource: ce(r.resource), surface: c(r.surface), blocked_ms: r.blockedMs, attempt: e.attempt, decided_without_waiting: e.decidedWithoutWaiting, final_outcome: ce(o?.outcome), recovered_after_ms: o?.recoveredAfterMs, tier: ce(d.candidate ? d.tier : void 0), flag_source: c(e.flagSource), flag_percent: a.percent, grace_ttl_hours: a.graceTtlHours, budget_ms: a.budgetMs, policy_reason: ce(n?.policy.reason), policy_has_cache: n?.policy.hasAdmittedCache, policy_cache_age_ms: n?.policy.admittedCacheAgeMs, settings_reason: ce(n?.settings.reason), settings_has_cache: n?.settings.hasAdmittedCache, settings_cache_age_ms: n?.settings.admittedCacheAgeMs, http_status: e.context.httpStatus }).catch(() => {
+  }), s = !Y.done && (o !== void 0 || e.attempt === 0 && !Vfe(r));
+  if (s) Y.done = true;
+  let g = !s ? void 0 : r.verdict === "pass" ? jr("org_config_gate") : r.verdict === "pass_cached" || r.verdict === "pass_exempt" ? da("org_config_gate", r.verdict) : zt("org_config_gate", r.reason ?? r.verdict), f = Promise.all([u, g]).then(() => {
+    return;
+  });
+  return M.set.add(f), f.finally(() => M.set.delete(f)), t(`org-config gate: ${r.verdict}${r.reason ? ` (${r.resource} ${r.reason})` : ""} on ${r.surface} after ${r.blockedMs}ms`), f;
+}
+var Y = Ee({ done: false }, (e) => {
+  e.done = false;
+}), M = Ee({ set: /* @__PURE__ */ new Set() }, (e) => {
+  e.set = /* @__PURE__ */ new Set();
+});
+async function jgs() {
+  await Promise.allSettled([...M.set]);
+}
+async function Eyr() {
+  await Promise.all([Nhn({ singleAttempt: true }).catch((e) => l(new R(`org-config gate: the policy retry threw (${gY(e)})`, "org-config gate: the policy retry threw"))), c8e(void 0, void 0, { singleAttempt: true }).catch((e) => (l(new R(`org-config gate: the settings retry threw (${gY(e)})`, "org-config gate: the settings retry threw")), false)), Pe(SH().catch((e) => l(new R(`org-config gate: the flag refresh threw (${gY(e)})`, "org-config gate: the flag refresh threw"))), Re)]);
+}
+var Re = 3e3;
+function Kso(e, n = ZYt, o = JV) {
+  if (e === "disk") return !n();
+  return e === "fallback" && o() && !n();
+}
+function qso(e, n = ZYt, o = JV) {
+  return !e.armed && e.flagSource === "fallback" && !e.candidacy.candidate && e.candidacy.exclusion === "flag_off" && o() && !n();
+}
+function ZYt() {
+  return UEt(ire()) || !rKe();
+}
+async function vyr(e, n = Ti) {
+  await Pe(n().then(() => {
+    return;
+  }, () => {
+    return;
+  }), e);
+}
+var J = Ee({ byFetcher: /* @__PURE__ */ new WeakMap() }, (e) => {
+  e.byFetcher = /* @__PURE__ */ new WeakMap();
+});
+function Yso(e = Ti) {
+  let n = J.byFetcher.get(e);
+  if (n === void 0) n = vyr(zB, e), J.byFetcher.set(e, n);
+  return n;
+}
+var Fe = [15e3, 15e3, 3e4, 6e4, 18e4, 6e5], Ae = 0.3;
+function Xso(e, n = Math.random) {
+  let o = Fe[e];
+  if (o === void 0) return;
+  let r = (n() * 2 - 1) * Ae;
+  return Math.max(1e3, Math.round(o * (1 + r)));
+}
+export {
+  $gs,
+  Bgs,
+  Eyr,
+  Gso,
+  Kso,
+  QYt,
+  Ugs,
+  Vfe,
+  Vso,
+  Wso,
+  Xso,
+  Yso,
+  ZYt,
+  jgs,
+  oIt,
+  qso,
+  vyr,
+  zso
+};

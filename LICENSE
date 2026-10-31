@@ -1,11 +1,11 @@
 本项目由两部分组成，适用不同的条款。
 
 ================================================================================
-一、Claude Code 2.1.310（src/ 中的生成代码、assets/、reference/、docs/reference/）
+一、Claude Code 2.1.310（src/ 下各系统的生成代码、assets/、reference/、docs/reference/）
 ================================================================================
 
 这些内容提取自 Anthropic PBC 发布的 Claude Code 2.1.310
-（npm 包 @anthropic-ai/claude-code 与 @anthropic-ai/claude-code-darwin-arm64），
+（npm 包 @anthropic-ai/claude-code、@anthropic-ai/claude-code-darwin-arm64、@anthropic-ai/claude-code-linux-x64、@anthropic-ai/claude-code-linux-arm64），
 版权归 Anthropic PBC 所有。本项目只对其做了提取、格式化与重新组织，未取得任何额外授权。
 
 原版 LICENSE.md:
@@ -66,16 +66,16 @@ SOFTWARE.
 * Copyright(c) 2015 Douglas Christopher Wilson
 * MIT Licensed
 */
-    （位于 src/vendor/mcp-sdk/not-in-era.0ynw.js）
+    （位于 src/darwin/vendor/mcp-sdk/not-in-era.js、src/linux/vendor/mcp-sdk/not-in-era.js）
 
 /*! @azure/msal-common v15.13.1 2025-10-29 */
-    （位于 src/auth/get-bearer-token-provider.hrvv.js）
+    （位于 src/darwin/auth/get-bearer-token-provider.js、src/linux/auth/get-bearer-token-provider.js）
 
 /*! @azure/msal-node v3.8.1 2025-10-29 */
-    （位于 src/auth/get-bearer-token-provider.hrvv.js）
+    （位于 src/darwin/auth/get-bearer-token-provider.js、src/linux/auth/get-bearer-token-provider.js）
 
 /*! chokidar - MIT License (c) 2012 Paul Miller (paulmillr.com) */
-    （位于 src/fs/files-directories.md42.js）
+    （位于 src/darwin/fs/files-directories.js、src/linux/fs/files-directories.js）
 
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-    （位于 src/shared/chunk-967bck0p.js）
+    （位于 src/darwin/shared/chunk-3a1f553b.js、src/linux/shared/chunk-3a1f553b.js）

@@ -1,0 +1,55 @@
+// linux/ui/aria-hidden.c79b.js — Claude Code 2.1.310（linux）模块 chunk-tgsekzq8.js
+import { nir, rir } from "../shell/invalid-type.js";
+import { w } from "./chunk-0ed4c357.js";
+import { s, n } from "../telemetry/render-glyph-cardinality.js";
+import { Hxt } from "../shared/chunk-e692f372.js";
+import { blt } from "../shared/chunk-d20db2fd.js";
+import { F2 } from "../shared/chunk-171a4ff3.js";
+import { lw } from "../shared/chunk-15efe309.js";
+import { e, r } from "../vendor/react/chunk-40234545.js";
+import { Gt, be, j } from "../vendor/react/chunk-9a0b1ced.js";
+j();
+j();
+var CPe = Gt(false), s8t = Gt(false);
+function Cwe(i) {
+  let p = w(26), { tone: o, text: a, detail: m, subLines: b, linkify: G } = i, t = G ? F2 : n, E = be(s8t) ? " " : i.state === "live" && !i.reducedMotion ? rir[i.frame % rir.length] : nir, T = o === "gold" ? "warning" : o === "red" ? "error" : void 0, P = o === "red";
+  const L = o === "dim", R = o === "red" ? "error:" : o === "gold" ? "warning:" : void 0, h = o === "dim";
+  let c;
+  if (p[0] !== E || p[1] !== T || p[2] !== L || p[3] !== R || p[4] !== h) c = r(n, { "aria-hidden": L, "aria-label": R, italic: true, color: T, dimColor: h, children: [E, " "] }), p[0] = E, p[1] = T, p[2] = L, p[3] = R, p[4] = h, p[5] = c;
+  else c = p[5];
+  const I = P ? "error" : void 0, k = !P;
+  let u;
+  if (p[6] !== t || p[7] !== a) u = e(t, { children: a }), p[6] = t, p[7] = a, p[8] = u;
+  else u = p[8];
+  let f;
+  if (p[9] !== t || p[10] !== m) f = m !== void 0 && r(n, { dimColor: true, children: [" · ", e(t, { children: m })] }), p[9] = t, p[10] = m, p[11] = f;
+  else f = p[11];
+  let g;
+  if (p[12] !== I || p[13] !== k || p[14] !== u || p[15] !== f) g = r(n, { italic: true, color: I, dimColor: k, children: [u, f] }), p[12] = I, p[13] = k, p[14] = u, p[15] = f, p[16] = g;
+  else g = p[16];
+  let C;
+  if (p[17] !== t || p[18] !== b) C = b?.map((U, B) => e(n, { dimColor: true, children: e(t, { children: U }) }, B)), p[17] = t, p[18] = b, p[19] = C;
+  else C = p[19];
+  let y;
+  if (p[20] !== g || p[21] !== C) y = r(s, { flexDirection: "column", flexGrow: 1, children: [g, C] }), p[20] = g, p[21] = C, p[22] = y;
+  else y = p[22];
+  let S;
+  if (p[23] !== y || p[24] !== c) S = r(s, { flexDirection: "row", children: [c, y] }), p[23] = y, p[24] = c, p[25] = S;
+  else S = p[25];
+  return S;
+}
+function Dv(i) {
+  let o = Hxt(), a = blt()?.isQueued === true;
+  return !i && !o && !a && lw();
+}
+function Jto(i) {
+  let o = Dv(i), a = blt();
+  return a?.isQueued === true ? a.noticeSystemLines : o;
+}
+export {
+  CPe,
+  Cwe,
+  Dv,
+  Jto,
+  s8t
+};

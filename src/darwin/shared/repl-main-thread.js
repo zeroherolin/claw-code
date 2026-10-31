@@ -1,0 +1,16 @@
+// darwin/shared/repl-main-thread.js — Claude Code 2.1.310（darwin）模块 chunk-rgtztr8n.js
+import { xP, Y7 } from "../core/conversation-engine.js";
+import { fr } from "../settings/settings-auto-mode-rules-untrusted-source-ignored.js";
+function Pae(t, e) {
+  if (e) return t ? `agent:builtin:${t}` : "agent:default";
+  return t ? `agent:custom:${t}` : "agent:custom";
+}
+function W9e() {
+  let e = fr()?.outputStyle ?? xP;
+  if (e === xP) return "repl_main_thread";
+  return Object.hasOwn(Y7, e) ? `repl_main_thread:outputStyle:${e}` : "repl_main_thread:outputStyle:custom";
+}
+export {
+  Pae,
+  W9e
+};

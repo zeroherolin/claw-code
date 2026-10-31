@@ -1,0 +1,5 @@
+When on (default), users can schedule Cowork tasks and Code sessions to run later or on a recurring schedule, and Claude can create such schedules when asked.
+
+Set to `false` to turn scheduled tasks off for every user. The Scheduled section in Cowork and the routines list in the Code tab are hidden, together with every other place a schedule can be created. Tasks that already exist on a device no longer run; they are kept, not deleted, and run again once the key is removed or set to `true`. Claude is not offered the tools that create, change or run these tasks, and sessions start without Claude Code's own in-session scheduling tools (the `/loop` command, its cron tools and its wake-up timer).
+
+It does not remove task files already on the user's machine. A change takes effect at the next app launch.

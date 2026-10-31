@@ -1,0 +1,40 @@
+// linux/mcp/mcp-serve-tool-output.d936.js — Claude Code 2.1.310（linux）模块 chunk-n4mqndb0.js
+import { f } from "../telemetry/chunk-9d6962d2.js";
+import { p } from "../shared/chunk-2fe3b2b7.js";
+import { jWr, qmn, SQn, wQn } from "../permissions/peer-too-old.js";
+import { t } from "../fs/gitlab-runner-authentication-token.js";
+import { oE } from "../shared/chunk-537f65d6.js";
+import { ot } from "../fs/chunk-86be9585.js";
+import { mn } from "../shared/chunk-62f8d501.js";
+import { o, oe, u } from "../vendor/zod/string-format.js";
+var _ = "anthropic/toolHostInterface";
+function eCn() {
+  return tCn();
+}
+function tCn() {
+  let { version: e } = qmn;
+  return { version: e, min_version: jWr(oE.CLAUDE_CODE_MCP_SERVE_INTERFACE_MIN_VERSION, e) };
+}
+function Gvi() {
+  let e = eCn(), n = oE.CLAUDE_CODE_MCP_SERVE_INTERFACE_MIN_VERSION;
+  if (n !== void 0 && e?.min_version !== n) f("mcp_serve_tool_output", "launch_min_version_ignored", { launch_min_version: n, ...e && { daemon_interface_version: e.version, daemon_interface_min_version: e.min_version } });
+  return { experimental: e === void 0 ? {} : { [_]: e } };
+}
+var l = 100;
+function zvi(e, n) {
+  let i = mn(n) ? n[_] : void 0;
+  if (i === void 0) return;
+  let r = eCn();
+  if (r === void 0) return;
+  let s = typeof i === "string" && i.length <= l ? SQn(ot(i, false)) : void 0, a = s === void 0 ? "unreadable" : { peer_too_old: "session_too_old", self_too_old: "daemon_too_old", agreed: void 0 }[wQn(r, s).kind];
+  if (a === void 0) return;
+  let d = `${e} was not run: ${s === void 0 ? "this server could not read the version of the interface that its caller stated with the call" : a === "session_too_old" ? `this session speaks version ${s.version} of the interface to this server, which works with version ${r.min_version} or later` : `this session works with version ${s.min_version} or later of the interface to this server, which speaks version ${r.version}`}. Retrying won't help: tell the user.`;
+  return t(`MCP server: ${d}`, { level: "warn" }), f("mcp_serve_tool_output", `caller_interface_${a}`, { daemon_interface_min_version: r.min_version }), { isError: true, content: [{ type: "text", text: d }], _meta: { [_]: { refused: a, range: r } } };
+}
+var O = p(() => u({ refused: o(), range: oe().optional() }));
+export {
+  Gvi,
+  eCn,
+  tCn,
+  zvi
+};

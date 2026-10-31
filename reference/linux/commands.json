@@ -1,0 +1,1315 @@
+[
+ {
+  "type": "local",
+  "name": "__remote-workflow",
+  "description": "Run the workflow script delivered in this session environment (server-launched sessions only)",
+  "isHidden": true,
+  "disableModelInvocation": true,
+  "supportsNonInteractive": true,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "add-dir",
+  "description": "Add a new working directory",
+  "argumentHint": "<path>",
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "add-dir",
+  "description": "Add a new working directory",
+  "argumentHint": "<path>",
+  "immediate": "[fn]",
+  "thinClientDispatch": "twin",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "advisor",
+  "description": "Let Claude consult a stronger model at key moments",
+  "thinClientDispatch": "control-request",
+  "immediate": "[fn]",
+  "argumentHint": "[fn]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "advisor",
+  "supportsNonInteractive": true,
+  "description": "Let Claude consult a stronger model at key moments",
+  "argumentHint": "[fn]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "agents",
+  "description": "(removed) Ask Claude to create/manage subagents, or edit .claude/agents/",
+  "isHidden": true,
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "artifacts",
+  "aliases": [],
+  "description": "Browse your published and shared artifacts",
+  "isEnabled": "[fn]",
+  "immediate": true,
+  "runsBesideTurns": "<FXo>",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "auto-mode-setup",
+  "supportsNonInteractive": true,
+  "description": "Teach auto mode about your environment, plus optional rule tweaks",
+  "argumentHint": "[--request-id <uuid>] (--wizard posture=… scope=… depth=… --propose | --expect-sha256 <64-hex> --apply-file <path>)",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "auto-mode-setup",
+  "description": "Teach auto mode about your environment, plus optional rule tweaks",
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "autocompact",
+  "description": "Set how full the context gets before auto-summarizing",
+  "immediate": true,
+  "isEnabled": "[fn]",
+  "isHidden": false,
+  "argumentHint": "[auto|<tokens>]",
+  "userFacingName": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "autocompact",
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "description": "Configure the auto-compact window size",
+  "isHidden": "[fn]",
+  "isEnabled": "[fn]",
+  "argumentHint": "[auto|<tokens>]",
+  "load": "[fn]",
+  "userFacingName": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "autofix-pr",
+  "description": "Monitor and autofix any issues with the current PR",
+  "availability": [
+   "claude-ai",
+   "console-profile"
+  ],
+  "isEnabled": "[fn]",
+  "policyGate": "<kQ>",
+  "isHidden": "[fn]",
+  "userFacingName": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "background",
+  "aliases": [
+   "bg"
+  ],
+  "description": "Send this session to the background and free the terminal",
+  "argumentHint": "[prompt]",
+  "immediate": "[fn]",
+  "isEnabled": "[fn]",
+  "path": "commands/command-background.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "branch",
+  "description": "Create a branch of the current conversation at this point",
+  "argumentHint": "[name]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "brief",
+  "description": "Toggle brief-only mode",
+  "isEnabled": "[fn]",
+  "immediate": true,
+  "load": "[fn]",
+  "path": "commands/command-brief.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "btw",
+  "description": "Ask a quick side question without interrupting the main conversation",
+  "immediate": true,
+  "keepsScrollPosition": true,
+  "argumentHint": "[question]",
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "aliases": [
+   "share"
+  ],
+  "type": "local-jsx",
+  "name": "bug",
+  "description": "Report a bug or share your conversation",
+  "argumentHint": "[report]",
+  "immediate": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "cd",
+  "description": "Move this session to a new working directory",
+  "argumentHint": "<path>",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "name": "chrome",
+  "description": "Open Claude in Chrome settings",
+  "availability": [
+   "claude-ai"
+  ],
+  "isEnabled": "[fn]",
+  "type": "local-jsx",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "clear",
+  "description": "Start a new session with empty context; previous session stays on disk (resumable with /resume)",
+  "argumentHint": "[name]",
+  "aliases": [
+   "reset",
+   "new"
+  ],
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "cloud-plugins",
+  "description": "Choose whether cloud sessions use the plugins enabled on this machine",
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "color",
+  "description": "Set the prompt bar color for this session",
+  "immediate": true,
+  "argumentHint": "[${…}]",
+  "terminalOriented": true,
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "color",
+  "terminalOriented": true,
+  "supportsNonInteractive": true,
+  "description": "Set the prompt bar color for this session",
+  "argumentHint": "[${…}]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "compact",
+  "description": "Free up context by summarizing the conversation so far",
+  "isEnabled": "[fn]",
+  "supportsNonInteractive": true,
+  "argumentHint": "<optional custom summarization instructions>",
+  "thinClientDispatch": "post-text",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "aliases": [
+   "settings"
+  ],
+  "type": "local-jsx",
+  "name": "config",
+  "description": "Open settings",
+  "argumentHint": "[key=value]",
+  "immediate": "[fn]",
+  "getArgumentCompletions": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "config",
+  "aliases": [
+   "settings"
+  ],
+  "supportsNonInteractive": true,
+  "description": "Set a setting by key",
+  "argumentHint": "key=value",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "name": "context",
+  "description": "Visualize current context usage as a colored grid",
+  "argumentHint": "[all]",
+  "isEnabled": "[fn]",
+  "type": "local-jsx",
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "context",
+  "supportsNonInteractive": true,
+  "description": "Show current context usage",
+  "isHidden": "[fn]",
+  "isEnabled": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "copy",
+  "description": "Copy Claude's last response to clipboard (or /copy N for the Nth-latest)",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "daemon",
+  "description": "Manage background services and routines",
+  "immediate": true,
+  "path": "commands/command-daemon.js"
+ },
+ {
+  "type": "local",
+  "name": "design-consent",
+  "description": "Grant Claude agent access to your Design projects",
+  "isEnabled": "[fn]",
+  "policyGate": "<MGe>",
+  "supportsNonInteractive": true,
+  "isHidden": true,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "design-login",
+  "description": "Authorize design-system access for /design-sync with your claude.ai account",
+  "isEnabled": "[fn]",
+  "policyGate": "<MGe>",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "design-revoke",
+  "description": "Revoke Claude agent access to your Design projects",
+  "isEnabled": "[fn]",
+  "policyGate": "<MGe>",
+  "supportsNonInteractive": true,
+  "isHidden": true,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "desktop",
+  "aliases": [
+   "app"
+  ],
+  "description": "Continue the current session in Claude Desktop",
+  "availability": [
+   "claude-ai"
+  ],
+  "isEnabled": "<Eke>",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "diff",
+  "isEnabled": "[fn]",
+  "description": "[fn]",
+  "immediate": "[fn]",
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "effort",
+  "description": "Set effort level for model usage",
+  "argumentHint": "[fn]",
+  "immediate": true,
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "effort",
+  "supportsNonInteractive": true,
+  "description": "Set effort level for model usage",
+  "argumentHint": "[fn]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "exit",
+  "aliases": [
+   "quit"
+  ],
+  "description": "[fn]",
+  "immediate": true,
+  "terminalOriented": true,
+  "fleetHostCall": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "exit",
+  "terminalOriented": true,
+  "supportsNonInteractive": true,
+  "description": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "export",
+  "description": "Export the current conversation to a file or clipboard",
+  "argumentHint": "[filename]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "extra-usage",
+  "description": "Renamed to /usage-credits",
+  "isHidden": true,
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "extra-usage",
+  "supportsNonInteractive": true,
+  "description": "Renamed to /usage-credits",
+  "isHidden": true,
+  "isEnabled": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "fast",
+  "description": "[fn]",
+  "isHidden": "[fn]",
+  "argumentHint": "[on|off]",
+  "immediate": true,
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "fast",
+  "supportsNonInteractive": true,
+  "description": "[fn]",
+  "argumentHint": "[on|off]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "feedback",
+  "description": "Send feedback to Anthropic or report a bug",
+  "argumentHint": "[report]",
+  "immediate": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "focus",
+  "description": "Toggle focus view: just your prompt, summary, and response",
+  "immediate": true,
+  "terminalOriented": true,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "focus",
+  "terminalOriented": true,
+  "advertisedOnHostedSessions": true,
+  "supportsNonInteractive": true,
+  "description": "Toggle focus view: just your prompt, summary, and response",
+  "argumentHint": "[on|off]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "fork",
+  "description": "Spawn a background agent that inherits the full conversation",
+  "argumentHint": "<directive>",
+  "isEnabled": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "fork",
+  "description": "Copy this conversation into a new background session and keep working here",
+  "argumentHint": "[prompt]",
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "goal",
+  "description": "Set a goal Claude checks before stopping",
+  "argumentHint": "[<condition> | clear]",
+  "immediate": true,
+  "path": "commands/command-goal.js"
+ },
+ {
+  "type": "local",
+  "name": "goal",
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "description": "Set a goal — keep working until the condition is met",
+  "isHidden": "[fn]",
+  "isEnabled": "[fn]",
+  "load": "[fn]",
+  "path": "commands/command-goal.js"
+ },
+ {
+  "type": "local",
+  "name": "heapdump",
+  "description": "Dump the JS heap to the Desktop; on Linux with no Desktop folder, the home directory",
+  "isHidden": true,
+  "supportsNonInteractive": true,
+  "fleetHostCall": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "help",
+  "description": "Show help and available commands",
+  "immediate": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "hooks",
+  "description": "View hook configurations for tool events",
+  "immediate": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "ide",
+  "description": "Manage IDE integrations and show status",
+  "argumentHint": "[open]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "import",
+  "description": "Import config from another AI coding agent",
+  "immediate": true,
+  "argumentHint": "[codex|gemini|cursor] [--dry-run]",
+  "isEnabled": "<SMe>",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "import",
+  "supportsNonInteractive": true,
+  "description": "Import config from another AI coding agent",
+  "isHidden": "[fn]",
+  "isEnabled": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "prompt",
+  "name": "init",
+  "description": "[fn]",
+  "contentLength": 0,
+  "progressMessage": "analyzing your codebase",
+  "source": "builtin",
+  "getPromptForCommand": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "prompt",
+  "name": "insights",
+  "description": "Generate a report analyzing your Claude Code sessions",
+  "contentLength": 0,
+  "progressMessage": "analyzing your sessions",
+  "source": "builtin",
+  "disableModelInvocation": true,
+  "getPromptForCommand": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "prompt",
+  "name": "insights",
+  "description": "Generate a report analyzing your Claude Code sessions",
+  "contentLength": 0,
+  "progressMessage": "analyzing your sessions",
+  "source": "builtin",
+  "getPromptForCommand": "[fn]",
+  "path": "commands/command-insights.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "install",
+  "description": "Install Claude Code native build",
+  "argumentHint": "[options]",
+  "call": "[fn]",
+  "path": "commands/command-install.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "install-github-app",
+  "description": "Set up Claude GitHub Actions for a repository",
+  "availability": [
+   "claude-ai",
+   "console"
+  ],
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "install-slack-app",
+  "description": "Install the Claude Slack app",
+  "availability": [
+   "claude-ai"
+  ],
+  "supportsNonInteractive": false,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "name": "keybindings",
+  "description": "Open your keyboard shortcuts file",
+  "isEnabled": "[fn]",
+  "supportsNonInteractive": false,
+  "type": "local",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "limit-reset",
+  "description": "[fn]",
+  "argumentHint": "[fn]",
+  "isEnabled": "[fn]",
+  "isHidden": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "list-agents",
+  "aliases": [
+   "peers"
+  ],
+  "description": "List subagents, teammates, and other Claude sessions you can message",
+  "supportsNonInteractive": true,
+  "isEnabled": "[fn]",
+  "load": "[fn]",
+  "path": "commands/command-list-agents.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "login",
+  "description": "[fn]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "fleetHostCall": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "logout",
+  "description": "Sign out from your Anthropic account",
+  "isEnabled": "[fn]",
+  "fleetHostCall": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "loops",
+  "description": "List, create, and delete loops",
+  "immediate": true,
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "mcp",
+  "supportsNonInteractive": true,
+  "description": "Manage MCP servers",
+  "argumentHint": "[reconnect|enable|disable [<server>|all]]",
+  "thinClientDispatch": "post-text",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "mcp",
+  "description": "Manage MCP servers",
+  "immediate": true,
+  "argumentHint": "[reconnect (<server>|all)|enable|disable [<server>|all]]",
+  "thinClientDispatch": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "memory",
+  "description": "Edit CLAUDE.md files and memory settings",
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "mobile",
+  "aliases": [
+   "ios",
+   "android"
+  ],
+  "description": "Show QR code to download the Claude mobile app",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "model",
+  "supportsNonInteractive": true,
+  "description": "Set the AI model for Claude Code",
+  "argumentHint": "<model>",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "model",
+  "description": "[fn]",
+  "argumentHint": "[model]",
+  "immediate": true,
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "output-style",
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "description": "List output styles or switch to one",
+  "argumentHint": "[style]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "passes",
+  "description": "[fn]",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "pause-memory",
+  "aliases": [
+   "memory-pause",
+   "toggle-memory"
+  ],
+  "description": "[fn]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "load": "[fn]",
+  "userFacingName": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "permissions",
+  "aliases": [
+   "allowed-tools"
+  ],
+  "description": "Manage allow and deny tool permission rules",
+  "immediate": true,
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "plan",
+  "description": "Enable plan mode or view the current session plan",
+  "argumentHint": "[open|<description>]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "plugin",
+  "aliases": [
+   "plugins",
+   "marketplace"
+  ],
+  "description": "Manage Claude Code plugins",
+  "immediate": true,
+  "getArgumentCompletions": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "powerup",
+  "description": "Discover Claude Code features through quick interactive lessons",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "privacy-settings",
+  "description": "View and update your privacy settings",
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "pro-trial-expired",
+  "description": "Options shown when the Pro plan Claude Code trial has ended",
+  "isHidden": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "radio",
+  "description": "Listen to Claude FM lo-fi radio",
+  "supportsNonInteractive": false,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "rate-limit-options",
+  "description": "Manage usage limits and upgrade options",
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "recap",
+  "description": "Generate a one-line session recap now",
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "load": "[fn]",
+  "path": "commands/command-recap.js"
+ },
+ {
+  "description": "View release notes",
+  "name": "release-notes",
+  "type": "local-jsx",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "reload-plugins",
+  "description": "Activate pending plugin changes in the current session",
+  "argumentHint": "[--force]",
+  "supportsNonInteractive": true,
+  "terminalOriented": true,
+  "thinClientDispatch": "control-request",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "reload-skills",
+  "description": "Pick up skills added or changed on disk during this session",
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "remote-control",
+  "aliases": [
+   "rc"
+  ],
+  "description": "[fn]",
+  "argumentHint": "[fn]",
+  "isEnabled": "<e>",
+  "isHidden": "[fn]",
+  "immediate": true,
+  "path": "commands/command-remote-control.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "remote-env",
+  "description": "Choose the default environment for cloud agents",
+  "availability": [
+   "claude-ai",
+   "console-profile"
+  ],
+  "isEnabled": "[fn]",
+  "policyGate": "<kQ>",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "rename",
+  "aliases": [
+   "name"
+  ],
+  "description": "Rename the current conversation",
+  "immediate": true,
+  "argumentHint": "[name]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "rename",
+  "aliases": [
+   "name"
+  ],
+  "supportsNonInteractive": true,
+  "description": "Rename the current conversation",
+  "argumentHint": "[name]",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "restart",
+  "aliases": [
+   "update"
+  ],
+  "description": "[fn]",
+  "supportsNonInteractive": false,
+  "isEnabled": "<Zan>",
+  "isHidden": "[fn]",
+  "fleetHostCall": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "resume",
+  "description": "[fn]",
+  "aliases": [
+   "continue"
+  ],
+  "argumentHint": "[fn]",
+  "isEnabled": "<O8o>",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "description": "Restore the code and/or conversation to a previous point",
+  "name": "rewind",
+  "aliases": [
+   "checkpoint",
+   "undo"
+  ],
+  "argumentHint": "",
+  "type": "local",
+  "supportsNonInteractive": false,
+  "thinClientDispatch": "control-request",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "name": "sandbox",
+  "description": "[fn]",
+  "argumentHint": "[fn]",
+  "isHidden": "[fn]",
+  "immediate": "[fn]",
+  "type": "local-jsx",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "scroll-speed",
+  "description": "Adjust mouse wheel scroll speed",
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "session",
+  "aliases": [
+   "remote"
+  ],
+  "description": "Show cloud session URL and QR code",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "setup-bedrock",
+  "description": "Reconfigure Amazon Bedrock authentication, region, or model pins",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "setup-vertex",
+  "description": "Reconfigure Google Vertex AI authentication, project, region, or model pins",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "skill-doctor",
+  "description": "Show which loaded skills are unused and costing context",
+  "immediate": true,
+  "thinClientDispatch": "twin",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "skill-doctor",
+  "description": "Show which loaded skills are unused and costing context",
+  "supportsNonInteractive": true,
+  "thinClientDispatch": "post-text",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "skills",
+  "description": "List available skills",
+  "immediate": true,
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "status",
+  "description": "Show Claude Code status including version, model, account, API connectivity, and tool statuses",
+  "immediate": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "prompt",
+  "description": "Set up Claude Code's status line UI",
+  "contentLength": 0,
+  "aliases": [],
+  "name": "statusline",
+  "progressMessage": "setting up statusLine",
+  "source": "builtin",
+  "terminalOriented": true,
+  "disableNonInteractive": true,
+  "disableModelInvocation": true,
+  "getPromptForCommand": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "stickers",
+  "description": "Order Claude Code stickers",
+  "supportsNonInteractive": false,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "stop",
+  "description": "Stop this background session; transcript and worktree are kept",
+  "immediate": true,
+  "isEnabled": "[fn]",
+  "path": "commands/command-stop.js"
+ },
+ {
+  "type": "local",
+  "name": "stop",
+  "supportsNonInteractive": true,
+  "description": "Stop this background session; transcript and worktree are kept",
+  "isEnabled": "<Ut>",
+  "load": "[fn]",
+  "path": "commands/command-stop.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "subtask",
+  "description": "Send a subagent off with your full context; its result comes back here",
+  "argumentHint": "<task>",
+  "isEnabled": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "tasks",
+  "aliases": [
+   "bashes"
+  ],
+  "description": "View and manage everything running in the background",
+  "immediate": true,
+  "thinClientDispatch": "control-request",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "prompt",
+  "name": "team-onboarding",
+  "description": "Help teammates ramp on Claude Code with a guide from your usage",
+  "allowedTools": "<h7o>",
+  "contentLength": 0,
+  "isHidden": false,
+  "progressMessage": "scanning usage data",
+  "effort": "low",
+  "userFacingName": "[fn]",
+  "source": "builtin",
+  "disableModelInvocation": true,
+  "getPromptForCommand": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "teleport",
+  "description": "Send this session to the cloud, or resume one from claude.ai",
+  "aliases": [
+   "tp"
+  ],
+  "availability": [
+   "claude-ai",
+   "console-profile"
+  ],
+  "isEnabled": "[fn]",
+  "policyGate": "<kQ>",
+  "isHidden": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "terminal-setup",
+  "description": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "theme",
+  "description": "Change the theme",
+  "immediate": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "tui",
+  "description": "Set the terminal UI renderer (default | fullscreen)",
+  "argumentHint": "[default|fullscreen]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "ultraplan",
+  "description": "[fn]",
+  "argumentHint": "<prompt>",
+  "availability": [
+   "claude-ai"
+  ],
+  "isEnabled": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "ultrareview",
+  "description": "[fn]",
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "ultrareview",
+  "description": "[fn]",
+  "supportsNonInteractive": true,
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "upgrade",
+  "description": "Upgrade to Max for higher rate limits and more Opus",
+  "availability": [
+   "claude-ai"
+  ],
+  "isEnabled": "<Qde>",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "usage",
+  "aliases": [
+   "cost",
+   "stats"
+  ],
+  "description": "Show session cost, plan usage, and activity stats",
+  "thinClientDispatch": "control-request",
+  "immediate": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "usage",
+  "aliases": [
+   "cost",
+   "stats"
+  ],
+  "supportsNonInteractive": true,
+  "description": "Show session cost, plan usage, and what's contributing to your limits",
+  "menuDescription": "Show session cost and plan usage",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "usage-credits",
+  "description": "Configure usage credits or request them from your admin when you hit a limit",
+  "isEnabled": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "usage-credits",
+  "supportsNonInteractive": true,
+  "description": "Configure usage credits or request them from your admin when you hit a limit",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "version",
+  "description": "Show this session's version (autoupdate may have a newer one)",
+  "isEnabled": "[fn]",
+  "immediate": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "version",
+  "description": "Print the version this session is running (not what autoupdate downloaded)",
+  "isEnabled": "[fn]",
+  "isHidden": "[fn]",
+  "supportsNonInteractive": true,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "voice",
+  "description": "Toggle voice mode",
+  "argumentHint": "[hold|tap|off]",
+  "availability": [
+   "claude-ai"
+  ],
+  "isHidden": "[fn]",
+  "supportsNonInteractive": false,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "web-setup",
+  "description": "Set up cloud sessions with your GitHub account",
+  "availability": [
+   "claude-ai"
+  ],
+  "isEnabled": "<KDe>",
+  "policyGate": "<kQ>",
+  "isHidden": "[fn]",
+  "path": "commands/command-web-setup.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "wellbeing",
+  "aliases": [
+   "breaks",
+   "break-reminder",
+   "downtime"
+  ],
+  "description": "Configure optional break reminders and quiet-hours nudges",
+  "isEnabled": "[fn]",
+  "immediate": true,
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local",
+  "name": "workflow-launch-exec",
+  "description": "Execute a server-launched workflow handoff (workflow_launch event sessions only)",
+  "isHidden": true,
+  "disableModelInvocation": true,
+  "supportsNonInteractive": true,
+  "load": "[fn]",
+  "path": "core/conversation-engine.js"
+ },
+ {
+  "type": "local-jsx",
+  "name": "workflows",
+  "aliases": [],
+  "description": "Browse running and completed workflows",
+  "isEnabled": "[fn]",
+  "immediate": true,
+  "thinClientDispatch": "control-request",
+  "path": "commands/command-workflows.js"
+ }
+]
