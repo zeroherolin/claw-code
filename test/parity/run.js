@@ -14,7 +14,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
 import { ROOT, DIST, makeHome, cleanEnv, startFakeApi, runCli, runInPty, renderScreen } from "../harness.js";
-import { normalizeText, normalizeRequest, jsonDiff, screenDiff } from "./normalize.js";
+import { normalizeStream, normalizeText, normalizeRequest, jsonDiff, screenDiff } from "./normalize.js";
 
 const { values, positionals } = parseArgs({ allowPositionals: true, options: { filter: { type: "string" } } });
 const ORIG = path.resolve(positionals[0] ?? process.env.CLAUDE_ORIG_BIN ?? path.join(ROOT, "extract/upstream/claude-code-darwin-arm64/claude"));
@@ -91,8 +91,7 @@ for (const file of fs.readdirSync(SCENARIO_DIR).filter((f) => f.endsWith(".json"
   const cols = sc.cols ?? 100, rows = sc.rows ?? 30;
   const [o, n] = await both({ fresh: sc.fresh }, async (bin, c) => {
     const raw = await runInPty([bin], { cwd: c.work, env: c.env, cols, rows, keys: sc.keys, end: sc.end });
-    // 先在字节流上替换 HOME 与端口：长路径在窄屏上会折行，回放后就无法再匹配
-    const text = raw.toString("latin1").split(c.home).join("<HOME>").replace(/127\.0\.0\.1:\d+/g, "127.0.0.1:<PORT>");
+    const text = normalizeStream(raw.toString("latin1"), c.home);
     return { screen: await renderScreen(Buffer.from(text, "latin1"), cols, rows) };
   });
   report(`${name}（${cols}×${rows}）`, screenDiff(o.screen, n.screen, o.home, n.home));

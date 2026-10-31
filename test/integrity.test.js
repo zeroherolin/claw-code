@@ -83,6 +83,32 @@ describe("资源", () => {
   });
 });
 
+describe("手写文档", () => {
+  // 生成源码的文件名带 chunk id 后缀，重新提取后模块可能换目录；文档中的引用须随之更新
+  const DOCS = ["README.md", "docs/architecture.md", "docs/runtime.md", "extract/README.md"];
+  const files = new Set(sources.map((s) => path.relative(SRC, s.file).split(path.sep).join("/")));
+  const lineCount = (p) => sources.find((s) => s.file === path.join(SRC, p)).code.split("\n").length;
+
+  test("引用的生成源码文件都存在，行号不超出文件长度", () => {
+    const bad = [];
+    // shell/sandbox.aet2.js:24007、fs/chunk-tzqhxyjb.js、src/cli.js:59；通配：shell/sandbox.*、remote/self-hosted-runner-*.js
+    // 路径须以 src/ 下的目录开头，且前面不是别的路径成分（排除 test/runtime/… 之类）
+    const areas = fs.readdirSync(SRC, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).join("|");
+    const RE = new RegExp(String.raw`(?<![\w./-])(?:src/)?((?:${areas})/(?:[\w-]+/)*(?:[\w-]+\.[a-z0-9]{4}|chunk-[a-z0-9]{8})\.js|cli\.js)(?::(\d+))?|(?<![\w./-])((?:${areas})/[\w-]+(?:\.\*|-\*\.js))`, "g");
+    for (const doc of DOCS) {
+      for (const m of fs.readFileSync(path.join(ROOT, doc), "utf8").matchAll(RE)) {
+        const [ref, file, line, glob] = m;
+        if (glob) {
+          const prefix = glob.replace(/\*(\.js)?$/, "");
+          if (![...files].some((f) => f.startsWith(prefix))) bad.push(`${doc}: ${ref}`);
+        } else if (!files.has(file)) bad.push(`${doc}: ${ref}（文件不存在）`);
+        else if (line && +line > lineCount(file)) bad.push(`${doc}: ${ref}（超出 ${lineCount(file)} 行）`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+});
+
 describe("参考映射", () => {
   test("module-map.json 覆盖全部模块，且指向的文件都存在", () => {
     const map = JSON.parse(fs.readFileSync(path.join(ROOT, "reference/module-map.json"), "utf8"));

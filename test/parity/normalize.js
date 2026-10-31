@@ -9,6 +9,12 @@ function homeForms(home) {
   return [...forms.map((h) => [h.replace(/[^A-Za-z0-9]/g, "-"), "<HP>"]), ...forms.map((h) => [h, "<HOME>"])];
 }
 
+/** 终端输出的字节流（latin1 字符串）：回放前先替换 HOME 与端口，长路径在窄屏上会折行，回放后就无法再匹配 */
+export function normalizeStream(s, home) {
+  for (const [from, to] of homeForms(home)) s = s.split(from).join(to);
+  return s.replace(/127\.0\.0\.1:\d+/g, "127.0.0.1:<PORT>");
+}
+
 /** 文本输出：HOME 路径、UUID、耗时与花费、时间戳、socket 路径、端口 */
 export function normalizeText(s, home) {
   for (const [from, to] of homeForms(home)) s = s.split(from).join(to);
@@ -60,19 +66,20 @@ const BLINK = "⏺";
 const IN_PROGRESS = /^\s*(Reading|Running|Searching|Fetching|Writing|Editing)/;
 const DEFAULT_ATTR = "0.-1/0.-1";
 
-/** 归一化一行：去掉随机文本；返回 { text } 或可逐格比较的 { cells: Map<列, "字符|属性"> } */
+/**
+ * 归一化一行：去掉随机文本；返回 { text } 或可逐格比较的 { cells: Map<列, "字符|属性"> }。
+ * HOME 与端口通常已在字节流上替换（normalizeStream），这里兜底处理被转义序列隔开等情况。
+ */
 function normalizeRow({ text, cells }, home) {
   let t = text;
   for (const [from, to] of homeForms(home)) t = t.split(from).join(to);
-  t = t.replace(/127\.0\.0\.1:\d+/g, "127.0.0.1:<PORT>");
-  const randomized = t.replace(VERB_LINE, "<VERB> for <N>s").replace(CLOCK, "done <TIME>");
-  if (randomized !== t) return { text: randomized.trimEnd() }; // 文本被替换后，属性无法逐格对应，只比文本
-  const chars = [...t], out = new Map();
-  const width = Math.max(chars.length, ...Object.keys(cells).map((k) => +k + 1));
-  for (let x = 0; x < width; x++) {
-    let ch = chars[x] ?? " ", a = cells[x];
-    if (x <= 1 && (ch === BLINK || (x === 0 && ch === " " && a && a !== DEFAULT_ATTR && IN_PROGRESS.test(t)))) ch = " ", a = undefined;
-    if (ch === " " && (!a || a === DEFAULT_ATTR)) continue; // 未写入的格子与默认属性的空格不可区分
+  t = t.replace(/127\.0\.0\.1:\d+/g, "127.0.0.1:<PORT>").replace(VERB_LINE, "<VERB> for <N>s").replace(CLOCK, "done <TIME>");
+  if (t !== text) return { text: t.trimEnd() }; // 文本被替换后，属性无法逐格对应，只比文本
+  const out = new Map();
+  for (const [col, [ch, a]] of Object.entries(cells)) {
+    const x = +col;
+    if (x <= 1 && (ch === BLINK || (x === 0 && ch === " " && a !== DEFAULT_ATTR && IN_PROGRESS.test(t)))) continue;
+    if (ch === " " && a === DEFAULT_ATTR) continue; // 与未写入的格子不可区分
     out.set(x, `${ch}|${a}`);
   }
   return { cells: out };

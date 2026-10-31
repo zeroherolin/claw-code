@@ -14,6 +14,12 @@ Claude Code **2.1.310** 的可读、可运行重组版本，运行在公开版 B
 
 ## 快速开始
 
+平台：macOS，Apple Silicon。原因如下：
+
+- 提取来源是官方 darwin-arm64 包，提取工具只解析 Mach-O；
+- `assets/native/` 中的原生模块是 macOS 版（`audio-capture.node` 只有 arm64）；
+- 对比测试只在这个平台上运行过。
+
 ```sh
 npm install           # 安装固定版本的 Bun 与开发依赖
 npm run build         # 编译出 dist/claude（约 1 秒）

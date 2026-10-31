@@ -149,8 +149,8 @@ export async function runInPty(cmd, { cwd, env, cols, rows, keys, end }) {
 }
 
 /**
- * 把终端输出回放到 xterm，返回最终屏幕：每行 { text, cells }，cells 为 列号 → "字符属性" 摘要。
- * 属性：前景/背景颜色模式与值、粗体 b、暗淡 d、斜体 i、下划线 u、反显 r、宽字符 W。
+ * 把终端输出回放到 xterm，返回最终屏幕：每行 { text, cells }，cells 为 列号 → [字符, 属性摘要]。
+ * 宽字符只记在它的首列。属性：前景/背景颜色模式与值、粗体 b、暗淡 d、斜体 i、下划线 u、反显 r、宽字符 W。
  */
 export async function renderScreen(bytes, cols, rows) {
   const term = new Terminal({ cols, rows, allowProposedApi: true, scrollback: 0 });
@@ -162,8 +162,8 @@ export async function renderScreen(bytes, cols, rows) {
     for (let x = 0; x < cols; x++) {
       const c = line.getCell(x);
       if (!c?.getChars()) continue;
-      cells[x] = `${c.getFgColorMode()}.${c.getFgColor()}/${c.getBgColorMode()}.${c.getBgColor()}` +
-        (c.isBold() ? "b" : "") + (c.isDim() ? "d" : "") + (c.isItalic() ? "i" : "") + (c.isUnderline() ? "u" : "") + (c.isInverse() ? "r" : "") + (c.getWidth() === 2 ? "W" : "");
+      cells[x] = [c.getChars(), `${c.getFgColorMode()}.${c.getFgColor()}/${c.getBgColorMode()}.${c.getBgColor()}` +
+        (c.isBold() ? "b" : "") + (c.isDim() ? "d" : "") + (c.isItalic() ? "i" : "") + (c.isUnderline() ? "u" : "") + (c.isInverse() ? "r" : "") + (c.getWidth() === 2 ? "W" : "")];
     }
     screen.push({ text: line.translateToString(true), cells });
   }
