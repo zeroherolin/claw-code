@@ -42,13 +42,22 @@ const PRINT_CASES = {
 };
 const SCENARIO_DIR = path.join(import.meta.dir, "scenarios");
 
-let passed = 0, failed = 0;
+let passed = 0;
+const failures = [];
 const report = (name, diffs) => {
   if (!diffs.length) return passed++, console.log(`  ✓ ${name}`);
-  failed++;
+  failures.push({ name, diffs: diffs.map((d) => d.slice(0, 300)) });
   console.log(`  ✗ ${name}`);
-  for (const d of diffs) console.log(`      ${d.slice(0, 300)}`);
+  for (const d of failures.at(-1).diffs) console.log(`      ${d}`);
 };
+
+// 在 GitHub Actions 中把不一致的用例输出为错误注解；每个步骤最多显示 10 条，超出的合并到最后一条
+function annotate() {
+  const esc = (s) => s.replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A");
+  const escProp = (s) => esc(s).replace(/:/g, "%3A").replace(/,/g, "%2C");
+  const shown = failures.length > 10 ? [...failures.slice(0, 9), { name: `另外 ${failures.length - 9} 项`, diffs: failures.slice(9).flatMap((f) => [f.name, ...f.diffs.map((d) => "  " + d)]) }] : failures;
+  for (const f of shown) console.log(`::error title=${escProp(`对比不一致：${f.name}`)}::${esc(f.diffs.join("\n"))}`);
+}
 
 /** 用同一份配置分别运行原版与本项目，fn(bin, ctx) 的结果交给 compare */
 async function both(opts, fn) {
@@ -108,5 +117,6 @@ for (const file of fs.readdirSync(SCENARIO_DIR).filter((f) => f.endsWith(".json"
   report(`${name}（${cols}×${rows}）`, [...stuck, ...screenDiff(o.screen, n.screen, o.home, n.home)]);
 }
 
-console.log(`\n通过 ${passed}，失败 ${failed}`);
-process.exit(failed ? 1 : 0);
+console.log(`\n通过 ${passed}，失败 ${failures.length}`);
+if (process.env.GITHUB_ACTIONS === "true") annotate();
+process.exit(failures.length ? 1 : 0);
