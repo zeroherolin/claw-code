@@ -1,0 +1,47 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      parity:
+        description: 同时运行与官方可执行程序的对比测试（约 3 分钟，需下载官方 npm 包）
+        type: boolean
+        default: true
+
+jobs:
+  test:
+    runs-on: macos-15 # Apple Silicon，与项目支持的平台一致
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+
+  parity:
+    if: github.event_name == 'workflow_dispatch' && inputs.parity
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: brew install ripgrep bfs ugrep
+      - name: 获取官方发布内容
+        run: |
+          version=$(node -p 'require("./package.json").version')
+          mkdir -p extract/upstream && cd extract/upstream
+          npm pack "@anthropic-ai/claude-code@$version" "@anthropic-ai/claude-code-darwin-arm64@$version"
+          mkdir claude-code claude-code-darwin-arm64
+          tar -xzf "anthropic-ai-claude-code-$version.tgz" --strip-components=1 -C claude-code
+          tar -xzf "anthropic-ai-claude-code-darwin-arm64-$version.tgz" --strip-components=1 -C claude-code-darwin-arm64
+          rm ./*.tgz
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:parity

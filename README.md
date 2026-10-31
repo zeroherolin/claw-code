@@ -75,6 +75,7 @@ npm run test:parity    # 与官方可执行程序逐项对比（约 3 分钟）
 - 对比测试默认使用 `extract/upstream/` 中的官方可执行程序，获取方式见 [extract/README.md](extract/README.md#获取官方发布内容)。也可以用参数或 `CLAUDE_ORIG_BIN` 指定其他位置。
 - 只跑部分用例：`npm run test:parity -- --filter '^(text|markdown)'`。
 - 全部测试都在隔离的 HOME 下运行，使用假 API key，只连接 127.0.0.1 上的假 API，不访问真实服务。
+- CI（`.github/workflows/test.yml`）：每次 push 和 PR 在 macOS（Apple Silicon）上构建并运行 `npm test`；对比测试需要下载官方 npm 包，在 Actions 页面手动触发。
 
 ## 行为一致性
 
