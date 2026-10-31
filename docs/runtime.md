@@ -117,21 +117,20 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 
 ## 编译方式
 
-`npm run build`（`scripts/build.js`）用 `Bun.build({ compile })` 生成单文件可执行程序：
+`npm run build`（`scripts/build.js`）用 `Bun.build({ compile })` 生成单文件可执行程序，约 10 秒：
 
 ```js
-entrypoints: ["scripts/boot.js"],
-compile: { outfile: "dist/claude", assets: ["src", "assets"] },
-external: ["/$bunfs/*"],
+entrypoints: ["scripts/boot.js", ...src/ 下全部 .js],
+compile: { outfile: "dist/claude", assets: ["assets"] },
+naming: "[dir]/[name].[ext]",
+bytecode: true,
+external: ["/$bunfs/*", "./*", "../*"],
 ```
 
-- `src/` 和 `assets/` **原样**嵌入 `/$bunfs/root/`，不经打包器改写。
+- **每个模块各作一个入口，模块间的相对引用全部 external**：打包器不合并、不移动模块，输出保持原目录结构 `/$bunfs/root/src/…`。原版代码里有 500 多处运行期执行的相对路径 `import.meta.require("./x.js")`，以及大量动态 `import()`，模块位置不变，这些路径才能继续生效。
+- **字节码**：每个模块预编译为 JavaScriptCore 字节码，启动时不必重新解析约 115 万行源码。一次 `-p` 请求约 0.23 秒，不用字节码时约 0.8 秒，原版约 0.15 秒（Apple M 系列，中位数）。
+- `assets/` 原样嵌入 `/$bunfs/root/assets/`。
 - 入口 `boot.js` 只做一件事：运行期 `import("/$bunfs/root/src/main.js")`。
-
-不让打包器处理源码有两个原因：
-
-- 原版代码里有 500 多处运行期执行的相对路径 `import.meta.require("./x.js")`，以及大量动态 `import()`。打包器合并或拆分模块后，这些路径会失效。
-- 把 2568 个模块逐个作为入口编译，耗时过长。原样嵌入只需约 1 秒。
 
 ## 开发模式与构建产物的差异
 

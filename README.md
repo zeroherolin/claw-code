@@ -22,7 +22,7 @@ Claude Code **2.1.310** 的可读、可运行重组版本，运行在公开版 B
 
 ```sh
 npm install           # 安装固定版本的 Bun 与开发依赖
-npm run build         # 编译出 dist/claude（约 1 秒）
+npm run build         # 编译出 dist/claude（约 10 秒）
 ./dist/claude         # 交互模式；用法与原版相同，例如 ./dist/claude -p "hello"
 ```
 
@@ -47,7 +47,7 @@ npm run build         # 编译出 dist/claude（约 1 秒）
 | `docs/` | 架构与运行时文档；`docs/reference/` 为参考手册 | 手写 + 生成 |
 | `scripts/` | `build.js` 编译单文件可执行程序，`boot.js` 是它的入口 | 手写 |
 | `bin/claude` | 开发模式启动器：直接运行 `src/`，无需构建；与原版有两处行为差异，见 [runtime.md](docs/runtime.md#开发模式与构建产物的差异) | 手写 |
-| `dist/claude` | `npm run build` 的产物：自包含的单文件可执行程序（约 160 MB，含 Bun 运行时与全部 `src/`、`assets/`），行为与原版一致 | 构建，不提交 |
+| `dist/claude` | `npm run build` 的产物：自包含的单文件可执行程序（约 290 MB，含 Bun 运行时、全部 `src/` 及其字节码、`assets/`），行为与原版一致 | 构建，不提交 |
 | `test/` | 单元、完整性、冒烟测试；`parity/` 为与原版的对比测试 | 手写 |
 | `extract/` | 维护者工具：从官方发布内容重新生成上表中"生成"的部分以及 `LICENSE` | 手写 |
 
@@ -93,4 +93,5 @@ npm run test:parity    # 与官方可执行程序逐项对比（约 3 分钟）
 已知差异（不影响对话、工具和界面）：
 
 - 内部 Bun 另有 11 个 `Bun.ant.*` 原生能力没有补，原版代码对它们都自带回退。
+- 启动稍慢：一次 `-p` 请求约 0.23 秒，原版约 0.15 秒，见 [docs/runtime.md](docs/runtime.md#编译方式)。
 - 可执行文件的体积和 Bun 版本串不同，且本项目的可执行文件没有代码签名。
