@@ -723,7 +723,7 @@ function Joo(e) {
     if (h.toolUseContext.agentId) return;
     let A = Q?.onTurnEnd(h, E);
     try {
-      if (trt() || $t()) await Yt(h, E);
+      // 记忆内容不发送：不运行后台记忆提取（它会把已有记忆的清单和对话发给模型）
     } finally {
       await A;
     }

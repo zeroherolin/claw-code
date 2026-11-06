@@ -6278,6 +6278,7 @@ function pfn() {
 }
 var sb = /* @__PURE__ */ new Set(["cyber", "frontier_llm"]);
 function z1o(e, { visibleRouteDeclined: n = false, apiRefusalCategory: r, responseSwapped: s = false } = {}) {
+  return; // 拒答后不切换模型：不装填静默回退模型
   if (!n && vSt(e)) return;
   if (!pfn()) return;
   let h = Fn(e);

@@ -63,7 +63,7 @@ function G(e) {
 function U(e) {
   return D.test(e) && r_t(e).some((t) => N.test(t));
 }
-var K = 65536, z = 20, B = [["pnpm-lock.yaml", "pnpm"], ["yarn.lock", "yarn"], ["bun.lock", "bun"], ["bun.lockb", "bun"], ["package-lock.json", "npm"], ["npm-shrinkwrap.json", "npm"], ["deno.lock", "deno"], ["poetry.lock", "poetry"], ["uv.lock", "uv"], ["Pipfile.lock", "pipenv"], ["requirements.txt", "pip"], ["Cargo.lock", "cargo"], ["go.sum", "go"], ["composer.lock", "composer"], ["Gemfile.lock", "bundler"], ["gradle.lockfile", "gradle"], ["packages.lock.json", "nuget"], ["Podfile.lock", "cocoapods"], ["Package.resolved", "swift"], ["mix.lock", "mix"], ["pubspec.lock", "pub"], ["conan.lock", "other"]], H = /(?:registry|index-url)\s*=\s*["']?(https?:\/\/[^\s"'`]+)/g, X = /\[\[tool\.(?:poetry\.source|uv\.index)\]\][^[]*?url\s*=\s*["'](https?:\/\/[^\s"'`]+)/g, Y = /npmRegistryServer\s*:\s*["']?(https?:\/\/[^\s"'`]+)/g, I = /(?:index|registry)\s*=\s*["']?(?:sparse\+)?(https?:\/\/[^\s"'`]+)/g, V = /\b(?:VAULT_ADDR|SOPS_[A-Z_]*|op read|aws secretsmanager|gcloud secrets)\b/, k = /\bcom\.android\.(?:application|library|test|dynamic-feature|tools\.build:gradle)\b/, J = /\b(?:enable_language\s*\(\s*CUDA|LANGUAGES\b[^)\n]{0,200}\bCUDA\b|find_package\s*\(\s*CUDA|cuda_add_(?:executable|library))/i, q = /^[^\S\n]*-[^\S\n]*(?:[a-z][\w.-]*::)?(?:cudatoolkit|cuda-toolkit|cudnn|pytorch-cuda)\b/m, Z = ["settings.gradle", "settings.gradle.kts", "build.gradle", "build.gradle.kts"], Q = ["environment.yml", "environment.yaml"], ee = ["ios", "iosapp", "macos", "apple"], te = 5, ne = 1048576, oe = /* @__PURE__ */ new Set(["registry.npmjs.org", "registry.yarnpkg.com", "pypi.org", "pypi.python.org", "files.pythonhosted.org", "crates.io", "index.crates.io", "static.crates.io", "proxy.golang.org", "localhost", "127.0.0.1", "0.0.0.0", "[::1]", "registry.npmmirror.com", "registry.npm.taobao.org", "pypi.tuna.tsinghua.edu.cn", "mirrors.aliyun.com"]);
+var K = 65536, z = 20, B = [["pnpm-lock.yaml", "pnpm"], ["yarn.lock", "yarn"], ["bun.lock", "bun"], ["bun.lockb", "bun"], ["package-lock.json", "npm"], ["npm-shrinkwrap.json", "npm"], ["deno.lock", "deno"], ["poetry.lock", "poetry"], ["uv.lock", "uv"], ["Pipfile.lock", "pipenv"], ["requirements.txt", "pip"], ["Cargo.lock", "cargo"], ["go.sum", "go"], ["composer.lock", "composer"], ["Gemfile.lock", "bundler"], ["gradle.lockfile", "gradle"], ["packages.lock.json", "nuget"], ["Podfile.lock", "cocoapods"], ["Package.resolved", "swift"], ["mix.lock", "mix"], ["pubspec.lock", "pub"], ["conan.lock", "other"]], H = /(?:registry|index-url)\s*=\s*["']?(https?:\/\/[^\s"'`]+)/g, X = /\[\[tool\.(?:poetry\.source|uv\.index)\]\][^[]*?url\s*=\s*["'](https?:\/\/[^\s"'`]+)/g, Y = /npmRegistryServer\s*:\s*["']?(https?:\/\/[^\s"'`]+)/g, I = /(?:index|registry)\s*=\s*["']?(?:sparse\+)?(https?:\/\/[^\s"'`]+)/g, V = /\b(?:VAULT_ADDR|SOPS_[A-Z_]*|op read|aws secretsmanager|gcloud secrets)\b/, k = /\bcom\.android\.(?:application|library|test|dynamic-feature|tools\.build:gradle)\b/, Z = ["settings.gradle", "settings.gradle.kts", "build.gradle", "build.gradle.kts"], ee = ["ios", "iosapp", "macos", "apple"], te = 5, ne = 1048576, oe = /* @__PURE__ */ new Set(["registry.npmjs.org", "registry.yarnpkg.com", "pypi.org", "pypi.python.org", "files.pythonhosted.org", "crates.io", "index.crates.io", "static.crates.io", "proxy.golang.org", "localhost", "127.0.0.1", "0.0.0.0", "[::1]", "registry.npmmirror.com", "registry.npm.taobao.org", "pypi.tuna.tsinghua.edu.cn", "mirrors.aliyun.com"]);
 function se(e) {
   let t = e?.toLowerCase() ?? null;
   if (!t) return "none";
@@ -181,18 +181,6 @@ async function me(e, t, n) {
 function _(e) {
   return e.replace(/^[^\S\n]*(?:#|\/\/).*$/gm, "");
 }
-async function ge(e, t) {
-  if (t.has("CMakeLists.txt")) {
-    let n = await f(e, "CMakeLists.txt");
-    if (n !== null && J.test(_(n))) return true;
-  }
-  for (let n of Q) {
-    if (!t.has(n)) continue;
-    let s = await f(e, n);
-    if (s !== null && q.test(_(s))) return true;
-  }
-  return false;
-}
 function _e(e, t) {
   return [...e, ...t].some((n) => {
     let s = n.toLowerCase();
@@ -236,7 +224,6 @@ async function Ee(e, t, n, s, o) {
   let r = t.map((i) => i.toLowerCase());
   if (s) return "xcode";
   if (o) return "android";
-  if (r.some((i) => i.endsWith(".cu") || i.endsWith(".cuh")) || await ge(e, n)) return "cuda";
   if (r.some((i) => i.endsWith(".sln") || i.endsWith(".csproj"))) return "dotnet";
   if (r.some((i) => (i.endsWith(".bat") || i.endsWith(".cmd") || i.endsWith(".ps1")) && i !== "gradlew.bat" && i !== "gradlew.cmd" && i !== "mvnw.bat" && i !== "mvnw.cmd")) return "windows_scripts";
   return "none";

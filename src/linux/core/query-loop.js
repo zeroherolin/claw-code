@@ -2447,7 +2447,8 @@ function Ur(e) {
     return l(o), false;
   }
 }
-var Fm = "Not run: the response that made this tool call was stopped by a safety classifier.", Lm = "Interrupted: the response that made this tool call was stopped by a safety classifier while the call was running; it may have partially or fully completed.";
+var REFUSAL_RETRY_MAX = 10;
+var Fm = "Not run: the response containing this tool call ended before the call was executed.", Lm = "Interrupted: the response containing this tool call ended while the call was running; it may have partially or fully completed.";
 function ed(e, o) {
   try {
     return !o && Jo(e) !== "auxiliary" && !i.CLAUDE_CODE_DISABLE_REFUSAL_RETRY;
@@ -2458,7 +2459,7 @@ function ed(e, o) {
 function nr(e) {
   return e?.type === "assistant" && e.isApiErrorMessage === true && e.message.stop_reason === "refusal";
 }
-function td({ refused: e, kept: o, answered: n, started: r, model: y, querySource: s, queryChainId: h, queryDepth: C, deps: E, makeUserMessage: T }) {
+function td({ refused: e, kept: o, answered: n, started: r, model: y, querySource: s, queryChainId: h, queryDepth: C, deps: E, makeUserMessage: T, attempt }) {
   let I = new Set(n.flatMap((D) => D.type === "user" && Array.isArray(D.message.content) ? D.message.content.flatMap((Z) => Z.type === "tool_result" ? [Z.tool_use_id] : []) : [])), A = new Set(r), H = 0, P = o.flatMap((D) => D.message.content.flatMap((Z) => {
     if (Z.type !== "tool_use" || I.has(Z.id)) return [];
     let K = A.has(Z.id);
@@ -2472,7 +2473,7 @@ function td({ refused: e, kept: o, answered: n, started: r, model: y, querySourc
   } catch (D) {
     l(D);
   }
-  return { notRun: P, notice: kk(`${Qo(y)}'s safeguards stopped the response above · continuing once with that noted`, "notice"), nudge: T({ content: H > 0 ? u3o : GYr, isMeta: true, turnCompanion: true, refusedMessageId: e.refusedMessageId, now: E.now, uuidFn: E.uuid }) };
+  return { notRun: P, notice: kk(`The response above was cut off by the server · retrying with the same model (${attempt}/${REFUSAL_RETRY_MAX})`, "notice") };
 }
 function od({ sentOn: e, servedBy: o, lastMessage: n, withheldRecoverable: r }) {
   try {
@@ -3530,7 +3531,7 @@ async function* Ou(e, o, n, r) {
   } catch (S) {
     l(S);
   }
-  let Y = ks(e.messages), Te = Ff(Y), V = { guards: { ...Zs, refusalRetrySpent: false, mcpEndTurnOverrideSpent: false, stopHookActive: e.stopHookActive ?? false, turnCount: 1 }, messages: e.messages, toolUseContext: e.toolUseContext, compactTracking: void 0, transition: void 0 }, Le = void 0, Ye = Hd(), zt = U1s(Y, V.toolUseContext, T);
+  let Y = ks(e.messages), Te = Ff(Y), V = { guards: { ...Zs, refusalRetrySpent: 0, mcpEndTurnOverrideSpent: false, stopHookActive: e.stopHookActive ?? false, turnCount: 1 }, messages: e.messages, toolUseContext: e.toolUseContext, compactTracking: void 0, transition: void 0 }, Le = void 0, Ye = Hd(), zt = U1s(Y, V.toolUseContext, T);
   using De = bNs(V.messages, V.toolUseContext, T, zt);
   if (De && SNs()) {
     let S = [];
@@ -3607,7 +3608,7 @@ async function* Ou(e, o, n, r) {
   async function* Du() {
     if (ir && V.toolUseContext.shouldStopBeforeNextApiCall?.()) return yield* Tt, { reason: "background_requested" };
     if (le) JR("message_prep");
-    let { toolUseContext: S } = V, Ze = V.messages, Ct, { guards: Mt, compactTracking: Vo, resumeIncompleteThinking: yn, pendingToolUseSummary: Co, prevToolDurations: hn } = V, { maxOutputTokensRecoveryCount: Mo, hasAttemptedReactiveCompact: Xo, reactiveCompactDeeperPass: Fn, thinkingOnlyNudged: fi, malformedToolUseRetryCount: Ln, refusalRetrySpent: Lu, mcpEndTurnOverrideSpent: gi, stopHookActive: Uo, stopHookBlockingCount: Hr, turnCount: Zo } = Mt, Uu = V.transition === void 0 ? e.maxOutputTokensOverride : void 0, it = yn;
+    let { toolUseContext: S } = V, Ze = V.messages, Ct, { guards: Mt, compactTracking: Vo, resumeIncompleteThinking: yn, pendingToolUseSummary: Co, prevToolDurations: hn } = V, { maxOutputTokensRecoveryCount: Mo, hasAttemptedReactiveCompact: Xo, reactiveCompactDeeperPass: Fn, thinkingOnlyNudged: fi, malformedToolUseRetryCount: Ln, refusalRetrySpent: LuRaw, mcpEndTurnOverrideSpent: gi, stopHookActive: Uo, stopHookBlockingCount: Hr, turnCount: Zo } = Mt, Lu = V.transition?.reason === "refusal_retry" ? LuRaw : 0, Uu = V.transition === void 0 ? e.maxOutputTokensOverride : void 0, it = yn;
     if (tu(V.transition, S.agentId), ir && !S.agentId) Ed(S.messageQueue);
     if (yield { type: "stream_request_start" }, og("query_fn_entry"), !S.agentId) gh("query_started");
     let yi = performance.now(), ot = S.queryTracking ? { chainId: S.queryTracking.chainId, depth: S.queryTracking.depth + 1, roundStartedAtMs: yi } : { chainId: j.uuid(), depth: 0, roundStartedAtMs: yi }, St = _e(ot.chainId);
@@ -3730,7 +3731,7 @@ async function* Ou(e, o, n, r) {
     let Gn = (M) => {
       if (it && Vw(M)) M.virtualInResumeRun = true;
       return M;
-    }, Hn = null, Wn, No, _n, Sn = ed(T, Lu);
+    }, Hn = null, Wn, No, _n, Sn = ed(T, false);
     if (og("query_setup_start"), le) JR("query_setup");
     let Me = Gd({ createStreamingToolExecutor: () => new qs(S.options.tools, C, S, j.now), onReset: () => di(S.options, Dn) }), { assistantMessages: se, toolResults: lt, toolUseBlocks: Ht } = Me;
     function Zr(M) {
@@ -4395,12 +4396,13 @@ async function* Ou(e, o, n, r) {
         let ne = wn(Me.streamingToolExecutor, "same_model_retry");
         if (G = ne.removes, Me.rebuildStreamingToolExecutor(), ne.startedToolUseIds.length > 0) di(S.options, Dn);
         let de = se.filter((be) => be !== sn);
-        fe = { ...td({ refused: sn, kept: de, answered: lt, started: ne.startedToolUseIds, model: Ae, querySource: T, queryChainId: St, queryDepth: ot.depth, deps: j, makeUserMessage: Oe }), kept: de };
+        fe = { ...td({ refused: sn, kept: de, answered: lt, started: ne.startedToolUseIds, model: Ae, querySource: T, queryChainId: St, queryDepth: ot.depth, deps: j, makeUserMessage: Oe, attempt: Lu + 1 }), kept: de };
       } catch (ne) {
         l(ne);
       }
       if (G) yield G;
-      if (fe) return yield* fe.notRun, yield fe.notice, yield fe.nudge, V = { guards: { ...Mt, refusalRetrySpent: true, ...Ht.length > 0 && { stopHookBlockingCount: 0 } }, messages: [...Q, ...fe.kept, ...lt, ...fe.notRun, fe.nudge], toolUseContext: S, compactTracking: ft, transition: { reason: "refusal_retry", model: Ae }, prevToolDurations: Me.toolDurations.length > 0 ? [...Me.toolDurations] : void 0 }, xo;
+      if (fe && Lu >= REFUSAL_RETRY_MAX) yield* fe.notRun, Me.needsFollowUp = false, fe = void 0;
+      if (fe) return yield* fe.notRun, yield fe.notice, V = { guards: { ...Mt, refusalRetrySpent: Lu + 1, ...Ht.length > 0 && { stopHookBlockingCount: 0 } }, messages: [...Q, ...fe.kept, ...lt, ...fe.notRun], toolUseContext: S, compactTracking: ft, transition: { reason: "refusal_retry", model: Ae }, prevToolDurations: Me.toolDurations.length > 0 ? [...Me.toolDurations] : void 0 }, xo;
     }
     if (nr(sn) && sn === No) yield* xi(sn);
     if (!Me.needsFollowUp) {

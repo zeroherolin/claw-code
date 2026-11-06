@@ -23,7 +23,7 @@ import { o, u } from "../vendor/zod/string-format.js";
 import { readdir as x, readFile as C, stat as V } from "fs/promises";
 import { release as N } from "os";
 import { join as F } from "path";
-var z = 1500, A = 262144, X = 32, B = 16, w = /^[0-9][0-9A-Za-z.+_-]{0,23}$/, j = /^[a-z0-9_]{1,16}$/, U = /^[a-z0-9._-]{1,24}$/, J = /^[A-Za-z0-9_.-]{1,64}$/, G = ["swift", "xcodebuild", "xcrun", "pod", "fastlane", "carthage", "adb", "emulator", "sdkmanager", "flutter", "dart", "xcodes", "kubectl", "helm", "terraform", "bazel", "bazelisk", "nix", "conda", "mamba", "pipx", "podman", "nerdctl", "nvidia-smi", "psql", "mysql", "redis-cli", ...f9r], Y = /* @__PURE__ */ new Set(["xcodebuild", "swift", "swiftc", "xcrun", "git", "make", "clang", "clang++", "gcc", "g++", "python3", "pip3"]), q = "/System/Library/CoreServices/SystemVersion.plist", y = "/Applications", W = "/Library/Developer/CommandLineTools/usr/bin", Z = "/usr/local/cuda/version.json", K = "/proc/driver/nvidia/version", Q = p(() => u({ cuda: u({ version: o() }) }));
+var z = 1500, A = 262144, X = 32, B = 16, w = /^[0-9][0-9A-Za-z.+_-]{0,23}$/, j = /^[a-z0-9_]{1,16}$/, U = /^[a-z0-9._-]{1,24}$/, J = /^[A-Za-z0-9_.-]{1,64}$/, G = ["swift", "xcodebuild", "xcrun", "pod", "fastlane", "carthage", "adb", "emulator", "sdkmanager", "flutter", "dart", "xcodes", "kubectl", "helm", "terraform", "bazel", "bazelisk", "nix", "conda", "mamba", "pipx", "podman", "nerdctl", "psql", "mysql", "redis-cli", ...f9r], Y = /* @__PURE__ */ new Set(["xcodebuild", "swift", "swiftc", "xcrun", "git", "make", "clang", "clang++", "gcc", "g++", "python3", "pip3"]), q = "/System/Library/CoreServices/SystemVersion.plist", y = "/Applications", W = "/Library/Developer/CommandLineTools/usr/bin";
 function M() {
   let n = k("tengu_bridge_host_profile", "off");
   return dot.find((e) => e === n) ?? "off";
@@ -101,7 +101,6 @@ async function Aoo({ includeMcpServers: n, signal: e, alsoLookFor: r = [], maxTo
   if (c === void 0) return;
   let s = [...G, ...r], _ = { pathTools: /* @__PURE__ */ new Set(), mcpServers: [] }, P = [oe(c, _), se(_), Fkn(s, _.pathTools)];
   if (c === "darwin") P.push(re(_), ne(_));
-  if (c === "linux") P.push(ie(_));
   if (n) P.push(ae(_));
   let h = Pe(Promise.all(P.map((E) => E.catch((D) => {
     l(D);
@@ -163,18 +162,6 @@ async function se(n) {
   if (e === void 0 || !await tes(e) || !await R(e)) return;
   n.androidSdk = "android-sdk";
 }
-async function ie(n) {
-  let e = await bl(Z, A);
-  if (e !== null) {
-    let r = Q().safeParse(ot(e, false));
-    n.cuda = r.success && w.test(r.data.cuda.version) ? `cuda@${r.data.cuda.version}` : "cuda";
-    return;
-  }
-  try {
-    await C(K, "utf8"), n.cuda = "cuda";
-  } catch {
-  }
-}
 async function R(n) {
   try {
     return (await V(n)).isDirectory();
@@ -201,7 +188,7 @@ async function ae(n) {
   }
 }
 function le(n, e, r, S) {
-  let c = n !== "darwin" || e.xcode !== void 0 || e.clt !== void 0, s = r.filter((P) => e.pathTools.has(P) && (c || !Y.has(P))), _ = [e.xcode, e.clt, ...s.filter((P) => P === "swift"), e.androidSdk, e.cuda, ...s.filter((P) => P !== "swift")].filter((P) => P !== void 0 && hWr.test(P));
+  let c = n !== "darwin" || e.xcode !== void 0 || e.clt !== void 0, s = r.filter((P) => e.pathTools.has(P) && (c || !Y.has(P))), _ = [e.xcode, e.clt, ...s.filter((P) => P === "swift"), e.androidSdk, ...s.filter((P) => P !== "swift")].filter((P) => P !== void 0 && hWr.test(P));
   return L(_).slice(0, S);
 }
 export {

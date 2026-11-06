@@ -40,7 +40,7 @@ npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 | 路径 | 内容 | 来源 |
 |---|---|---|
 | `src/main.js` | 入口：补齐运行时能力后加载当前系统的 `src/<系统>/cli.js` | 手写 |
-| `src/runtime/` | 替代内部定制 Bun 的运行时层，以及支持的平台列表 `platforms.js` | 手写 |
+| `src/runtime/` | 替代内部定制 Bun 的运行时层，以及支持的平台列表 `platforms.js`；`dev` 分支另有固定环境变量、记忆读取确认、`safeguards` 脱敏三组模块 | 手写 |
 | `src/darwin/`、`src/linux/` | 各系统的原版模块，结构相同：`cli.js` 为原版入口，`core/` 为对话引擎，`cli/`、`ui/`、`tools/` 等按功能划分，`vendor/` 为第三方库；各目录职责见 [architecture.md](docs/architecture.md#5-目录职责) | 生成 |
 | `assets/` | 资源：提示词、skill 文档、字体等各系统共用；原生 `.node` 模块按平台放在 `native/<系统>-<架构>/`；清单见 `INDEX.json` | 生成 |
 | `reference/` | 机器可读的参考数据：`module-map.json` 为模块路径与各系统原 chunk id 的对照；`<系统>/` 下为工具、命令、特性开关、提示词全文等 | 生成 |
@@ -91,6 +91,16 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 - **交互界面**（18 项）：在固定尺寸的伪终端中，等启动输出静止后按相同的节奏发送按键，输出再次静止后比较屏幕每个格子的字符、颜色和样式。场景包括首次引导、启动页、中日文与 emoji 输入、键帽和国旗等特殊 emoji 字素、斜杠命令菜单、`/help`、对话回合、工具调用、权限确认对话框、Markdown 渲染、长输出、多行输入、Esc、Shift+Tab 切换模式、60 列窄屏和 160 列宽屏。
 
 比较前只归一化与运行环境有关的内容：路径、端口、时间、随机 id、动画相位。规则见 `test/parity/normalize.js`。
+
+`dev` 分支有意改动了七处行为，见 [docs/runtime.md](docs/runtime.md#固定的环境变量)。时区与遥测的改动，对比用例覆盖不到（隔离环境本来就关闭了遥测，用例输出也不涉及时区）；记忆政策段落和「Today's date」这两处有意的差异，对比测试比较请求时会去掉，其余仍逐字比较，33 项全部一致。日常使用时，发出的日期、时间戳、网络请求和记忆内容会与原版不同：
+
+- 发出的时间信息无条件使用美国太平洋时间（`America/Los_Angeles`），包括 Bash 工具里执行的命令；
+- 遥测无条件关闭：1P 事件日志、Datadog、BigQuery 指标、错误上报、GrowthBook、OpenTelemetry 导出、反馈问卷；
+- 非必要网络流量无条件关闭（`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`）：登录引导、更新检查、MCP 官方目录、插件市场、远程会话、团队记忆同步等都不再发请求，代价是这些功能不可用；官方插件市场的下载原版漏查了这个开关，这里补上了；
+- 不收集、不发送任何 GPU 相关信息（Remote Control 主机画像中的 nvidia-smi 与 CUDA 探测、项目扫描中的 CUDA 识别）；
+- 记忆内容不发送，只发记忆文件的路径：`MEMORY.md` 索引、相关记忆召回、账号与团队记忆、子代理记忆都不再带正文，后台记忆提取与记忆整理不再运行；模型要读记忆目录里的文件时，一律先询问你，bypassPermissions 模式、allow 规则和 hook 都绕不过；
+- 发往服务端分类器的 `safeguards`（auto / plan 模式）脱敏：用户名、git 分支与 remote、权限规则、autoMode 规则、`--add-dir`、home 目录都不再发送，字段本身仍发送；
+- 服务端拒答（如 `frontier_llm`）后，用原模型最多连续重试 10 轮并显示轮数（`retrying with the same model (3/10)`），不会换模型；历史里保留被拦截那一轮的提问、已输出的内容和工具调用，但不再追加 "stopped by a safety classifier" 之类的提示。连续 10 轮后仍被拦截就正常中断结束，不弹出换模型或改提示词的底部选择框。
 
 已知差异（不影响对话、工具和界面）：
 

@@ -29,10 +29,7 @@ function u9t() {
   return e?.enabled === true || e?.available === true;
 }
 function adt() {
-  if (!u9t()) return false;
-  let e = pt().autoDreamEnabled;
-  if (e !== void 0) return e;
-  return K()?.enabled === true;
+  return false; // 记忆内容不发送：不运行记忆整理（它会把记忆文件读给模型）
 }
 class Z {
   runner = null;

@@ -11,6 +11,7 @@
 ```
 本项目（手写）
   src/main.js
+    runtime/pinned-env.js       固定时区与遥测相关的环境变量，包装 Bun.spawn / Worker（dev 分支，见 runtime.md）
     runtime/embedded-tools.js   argv0 为 rg / bfs / ugrep 时转交系统工具
     runtime/platforms.js        支持的平台；不支持时提示并退出
     runtime/bun-ant.js          补齐 Bun.ant 中没有回退的原生能力
@@ -30,10 +31,11 @@
 
 ### 2.1 本项目入口 `src/main.js`
 
-1. `dispatchEmbeddedTool()`：如果进程以 `rg`、`bfs` 或 `ugrep` 为 argv0 启动，直接转交系统里的同名工具，不再加载 CLI。原版由内部 Bun 在原生层完成这一步，见 [runtime.md](runtime.md#内嵌命令行工具)。
-2. 检查当前平台（`<系统>-<架构>`）是否在 `src/runtime/platforms.js` 中，不支持时提示并退出。
-3. `installBunAnt()`：在公开版 Bun 上补齐 `Bun.ant` 中没有回退的能力，见 [runtime.md](runtime.md#bunant)。
-4. `await import("./<系统>/cli.js")`。
+1. `pinEnvironment()`（`dev` 分支）：在读取任何环境变量之前，固定时区与遥测相关的变量，锁定 `process.env`，并包装 `Bun.spawn`、`Bun.spawnSync` 和 `Worker`，见 [runtime.md](runtime.md#固定的环境变量)。
+2. `dispatchEmbeddedTool()`：如果进程以 `rg`、`bfs` 或 `ugrep` 为 argv0 启动，直接转交系统里的同名工具，不再加载 CLI。原版由内部 Bun 在原生层完成这一步，见 [runtime.md](runtime.md#内嵌命令行工具)。
+3. 检查当前平台（`<系统>-<架构>`）是否在 `src/runtime/platforms.js` 中，不支持时提示并退出。
+4. `installBunAnt()`：在公开版 Bun 上补齐 `Bun.ant` 中没有回退的能力，见 [runtime.md](runtime.md#bunant)。
+5. `await import("./<系统>/cli.js")`。
 
 编译产物 `dist/claude` 的入口是 `scripts/boot.js`，它在运行期加载 `/$bunfs/root/src/main.js`，之后的流程完全相同。
 
@@ -181,7 +183,7 @@
 | `shared/` | 668 / 667 | 被多个功能区共用、无法归入单一区域的模块（含大量小型工具函数） |
 | `vendor/` | 73 / 73 | 第三方库（含 Claude Code 自身代码的模块不归入此处）：react、ink、yoga、zod、commander、chalk、marked、highlight、ajv、jose、semver、parse5、acorn、grpc、opentelemetry、aws-sdk、google-auth、mcp-sdk、anthropic-sdk |
 
-`src/runtime/` 为本项目手写：assets、bun-ant、cell-segmenter、set-dumpable、embedded-tools、platforms。
+`src/runtime/` 为本项目手写：assets、bun-ant、cell-segmenter、set-dumpable、embedded-tools、platforms；`dev` 分支另有 pinned-env、pinned-env-worker（固定环境变量）、memory-guard（读取记忆文件需要确认）、safeguards-redact（safeguards 脱敏），都在 [runtime.md](runtime.md#固定的环境变量) 中说明。
 
 模块数随重新生成可能略有变化。
 

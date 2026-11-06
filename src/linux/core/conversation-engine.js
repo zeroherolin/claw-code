@@ -1,5 +1,7 @@
 // linux/core/conversation-engine.js — Claude Code 2.1.310（linux）模块 chunk-j0tbz6ra.js
 import { __asset_src, __asset_text } from "../../runtime/assets.js";
+import { memoryReadGuard } from "../../runtime/memory-guard.js";
+import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
 import { tf } from "../shared/chunk-b5845da6.js";
 import { He, oqo, x_e, sqo, jer, Wer, JKr, Avt, CCe, zer, Ker } from "../telemetry/chunk-1bb3c64e.js";
 import { b, c, ce, Vr, Wq, Ku, Ka, $b, Hn, Xw, gJr } from "../agents/third-party.js";
@@ -34897,8 +34899,7 @@ function TNs(e, n, r) {
   return yYe(e, n, r, n).includePaths;
 }
 function SKo(e) {
-  let { content: n } = oXn(e);
-  return { path: WV(), type: "AutoMem", content: n, contentDiffersFromDisk: true, rawContent: e };
+  return { path: WV(), type: "AutoMem", content: "(path only; contents not loaded)", contentDiffersFromDisk: true };
 }
 function bKo() {
   return process.env.CLAUDE_COWORK_MEMORY_INDEX_CONTENT;
@@ -35345,7 +35346,7 @@ async function OKo(e, n, r, s, h, y) {
     await hH().warmCanonicalWcRoot();
     let ro = r7(), Do = bKo();
     if (!ro && Do !== "") {
-      let ho = WV(), To = ba(), Ho = Do === void 0 && p6t(ho), Tr = async (kr) => kr ? (await _Ye(ho, "AutoMem")).info : null, Oo = Do !== void 0 ? SKo(Do) : await Tr(Ho);
+      let ho = WV(), To = ba(), Ho = Do === void 0 && p6t(ho), Tr = async (kr) => kr ? await Mw(ho).then(() => ({ path: ho, type: "AutoMem", content: "(path only; contents not loaded)", contentDiffersFromDisk: true }), () => null) : null, Oo = Do !== void 0 ? SKo(Do) : await Tr(Ho);
       if (Oo === null && Do === void 0 && !s && !$oe() && !i.CLAUDE_CODE_REMOTE && Ho && await T4t(e.host, To)) Oo = await Tr(p6t(ho));
       if (Oo) {
         let kr = nu(Oo.path);
@@ -59422,6 +59423,7 @@ function nmn(e) {
 }
 var $0s = Object.freeze({ visibleModel: void 0, serverLane: void 0, shouldLogSuppression: false });
 function qOr(e) {
+  return { visibleModel: void 0, serverLane: void 0, shouldLogSuppression: false }; // 拒答后不切换模型：不装填任何回退模型，重试始终用原模型
   let n = $G(), r = g5s({ requestDialog: e.requestDialog, isMainThread: e.isMainThread, consumerLacksDialogCapability: e.consumerLacksDialogCapability }), s = e.inCascadeEpisode ? e.cascadeNext : XUo(e.currentModel), h = !e.alreadyUsed && !e.declined && n && !r ? s : void 0, y = h !== void 0 && !e.inCascadeEpisode && !e.threadedRequest && !e.preferenceQuestionPending && ZYs() && !Kp(e.sticky, Dj), S = y && tmn({ primaryModel: e.currentModel, sticky: e.sticky, serverDefaultFallbacksEnabled: e.serverDefaultFallbacksEnabled, selfTargetDefaultFallbacksEnabled: e.selfTargetDefaultFallbacksEnabled }) ? "default" : "explicit", w = y && (S === "default" || !mbt(e.currentModel, h)) ? { forModel: e.currentModel, model: h, mode: S } : void 0;
   return { visibleModel: h, serverLane: w, shouldLogSuppression: !e.suppressionAlreadyLogged && n && r && s !== void 0 };
 }
@@ -61666,7 +61668,7 @@ function khn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
     a("tengu_auto_mode_context_withheld", { reason: b("field_over_ceiling"), bytes: h });
     return;
   }
-  return s;
+  return redactClassifierContext(s); // safeguards 脱敏，见 docs/runtime.md
 }
 function Qgr(e, n, r, s, h, y) {
   let S = (Te, Ee, xe, Me, je, Ge) => {
@@ -62863,7 +62865,7 @@ function tyr(e, n) {
   let r = n.effort === void 0 ? void 0 : Array(e.length), s = n.now === void 0 ? void 0 : Array(e.length), { effort: h, now: y } = n;
   for (let S = e.length - 1; S >= 0; S--) {
     let w = e[S];
-    if (w.type === "assistant" && !w.isApiErrorMessage) h = (w.perTurnEffort === void 0 ? w.effort : w.perTurnEffort) ?? h, y = w.perTurnTiming;
+    if (w.type === "assistant" && !w.isApiErrorMessage) h = (w.perTurnEffort === void 0 ? w.effort : w.perTurnEffort) ?? h, y = typeof w.perTurnTiming === "string" && !Number.isNaN(Date.parse(w.perTurnTiming)) ? Iyn(new Date(w.perTurnTiming)) : w.perTurnTiming;
     if (r !== void 0) r[S] = h;
     if (s !== void 0) s[S] = y;
   }
@@ -70541,7 +70543,7 @@ async function $A(e, n, r, s) {
     }
     if (s?.planModeWriteFloor === true && Vye(r.session, e.name) === void 0 && D.behavior === "passthrough" && YRe(e, n, r)) return Yee(e);
   }
-  if (D = cVe(e, n, r, D) ?? D, D = gVe(e, n, r, D) ?? D, D = I2e(e, n, D) ?? D, D?.behavior === "deny") return D;
+  if (D = cVe(e, n, r, D) ?? D, D = gVe(e, n, r, D) ?? D, D = I2e(e, n, D) ?? D, D = memoryReadGuard(e, n, D, r, __memoryHost) ?? D, D?.behavior === "deny") return D;
   let K = bp(h, e, n, "ask");
   if (K) return D?.behavior === "ask" ? { ...D, matchedAskRule: K } : { behavior: "ask", decisionReason: { type: "rule", rule: K }, message: id(e.name) };
   if (eon(e, s?.hookUpdatedInput) && !(s?.hookAsked === true && !e.requiresUserInteraction?.())) return D?.behavior === "ask" ? D : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
@@ -70623,7 +70625,7 @@ async function Rwn(e, n, r, s, h = kE, y) {
     else if (!Q) V = { behavior: "passthrough", message: id(e.name), checkIncomplete: true };
     if (V.behavior === "passthrough" && YRe(e, n, r)) V = V.checkIncomplete === true ? { ...Yee(e), checkIncomplete: true } : Yee(e);
   }
-  if (V = cVe(e, n, r, V) ?? V, V = gVe(e, n, r, V) ?? V, V = I2e(e, n, V) ?? V, V?.behavior === "deny") return V;
+  if (V = cVe(e, n, r, V) ?? V, V = gVe(e, n, r, V) ?? V, V = I2e(e, n, V) ?? V, V = memoryReadGuard(e, n, V, r, __memoryHost) ?? V, V?.behavior === "deny") return V;
   let Se = bp(S, e, n, "ask");
   if (Se) return V?.behavior === "ask" ? { ...V, matchedAskRule: Se } : { behavior: "ask", decisionReason: { type: "rule", rule: Se }, message: id(e.name) };
   if (e.requiresUserInteraction?.()) return V?.behavior === "ask" ? V : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
@@ -73262,7 +73264,7 @@ async function xEn(e, n) {
     if (K.scrubCredentialEnv) Je2.push(Wai({ sandboxMasked: K.sandboxMaskedEnv }));
     let dt = K.shellToolCommand ? _Fs() : void 0;
     if (dt !== void 0) Je2.push(dt);
-    Je2.push(`eval ${Ge}`), Je2.push(`pwd -P >| ${wo([Ee])}`);
+    Je2.push("export TZ=America/Los_Angeles"), Je2.push(`eval ${Ge}`), Je2.push(`pwd -P >| ${wo([Ee])}`);
     let St = Je2.join(" && "), mt = i.CLAUDE_CODE_SHELL_PREFIX;
     if (mt) St = ime(mt, St);
     return { commandString: St, cwdFilePath: xe };
@@ -79018,6 +79020,7 @@ async function tBr(e, n) {
 var nBr = /* @__PURE__ */ new Set(["extract_memories", "auto_dream", iwe, "prompt_suggestion", "compact"]);
 function bNs(e, n, r, s) {
   let h = n.memorySelector;
+  if (true) return; // 记忆内容不发送：不做相关记忆召回
   if (!h || n.agentId || nBr.has(r)) return;
   let y = jf() && $oe(), S = wxe?.isAccountRecallOn() === true && !UEt();
   if (!y && !S) return;
@@ -97595,6 +97598,7 @@ import { chmod as hhs, mkdir as O1n, readFile as yhs, rename as dut, rm as uut, 
 import { dirname as D1n, join as cut, resolve as N1n, sep as _hs } from "path";
 var L1n = "https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official", F1n = "marketplaces/claude-plugins-official/";
 async function SKn(e, n, r) {
+  if (_t()) return null; // 非必要流量已关闭：不下载官方插件市场
   let s = N1n(n), h = N1n(e);
   if (h !== s && !h.startsWith(s + _hs)) return t(`fetchOfficialMarketplaceFromGcs: refusing path outside cache dir: ${e}`, { level: "error" }), null;
   await wTn();
@@ -111910,6 +111914,7 @@ import { randomBytes as QEs } from "crypto";
 import { rmSync as JEs, watch as tht } from "fs";
 import { lstat as WNe, mkdir as ZEs, readdir as rht, readFile as eRs, unlink as tRs, writeFile as nRs } from "fs/promises";
 import { basename as Vgt, dirname as iQn, isAbsolute as oRs, join as z6, sep as PF } from "path";
+var __memoryHost = { autoMemDir: () => ba(), cwd: () => ke() };
 var pQn = 5e3, rRs = 64, gQn = 256, sRs = 1e3, iRs = 8, aRs = 2e4, hQn = 3e4, lRs = 200, yQn = 250, aQn = { grace: 30, quiet: 60 }, lQn = 300, Gk = ve(/* @__PURE__ */ new Map(), () => {
   dRs();
 }), eb = /* @__PURE__ */ new Map(), SW = null, W6 = null, dQn = false;
@@ -115904,7 +115909,7 @@ ${IF}`, isMeta: true })]);
   let n = XLr().safeParse(e);
   if (!n.success) return [];
   return Kl([Oe({ content: C1s(n.data.available, n.data.available && n.data.abbreviated), isMeta: true })]);
-}, workflow_size_guideline_change: ({ size: e }) => Kl([Oe({ content: SJs(e), isMeta: true })]), cowork_memory_context: ({ content: e, anchor: n, toolsOnly: r }) => n ? [] : Kl([Oe({ content: e === null ? r ? "The account memory tool results from earlier in this conversation, and any memory snapshot shown before them, have been removed; do not rely on anything they said." : "The memory snapshot shown earlier has been removed from this conversation; do not rely on anything it said." : $5(e), isMeta: true })]), account_memory_recall: ({ content: e }) => Kl([Oe({ content: $5(e), isMeta: true })]), already_read_file: () => [], async_hook_response_batch: () => [], batching_reminder_sent: () => [], secondary_reminder_sent: () => [], command_permissions: () => [], edited_image_file: () => [], hook_cancelled: () => [], hook_error_during_execution: () => [], hook_non_blocking_error: () => [], hook_system_message: () => [], hook_permission_decision: () => [], hook_deferred_tool: () => [], goal_status: () => [], session_cron_carry: () => [], projects_thread_ask: () => [], structured_output: () => [], max_turns_reached: () => [], teammate_shutdown_batch: () => [] }, Ixs = `The following deferred tools are now available via ${ki}. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ${ki} with query "select:<name>[,<name>...]" to load tool schemas before calling them:`, Dxs = "The following tools just became available and are ready to use:", Nxs = "The following tools have updated definitions, which replace the earlier ones from here on:", Lxs = "The following tools are no longer available. Do not call them:", Fxs = "The following tools are now available:";
+}, workflow_size_guideline_change: ({ size: e }) => Kl([Oe({ content: SJs(e), isMeta: true })]), cowork_memory_context: () => [], account_memory_recall: () => [], already_read_file: () => [], async_hook_response_batch: () => [], batching_reminder_sent: () => [], secondary_reminder_sent: () => [], command_permissions: () => [], edited_image_file: () => [], hook_cancelled: () => [], hook_error_during_execution: () => [], hook_non_blocking_error: () => [], hook_system_message: () => [], hook_permission_decision: () => [], hook_deferred_tool: () => [], goal_status: () => [], session_cron_carry: () => [], projects_thread_ask: () => [], structured_output: () => [], max_turns_reached: () => [], teammate_shutdown_batch: () => [] }, Ixs = `The following deferred tools are now available via ${ki}. Their schemas are NOT loaded — calling them directly will fail with InputValidationError. Use ${ki} with query "select:<name>[,<name>...]" to load tool schemas before calling them:`, Dxs = "The following tools just became available and are ready to use:", Nxs = "The following tools have updated definitions, which replace the earlier ones from here on:", Lxs = "The following tools are no longer available. Do not call them:", Fxs = "The following tools are now available:";
 function pHr(e) {
   return e === "poll_events" || e === "project_doc_reads";
 }

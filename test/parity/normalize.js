@@ -26,12 +26,32 @@ export function normalizeText(s, home) {
     .replace(/127\.0\.0\.1:\d+/g, "127.0.0.1:<PORT>");
 }
 
-/** API 请求：在文本归一化的基础上，再忽略计费哈希、shell 快照文件名、ISO 时间与 metadata.user_id */
+/**
+ * dev 分支有意与原版不同的内容。比较前从两边的请求里去掉，其余部分仍逐字比较。
+ * 范围都收得很窄：只匹配这一处已知的文字，别处出现任何变化仍会被报告。
+ *
+ *   记忆政策段落：系统提示词 `# Memory` 一节之后追加的 "# Memory access policy"（见 docs/runtime.md#固定的环境变量）。
+ *   日期：对话里的 "Today's date is YYYY-MM-DD."。dev 固定使用美国太平洋时间，原版用本机时区；
+ *         在本机时区与太平洋时间相差一天的时段（如东八区的 0 点到 16 点），两边的日期不同。
+ *         日期的取值由 runtime 测试的 pinned-env 用例验证，这里只是不让它影响其余内容的比较。
+ */
+// 记忆政策段落的完整原文；与 src/<系统>/context/org-memory-writes-setting-changed.js 中追加的文字逐字相同，
+// 由 normalize.test.js 校验两者一致，所以措辞改了而这里没跟着改时测试会失败，而不是悄悄漏掉
+export const MEMORY_POLICY = "# Memory access policy\nOnly the paths of memory files are sent to you; their contents are not loaded into this conversation. Do not read, search, or open files in the memory directory unless the user explicitly asks you to. If the user asks you to remember or forget something, you may open just the files needed to do that.";
+// 请求被序列化为 JSON 字符串后再替换，所以换行写成字面的 \n 两个字符
+const JSON_POLICY = JSON.stringify("\n\n" + MEMORY_POLICY).slice(1, -1);
+const INTENTIONAL = [
+  [new RegExp(JSON_POLICY.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), ""],
+  [/Today's date is \d{4}-\d{2}-\d{2}\./g, "Today's date is <DATE>."],
+];
+
+/** API 请求：在文本归一化的基础上，再忽略计费哈希、shell 快照文件名、ISO 时间与 metadata.user_id，并去掉 dev 的有意差异 */
 export function normalizeRequest(req, home) {
-  const s = normalizeText(JSON.stringify(req), home)
+  let s = normalizeText(JSON.stringify(req), home)
     .replace(/\d{4}-\d{2}-\d{2}T[\d:.]+Z?/g, "<TS>")
     .replace(/cch=[0-9a-f]+/g, "cch=<H>")
     .replace(/snapshot-\w+-\d+-\w+\.sh/g, "snapshot.sh");
+  for (const [re, to] of INTENTIONAL) s = s.replace(re, to);
   const d = JSON.parse(s);
   if (d.body?.metadata?.user_id) d.body.metadata.user_id = "<U>";
   return d;

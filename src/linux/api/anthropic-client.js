@@ -6277,6 +6277,7 @@ function qfn() {
 }
 var ob = /* @__PURE__ */ new Set(["cyber", "frontier_llm"]);
 function iBo(e, { visibleRouteDeclined: n = false, apiRefusalCategory: r, responseSwapped: s = false } = {}) {
+  return; // 拒答后不切换模型：不装填静默回退模型
   if (!n && pbt(e)) return;
   if (!qfn()) return;
   let h = $n(e);
