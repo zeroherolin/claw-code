@@ -416,6 +416,8 @@ import "../shared/chunk-86ecf3aa.js";
 import "../remote/chunk-95151620.js";
 import { basename as _, dirname as O } from "path";
 async function ae(l) {
+  if (true) Ur(`claw-code does not update itself. Pull the claw-code repository and run \`npm run install-cli\` to rebuild.
+`), await Xn(0); // claw-code：update 会下载官方版本并改写共享配置里的 installMethod
   if (i.DISABLE_UPDATES) Ur(`Updates are disabled by your administrator. Contact your IT team to get the latest version.
 `), await Xn(0);
   a("tengu_update_check", {}), Ur(`Current version: ${{ ISSUES_EXPLAINER: "report the issue at https://github.com/anthropics/claude-code/issues", PACKAGE_URL: "@anthropic-ai/claude-code", README_URL: "https://code.claude.com/docs/en/overview", VERSION: "2.1.310", FEEDBACK_CHANNEL: "https://github.com/anthropics/claude-code/issues", BUILD_TIME: "2026-10-23T17:43:32Z", GIT_SHA: "0d2056ecf42d9452a8cd8e054600024e7c557add", HOOKS_WORKER_URL: __asset_src("darwin/hooks/hooks-worker.js"), DD_SOURCEMAP_GROUP: "darwin" }.VERSION}

@@ -285,3 +285,20 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，原
 - 后台记忆提取和记忆整理关闭后，不会再自动沉淀新的记忆；记忆只在用户明确要求时才会保存。
 - 系统提示词里原有的一句 "`MEMORY.md` is the index loaded into context each session" 没有改，与追加的政策有出入，以后者为准。
 - 团队记忆索引（需要服务端的记忆库）的改动没有实测，只改了文本格式化函数。
+
+## 安装与共存
+
+`npm run install-cli`（`scripts/install.js`）先构建，再在 `~/.local/bin` 创建符号链接 `claw-code -> <项目>/dist/claude`。只有一个链接，重新构建后立即生效。`--bin-dir <目录>` 换安装目录，`--name <名字>` 换命令名（不接受 `claude`），`--no-build` 跳过构建，`--uninstall` 卸载。不覆盖不是自己创建的文件（要覆盖加 `--force`），卸载只删除指向本项目 `dist/claude` 的链接。
+
+**共享的**：配置目录（`~/.claude` 或 `CLAUDE_CONFIG_DIR`）下的会话记录、`settings.json`、skills、插件、记忆，全局配置 `~/.claude.json`，以及登录凭据——钥匙串条目名只取决于配置目录，与可执行文件无关（读代码得出，`auth/claude-code-user.js` 的 `Jj`，没有用真实钥匙串测过）。实测原版 2.1.292 写的会话，`claw-code --continue` 能续上并带出历史，反过来也行。
+
+**会冲突的两处，已关掉**：
+
+| 位置 | 改动 |
+|---|---|
+| `fs/deep-link-register-failed.js` 的注册函数（darwin 的 `Rls`、linux 的 `hls`） | 不再自动注册 `claude-cli://` 处理程序。原版每次交互使用提交第一条消息后，发现处理程序没指向当前可执行文件就改注册到自己，会抢走已安装的 `claude` 的注册（macOS 上是 `~/Applications/Claude Code URL Handler.app`，Linux 上是 `.desktop` 文件）。从网页深链接拉起的仍是原版 |
+| `fs/auto-updater-forced-downgrade.js` 的 `update` / `upgrade`，`fs/setup-token-command.js` 的 `install`（darwin 的 `xki`、linux 的 `VEi`） | 直接提示后退出。`update` 会下载官方版本，并把共享配置里的 `installMethod` 改成 `native`；`install` 会把官方原生版本装进 `~/.local/bin/claude`。升级 claw-code 的办法是更新项目后重新执行 `npm run install-cli` |
+
+**共用同一个配置目录的其他状态**：`~/.claude.json` 里的 `lastOnboardingVersion`、`numStartups` 等字段两边都会写；后台守护进程、会话锁等运行时状态也在同一个配置目录里。这几项没有专门测过两个版本同时运行的情形，只验证了上面说的会话互通。
+
+测试：`test/install.test.js`（安装、重复安装、不覆盖他人文件、拒绝 `claude`、卸载只删自己的链接），`test/smoke.test.js` 的「与已安装的 claude 共存」（`update` / `upgrade` / `install` 不联网、不写 `installMethod`、不碰 `~/.local`；交互使用后不注册处理程序）。去掉三处补丁重新构建，这四个用例全部变红。

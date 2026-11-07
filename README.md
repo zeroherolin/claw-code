@@ -27,9 +27,11 @@ Claude Code **2.1.310** 的可读、可运行重组版本，运行在公开版 B
 npm install           # 安装固定版本的 Bun 与开发依赖
 npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 ./dist/claude         # 交互模式；用法与原版相同，例如 ./dist/claude -p "hello"
+npm run install-cli   # 构建并安装：在 ~/.local/bin 创建 claw-code 链接，之后输入 claw-code 即可启动
 ```
 
-- `dist/claude` 是自包含的单文件可执行程序，可以拷到别处，也可以链接到 PATH 中的目录以便随处使用，例如 `ln -s "$PWD/dist/claude" ~/.local/bin/claude`。
+- `npm run install-cli` 与已安装的 `claude` 共存，共用会话记录、配置文件和登录凭据；为避免抢走 `claude` 的深链接注册、改写共享配置，`claw-code update` 与 `claw-code install` 被关掉了，升级就是更新项目后重新执行 `npm run install-cli`。命令名、安装目录和卸载方式见 [docs/runtime.md](docs/runtime.md#安装与共存)。
+- `dist/claude` 是自包含的单文件可执行程序，可以拷到别处，也可以链接到 PATH 中的目录以便随处使用。注意不要把它链接成 `claude`：那会顶替已安装的原版。
 - 为其他平台编译：`npm run build -- --target linux-arm64`。
 - 建议安装 ripgrep、bfs（3.3 或更新）、ugrep，例如 `brew install ripgrep bfs ugrep` 或 `apt install ripgrep bfs ugrep`。原版把这三个工具内嵌在可执行文件里，本项目改为调用系统里的同名工具；bfs 缺失或过旧时改用系统的 find，详见 [docs/runtime.md](docs/runtime.md#内嵌命令行工具)。
 
@@ -45,7 +47,7 @@ npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 | `assets/` | 资源：提示词、skill 文档、字体等各系统共用；原生 `.node` 模块按平台放在 `native/<系统>-<架构>/`；清单见 `INDEX.json` | 生成 |
 | `reference/` | 机器可读的参考数据：`module-map.json` 为模块路径与各系统原 chunk id 的对照；`<系统>/` 下为工具、命令、特性开关、提示词全文等 | 生成 |
 | `docs/` | 架构与运行时文档；`docs/reference/<系统>/` 为参考手册 | 手写 + 生成 |
-| `scripts/` | `build.js` 编译单文件可执行程序，`boot.js` 是它的入口 | 手写 |
+| `scripts/` | `build.js` 编译单文件可执行程序，`boot.js` 是它的入口，`install.js` 构建并安装 `claw-code` 命令 | 手写 |
 | `bin/claude` | 开发模式启动器：直接运行 `src/`，无需构建；与原版有两处行为差异，见 [runtime.md](docs/runtime.md#开发模式与构建产物的差异) | 手写 |
 | `dist/claude` | `npm run build` 的产物：自包含的单文件可执行程序（约 290 MB，含 Bun 运行时、目标系统的源码及其字节码、资源），行为与原版一致 | 构建，不提交 |
 | `test/` | 单元、完整性、冒烟测试；`parity/` 为与原版的对比测试 | 手写 |
@@ -92,7 +94,7 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 
 比较前只归一化与运行环境有关的内容：路径、端口、时间、随机 id、动画相位。规则见 `test/parity/normalize.js`。
 
-`dev` 分支有意改动了七处行为，见 [docs/runtime.md](docs/runtime.md#固定的环境变量)。时区与遥测的改动，对比用例覆盖不到（隔离环境本来就关闭了遥测，用例输出也不涉及时区）；记忆政策段落和「Today's date」这两处有意的差异，对比测试比较请求时会去掉，其余仍逐字比较，33 项全部一致。日常使用时，发出的日期、时间戳、网络请求和记忆内容会与原版不同：
+`dev` 分支有意改动了八处行为，见 [docs/runtime.md](docs/runtime.md#固定的环境变量)。时区与遥测的改动，对比用例覆盖不到（隔离环境本来就关闭了遥测，用例输出也不涉及时区）；记忆政策段落和「Today's date」这两处有意的差异，对比测试比较请求时会去掉，其余仍逐字比较，33 项全部一致。日常使用时，发出的日期、时间戳、网络请求和记忆内容会与原版不同：
 
 - 发出的时间信息无条件使用美国太平洋时间（`America/Los_Angeles`），包括 Bash 工具里执行的命令；
 - 遥测无条件关闭：1P 事件日志、Datadog、BigQuery 指标、错误上报、GrowthBook、OpenTelemetry 导出、反馈问卷；
@@ -100,7 +102,8 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 - 不收集、不发送任何 GPU 相关信息（Remote Control 主机画像中的 nvidia-smi 与 CUDA 探测、项目扫描中的 CUDA 识别）；
 - 记忆内容不发送，只发记忆文件的路径：`MEMORY.md` 索引、相关记忆召回、账号与团队记忆、子代理记忆都不再带正文，后台记忆提取与记忆整理不再运行；模型要读记忆目录里的文件时，一律先询问你，bypassPermissions 模式、allow 规则和 hook 都绕不过；
 - 发往服务端分类器的 `safeguards`（auto / plan 模式）脱敏：用户名、git 分支与 remote、权限规则、autoMode 规则、`--add-dir`、home 目录都不再发送，字段本身仍发送；
-- 服务端拒答（如 `frontier_llm`）后，用原模型最多连续重试 10 轮并显示轮数（`retrying with the same model (3/10)`），不会换模型；历史里保留被拦截那一轮的提问、已输出的内容和工具调用，但不再追加 "stopped by a safety classifier" 之类的提示。连续 10 轮后仍被拦截就正常中断结束，不弹出换模型或改提示词的底部选择框。
+- 服务端拒答（如 `frontier_llm`）后，用原模型最多连续重试 10 轮并显示轮数（`retrying with the same model (3/10)`），不会换模型；历史里保留被拦截那一轮的提问、已输出的内容和工具调用，但不再追加 "stopped by a safety classifier" 之类的提示。连续 10 轮后仍被拦截就正常中断结束，不弹出换模型或改提示词的底部选择框；
+- 为与已安装的 `claude` 共存，不再自动注册 `claude-cli://` 深链接处理程序，`update`、`upgrade`、`install` 三个子命令直接提示后退出（它们会下载官方版本、改写共享配置里的 `installMethod`）。
 
 已知差异（不影响对话、工具和界面）：
 

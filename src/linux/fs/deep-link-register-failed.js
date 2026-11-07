@@ -132,6 +132,7 @@ async function v(e) {
   }
 }
 async function hls(e) {
+  if (true) return; // claw-code：不注册 claude-cli:// 处理程序，免得抢走已安装的 claude 的注册
   if (pt().disableDeepLinkRegistration === "disable") return;
   if (!["darwin", "linux", "win32"].includes("linux")) return;
   let r = await P();

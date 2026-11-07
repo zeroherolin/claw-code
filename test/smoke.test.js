@@ -300,4 +300,47 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       h.remove();
     }
   });
+
+  // 与已安装的 claude 共存：update / install 不联网、不改共享配置，交互使用不抢注册 claude-cli:// 处理程序
+  describe("与已安装的 claude 共存", () => {
+    for (const cmd of ["update", "upgrade", "install"]) {
+      test(`${cmd} 直接退出：不联网、不写 installMethod、不碰 ~/.local`, async () => {
+        const h = makeHome();
+        const hits = [];
+        const proxy = Bun.listen({ hostname: "127.0.0.1", port: 0, socket: { data(sock, d) { hits.push(String(d).split("\r\n")[0]); sock.end(); }, open() {}, close() {}, error() {} } });
+        try {
+          const px = `http://127.0.0.1:${proxy.port}`;
+          const env = { ...cleanEnv(h.home, "http://127.0.0.1:9"), HTTPS_PROXY: px, HTTP_PROXY: px, ALL_PROXY: px };
+          const r = await runCli([DIST], [cmd], { cwd: h.work, env });
+          expect(r.code).toBe(0);
+          expect(r.output).toContain("claw-code does not");
+          expect(hits).toEqual([]);
+          expect(fs.readFileSync(path.join(h.home, ".claude/.claude.json"), "utf8")).not.toContain("installMethod");
+          expect(fs.existsSync(path.join(h.home, ".local"))).toBe(false);
+        } finally {
+          proxy.stop(true);
+          h.remove();
+        }
+      }, 60_000);
+    }
+
+    test("交互使用并提交第一条消息后，没有注册 claude-cli:// 处理程序", async () => {
+      const h = makeHome();
+      const fake = startFakeApi(h.work);
+      // macOS：<HOME>/Applications/Claude Code URL Handler.app；Linux：<HOME>/.local/share/applications/claude-code-url-handler.desktop
+      const spots = [path.join(h.home, "Applications"), path.join(h.home, ".local/share/applications")];
+      try {
+        await runInPty([DIST], { cwd: h.work, env: cleanEnv(h.home, fake.url), cols: 100, rows: 30, keys: [[0, "hello\r"]], idle: 3000, timeout: 30_000 });
+        await Bun.sleep(2000); // 注册在第一条消息之后异步进行
+        for (const spot of spots) expect(fs.existsSync(spot)).toBe(false);
+      } finally {
+        if (process.platform === "darwin") {
+          const lsregister = "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister";
+          spawnSync(lsregister, ["-u", path.join(h.home, "Applications/Claude Code URL Handler.app")]); // 注册过就撤销，不在系统里留下临时目录的条目
+        }
+        fake.stop();
+        h.remove();
+      }
+    }, 60_000);
+  });
 });
