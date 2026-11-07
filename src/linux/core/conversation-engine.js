@@ -65774,7 +65774,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
       l(N(Qn));
     }
   };
-  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: xe, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
+  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
   let J6 = Q.enablePromptCaching ?? Ile(Jt), RI = Q.forkPointUuid !== void 0 && Bf(Q.agentContext), AA = Cve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || RI ? Jt : void 0 }), BR = AA.ttl === "1h" ? "1h" : void 0, dE = kkr(AA.ttl) === "1h" ? "1h" : void 0, Pie = dE !== BR;
   if (ii) {
     if (Gts(BR === "1h" ? JA : oj, Q.model, AA.reason === "live_5m_cache"), Pie) Skr();
@@ -66127,7 +66127,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
     Pf = B9t(Pf, dt);
     let Jh = eh !== null ? eh.shapeInheritedFields(kS, { system: HR, tools: Pf }) : { system: HR, tools: Pf };
     fw = HR, h$ = Pf, DW = Jh.system !== HR, NW = kS !== null;
-    let Vc = { model: tA(Q.model), messages: kS !== null && kS.sliceFrom > 0 ? ep.slice(Hi[kS.sliceFrom]) : ep, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: ub, ...A$ && nNe(qR), metadata: zWe({ agentContext: Q.agentContext, uploadIdentity: Q.uploadIdentity }), max_tokens: MT, thinking: Zf, ...Jie !== void 0 && { temperature: Jie }, ...wE && DF && Jr.includes(Lue) && { context_management: wE }, ...Uie && Nf !== void 0 && { safeguards: [{ type: W2e, classifier_context: Nf }] }, ...!mS && cb ? cb : {}, ...!mS && OT ? OT : {}, ...Tg, ...sl, ...{}, ...Object.keys(yd).length > 0 && { output_config: yd }, ...eD !== void 0 && { speed: eD }, ...kS !== null && { thread: kS.thread }, ...RW() && (kt || Q.forkPointUuid !== void 0) && DF && !mS && { diagnostics: { previous_message_id: lt ?? null } } };
+    let Vc = { model: tA(Q.model), messages: kS !== null && kS.sliceFrom > 0 ? ep.slice(Hi[kS.sliceFrom]) : ep, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: ub, ...A$ && nNe(qR), metadata: zWe({ agentContext: Q.agentContext, uploadIdentity: Q.uploadIdentity }), max_tokens: MT, thinking: Zf, ...Jie !== void 0 && { temperature: Jie }, ...wE && DF && Jr.includes(Lue) && { context_management: wE }, ...Uie && Nf !== void 0 && { safeguards: [{ type: W2e, classifier_context: Nf }] }, ...!mS && cb ? cb : {}, ...!mS && OT ? OT : {}, ...Tg, ...sl, ...{}, ...Object.keys(yd).length > 0 && { output_config: yd }, ...eD !== void 0 && { speed: eD }, ...kS !== null && { thread: kS.thread }, ...RW() && (kt || Q.forkPointUuid !== void 0) && DF && !mS && { diagnostics: { previous_message_id: Q.uploadIdentity !== void 0 ? null : lt ?? null } } };
     OW = yE !== void 0 && Vc.context_management === wE, WI = lP && Vc.messages.some((Oa) => Oa.clear_at !== void 0);
     let Yc = H_r(Vc.thinking, Q.querySource, !yyt);
     if (Yc !== Vc.thinking) yyt = true, Vc.thinking = Yc;

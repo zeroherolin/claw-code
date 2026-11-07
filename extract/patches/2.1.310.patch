@@ -96,7 +96,7 @@ index 72fe144..1775c25 100644
    ar();
    let h = Bp() && !uQ();
 diff --git a/src/darwin/core/conversation-engine.js b/src/darwin/core/conversation-engine.js
-index 7926d09..df43949 100644
+index 7926d09..4c235f2 100644
 --- a/src/darwin/core/conversation-engine.js
 +++ b/src/darwin/core/conversation-engine.js
 @@ -1,5 +1,7 @@
@@ -170,6 +170,15 @@ index 7926d09..df43949 100644
    if (We && Qs()) T5s(We);
    let Ge = z_r(e), Je2 = q_r(e), rt = PHr(e), lt = KJe(e), pt = Te() === "bedrock" && Q.model.includes("application-inference-profile") ? await fLe(Fn(Q.model)) ?? Q.model : Q.model;
    if (wRe(Q.model, Q.querySource), MEe()) await ehn(Q.model, Q.credentials, Q.storageV5);
+@@ -65786,7 +65788,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+       l(N(Qn));
+     }
+   };
+-  vA(), n = lUs(n, lLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: xe, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
++  vA(), n = lUs(n, lLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
+   let T6 = Q.enablePromptCaching ?? Ule(Jt), TI = Q.forkPointUuid !== void 0 && Up(Q.agentContext), RA = Mve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || TI ? Jt : void 0 }), KR = RA.ttl === "1h" ? "1h" : void 0, NE = pkr(RA.ttl) === "1h" ? "1h" : void 0, Mie = NE !== KR;
+   if (ii) {
+     if (Cns(KR === "1h" ? eA : uj, Q.model, RA.reason === "live_5m_cache"), Mie) mkr();
 @@ -65990,6 +65992,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
        if (oRe(Qn, Q.agentId)) {
          let Ma = q_n(e, Ys);
@@ -183,7 +192,7 @@ index 7926d09..df43949 100644
      let Jh = eh !== null ? eh.shapeInheritedFields(uS, { system: VR, tools: Rf }) : { system: VR, tools: Rf };
      pw = VR, v$ = Rf, $W = Jh.system !== VR, BW = uS !== null;
 -    let Yc = { model: rT(Q.model), messages: uS !== null && uS.sliceFrom > 0 ? hp.slice(Di[uS.sliceFrom]) : hp, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: VS, ...M$ && lNe(nC), metadata: t2e({ agentContext: Q.agentContext }), max_tokens: JT, thinking: gp, ...Zie !== void 0 && { temperature: Zie }, ...qE && u$ && Jr.includes(Wue) && { context_management: qE }, ...jie && Hf !== void 0 && { safeguards: [{ type: z2e, classifier_context: Hf }] }, ...!lS && QS ? QS : {}, ...!lS && ZT ? ZT : {}, ...Tg, ...sl, ...{}, ...Object.keys(hd).length > 0 && { output_config: hd }, ...rD !== void 0 && { speed: rD }, ...uS !== null && { thread: uS.thread }, ...AW() && (kt || Q.forkPointUuid !== void 0) && u$ && !lS && { diagnostics: { previous_message_id: lt ?? null } } };
-+    let Yc = { model: rT(Q.model), messages: uS !== null && uS.sliceFrom > 0 ? hp.slice(Di[uS.sliceFrom]) : hp, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: VS, ...M$ && lNe(nC), metadata: t2e({ agentContext: Q.agentContext, uploadIdentity: Q.uploadIdentity }), max_tokens: JT, thinking: gp, ...Zie !== void 0 && { temperature: Zie }, ...qE && u$ && Jr.includes(Wue) && { context_management: qE }, ...jie && Hf !== void 0 && { safeguards: [{ type: z2e, classifier_context: Hf }] }, ...!lS && QS ? QS : {}, ...!lS && ZT ? ZT : {}, ...Tg, ...sl, ...{}, ...Object.keys(hd).length > 0 && { output_config: hd }, ...rD !== void 0 && { speed: rD }, ...uS !== null && { thread: uS.thread }, ...AW() && (kt || Q.forkPointUuid !== void 0) && u$ && !lS && { diagnostics: { previous_message_id: lt ?? null } } };
++    let Yc = { model: rT(Q.model), messages: uS !== null && uS.sliceFrom > 0 ? hp.slice(Di[uS.sliceFrom]) : hp, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: VS, ...M$ && lNe(nC), metadata: t2e({ agentContext: Q.agentContext, uploadIdentity: Q.uploadIdentity }), max_tokens: JT, thinking: gp, ...Zie !== void 0 && { temperature: Zie }, ...qE && u$ && Jr.includes(Wue) && { context_management: qE }, ...jie && Hf !== void 0 && { safeguards: [{ type: z2e, classifier_context: Hf }] }, ...!lS && QS ? QS : {}, ...!lS && ZT ? ZT : {}, ...Tg, ...sl, ...{}, ...Object.keys(hd).length > 0 && { output_config: hd }, ...rD !== void 0 && { speed: rD }, ...uS !== null && { thread: uS.thread }, ...AW() && (kt || Q.forkPointUuid !== void 0) && u$ && !lS && { diagnostics: { previous_message_id: Q.uploadIdentity !== void 0 ? null : lt ?? null } } };
      LW = BE !== void 0 && Yc.context_management === qE, zI = rP && Yc.messages.some((Aa) => Aa.clear_at !== void 0);
      let Xc = D_r(Yc.thinking, Q.querySource, !hyt);
      if (Xc !== Yc.thinking) hyt = true, Yc.thinking = Xc;
@@ -614,7 +623,7 @@ index 7abd32b..70da82c 100644
    ar();
    let h = jf() && !r7();
 diff --git a/src/linux/core/conversation-engine.js b/src/linux/core/conversation-engine.js
-index 8b67836..6e77c97 100644
+index 8b67836..bd08a4d 100644
 --- a/src/linux/core/conversation-engine.js
 +++ b/src/linux/core/conversation-engine.js
 @@ -1,5 +1,7 @@
@@ -688,6 +697,15 @@ index 8b67836..6e77c97 100644
    if (je && Qs()) x5s(je);
    let Ge = Q_r(e), Je2 = J_r(e), rt = cHr(e), lt = KJe(e), ft = Ae() === "bedrock" && Q.model.includes("application-inference-profile") ? await a0e($n(Q.model)) ?? Q.model : Q.model;
    if (TRe(Q.model, Q.querySource), pEe()) await ehn(Q.model, Q.credentials, Q.storageV5);
+@@ -65772,7 +65774,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+       l(N(Qn));
+     }
+   };
+-  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: xe, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
++  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
+   let J6 = Q.enablePromptCaching ?? Ile(Jt), RI = Q.forkPointUuid !== void 0 && Bf(Q.agentContext), AA = Cve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || RI ? Jt : void 0 }), BR = AA.ttl === "1h" ? "1h" : void 0, dE = kkr(AA.ttl) === "1h" ? "1h" : void 0, Pie = dE !== BR;
+   if (ii) {
+     if (Gts(BR === "1h" ? JA : oj, Q.model, AA.reason === "live_5m_cache"), Pie) Skr();
 @@ -65976,6 +65978,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
        if (sRe(Qn, Q.agentId)) {
          let Da = W_n(e, Ys);
@@ -701,7 +719,7 @@ index 8b67836..6e77c97 100644
      let Jh = eh !== null ? eh.shapeInheritedFields(kS, { system: HR, tools: Pf }) : { system: HR, tools: Pf };
      fw = HR, h$ = Pf, DW = Jh.system !== HR, NW = kS !== null;
 -    let Vc = { model: tA(Q.model), messages: kS !== null && kS.sliceFrom > 0 ? ep.slice(Hi[kS.sliceFrom]) : ep, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: ub, ...A$ && nNe(qR), metadata: zWe({ agentContext: Q.agentContext }), max_tokens: MT, thinking: Zf, ...Jie !== void 0 && { temperature: Jie }, ...wE && DF && Jr.includes(Lue) && { context_management: wE }, ...Uie && Nf !== void 0 && { safeguards: [{ type: W2e, classifier_context: Nf }] }, ...!mS && cb ? cb : {}, ...!mS && OT ? OT : {}, ...Tg, ...sl, ...{}, ...Object.keys(yd).length > 0 && { output_config: yd }, ...eD !== void 0 && { speed: eD }, ...kS !== null && { thread: kS.thread }, ...RW() && (kt || Q.forkPointUuid !== void 0) && DF && !mS && { diagnostics: { previous_message_id: lt ?? null } } };
-+    let Vc = { model: tA(Q.model), messages: kS !== null && kS.sliceFrom > 0 ? ep.slice(Hi[kS.sliceFrom]) : ep, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: ub, ...A$ && nNe(qR), metadata: zWe({ agentContext: Q.agentContext, uploadIdentity: Q.uploadIdentity }), max_tokens: MT, thinking: Zf, ...Jie !== void 0 && { temperature: Jie }, ...wE && DF && Jr.includes(Lue) && { context_management: wE }, ...Uie && Nf !== void 0 && { safeguards: [{ type: W2e, classifier_context: Nf }] }, ...!mS && cb ? cb : {}, ...!mS && OT ? OT : {}, ...Tg, ...sl, ...{}, ...Object.keys(yd).length > 0 && { output_config: yd }, ...eD !== void 0 && { speed: eD }, ...kS !== null && { thread: kS.thread }, ...RW() && (kt || Q.forkPointUuid !== void 0) && DF && !mS && { diagnostics: { previous_message_id: lt ?? null } } };
++    let Vc = { model: tA(Q.model), messages: kS !== null && kS.sliceFrom > 0 ? ep.slice(Hi[kS.sliceFrom]) : ep, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: ub, ...A$ && nNe(qR), metadata: zWe({ agentContext: Q.agentContext, uploadIdentity: Q.uploadIdentity }), max_tokens: MT, thinking: Zf, ...Jie !== void 0 && { temperature: Jie }, ...wE && DF && Jr.includes(Lue) && { context_management: wE }, ...Uie && Nf !== void 0 && { safeguards: [{ type: W2e, classifier_context: Nf }] }, ...!mS && cb ? cb : {}, ...!mS && OT ? OT : {}, ...Tg, ...sl, ...{}, ...Object.keys(yd).length > 0 && { output_config: yd }, ...eD !== void 0 && { speed: eD }, ...kS !== null && { thread: kS.thread }, ...RW() && (kt || Q.forkPointUuid !== void 0) && DF && !mS && { diagnostics: { previous_message_id: Q.uploadIdentity !== void 0 ? null : lt ?? null } } };
      OW = yE !== void 0 && Vc.context_management === wE, WI = lP && Vc.messages.some((Oa) => Oa.clear_at !== void 0);
      let Yc = H_r(Vc.thinking, Q.querySource, !yyt);
      if (Yc !== Vc.thinking) yyt = true, Vc.thinking = Yc;

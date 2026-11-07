@@ -109,11 +109,13 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       promptHeader: q.headers["x-claude-code-prompt-id"],
       billingPrompt: JSON.stringify(q.body.system).match(/cc_prompt_id=([0-9a-f-]{36})/)?.[1], // 系统提示词首段的账单头
       clientRequest: q.headers["x-client-request-id"],
+      prevRequest: JSON.stringify(q.body.system).match(/cc_prev_req=(req_[\w-]+)/)?.[1], // 账单头里的上一个请求 ID，没有就是 undefined
+      prevMessage: q.body.diagnostics?.previous_message_id, // 缓存诊断里的上一条消息 ID，null 表示不指向任何消息
       thread: q.body.thread?.type,
     };
   };
 
-  test("拒答重试使用临时身份：会话、设备、提示 ID 每轮都换，线程新建，本地标识不外泄", async () => {
+  test("拒答重试使用临时身份：会话、设备、提示 ID 每轮都换，线程新建，不指向被拦截的请求，本地标识不外泄", async () => {
     const { r, fake, result } = await retryRun(3, FIRST_PARTY);
     expect(r.code).toBe(0);
     expect(fake.requests[0].headers["anthropic-beta"]).toContain("message-threads");
@@ -135,6 +137,12 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       expect(x.thread).toBe("create"); // 不续接旧线程
     }
     expect(new Set(w.map((x) => x.clientRequest)).size).toBe(4); // x-client-request-id 本来就是每个请求各一个
+    // 重试不带上一个（被拦截的）请求和消息的 ID，服务端无法靠它们把重试连到上一轮
+    for (const x of w) {
+      expect(x.prevRequest).toBeUndefined();
+      expect(x.prevMessage).toBeNull();
+    }
+    for (const q of fake.requests) expect(JSON.stringify(q.body.diagnostics ?? {})).not.toMatch(/"m_\d/);
     expect(new Set(w.map((x) => x.account)).size).toBe(1); // 账号不变
     for (const q of fake.requests.slice(1)) {
       const raw = JSON.stringify(q);
@@ -154,6 +162,11 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(afterTool.session).toBe(result.session_id);
     expect(afterTool.device).toBe(first.device);
     expect(afterTool.promptHeader).toBe(first.promptHeader);
+    // 重试本身不指向被拦截的请求；重试成功后的工具轮指向重试那一次，不是被拦截的那次
+    expect(retry.prevRequest).toBeUndefined();
+    expect(retry.prevMessage).toBeNull();
+    expect(afterTool.prevRequest).toBe("req_2");
+    expect(afterTool.prevMessage).toBe("m_2");
   });
 
   test("拒答重试时流式请求 404、改用非流式重发：沿用同一份临时身份", async () => {
