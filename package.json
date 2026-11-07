@@ -6,7 +6,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "bin": {
-    "claude": "bin/claude"
+    "claw-code": "bin/claude"
   },
   "scripts": {
     "start": "bun src/main.js",

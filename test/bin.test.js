@@ -103,14 +103,15 @@ describe("选择 Bun", () => {
 });
 
 describe("真实项目", () => {
-  test("bin/claude 可执行，且就是 package.json 中 bin.claude 指向的文件", () => {
-    const declared = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8")).bin.claude;
-    expect(path.resolve(ROOT, declared)).toBe(LAUNCHER);
+  test("bin/claude 可执行，npm 只注册 claw-code 命令", () => {
+    const declared = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8")).bin;
+    expect(declared).toEqual({ "claw-code": "bin/claude" });
+    expect(path.resolve(ROOT, declared["claw-code"])).toBe(LAUNCHER);
     expect(fs.statSync(LAUNCHER).mode & 0o111).not.toBe(0);
   });
 
   test("经符号链接运行 --version", () => {
-    const r = run(link(LAUNCHER, path.join(tmp, "claude")), ["--version"]);
+    const r = run(link(LAUNCHER, path.join(tmp, "claw-code")), ["--version"]);
     expect(r.out.trim()).toBe(`${VERSION} (Claude Code)`);
     expect(r.code).toBe(0);
   });
