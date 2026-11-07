@@ -4,6 +4,7 @@ import { spawnSync } from "child_process";
 import fs from "fs";
 import os from "os";
 import path from "path";
+import { newUploadIdentity } from "../../src/runtime/upload-identity.js";
 
 const ROOT = path.resolve(import.meta.dir, "../..");
 const RUNTIME = path.join(ROOT, "src/runtime");
@@ -446,6 +447,30 @@ describe("safeguards-redact", () => {
     expect(redact("x")).toBe("x");
     expect(() => redact({})).not.toThrow();
     expect(() => redact({ git_state: null, rules: null, auto_mode: null, trusted_directories: null, prior_turn_context: [null, {}] })).not.toThrow();
+  });
+});
+
+describe("upload-identity", () => {
+  test("会话 ID、提示 ID 是 UUID，设备 ID 是 64 位十六进制", () => {
+    const id = newUploadIdentity();
+    expect(id.sessionId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    expect(id.promptId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    expect(id.deviceId).toMatch(/^[0-9a-f]{64}$/);
+    expect(Object.keys(id).sort()).toEqual(["deviceId", "promptId", "sessionId"]);
+  });
+
+  test("每次调用都不同；设备 ID 不是两个 UUID 拼接（拼接的话第 13 位恒为 4）", () => {
+    const ids = Array.from({ length: 200 }, () => newUploadIdentity());
+    for (const key of ["sessionId", "deviceId", "promptId"]) expect(new Set(ids.map((i) => i[key])).size).toBe(200);
+    expect(new Set(ids.map((i) => i.deviceId[12])).size).toBeGreaterThan(1);
+  });
+
+  test("UUID 取自传入的函数，会话 ID 在前、提示 ID 在后", () => {
+    let n = 0;
+    const id = newUploadIdentity(() => `u${n++}`);
+    expect(id.sessionId).toBe("u0");
+    expect(id.promptId).toBe("u1");
+    expect(n).toBe(2);
   });
 });
 

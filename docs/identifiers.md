@@ -14,6 +14,8 @@
 
 `metadata.user_id` 是一个 JSON 字符串，内部还有一层对象。子会话可以增加 `parent_session_id`，特定远程路由可以增加 `tk`；`CLAUDE_CODE_EXTRA_METADATA` 可以附加额外字段。组装见 [system-prompt-blocks.js](../src/darwin/core/system-prompt-blocks.js) 的 `function t2e`。默认请求头 `X-Claude-Code-Session-Id` 也携带当前会话 ID，见 [anthropic-client.js](../src/darwin/api/anthropic-client.js) 的 `function ml`。
 
+服务端拒答后的每次同模型重试生成一份临时上传身份：会话 UUID、设备 ID（32 个随机字节的十六进制，与 `userID` 同形）和提示 UUID。会话 ID 用于 `metadata.user_id.session_id` 与 `X-Claude-Code-Session-Id`，设备 ID 用于 `metadata.user_id.device_id`，提示 ID 用于 `x-claude-code-prompt-id` 与系统提示词首段账单头里的 `cc_prompt_id`；原本会续接的 `thread.continue` 改为 `thread.create`。该身份只属于这一轮请求，不替换本地会话 ID 或磁盘上的 `userID`，也不改变持久化记录、`--continue`、账号 ID、鉴权、父子会话、Agent、工具调用或本地消息 UUID。重试成功后进入的工具轮和下一条消息恢复使用本地标识。`x-client-request-id` 与查询链 ID 本来就是每个请求各自生成，不在其中。实现和端到端验证见 `docs/runtime.md` 的「拒答后的重试与换模型」。
+
 | 标识 | 生成与保存 | 用途、发送位置及 dev 行为 |
 |---|---|---|
 | `userID` → `device_id` / `deviceId` | 首次需要时生成 32 个随机字节，编码为 64 位十六进制，保存在全局配置 | 模型请求 `metadata.user_id.device_id`；原版也用于遥测。dev 仍发送模型请求中的值。它是安装配置中的随机标识，生成过程不读取 MAC、硬盘序列号或硬件 UUID |

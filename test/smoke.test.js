@@ -30,6 +30,14 @@ describe("开发模式 bun src/main.js", () => {
     expect(r.output.trim()).toBe("PONG");
     expect(r.code).toBe(0);
   });
+
+  // CLAUDE_CODE_EXTRA_METADATA 不是 JSON 对象时，原版只记一条错误日志，请求照常发出
+  test("CLAUDE_CODE_EXTRA_METADATA 不是 JSON 对象时请求照常完成", async () => {
+    const env = cleanEnv(home.home, api.url, { CLAUDE_CODE_EXTRA_METADATA: "not json" });
+    const r = await runCli(DEV, ["-p", "say hi"], { cwd: home.work, env });
+    expect(r.output.trim()).toBe("PONG");
+    expect(r.code).toBe(0);
+  });
 });
 
 describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
@@ -66,14 +74,14 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
   });
 
   // 拒答后同模型最多重试 10 轮并显示轮数；用尽后正常结束，不换模型
-  const retryRun = async (script) => {
+  const retryRun = async (script, extraEnv = {}) => {
     const h = makeHome();
     const fake = startScriptedApi(script);
     try {
-      const r = await runCli([DIST], ["-p", "BLOCKME run something", "--allowedTools", "Bash(echo:*)", "--output-format", "stream-json", "--verbose"], { cwd: h.work, env: cleanEnv(h.home, fake.url) });
+      const r = await runCli([DIST], ["-p", "BLOCKME run something", "--allowedTools", "Bash(echo:*)", "--output-format", "stream-json", "--verbose"], { cwd: h.work, env: cleanEnv(h.home, fake.url, extraEnv) });
       const events = r.output.split("\n").flatMap((l) => { try { return [JSON.parse(l)]; } catch { return []; } });
       const notices = events.filter((e) => e.type === "system" && e.subtype === "informational").map((e) => e.content);
-      return { r, fake: { requests: fake.requests }, notices, result: events.find((e) => e.type === "result") };
+      return { r, fake: { requests: fake.requests, nonStreaming: fake.nonStreaming }, notices, result: events.find((e) => e.type === "result") };
     } finally {
       fake.stop();
       h.remove();
@@ -85,8 +93,77 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(r.code).toBe(0);
     expect(fake.requests.length).toBe(4);
     expect(notices.map((n) => n.match(/\((\d+\/10)\)/)?.[1])).toEqual(["1/10", "2/10", "3/10"]);
-    expect(new Set(fake.requests.map((q) => q.model)).size).toBe(1);
+    expect(new Set(fake.requests.map((q) => q.body.model)).size).toBe(1);
     expect(result.result).toBe("FINAL_ANSWER");
+  });
+
+  // 每次拒答重试用一份临时上传身份。假 API 要像一方端点（否则请求里没有 prompt id 等头、也不启用消息线程），
+  // 下面的断言才不会因为字段不存在而空过
+  const FIRST_PARTY = { _CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL: "1", CLAUDE_CODE_GATEWAY_HINT_HEADERS: "1", CLAUDE_CODE_TETHER_LIVE: "1" };
+  const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  const wire = (q) => {
+    const meta = JSON.parse(q.body.metadata.user_id);
+    return {
+      session: meta.session_id, device: meta.device_id, account: meta.account_uuid,
+      sessionHeader: q.headers["x-claude-code-session-id"],
+      promptHeader: q.headers["x-claude-code-prompt-id"],
+      billingPrompt: JSON.stringify(q.body.system).match(/cc_prompt_id=([0-9a-f-]{36})/)?.[1], // 系统提示词首段的账单头
+      clientRequest: q.headers["x-client-request-id"],
+      thread: q.body.thread?.type,
+    };
+  };
+
+  test("拒答重试使用临时身份：会话、设备、提示 ID 每轮都换，线程新建，本地标识不外泄", async () => {
+    const { r, fake, result } = await retryRun(3, FIRST_PARTY);
+    expect(r.code).toBe(0);
+    expect(fake.requests[0].headers["anthropic-beta"]).toContain("message-threads");
+    const w = fake.requests.map(wire);
+    expect(w.length).toBe(4);
+    const [first, ...retries] = w;
+    expect(first.session).toBe(result.session_id); // 第一次请求用本地会话 ID
+    for (const key of ["session", "device", "promptHeader"]) {
+      const values = retries.map((x) => x[key]);
+      expect(new Set(values).size).toBe(3);
+      expect(values).not.toContain(first[key]);
+    }
+    for (const x of w) {
+      expect(x.session).toMatch(UUID_V4);
+      expect(x.sessionHeader).toBe(x.session); // 请求头与 metadata 一致
+      expect(x.device).toMatch(/^[0-9a-f]{64}$/);
+      expect(x.promptHeader).toMatch(UUID_V4);
+      expect(x.billingPrompt).toBe(x.promptHeader); // 账单头里的 cc_prompt_id 也跟着换
+      expect(x.thread).toBe("create"); // 不续接旧线程
+    }
+    expect(new Set(w.map((x) => x.clientRequest)).size).toBe(4); // x-client-request-id 本来就是每个请求各一个
+    expect(new Set(w.map((x) => x.account)).size).toBe(1); // 账号不变
+    for (const q of fake.requests.slice(1)) {
+      const raw = JSON.stringify(q);
+      expect(raw).not.toContain(first.session);
+      expect(raw).not.toContain(first.device);
+    }
+  });
+
+  test("拒答重试成功后，后面的工具轮恢复本地标识", async () => {
+    const { r, fake, result } = await retryRun(["refuse", "tool"], FIRST_PARTY);
+    expect(r.code).toBe(0);
+    expect(fake.requests.length).toBe(3);
+    const [first, retry, afterTool] = fake.requests.map(wire);
+    expect(retry.session).not.toBe(first.session);
+    expect(retry.device).not.toBe(first.device);
+    expect(afterTool.session).toBe(first.session);
+    expect(afterTool.session).toBe(result.session_id);
+    expect(afterTool.device).toBe(first.device);
+    expect(afterTool.promptHeader).toBe(first.promptHeader);
+  });
+
+  test("拒答重试时流式请求 404、改用非流式重发：沿用同一份临时身份", async () => {
+    const { r, fake } = await retryRun(["refuse", "notfound"], FIRST_PARTY);
+    expect(r.code).toBe(0);
+    expect(fake.nonStreaming.length).toBe(1);
+    const [first, retry] = fake.requests.map(wire);
+    const fallback = wire(fake.nonStreaming[0]);
+    expect(retry.session).not.toBe(first.session);
+    for (const key of ["session", "sessionHeader", "device", "promptHeader", "billingPrompt"]) expect(fallback[key]).toBe(retry[key]);
   });
 
   test("第 10 次重试成功就算成功", async () => {
@@ -99,7 +176,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
   test("重试 10 轮后仍被拦截：正常中断结束，不换模型、不再请求", async () => {
     const { fake, notices, result } = await retryRun(99);
     expect(fake.requests.length).toBe(11); // 1 次原请求 + 10 次重试
-    expect(new Set(fake.requests.map((q) => q.model)).size).toBe(1); // 一直是原模型
+    expect(new Set(fake.requests.map((q) => q.body.model)).size).toBe(1); // 一直是原模型
     expect(notices.length).toBe(10);
     expect(result.is_error).toBe(true);
     expect(result.terminal_reason).toBe("api_error");
@@ -137,9 +214,9 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       const env = cleanEnv(h.home, fake.url, { CLAUDE_CODE_SKIP_ONBOARDING: "1" });
       const { bytes } = await runInPty([DIST], { cwd: h.work, env, cols, rows, keys: [[0.5, "BLOCKME run something"], [1.0, "\r"]], idle: 5000, timeout: 90_000 });
       const text = (await renderScreen(bytes, cols, rows)).map((l) => l.text).join("\n");
-      const main = fake.requests.filter((q) => q.tools?.length > 0); // 交互界面还会另发一个不带工具的辅助请求（标题）
+      const main = fake.requests.filter((q) => q.body.tools?.length > 0); // 交互界面还会另发一个不带工具的辅助请求（标题）
       expect(main.length).toBe(11);
-      expect(new Set(fake.requests.map((q) => q.model)).size).toBe(1);
+      expect(new Set(fake.requests.map((q) => q.body.model)).size).toBe(1);
       expect(text).toContain("(10/10)");
       expect(text).not.toMatch(/Model switch|Switch to|Stay on|keep going whenever this happens/);
       expect(text).toContain("❯"); // 输入框还在

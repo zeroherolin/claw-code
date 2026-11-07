@@ -64998,7 +64998,7 @@ function U_r(e) {
   }
 }
 async function* j_r(e, n, r, s, h, y) {
-  let b = cSn(), w = e.clock ?? Jl, H = 0, q = cRe(() => bF({ maxRetries: 0, model: e.model, fetchOverride: e.fetchOverride, source: e.source, requestClass: e.requestClass, agentContext: e.agentContext, promptId: e.promptId, ccsSender: e.ccsSender, permissionContext: e.permissionContext, toolNames: e.toolNames, credentials: e.credentials, storageV5: e.storageV5, signal: n.signal, clock: e.clock }), async (Q, Se, be) => {
+  let b = cSn(), w = e.clock ?? Jl, H = 0, q = cRe(() => bF({ maxRetries: 0, model: e.model, fetchOverride: e.fetchOverride, source: e.source, requestClass: e.requestClass, agentContext: e.agentContext, promptId: e.promptId, ccsSender: e.ccsSender, permissionContext: e.permissionContext, toolNames: e.toolNames, credentials: e.credentials, storageV5: e.storageV5, signal: n.signal, clock: e.clock, uploadIdentity: e.uploadIdentity }), async (Q, Se, be) => {
     let we = w.now(), ve = Lm(), Ce = r(be);
     s(Se, we, Ce.max_tokens);
     let xe = bkr(Ce, ekn);
@@ -65455,7 +65455,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
     a("tengu_off_switch_query", { tier: S("per_model_block") }), yield Xs({ content: Ce, error: "rate_limit" });
     return;
   }
-  let xe = W_r(e), Me = gWe(e, Q.agentContext), We = C5s(Q.agentContext, Me);
+  let xe = W_r(e), Me = Q.uploadIdentity?.promptId ?? gWe(e, Q.agentContext), We = C5s(Q.agentContext, Me);
   if (We && Qs()) T5s(We);
   let Ge = z_r(e), Je2 = q_r(e), rt = PHr(e), lt = KJe(e), pt = Te() === "bedrock" && Q.model.includes("application-inference-profile") ? await fLe(Fn(Q.model)) ?? Q.model : Q.model;
   if (wRe(Q.model, Q.querySource), MEe()) await ehn(Q.model, Q.credentials, Q.storageV5);
@@ -65992,6 +65992,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
       if (oRe(Qn, Q.agentId)) {
         let Ma = q_n(e, Ys);
         if (eh = N_n({ engine: xi, previousMessageId: ir, anchorRewritten: Ma !== null && W_n(Ma, ir), messages: Ys, agentId: Q.agentId, model: Q.model, modelHeldStateless: TA, relayHeldStateless: L_, classifierHeldStateless: w6, creditRetryStateless: Pie, dropHeldStateless: eLe, toolResultClearingHeldStateless: BE !== void 0, clock: Se }), Ma !== null) K_n(Ma, { sourceCategory: Qn, messageCount: Ys.length, anchorMessageId: ir });
+        if (Q.uploadIdentity !== void 0) eh.forceCreate("refusal_retry_identity");
       }
     }
   }
@@ -66140,7 +66141,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
     Rf = j9t(Rf, dt);
     let Jh = eh !== null ? eh.shapeInheritedFields(uS, { system: VR, tools: Rf }) : { system: VR, tools: Rf };
     pw = VR, v$ = Rf, $W = Jh.system !== VR, BW = uS !== null;
-    let Yc = { model: rT(Q.model), messages: uS !== null && uS.sliceFrom > 0 ? hp.slice(Di[uS.sliceFrom]) : hp, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: VS, ...M$ && lNe(nC), metadata: t2e({ agentContext: Q.agentContext }), max_tokens: JT, thinking: gp, ...Zie !== void 0 && { temperature: Zie }, ...qE && u$ && Jr.includes(Wue) && { context_management: qE }, ...jie && Hf !== void 0 && { safeguards: [{ type: z2e, classifier_context: Hf }] }, ...!lS && QS ? QS : {}, ...!lS && ZT ? ZT : {}, ...Tg, ...sl, ...{}, ...Object.keys(hd).length > 0 && { output_config: hd }, ...rD !== void 0 && { speed: rD }, ...uS !== null && { thread: uS.thread }, ...AW() && (kt || Q.forkPointUuid !== void 0) && u$ && !lS && { diagnostics: { previous_message_id: lt ?? null } } };
+    let Yc = { model: rT(Q.model), messages: uS !== null && uS.sliceFrom > 0 ? hp.slice(Di[uS.sliceFrom]) : hp, system: Jh.system, ...Jh.tools !== void 0 && { tools: Jh.tools }, tool_choice: VS, ...M$ && lNe(nC), metadata: t2e({ agentContext: Q.agentContext, uploadIdentity: Q.uploadIdentity }), max_tokens: JT, thinking: gp, ...Zie !== void 0 && { temperature: Zie }, ...qE && u$ && Jr.includes(Wue) && { context_management: qE }, ...jie && Hf !== void 0 && { safeguards: [{ type: z2e, classifier_context: Hf }] }, ...!lS && QS ? QS : {}, ...!lS && ZT ? ZT : {}, ...Tg, ...sl, ...{}, ...Object.keys(hd).length > 0 && { output_config: hd }, ...rD !== void 0 && { speed: rD }, ...uS !== null && { thread: uS.thread }, ...AW() && (kt || Q.forkPointUuid !== void 0) && u$ && !lS && { diagnostics: { previous_message_id: lt ?? null } } };
     LW = BE !== void 0 && Yc.context_management === qE, zI = rP && Yc.messages.some((Aa) => Aa.clear_at !== void 0);
     let Xc = D_r(Yc.thinking, Q.querySource, !hyt);
     if (Xc !== Yc.thinking) hyt = true, Yc.thinking = Xc;
@@ -66709,7 +66710,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
     yield* V_t.splice(0);
   }
   async function* X_t(Qn, ir) {
-    let { message: Jr, requestId: xi, headers: Ma, creditCode: Rl } = yield* j_r({ model: Q.model, fetchOverride: Q.fetchOverride, source: Q.querySource, requestClass: Q.requestClass, agentContext: Q.agentContext, promptId: Me, ccsSender: We, permissionContext: xW, toolNames: v6, credentials: Q.credentials, storageV5: Q.storageV5, clock: Se, queryTracking: Q.queryTracking, llmSpan: By, contextCompactedKindForWire: eFe, compactionRequestKindForWire: Z_t, prevToolDurationsForWire: ekt }, { model: Q.model, fallbackModel: Q.fallbackModel, accessFallbackModel: K, toolFreeHelper: Q.toolFreeHelper, ...Xo() && { fastMode: y$ }, modelIsRefusalFallbackTarget: Q.modelIsRefusalFallbackTarget, signal: h, initialConsecutive529Errors: nS.counts().overloaded, querySource: Q.querySource, maxRetries: nS.retriesLeft(), modelCallRetries: nS, clock: Se, random: Q.random, isResumePrefillRequest: _o, failedStreamOutlastedTimeout: ir, onRetryStatus: Q.onRetryStatus, subscribeRetryWake: Q.subscribeRetryWake, onQuotaWindowWait: gw, isUsageLimitLifted: ip, lowPriorityWait: tS, stampDispatchHeader: xyt, onApiError: async (dc) => {
+    let { message: Jr, requestId: xi, headers: Ma, creditCode: Rl } = yield* j_r({ model: Q.model, fetchOverride: Q.fetchOverride, source: Q.querySource, requestClass: Q.requestClass, agentContext: Q.agentContext, promptId: Me, ccsSender: We, permissionContext: xW, toolNames: v6, credentials: Q.credentials, storageV5: Q.storageV5, clock: Se, queryTracking: Q.queryTracking, uploadIdentity: Q.uploadIdentity, llmSpan: By, contextCompactedKindForWire: eFe, compactionRequestKindForWire: Z_t, prevToolDurationsForWire: ekt }, { model: Q.model, fallbackModel: Q.fallbackModel, accessFallbackModel: K, toolFreeHelper: Q.toolFreeHelper, ...Xo() && { fastMode: y$ }, modelIsRefusalFallbackTarget: Q.modelIsRefusalFallbackTarget, signal: h, initialConsecutive529Errors: nS.counts().overloaded, querySource: Q.querySource, maxRetries: nS.retriesLeft(), modelCallRetries: nS, clock: Se, random: Q.random, isResumePrefillRequest: _o, failedStreamOutlastedTimeout: ir, onRetryStatus: Q.onRetryStatus, subscribeRetryWake: Q.subscribeRetryWake, onQuotaWindowWait: gw, isUsageLimitLifted: ip, lowPriorityWait: tS, stampDispatchHeader: xyt, onApiError: async (dc) => {
       let Qh = T$(dc);
       if (Qh !== void 0) return Qh;
       let bw = await Lyt(dc);
@@ -66815,7 +66816,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
         }, VS);
       };
       if (Eh = void 0, og("query_client_creation_start"), ve) tx("request_build"), ex("client_creation");
-      let Qn = cRe(() => bF({ maxRetries: 0, model: Q.model, fetchOverride: Q.fetchOverride, source: Q.querySource, requestClass: Q.requestClass, agentContext: Q.agentContext, promptId: Me, ccsSender: We, permissionContext: xW, toolNames: v6, credentials: Q.credentials, storageV5: Q.storageV5, signal: h, clock: Se, noResponseRetryLedger: LLe }), async (Sd, Gl, Tg) => {
+      let Qn = cRe(() => bF({ maxRetries: 0, model: Q.model, fetchOverride: Q.fetchOverride, source: Q.querySource, requestClass: Q.requestClass, agentContext: Q.agentContext, promptId: Me, ccsSender: We, permissionContext: xW, toolNames: v6, credentials: Q.credentials, storageV5: Q.storageV5, signal: h, clock: Se, noResponseRetryLedger: LLe, uploadIdentity: Q.uploadIdentity }), async (Sd, Gl, Tg) => {
         if (KI === void 0) Xy("attempt_errored", yl ?? null, null);
         if (Hy = Gl, XI = Tg.fastMode ?? false, U_ = Se.monotonicNow(), Eh = void 0, HW.push(U_), og("query_client_creation_end"), ve) tx("client_creation"), ex("request_build");
         let fh = ELe(Tg);

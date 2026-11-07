@@ -172,14 +172,14 @@ function HIo(e, n) {
   if (w) y.push({ text: w, cacheScope: "org" });
   return y;
 }
-function t2e({ agentContext: e, servedSessionMode: n } = {}) {
+function t2e({ agentContext: e, servedSessionMode: n, uploadIdentity } = {}) {
   let r = {}, s = process.env.CLAUDE_CODE_EXTRA_METADATA;
   if (s) {
     let v = ot(s, false);
     if (v && typeof v === "object" && !Array.isArray(v)) r = xe(v);
     else t(`CLAUDE_CODE_EXTRA_METADATA env var must be a JSON object, but was given ${s}`, { level: "error" });
   }
-  let d = {}, m, p = Gx(), h = Ne(i.CLAUDE_CODE_REMOTE) && $n() ? YLe(e) : void 0, y = { ...m && { ti: m }, device_id: EH(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || sT()?.accountUuid || gn()?.accountUuid || "", session_id: V(), ...p && { parent_session_id: p }, ...h && { tk: h } }, w = { ...d, ...r, ...y };
+  let d = {}, m, p = Gx(), h = Ne(i.CLAUDE_CODE_REMOTE) && $n() ? YLe(e) : void 0, y = { ...m && { ti: m }, device_id: uploadIdentity?.deviceId ?? EH(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || sT()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentity?.sessionId ?? V(), ...p && { parent_session_id: p }, ...h && { tk: h } }, w = { ...d, ...r, ...y };
   if ((Object.keys(r).length > 0 || Object.keys(d).length > 0) && _(w).length > ie) {
     if (w = { ...d, ...y }, _(w).length > ie) w = y;
   }

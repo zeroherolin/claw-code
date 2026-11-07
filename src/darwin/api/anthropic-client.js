@@ -7311,8 +7311,8 @@ async function pl(e, n) {
 function T5s(e) {
   pl(new Headers(), e);
 }
-function ml() {
-  return { "x-app": Ut() ? "cli-bg" : "cli", "User-Agent": NF(), [jzt]: V() };
+function ml(sessionId) {
+  return { "x-app": Ut() ? "cli-bg" : "cli", "User-Agent": NF(), [jzt]: sessionId ?? V() };
 }
 function dce() {
   let e = new Set(u5o());
@@ -7325,7 +7325,7 @@ function KYn(e, n = []) {
   return e.map((s) => "name" in s ? s.name : `mcp__${s.type}`);
 }
 async function bF(e) {
-  let { apiKey: n, maxRetries: r, model: s, fetchOverride: h, source: b, querySource: y = b, requestClass: w, agentContext: E, promptId: P, ccsSender: H, permissionContext: O, toolNames: M = [], classifierJudgesServedCall: A, credentials: L, storageV5: K, signal: G, clock: Q = Jl, noResponseRetryLedger: z } = e, ee = process.env.CLAUDE_CODE_CONTAINER_ID, X = process.env.CLAUDE_CODE_REMOTE_SESSION_ID, j = process.env.CLAUDE_AGENT_SDK_CLIENT_APP, re = _X() ? i.CLAUDE_CODE_SESSION_ORIGIN : void 0, te = Up(E) ? void 0 : E, ie = IYn(), se = ie ? Lni(b, E, w) : void 0, ae = ie ? Nni(b, E) : void 0, ne = { userTurn: b !== "side_query" && Hni(y) && jG() === void 0 && k_() === void 0 && (E.agentType === "main" || E.isBackgroundAgent === false) }, Be = vjt(), bt = await Tp({ querySource: y, permissionContext: O, toolNames: M, classifierJudgesServedCall: A }), je = { ...ml(), ...Be, ...o1(), ...ee && { "x-claude-remote-container-id": ee }, ...X && { "x-claude-remote-session-id": X }, ...re && { [aKr]: re }, ...j && { "x-client-app": j }, ...te?.agentId && { "x-claude-code-agent-id": z3r(te.agentId) }, ...te?.parentAgentId && { "x-claude-code-parent-agent-id": z3r(te.parentAgentId) }, ...se && { [Bzt]: se }, ...ae && { [sKr]: z3r(ae) }, ...ie && P !== void 0 && Vt(P) !== null && { [iKr]: P } };
+  let { apiKey: n, maxRetries: r, model: s, fetchOverride: h, source: b, querySource: y = b, requestClass: w, agentContext: E, promptId: P, ccsSender: H, permissionContext: O, toolNames: M = [], classifierJudgesServedCall: A, credentials: L, storageV5: K, signal: G, clock: Q = Jl, noResponseRetryLedger: z, uploadIdentity } = e, ee = process.env.CLAUDE_CODE_CONTAINER_ID, X = process.env.CLAUDE_CODE_REMOTE_SESSION_ID, j = process.env.CLAUDE_AGENT_SDK_CLIENT_APP, re = _X() ? i.CLAUDE_CODE_SESSION_ORIGIN : void 0, te = Up(E) ? void 0 : E, ie = IYn(), se = ie ? Lni(b, E, w) : void 0, ae = ie ? Nni(b, E) : void 0, ne = { userTurn: b !== "side_query" && Hni(y) && jG() === void 0 && k_() === void 0 && (E.agentType === "main" || E.isBackgroundAgent === false) }, Be = vjt(), bt = await Tp({ querySource: y, permissionContext: O, toolNames: M, classifierJudgesServedCall: A }), je = { ...ml(uploadIdentity?.sessionId), ...Be, ...o1(), ...ee && { "x-claude-remote-container-id": ee }, ...X && { "x-claude-remote-session-id": X }, ...re && { [aKr]: re }, ...j && { "x-client-app": j }, ...te?.agentId && { "x-claude-code-agent-id": z3r(te.agentId) }, ...te?.parentAgentId && { "x-claude-code-parent-agent-id": z3r(te.parentAgentId) }, ...se && { [Bzt]: se }, ...ae && { [sKr]: z3r(ae) }, ...ie && P !== void 0 && Vt(P) !== null && { [iKr]: P } };
   if (t(`[API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: ${!!process.env.ANTHROPIC_CUSTOM_HEADERS}, has Authorization header: ${!!Be.Authorization}`, { level: "verbose" }), i.CLAUDE_CODE_ADDITIONAL_PROTECTION) je["x-anthropic-additional-protection"] = "true";
   if (Te() === "gateway" && !Wr() && !Dit()) {
     if (fd()) throw z_n("Cloud gateway");

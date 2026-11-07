@@ -18,7 +18,8 @@ test("两个系统的 dev 补丁可完整重放，缺失版本必须失败", () 
       fs.copyFileSync(path.join(ROOT, file), path.join(dir, file));
     }
     applySourcePatch(dir, patch, { reverse: true });
-    expect(fs.readFileSync(path.join(dir, "src/darwin/core/conversation-engine.js"), "utf8")).not.toContain("memoryReadGuard");
+    const engine = fs.readFileSync(path.join(dir, "src/darwin/core/conversation-engine.js"), "utf8");
+    for (const token of ["memoryReadGuard", "uploadIdentity"]) expect(engine).not.toContain(token); // 逆向后补丁引入的内容都应消失
     applySourcePatch(dir, patch);
     for (const file of files) expect(fs.readFileSync(path.join(dir, file)).equals(fs.readFileSync(path.join(ROOT, file)))).toBe(true);
     expect(() => sourcePatchForVersion("0.0.0")).toThrow("缺少 dev 源码补丁");

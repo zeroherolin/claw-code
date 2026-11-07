@@ -183,7 +183,7 @@
 | `shared/` | 668 / 667 | 被多个功能区共用、无法归入单一区域的模块（含大量小型工具函数） |
 | `vendor/` | 73 / 73 | 第三方库（含 Claude Code 自身代码的模块不归入此处）：react、ink、yoga、zod、commander、chalk、marked、highlight、ajv、jose、semver、parse5、acorn、grpc、opentelemetry、aws-sdk、google-auth、mcp-sdk、anthropic-sdk |
 
-`src/runtime/` 为本项目手写：assets、bun-ant、cell-segmenter、set-dumpable、embedded-tools、platforms；`dev` 分支另有 pinned-env、pinned-env-worker（固定环境变量）、memory-guard（读取记忆文件需要确认）、safeguards-redact（safeguards 脱敏），都在 [runtime.md](runtime.md#固定的环境变量) 中说明。
+`src/runtime/` 为本项目手写：assets、bun-ant、cell-segmenter、set-dumpable、embedded-tools、platforms；`dev` 分支另有 pinned-env、pinned-env-worker（固定环境变量）、memory-guard（读取记忆文件需要确认）、safeguards-redact（safeguards 脱敏）、upload-identity（拒答重试的临时上传身份），都在 [runtime.md](runtime.md#固定的环境变量) 中说明。
 
 模块数随重新生成可能略有变化。
 
