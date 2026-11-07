@@ -13,10 +13,11 @@ npm run extract                       # 默认读取 extract/upstream/
 npm run extract -- --upstream <目录>
 ```
 
-整个流程只依赖 Bun 和项目的 devDependencies（esbuild、acorn），约 1 分钟完成。
+整个流程依赖 Bun、Git 和项目的 devDependencies（esbuild、acorn），约 1 分钟完成。Git 只用于在临时目录校验和应用版本补丁，不修改仓库索引。
 
 - 输出是确定的：对同一份输入运行两次，结果逐字节相同。
 - 读取与分析全部成功后才写入项目目录；输入缺失或分析出错时，项目保持原样。
+- `dev` 的生成源码改动保存在 `patches/<版本>.patch`。源码先生成到项目外的临时目录，补丁全部校验并应用成功后才替换项目中的源码和资源；补丁缺失、不匹配时直接失败，不生成丢失隐私策略的版本。
 
 ## 目录
 
@@ -31,6 +32,9 @@ extract/
 ├── areas.js        功能区规则：模块放进 src/<系统>/ 的哪个目录
 ├── naming.js       自动命名规则
 ├── assemble.js     组装：确定各模块路径、改写模块与资源引用、写出 src/<系统>/
+├── patches.js      在临时目录完整校验并应用 dev 的版本补丁
+├── patches/
+│   └── 2.1.310.patch  两个系统生成源码上的 dev 改动
 ├── reference.js    写 reference/<系统>/*.json 与 docs/reference/<系统>/*.md
 ├── license.js      写 LICENSE：原版声明 + 本项目许可 + 第三方许可注释
 ├── layout/
@@ -65,7 +69,7 @@ rm ./*.tgz
 | 3. 格式化与架构还原 | `lib.js` `unfold.js` | 用 esbuild 格式化各平台的 JS 模块；同一系统有多个架构时，把写死的架构名改回 `process.arch` |
 | 4. 分析 | `analyze.js` | 对每个系统做 AST 分析，结果供命名与参考资料使用 |
 | 5. 对齐与命名 | `align.js` `assemble.js` `areas.js` `naming.js` | 找出两个系统中对应的模块，为每组确定目录和文件名 |
-| 6. 写出 | `assemble.js` | 改写模块与资源引用，写出 `src/<系统>/` 与 `assets/`（含 `INDEX.json`） |
+| 6. 写出 | `assemble.js` `patches.js` | 改写引用，临时生成源码，校验并应用 dev 版本补丁，然后替换 `src/<系统>/` 与 `assets/`（含 `INDEX.json`） |
 | 7. 参考资料 | `reference.js` | 把分析结果中的位置换算到 `src/<系统>/` 下的新路径和行号，写 `reference/<系统>/` 与 `docs/reference/<系统>/`；`reference/module-map.json` 为模块路径与各系统原 chunk id 的对照 |
 | 8. LICENSE | `license.js` | 汇总原版 LICENSE.md、模块头部的条款声明、第三方库许可注释 |
 
@@ -76,7 +80,7 @@ rm ./*.tgz
 - `"/$bunfs/root/<chunk>.js"` 改成相对路径；
 - 资源引用改成 `__asset_text()`、`__asset_path()`、`__asset_native()`、`__asset_src()`（见 `src/runtime/assets.js`）。
 
-架构还原是唯一改动表达式的步骤，范围见下节。
+上述组装不包含 dev 的行为改动；这些改动统一由版本补丁应用，范围见 [runtime.md](../docs/runtime.md#固定的环境变量)。架构还原的范围见下节。
 
 ## 架构还原
 
@@ -148,7 +152,7 @@ rm ./*.tgz
 
 内部 chunk id 和资源名中的 hash 每个版本都会变。新版本需要一份新的 `layout/<版本>.json`：
 
-1. 按上文获取新版本全部平台的官方发布内容，然后复制上一版的 layout 文件并改名。
+1. 按上文获取新版本全部平台的官方发布内容，然后复制上一版的 layout 文件并改名。同时迁移 `patches/<版本>.patch`，审查两个系统中的每一处行为改动；没有相应版本的补丁时，提取会在写入前停止。
 2. 运行 `npm run extract`。没有归档规则的资源会被逐个列出，并注明各系统中引用它的 chunk。按提示更新 `assets` 中的规则：锚点资源与 `named` 的键是带 hash 的资源名，需要换成新版本的名字。
 3. 人工命名按 `match` 自动定位。某条在某个系统中命中 0 个或多个模块时，提取会列出命中情况并停止，项目保持原样。处理方式：
    - 按 `why` 的说明在新版本的源码中重新挑选特征字符串；

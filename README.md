@@ -31,6 +31,7 @@ npm run install-cli   # 构建并安装：在 ~/.local/bin 创建 claw-code 链�
 ```
 
 - `npm run install-cli` 与已安装的 `claude` 共存，共用会话记录、配置文件和登录凭据；为避免抢走 `claude` 的深链接注册、改写共享配置，`claw-code update` 与 `claw-code install` 被关掉了，升级就是更新项目后重新执行 `npm run install-cli`。命令名、安装目录和卸载方式见 [docs/runtime.md](docs/runtime.md#安装与共存)。
+- `npm link` 也只注册 `claw-code` 命令，指向开发模式启动器 `bin/claude`；需要完整运行行为时使用 `npm run install-cli` 安装构建产物。
 - `dist/claude` 是自包含的单文件可执行程序，可以拷到别处，也可以链接到 PATH 中的目录以便随处使用。注意不要把它链接成 `claude`：那会顶替已安装的原版。
 - 为其他平台编译：`npm run build -- --target linux-arm64`。
 - 建议安装 ripgrep、bfs（3.3 或更新）、ugrep，例如 `brew install ripgrep bfs ugrep` 或 `apt install ripgrep bfs ugrep`。原版把这三个工具内嵌在可执行文件里，本项目改为调用系统里的同名工具；bfs 缺失或过旧时改用系统的 find，详见 [docs/runtime.md](docs/runtime.md#内嵌命令行工具)。
@@ -53,7 +54,7 @@ npm run install-cli   # 构建并安装：在 ~/.local/bin 创建 claw-code 链�
 | `test/` | 单元、完整性、冒烟测试；`parity/` 为与原版的对比测试 | 手写 |
 | `extract/` | 维护者工具：从官方发布内容重新生成上表中"生成"的部分以及 `LICENSE` | 手写 |
 
-"生成"的内容由 `npm run extract` 产出，不要手改。
+"生成"的内容由 `npm run extract` 产出。`dev` 对生成源码的改动保存在 `extract/patches/<版本>.patch`，提取时自动校验并应用；维护这些改动时须同步更新补丁。
 
 - **文件命名**：`<语义名>.js`，例如 `tools/agent-tool.js`；名字重复的加上短哈希，如 `ui/aria-hidden.12aa.js`；约 720 个模块找不到可靠的名字，命名为 `chunk-<哈希>.js`。两个系统中对应的模块使用同一路径，只属于某个系统的模块只出现在该系统的目录中。
 - **源码只改了位置和排版**：用 esbuild 等价格式化；模块引用改为相对路径；资源引用改为 `__asset_*()`；Linux 版另把写死的架构名改回 `process.arch`。标识符仍是原版混淆后的名字，各系统不同。
@@ -64,6 +65,7 @@ npm run install-cli   # 构建并安装：在 ~/.local/bin 创建 claw-code 链�
 |---|---|
 | [docs/architecture.md](docs/architecture.md) | 启动流程、一次对话回合的运行路径、各目录职责、两个系统的差异 |
 | [docs/runtime.md](docs/runtime.md) | 与原版运行时的差异：Bun.ant、内嵌工具、资源定位、编译方式、开发模式的限制 |
+| [docs/identifiers.md](docs/identifiers.md) | 会话、设备、账号、请求等标识的来源、存储与发送位置，以及 dev 关闭遥测后的实际行为 |
 | [extract/README.md](extract/README.md) | 重新生成、架构还原、跨系统对齐、命名与归档规则、升级到新版本 |
 | [docs/reference/](docs/reference) | 自动生成，每个系统一份：工具、斜杠命令、Skill、CLI、环境变量、特性开关、提示词（[darwin](docs/reference/darwin/TOOLS.md)、[linux](docs/reference/linux/TOOLS.md)） |
 

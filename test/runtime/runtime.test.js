@@ -236,7 +236,7 @@ process.exit(0);`, { ...TELEMETRY_ON, STARTUP_VAR: "s" });
 describe("memory-guard", () => {
   // 在一次性目录里搭一个记忆目录；host 模拟生成代码里 ba() / ke() 的返回
   async function setup() {
-    const { memoryReadGuard, isMemoryPath, commandMentionsMemory } = await import("../../src/runtime/memory-guard.js");
+    const { memoryReadGuard, isMemoryPath, containsMemoryPath, commandMentionsMemory } = await import("../../src/runtime/memory-guard.js");
     const root = fs.mkdtempSync(path.join(os.tmpdir(), "claw-memguard-"));
     const home = path.join(root, "home"), work = path.join(root, "work");
     const mem = path.join(home, ".claude/projects/-proj/memory");
@@ -249,7 +249,7 @@ describe("memory-guard", () => {
     const host = { autoMemDir: mem, cwd: () => work };
     const hostFns = { autoMemDir: () => mem, cwd: () => work };
     const cleanup = () => { Object.assign(process.env, saved); fs.rmSync(root, { recursive: true, force: true }); };
-    return { memoryReadGuard, isMemoryPath, commandMentionsMemory, host, hostFns, mem, work, home, cleanup };
+    return { memoryReadGuard, isMemoryPath, containsMemoryPath, commandMentionsMemory, host, hostFns, mem, work, home, cleanup };
   }
   const readTool = { name: "Read", getPath: (i) => i.file_path, isReadOnly: () => true };
   const writeTool = { name: "Write", getPath: (i) => i.file_path, isReadOnly: () => false };
@@ -323,6 +323,48 @@ describe("memory-guard", () => {
       for (const command of ["cat MEMORY.md", "git add MEMORY.md", "git commit -m 'update MEMORY.md'", "ls docs/agent-memory-design.md", "grep -rn agent-memory src/", "rg 'projects/foo/memory' .", "echo memory usage is fine", "ls -la", `ls ${path.dirname(c.mem)}`, `cat ${c.home}/.claude/settings.json`, ""]) {
         expect([command, ask(command)]).toEqual([command, undefined]);
       }
+    } finally { c.cleanup(); }
+  });
+
+  test("递归搜索上级目录、默认当前目录、cd 和管道都需要确认；普通搜索范围不受影响", async () => {
+    const c = await setup();
+    try {
+      const parent = path.dirname(c.mem);
+      const projects = path.dirname(parent);
+      fs.symlinkSync(projects, path.join(c.work, "all-projects"));
+      const ask = (command, cwd = c.work) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, { ...c.hostFns, cwd: () => cwd })?.behavior;
+      for (const command of [
+        `grep -R SENTINEL ${projects}`, `grep --recursive -e SENTINEL ${parent}`,
+        `rg SENTINEL ${projects}`, `rg -e SENTINEL ${parent}`,
+        `find ${projects} -type f -exec cat {} +`, `find -L ${projects} -type f -exec cat {} +`, "grep -R SENTINEL all-projects",
+        `cd ${parent} && grep -R SENTINEL .`, `echo ready; rg SENTINEL ${parent}`,
+        `Get-ChildItem -Recurse ${parent} | Select-String SENTINEL`,
+      ]) expect([command, ask(command)]).toEqual([command, "ask"]);
+      for (const command of ["rg SENTINEL", "grep -R SENTINEL", "rg --glob '*.md' SENTINEL", "find . -type f -exec cat {} +"]) {
+        expect([command, ask(command, parent)]).toEqual([command, "ask"]);
+      }
+      fs.mkdirSync(path.join(c.work, ".claude/agent-memory/test"), { recursive: true });
+      fs.mkdirSync(path.join(c.work, "src"));
+      expect(ask("rg SENTINEL .")).toBe("ask");
+      for (const command of ["rg SENTINEL src", "grep -rn SENTINEL src", "ls -la", `ls ${parent}`, "echo rg SENTINEL ."]) {
+        expect([command, ask(command)]).toEqual([command, undefined]);
+      }
+    } finally { c.cleanup(); }
+  });
+
+  test("Grep / Glob 的上级搜索范围需要确认；Read 普通文件和不存在的记忆目录不误拦", async () => {
+    const c = await setup();
+    try {
+      const parent = path.dirname(c.mem);
+      for (const name of ["Grep", "Glob"]) {
+        const tool = { name, isReadOnly: () => true, getPath: (input) => input.path };
+        expect(c.memoryReadGuard(tool, { path: parent }, { behavior: "allow" }, {}, c.hostFns)?.behavior).toBe("ask");
+        expect(c.memoryReadGuard(tool, { path: c.work }, { behavior: "allow" }, {}, c.hostFns)).toBeUndefined();
+        expect(c.memoryReadGuard(tool, { path: "" }, { behavior: "allow" }, {}, { ...c.hostFns, cwd: () => parent })?.behavior).toBe("ask");
+      }
+      expect(c.containsMemoryPath(c.home, c.host)).toBe(true);
+      expect(c.containsMemoryPath(c.work, c.host)).toBe(false);
+      expect(c.memoryReadGuard(readTool, { file_path: path.join(c.work, "a.txt") }, { behavior: "allow" }, {}, c.hostFns)).toBeUndefined();
     } finally { c.cleanup(); }
   });
 

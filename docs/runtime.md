@@ -195,7 +195,7 @@ external: ["/$bunfs/*", "./*", "../*"],
 
 关闭遥测的代价：GrowthBook 不再拉取，特性开关只用离线默认值；从 Claude Desktop 远程发起到本机的 Remote Control 会话可能被拒绝（原版提示 "feature-flag evaluation is off"）。
 
-另外直接修改了两个系统的生成代码，重新执行 `npm run extract` 会覆盖，需要再次应用：
+下面的改动作用于两个系统的生成代码，统一保存在 `extract/patches/2.1.310.patch`。`npm run extract` 会在临时目录自动校验并应用补丁，全部成功后才替换项目源码；升级时须迁移补丁，不匹配或缺失时提取直接失败：
 
 | 位置 | 改动 |
 |---|---|
@@ -264,18 +264,19 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，原
 
 | 调用 | 如何判断 | 可靠程度 |
 |---|---|---|
-| 带路径的只读工具（Read 等） | 取工具的 `getPath`，展开 `~`、相对路径，并解析符号链接（目标不存在时解析最长的已存在前缀）后，看是否在记忆目录里 | 可靠：符号链接、`..`、`~`、大小写不同（大小写不敏感的文件系统上）都已测试 |
-| Bash / PowerShell | 只能看命令文本：把命令切成词（引号内算一个词），对每个词按真实路径判断，`~`、`$HOME`、`${HOME}` 和相对路径展开后落在记忆目录里就询问；`cd <目录>` 之后的相对路径按那个目录解析；`VAR=路径` 取等号右边。只是提到名字的命令（`git add MEMORY.md`、`grep -rn agent-memory src/`、文件名含 `agent-memory`）不会被拦 | 尽力而为 |
+| 带路径的只读工具（Read 等） | 取工具的 `getPath`，展开 `~`、相对路径，并解析符号链接（目标不存在时解析最长的已存在前缀）后，看是否在记忆目录里。Grep、Glob 等搜索工具还检查搜索范围是否包含已存在的记忆目录 | 直接路径、符号链接与已知记忆目录的上级搜索范围都会询问 |
+| Bash / PowerShell | 对每个词按真实路径判断，展开 `~`、`$HOME`、`${HOME}`、相对路径与 `VAR=路径`。另外识别 grep/ugrep 的递归选项、rg/ag/ack、find/bfs、PowerShell Get-ChildItem 的递归搜索，检查显式起点或默认当前目录是否包含记忆；支持先 cd 再搜索及管道。只是提到名字、非递归列目录、搜索普通 src 目录不会被拦 | 尽力而为 |
 | 写类工具（Write、Edit） | 不询问：保存记忆需要写入。实测 Edit 一个记忆文件时，文件里模型没见过的内容没有进入请求，返回给模型的只有「更新成功」；但 Edit 没有先 Read 也能直接执行，所以模型知道文件里某段文字时可以不经询问地改它 | 写入不涉及读取，但不是完全没有信息通道 |
 
 在 `-p` 等没有人可以回答的模式下，询问记为 `permission_denials`，调用不执行，内容不会进入请求。交互界面里出现 "Do you want to proceed?"：选 No 内容不发送，选 Yes 才发送。
 
-测试覆盖：`test/runtime/runtime.test.js` 的 `memory-guard`（判断逻辑），`test/smoke.test.js` 的「读取记忆文件需要确认」（真实二进制 + 假 API，在默认、acceptEdits、bypassPermissions、auto 模式以及 allow 规则、hook 返回 allow 下 Read 与 Bash 都被拦；交互界面的 No 与 Yes 两个分支）。darwin 与 linux 两份生成代码都改了，linux 用伪装平台在 mac 上跑了同一组用例。
+测试覆盖：`test/runtime/runtime.test.js` 的 `memory-guard`（直接读取、上级递归范围、默认当前目录、cd、管道、符号链接、Grep/Glob 与普通搜索对照），`test/smoke.test.js` 的「读取记忆文件需要确认」（真实二进制 + 假 API，在各权限模式、allow 规则与 hook 下验证 Read/Bash；递归搜索上级目录的内容不进入请求；交互界面的 No 与 Yes 两个分支）。两个系统共用这份守卫，平台上的集成验证由 CI 执行。
 
 已知的盲区（Bash 只看命令文本，下面这些识别不到，会正常执行）：
 
 - 路径靠变量或通配符拼出来，例如 `d=...; cat $d/mem*/*.md`、`cd <项目目录> && cat memory/*.md`；
 - 脚本、解释器内部间接读取（`python -c`、`node -e`、已有脚本文件等）。
+- 使用未识别的递归工具或包装函数，或经搜索范围内部的任意符号链接访问不在已知记忆根目录中的记忆。
 
 这些要堵上只能在沙箱里限制读取范围，或在权限里对记忆目录加 deny 规则。
 

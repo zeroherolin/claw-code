@@ -7,6 +7,7 @@
 //
 // 覆盖范围：
 //   - 带 getPath 的只读工具（Read 等）：按解析后的真实路径判断，符号链接不能绕开；
+//   - Grep / Glob 与常见递归搜索：搜索起点包含已存在的记忆目录时同样确认；
 //   - Bash / PowerShell：只能看命令文本，把每个词按真实路径判断，是尽力而为（见 commandMentionsMemory）。
 // 不覆盖：Edit、Write 这类写工具，保存记忆需要写入。
 import fs from "node:fs";
@@ -53,6 +54,7 @@ function memoryRoots({ autoMemDir, cwd }) {
   const roots = [
     autoMemDir,
     path.join(configDir, "agent-memory"),
+    path.join(configDir, "agent-memory-local"),
     path.join(home, ".claude", "agent-memory"),
     path.join(cwd, ".claude", "agent-memory"),
     path.join(cwd, ".claude", "agent-memory-local"),
@@ -85,14 +87,77 @@ export function isMemoryPath(p, host) {
   return false;
 }
 
-/** 把命令切成词：双引号、单引号里的内容算一个词，其余按空白和 shell 元字符分隔 */
-function tokens(command) {
-  return [...command.matchAll(/"([^"]*)"|'([^']*)'|([^\s;|&<>()`]+)/g)].map((m) => m[1] ?? m[2] ?? m[3]).filter(Boolean);
+/** 递归搜索的范围是否包含已存在的记忆目录；不把尚不存在的 agent-memory 当成需要确认的目录。 */
+export function containsMemoryPath(p, host) {
+  const abs = resolveLoose(p, host.cwd());
+  if (abs === null) return false;
+  const { roots, configDir } = memoryRoots({ autoMemDir: host.autoMemDir, cwd: host.cwd() });
+  const projects = new Set([path.join(configDir, "projects"), path.join(os.homedir(), ".claude", "projects")]);
+  for (const projectRoot of projects) {
+    try {
+      for (const entry of fs.readdirSync(projectRoot, { withFileTypes: true })) {
+        if (entry.isDirectory() || entry.isSymbolicLink()) roots.push(path.join(projectRoot, entry.name, "memory"));
+      }
+    } catch { /* 配置目录可能不存在或不可读 */ }
+  }
+  // 搜索另一个项目或它的 .claude 目录时，也检查该项目的 agent-memory。
+  for (const name of AGENT_MEMORY) roots.push(path.join(abs, ".claude", name), path.join(abs, name));
+  const candidates = forms(abs);
+  return roots.some((root) => {
+    try {
+      if (!fs.statSync(root).isDirectory()) return false;
+    } catch { return false; }
+    return forms(path.resolve(root)).some((r) => candidates.some((candidate) => under(r, candidate)));
+  });
+}
+
+/** 按 shell 操作符分开命令；保留引号里的空格和操作符。这里只做路径识别，不解释 shell。 */
+function commandParts(command) {
+  const parts = [[]];
+  for (const m of command.matchAll(/"([^"]*)"|'([^']*)'|([;|&()\n]+)|([^\s;|&<>()`]+)/g)) {
+    if (m[3]) parts.push([]);
+    else parts.at(-1).push(m[1] ?? m[2] ?? m[4]);
+  }
+  return parts.filter((part) => part.length);
 }
 
 /** 词里的 $HOME、${HOME} 展开成真实的 home 目录，其余变量不展开（展开不了的就是识别不了） */
 function expandHome(word) {
   return word.replace(/^\$\{HOME\}(?=\/|$)|^\$HOME(?=\/|$)/, () => os.homedir());
+}
+
+const SEARCH_VALUE_OPTIONS = new Set(["-e", "--regexp", "-f", "--file", "-g", "--glob", "--iglob", "-t", "--type", "-T", "--type-not", "--include", "--exclude", "--exclude-dir", "-m", "--max-count", "-A", "-B", "-C", "--after-context", "--before-context", "--context", "--max-depth", "--maxdepth", "--encoding", "--sort", "--sortr", "--threads", "-j"]);
+
+/** 常见递归搜索的起点；grep/rg 没写路径时搜索当前目录。 */
+function recursiveSearchPaths(words) {
+  let first = 0;
+  while (first < words.length && (/^[A-Za-z_]\w*=/.test(words[first]) || ["command", "exec", "env", "sudo"].includes(words[first]))) first++;
+  const name = path.basename(words[first] ?? "").toLowerCase();
+  const args = words.slice(first + 1);
+  const find = name === "find" || name === "bfs";
+  const powershell = ["get-childitem", "gci", "dir", "ls"].includes(name) && args.some((arg) => /^-(recurse|r)$/i.test(arg));
+  const search = ["rg", "ag", "ack"].includes(name) || ["grep", "ugrep"].includes(name) && args.some((arg) => /^-[^-]*[rR]/.test(arg) || /^--(?:dereference-)?recursive$/.test(arg));
+  if (!find && !powershell && !search) return [];
+  const paths = [];
+  let patternOption = args.some((arg) => /^(?:-e|-f|--regexp|--file)(?:=|$)/.test(arg) || /^-[ef].+/.test(arg));
+  if (args.includes("--files")) patternOption = true;
+  let options = true;
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (options && arg === "--") { options = false; continue; }
+    if (options && arg.startsWith("-")) {
+      if (find) {
+        if (["-H", "-L", "-P", "-X"].includes(arg) || /^-O\d+$/.test(arg)) continue;
+        if (["-D", "-S", "-regextype"].includes(arg)) { i++; continue; }
+        break; // find 的表达式之后不再是起点，-exec 的命令另由直接路径检查处理
+      }
+      if (SEARCH_VALUE_OPTIONS.has(arg) || powershell && /^-(filter|include|exclude|depth)$/i.test(arg)) i++;
+      continue;
+    }
+    paths.push(arg);
+  }
+  if (search && !patternOption) paths.shift();
+  return paths.length ? paths : ["."];
 }
 
 /**
@@ -105,7 +170,8 @@ function expandHome(word) {
  */
 export function commandMentionsMemory(command, host) {
   if (typeof command !== "string" || command === "") return;
-  const words = tokens(command);
+  const parts = commandParts(command);
+  const words = parts.flat();
   let base = host.cwd();
   for (let i = 0; i < words.length; i++) {
     const w = words[i];
@@ -119,6 +185,18 @@ export function commandMentionsMemory(command, host) {
     const word = expandHome(eq > 0 && /^[A-Za-z_]\w*=/.test(w) ? w.slice(eq + 1) : w); // VAR=path 取等号右边
     if (word === "" || /[*?$`]/.test(word)) continue; // 含通配符或没展开的变量：识别不了
     if (isMemoryPath(word, { ...host, cwd: () => base })) return w;
+  }
+  base = host.cwd();
+  for (const part of parts) {
+    if (part[0] === "cd" && part[1] !== undefined) {
+      base = resolveLoose(expandHome(part[1]), base) ?? base;
+      continue;
+    }
+    for (const word of recursiveSearchPaths(part)) {
+      const expanded = expandHome(word);
+      if (/[*?$`]/.test(expanded)) continue;
+      if (containsMemoryPath(expanded, { ...host, cwd: () => base })) return word;
+    }
   }
 }
 
@@ -141,7 +219,9 @@ function findMemoryAccess(tool, input, context, host) {
   } catch {
     return;
   }
-  return typeof p === "string" && isMemoryPath(p, host) ? { kind: "path", detail: p } : undefined;
+  if (typeof p !== "string") return;
+  const search = ["Grep", "Glob"].includes(name) || tool.isSearchOrReadCommand?.()?.isSearch === true;
+  return isMemoryPath(p, host) || search && containsMemoryPath(p || host.cwd(), host) ? { kind: "path", detail: p || host.cwd() } : undefined;
 }
 
 /** 宿主给的函数可能抛错（如没有项目目录时取不到自动记忆目录）：取不到就退回默认值 */
@@ -170,8 +250,8 @@ export function memoryReadGuard(tool, input, current, context, host) {
   if (access === undefined) return;
   const message =
     access.kind === "path"
-      ? `Claude wants to read ${access.detail}, which is in a memory directory. If you allow it, the file's contents are sent to the model.`
-      : `This command refers to a memory directory or file (${access.detail}). If you allow it, what it prints is sent to the model.`;
+      ? `Claude wants to read or search ${access.detail}, which is in or contains a memory directory. If you allow it, memory contents may be sent to the model.`
+      : `This command can access a memory directory or file (${access.detail}), including through recursive search. If you allow it, what it prints is sent to the model.`;
   return {
     behavior: "ask",
     message,

@@ -191,6 +191,19 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       }, 60_000);
     }
 
+    test("递归搜索记忆上级目录：allow 规则和 bypass 模式都先询问，内容不进请求", async () => {
+      for (const variant of [VARIANTS["allow 规则"], VARIANTS.bypassPermissions]) {
+        for (const toolOf of [
+          ({ mem }) => ["Bash", { command: `grep -R SENTINEL ${path.dirname(path.dirname(mem))}` }],
+          ({ mem }) => ["Bash", { command: `cd ${path.dirname(mem)} && grep -R SENTINEL` }],
+        ]) {
+          const result = await run(variant, toolOf);
+          expect(result.leaked).toBe(false);
+          expect(result.denials.length).toBe(1);
+        }
+      }
+    }, 60_000);
+
     test("对照：工作目录里的普通文件、普通命令不受影响", async () => {
       for (const toolOf of [({ work }) => ["Read", { file_path: path.join(work, "fixture.txt") }], () => ["Bash", { command: "echo plain", description: "x" }]]) {
         const r = await run(VARIANTS.bypassPermissions, toolOf);
