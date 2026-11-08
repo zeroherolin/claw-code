@@ -4,7 +4,7 @@ import { spawnSync } from "child_process";
 import fs from "fs";
 import os from "os";
 import path from "path";
-import { newUploadIdentity } from "../../src/runtime/upload-identity.js";
+import { adoptUploadIdentity, isDeliveredResponse, newUploadIdentity, promptIdFor, uploadIdentityFor } from "../../src/runtime/upload-identity.js";
 
 const ROOT = path.resolve(import.meta.dir, "../..");
 const RUNTIME = path.join(ROOT, "src/runtime");
@@ -451,10 +451,15 @@ describe("safeguards-redact", () => {
 });
 
 describe("upload-identity", () => {
+  const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  // 模块状态是进程级的，每个用例用自己的本地会话 ID，互不干扰
+  let n = 0;
+  const local = () => `local-session-${++n}`;
+
   test("会话 ID、提示 ID 是 UUID，设备 ID 是 64 位十六进制", () => {
     const id = newUploadIdentity();
-    expect(id.sessionId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
-    expect(id.promptId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    expect(id.sessionId).toMatch(UUID);
+    expect(id.promptId).toMatch(UUID);
     expect(id.deviceId).toMatch(/^[0-9a-f]{64}$/);
     expect(Object.keys(id).sort()).toEqual(["deviceId", "promptId", "sessionId"]);
   });
@@ -466,11 +471,71 @@ describe("upload-identity", () => {
   });
 
   test("UUID 取自传入的函数，会话 ID 在前、提示 ID 在后", () => {
-    let n = 0;
-    const id = newUploadIdentity(() => `u${n++}`);
+    let k = 0;
+    const id = newUploadIdentity(() => `u${k++}`);
     expect(id.sessionId).toBe("u0");
     expect(id.promptId).toBe("u1");
-    expect(n).toBe(2);
+    expect(k).toBe(2);
+  });
+
+  test("采用之前：没有候选就没有身份，提示 ID 原样", () => {
+    const s = local();
+    expect(uploadIdentityFor(undefined, s)?.sessionId).toBeUndefined();
+    expect(promptIdFor(undefined, "p1", s)).toBe("p1");
+    expect(promptIdFor(undefined, undefined, s)).toBeUndefined();
+  });
+
+  test("候选身份优先；重试请求的提示 ID 记下它顶替了谁", () => {
+    const s = local(), c = newUploadIdentity();
+    expect(uploadIdentityFor(c, s)).toBe(c);
+    expect(promptIdFor(c, "p1", s)).toBe(c.promptId);
+    expect(c.replaces).toBe("p1");
+  });
+
+  test("采用后：同一本地会话的后续请求沿用，直到被下一次采用取代", () => {
+    const s = local(), a = newUploadIdentity(), b = newUploadIdentity();
+    adoptUploadIdentity(a, s);
+    expect(uploadIdentityFor(undefined, s)).toEqual({ sessionId: a.sessionId, deviceId: a.deviceId });
+    adoptUploadIdentity(b, s);
+    expect(uploadIdentityFor(undefined, s)).toEqual({ sessionId: b.sessionId, deviceId: b.deviceId });
+  });
+
+  test("会话 ID 记在本地会话名下：别的本地会话看不到；设备 ID 是装机级的，进程里通用", () => {
+    const s1 = local(), s2 = local(), a = newUploadIdentity();
+    adoptUploadIdentity(a, s1);
+    const other = uploadIdentityFor(undefined, s2);
+    expect(other?.sessionId).toBeUndefined(); // 换了本地会话（/clear、/resume）：用那个会话自己的 ID
+    expect(other?.deviceId).toBe(a.deviceId); // 设备 ID 不回到真实值
+  });
+
+  test("提示 ID：被顶替的那一问沿用顶替后的，下一问和未被顶替的保持自然值", () => {
+    const s = local(), a = newUploadIdentity(), b = newUploadIdentity();
+    promptIdFor(a, "ask-1", s);
+    adoptUploadIdentity(a, s);
+    expect(promptIdFor(undefined, "ask-1", s)).toBe(a.promptId); // 同一问后面的工具轮
+    expect(promptIdFor(undefined, "ask-2", s)).toBe("ask-2"); // 下一问
+    promptIdFor(b, "ask-2", s);
+    adoptUploadIdentity(b, s);
+    expect(promptIdFor(undefined, "ask-2", s)).toBe(b.promptId);
+    expect(promptIdFor(undefined, "ask-1", s)).toBe(a.promptId); // 之前的映射保留
+  });
+
+  test("缺少本地会话 ID 时不采用", () => {
+    const a = newUploadIdentity();
+    adoptUploadIdentity(a, undefined);
+    adoptUploadIdentity(undefined, "x");
+    expect(uploadIdentityFor(undefined, local())?.sessionId).toBeUndefined();
+  });
+
+  test("完整送达的判定：有停止原因的助手消息才算，拒答、API 错误、没结束的都不算", () => {
+    const msg = (extra, stop) => ({ type: "assistant", ...extra, message: { stop_reason: stop } });
+    expect(isDeliveredResponse(msg({}, "end_turn"))).toBe(true);
+    expect(isDeliveredResponse(msg({}, "tool_use"))).toBe(true);
+    expect(isDeliveredResponse(msg({}, "refusal"))).toBe(false);
+    expect(isDeliveredResponse(msg({ isApiErrorMessage: true }, "end_turn"))).toBe(false);
+    expect(isDeliveredResponse(msg({}, null))).toBe(false);
+    expect(isDeliveredResponse({ type: "user" })).toBe(false);
+    expect(isDeliveredResponse(undefined)).toBe(false);
   });
 });
 

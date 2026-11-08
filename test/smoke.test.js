@@ -151,22 +151,42 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
   });
 
-  test("拒答重试成功后，后面的工具轮恢复本地标识", async () => {
+  test("拒答重试成功后，后面的工具轮沿用成功那次的标识，不回到本地标识", async () => {
     const { r, fake, result } = await retryRun(["refuse", "tool"], FIRST_PARTY);
     expect(r.code).toBe(0);
     expect(fake.requests.length).toBe(3);
     const [first, retry, afterTool] = fake.requests.map(wire);
-    expect(retry.session).not.toBe(first.session);
-    expect(retry.device).not.toBe(first.device);
-    expect(afterTool.session).toBe(first.session);
-    expect(afterTool.session).toBe(result.session_id);
-    expect(afterTool.device).toBe(first.device);
-    expect(afterTool.promptHeader).toBe(first.promptHeader);
-    // 重试本身不指向被拦截的请求；重试成功后的工具轮指向重试那一次，不是被拦截的那次
+    expect(first.session).toBe(result.session_id); // 本地标识只在第一次请求里出现
+    for (const key of ["session", "sessionHeader", "device", "promptHeader", "billingPrompt"]) {
+      expect(retry[key]).not.toBe(first[key]);
+      expect(afterTool[key]).toBe(retry[key]);
+    }
+    // 重试本身不指向被拦截的请求；成功后的工具轮指向重试那一次，续接的也是重试那次建的线程（同一身份下的请求，服务端认识）
     expect(retry.prevRequest).toBeUndefined();
     expect(retry.prevMessage).toBeNull();
     expect(afterTool.prevRequest).toBe("req_2");
     expect(afterTool.prevMessage).toBe("m_2");
+    expect(afterTool.thread).toBe("continue");
+  });
+
+  // 采用的标识只放在进程内存里：不写盘，不改变本地会话。重启进程（--continue）从本地标识开始
+  test("拒答重试采用的标识只在本进程内有效：--continue 新进程从本地标识开始", async () => {
+    const h = makeHome();
+    const fake = startScriptedApi(["refuse"]);
+    try {
+      const env = cleanEnv(h.home, fake.url);
+      const flags = ["--allowedTools", "Bash(echo:*)"];
+      expect((await runCli([DIST], ["-p", "first message", ...flags], { cwd: h.work, env })).code).toBe(0);
+      const n = fake.requests.length;
+      expect((await runCli([DIST], ["-p", "--continue", "second message", ...flags], { cwd: h.work, env })).code).toBe(0);
+      const w = fake.requests.map(wire);
+      expect(w[1].session).not.toBe(w[0].session); // 进程 1：重试换了
+      expect(w[n].session).toBe(w[0].session); // 进程 2：回到本地标识
+      expect(w[n].device).toBe(w[0].device);
+    } finally {
+      fake.stop();
+      h.remove();
+    }
   });
 
   test("拒答重试时流式请求 404、改用非流式重发：沿用同一份临时身份", async () => {
@@ -177,6 +197,22 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     const fallback = wire(fake.nonStreaming[0]);
     expect(retry.session).not.toBe(first.session);
     for (const key of ["session", "sessionHeader", "device", "promptHeader", "billingPrompt"]) expect(fallback[key]).toBe(retry[key]);
+  });
+
+  // 默认配置（假 API 在 127.0.0.1，不是一方端点）与经中转站使用的形态相同：
+  // 一方端点才有的头和字段本来就不发送，重试仍要更换 metadata 与默认会话请求头里的标识
+  test("中转站形态（默认）下拒答重试同样更换会话与设备 ID，且不发一方端点才有的字段", async () => {
+    const { r, fake, result } = await retryRun(2);
+    expect(r.code).toBe(0);
+    const w = fake.requests.map(wire);
+    expect(w.length).toBe(3);
+    expect(w[0].session).toBe(result.session_id);
+    for (const key of ["session", "device"]) expect(new Set(w.map((x) => x[key])).size).toBe(3);
+    for (const x of w) {
+      expect(x.sessionHeader).toBe(x.session);
+      for (const key of ["promptHeader", "clientRequest", "prevRequest", "thread"]) expect(x[key]).toBeUndefined();
+    }
+    for (const q of fake.requests) expect(q.body.diagnostics).toBeUndefined();
   });
 
   test("第 10 次重试成功就算成功", async () => {
@@ -238,6 +274,67 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       h.remove();
     }
   }, 120_000);
+
+  // 交互界面是日常使用的形态。按请求顺序取出每个请求的会话 / 设备 ID，相邻相同的合成一段（run）。
+  // 一方端点形态下才有提示 ID 头，这里用它；标题等辅助请求不带工具，用 main 区分
+  const PTY_ENV = { CLAUDE_CODE_SKIP_ONBOARDING: "1", _CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL: "1", CLAUDE_CODE_GATEWAY_HINT_HEADERS: "1" };
+  const ptyIdentityRuns = async (plan, keys) => {
+    const h = makeHome();
+    let mainSeen = 0;
+    const fake = startScriptedApi((body) => (body.tools?.length > 0 ? plan(++mainSeen) : "ok"));
+    try {
+      await runInPty([DIST], { cwd: h.work, env: cleanEnv(h.home, fake.url, PTY_ENV), cols: 110, rows: 40, keys, idle: 5000, timeout: 170_000 });
+      const projects = path.join(h.home, ".claude/projects");
+      const sessions = fs.readdirSync(projects).flatMap((d) => fs.readdirSync(path.join(projects, d)).filter((f) => f.endsWith(".jsonl")));
+      expect(sessions.length).toBe(1);
+      const requests = fake.requests.map((q) => ({ ...wire(q), main: q.body.tools?.length > 0, asks: ["first", "second", "third"].filter((w) => JSON.stringify(q.body.messages).includes(`${w} message`)) }));
+      const runs = [];
+      for (const x of requests) {
+        if (runs.at(-1)?.session === x.session) runs.at(-1).items.push(x);
+        else runs.push({ session: x.session, device: x.device, items: [x] });
+      }
+      return { local: sessions[0].replace(".jsonl", ""), requests, runs }; // 会话文件名就是本地会话 ID
+    } finally {
+      fake.stop();
+      h.remove();
+    }
+  };
+  const SECOND_THIRD = [[0.5, "first message"], [1.0, "\r"], [9, "second message"], [10, "\r"], [18, "third message"], [19, "\r"]];
+
+  test("交互界面里拒答重试成功后，后续所有请求（含标题等辅助请求）沿用成功那次的会话与设备 ID，不再回到本地 ID", async () => {
+    const { local, requests, runs } = await ptyIdentityRuns((n) => (n === 1 ? "refuse" : "ok"), SECOND_THIRD);
+    expect(runs.length).toBe(2); // 本地 → 重试成功的那一份，之后不再变
+    expect(runs[0].session).toBe(local);
+    expect(runs[1].session).not.toBe(local);
+    expect(runs[1].device).not.toBe(runs[0].device);
+    expect(runs[1].items[0].main && runs[1].items[0].asks.join()).toBe("first"); // 第一个换了标识的是第一问的重试
+    expect(runs[1].items.some((x) => !x.main)).toBe(true); // 之后的标题等辅助请求
+    expect(runs[1].items.some((x) => x.main && x.asks.includes("third"))).toBe(true); // 第三问的主请求
+    for (const x of requests) expect(x.sessionHeader).toBe(x.session); // 请求头与 metadata 一致
+    expect(new Set(requests.map((x) => x.session + x.device)).size).toBe(2);
+  }, 180_000);
+
+  test("交互界面里拒答重试：被拒的候选标识不采用，之后的重试成功再换成新的，始终不回头", async () => {
+    // 第一问：本地被拒 → 候选 1 被拒 → 候选 2 通；第二问：用候选 2 发出被拒 → 候选 3 通；第三问用候选 3
+    const { local, requests, runs } = await ptyIdentityRuns((n) => (n === 1 || n === 2 || n === 4 ? "refuse" : "ok"), [[0.5, "first message"], [1.0, "\r"], [12, "second message"], [13, "\r"], [24, "third message"], [25, "\r"]]);
+    expect(runs.length).toBe(4);
+    expect(new Set(runs.map((r) => r.session)).size).toBe(4); // 没有任何一段回到之前出现过的标识
+    expect(runs[0].session).toBe(local);
+    expect(runs[1].items.length).toBe(1); // 候选 1 被拒，只用过那一次，没被采用
+    expect(runs[2].items.some((x) => x.main && x.asks.includes("second"))).toBe(true); // 第二问用候选 2 发出（被拒）
+    expect(runs[3].items.some((x) => x.main && x.asks.includes("third"))).toBe(true); // 第三问用候选 3
+    for (const x of requests) expect(x.sessionHeader).toBe(x.session);
+    expect(new Set(requests.map((x) => x.session + x.device)).size).toBe(4);
+  }, 200_000);
+
+  test("交互界面里重试 10 轮用尽也没通：不采用任何候选标识，下一问从本地标识开始", async () => {
+    const { local, runs } = await ptyIdentityRuns((n) => (n <= 11 ? "refuse" : "ok"), [[0.5, "first message"], [1.0, "\r"], [14, "second message"], [15, "\r"]]);
+    expect(runs.length).toBe(12); // 本地 + 10 个被拒的候选 + 回到本地
+    expect(runs[0].session).toBe(local);
+    expect(runs.at(-1).session).toBe(local);
+    expect(runs.slice(1, -1).some((r) => r.session === local)).toBe(false);
+    expect(runs.at(-1).items.some((x) => x.main && x.asks.includes("second"))).toBe(true);
+  }, 200_000);
 
   // 读记忆目录里的文件一律先问用户：不论权限模式、allow 规则还是 hook。-p 模式没人可答，询问记为 permission_denial，内容不进请求
   describe("读取记忆文件需要确认", () => {

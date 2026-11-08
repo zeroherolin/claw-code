@@ -1,4 +1,5 @@
 // linux/core/system-prompt-blocks.js — Claude Code 2.1.310（linux）模块 chunk-f7aya6cs.js
+import { uploadIdentityFor } from "../../runtime/upload-identity.js";
 import { Ne, De } from "../fs/async-hooks.93b1.js";
 import { wn, U, q, ATn, ye } from "../context/not-admin-owned.js";
 import { b, c, ce } from "../agents/third-party.js";
@@ -179,7 +180,7 @@ function zWe({ agentContext: e, servedSessionMode: n, uploadIdentity } = {}) {
     if (A && typeof A === "object" && !Array.isArray(A)) r = Ce(A);
     else t(`CLAUDE_CODE_EXTRA_METADATA env var must be a JSON object, but was given ${s}`, { level: "error" });
   }
-  let d = {}, f, m = jx(), h = Ne(i.CLAUDE_CODE_REMOTE) && Fn() ? W0e(e) : void 0, y = { ...f && { ti: f }, device_id: uploadIdentity?.deviceId ?? _H(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || rA()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentity?.sessionId ?? q(), ...m && { parent_session_id: m }, ...h && { tk: h } }, S = { ...d, ...r, ...y };
+  let d = {}, f, m = jx(), h = Ne(i.CLAUDE_CODE_REMOTE) && Fn() ? W0e(e) : void 0, y = { ...f && { ti: f }, device_id: uploadIdentityFor(uploadIdentity, q())?.deviceId ?? _H(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || rA()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentityFor(uploadIdentity, q())?.sessionId ?? q(), ...m && { parent_session_id: m }, ...h && { tk: h } }, S = { ...d, ...r, ...y };
   if ((Object.keys(r).length > 0 || Object.keys(d).length > 0) && _(S).length > ie) {
     if (S = { ...d, ...y }, _(S).length > ie) S = y;
   }

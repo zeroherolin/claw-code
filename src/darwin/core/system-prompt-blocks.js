@@ -1,4 +1,5 @@
 // darwin/core/system-prompt-blocks.js — Claude Code 2.1.310（darwin）模块 chunk-dpjpry6w.js
+import { uploadIdentityFor } from "../../runtime/upload-identity.js";
 import { Ne, He } from "../fs/async-hooks.93b1.js";
 import { wn, U, V, WCn, ye } from "../context/not-admin-owned.js";
 import { S, c, ce } from "../agents/third-party.js";
@@ -179,7 +180,7 @@ function t2e({ agentContext: e, servedSessionMode: n, uploadIdentity } = {}) {
     if (v && typeof v === "object" && !Array.isArray(v)) r = xe(v);
     else t(`CLAUDE_CODE_EXTRA_METADATA env var must be a JSON object, but was given ${s}`, { level: "error" });
   }
-  let d = {}, m, p = Gx(), h = Ne(i.CLAUDE_CODE_REMOTE) && $n() ? YLe(e) : void 0, y = { ...m && { ti: m }, device_id: uploadIdentity?.deviceId ?? EH(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || sT()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentity?.sessionId ?? V(), ...p && { parent_session_id: p }, ...h && { tk: h } }, w = { ...d, ...r, ...y };
+  let d = {}, m, p = Gx(), h = Ne(i.CLAUDE_CODE_REMOTE) && $n() ? YLe(e) : void 0, y = { ...m && { ti: m }, device_id: uploadIdentityFor(uploadIdentity, V())?.deviceId ?? EH(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || sT()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentityFor(uploadIdentity, V())?.sessionId ?? V(), ...p && { parent_session_id: p }, ...h && { tk: h } }, w = { ...d, ...r, ...y };
   if ((Object.keys(r).length > 0 || Object.keys(d).length > 0) && _(w).length > ie) {
     if (w = { ...d, ...y }, _(w).length > ie) w = y;
   }

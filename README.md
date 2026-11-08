@@ -104,7 +104,7 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 - 不收集、不发送任何 GPU 相关信息（Remote Control 主机画像中的 nvidia-smi 与 CUDA 探测、项目扫描中的 CUDA 识别）；
 - 记忆内容不发送，只发记忆文件的路径：`MEMORY.md` 索引、相关记忆召回、账号与团队记忆、子代理记忆都不再带正文，后台记忆提取与记忆整理不再运行；模型要读记忆目录里的文件时，一律先询问你，bypassPermissions 模式、allow 规则和 hook 都绕不过；
 - 发往服务端分类器的 `safeguards`（auto / plan 模式）脱敏：用户名、git 分支与 remote、权限规则、autoMode 规则、`--add-dir`、home 目录都不再发送，字段本身仍发送；
-- 服务端拒答（如 `frontier_llm`）后，用原模型最多连续重试 10 轮并显示轮数（`retrying with the same model (3/10)`），不会换模型；每次重试向服务端发送新的会话 ID、设备 ID 和提示 ID，并新建消息线程，不续接旧线程；重试请求也不再带指向被拦截请求的上一个请求 ID 和消息 ID（账单头的 `cc_prev_req`、缓存诊断的 `diagnostics.previous_message_id`）；本地会话、历史、`--continue`、账号与鉴权不变；历史里保留被拦截那一轮的提问、已输出的内容和工具调用，但不再追加 "stopped by a safety classifier" 之类的提示。连续 10 轮后仍被拦截就正常中断结束，不弹出换模型或改提示词的底部选择框；
+- 服务端拒答（如 `frontier_llm`）后，用原模型最多连续重试 10 轮并显示轮数（`retrying with the same model (3/10)`），不会换模型；每次重试向服务端发送新的会话 ID、设备 ID 和提示 ID，并新建消息线程，不续接旧线程；重试得到完整的响应后，此后发往服务端的所有请求（含标题等辅助请求、工具轮和下一条消息）都沿用这一次成功的 ID，不再回到原来的 ID，下一次重试成功再换成新的；重试又被拒则那一份作废，不采用；重试请求也不再带指向被拦截请求的上一个请求 ID 和消息 ID（账单头的 `cc_prev_req`、缓存诊断的 `diagnostics.previous_message_id`）；本地会话、历史、`--continue`、账号与鉴权不变，换掉的 ID 只存在于进程内存，重启进程（含 `--continue`）从本地 ID 重新开始，所以服务端仍能从消息历史和 `account_uuid` 关联到同一对话；历史里保留被拦截那一轮的提问、已输出的内容和工具调用，但不再追加 "stopped by a safety classifier" 之类的提示。连续 10 轮后仍被拦截就正常中断结束，不弹出换模型或改提示词的底部选择框；
 - 为与已安装的 `claude` 共存，不再自动注册 `claude-cli://` 深链接处理程序，`update`、`upgrade`、`install` 三个子命令直接提示后退出（它们会下载官方版本、改写共享配置里的 `installMethod`）。
 
 已知差异（不影响对话、工具和界面）：

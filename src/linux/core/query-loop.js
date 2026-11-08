@@ -1,5 +1,5 @@
 // linux/core/query-loop.js — Claude Code 2.1.310（linux）模块 chunk-tqjdehqd.js
-import { newUploadIdentity } from "../../runtime/upload-identity.js";
+import { newUploadIdentity, adoptUploadIdentity, isDeliveredResponse } from "../../runtime/upload-identity.js";
 import { Snn, Whi, Mjn, MPs, QCr, DPs, HPs, Djn, LPs, NPs, wnn, vnn, Pvo, ON, eXe, ege, Ljn, Ivo, Njn, V1e, $jn, rle, sLt, UPs, Enn, GPs, zPs, Mvo, eRr, jjn, tge, KPs, VPs, fpt, kk, _c, xnn, Pnn, Inn, Mnn, _Is, Xp, E3, Tpt, Jnn, POs, KRr, Qnn, lf, qOs, CWn, gXe, ULt, OJ, Rk, cGn, uGn, NMs, $Ms, zxr, Ypt, Kxr, Xpt, zMs, KMs, bge, AL, rne, wko, lke, Op, Sje, Qxr, o0t, Zxr, tPr, TS, QMs, hGn, wge, mle, nPr, SK, sne, rPr, Rko, xko, ZMs, _1, vge, CXe, Dko, nDs, Hko, EGn, d0t, LC, TGn, oMe, vje, lDs, dDs, cDs, mDs, m0t, pPr, bDs, kE, PXe, Yko, Xko, Jko, gPr, Qko, TDs, iMe, HGn, LGn, NA, MXe, LDs, lTo, fmt, wPr, IPr, wTo, czn, x0t, Yrn, Fmt, NJ, zXe, mAo, dLs, rNt, J4, Nge, eJe, qmt, JAo, $ge, lNt, $C, eCo, b2n, tCo, nCo, xL, kK, XLs, JR, QR, Xon, v2n, o0s, sgt, M0s, rWe, INt, PCo, L0s, UOr, ICo, U2n, ONt, B2n, F3, hO, zOr, W2n, KOr, VOr, $0s, qOr, F0s, U0s, DCo, igt, j0s, W0s, YOr, XOr, E1, HCo, QOr, LCo, ZOr, eMr, z2n, FCo, tMr, z0s, BCo, V2n, hsn, og, V0s, q0s, X0s, jCo, J0s, sMr, NNt, UN, vsn, dWe, bNs, SNs, wNs, nRo, Dke, nn, cWe, jge, wMr, zNt, KNt, ex, VNt, gRo, ksn, MMr, vRo, ONs, DMr, NNs, Myi, RRo, Xge, Zg, MK, qN, DK, Kle, Rin, nQ, wPo, Ld, Xs, vPo, Oe, LT, rQ, pm, xPo, L$t, UC, Yh, YN, wy, Bt, W$s, z$s, Yle, SVn, Xke, QMe, K$s, Jke, NK, Q$s, ZMe, Z$s, Qke, VPo, cFs, uFs } from "./conversation-engine.js";
 import { Kt } from "../shared/chunk-3b9c376b.js";
 import { Ne, is } from "../fs/async-hooks.93b1.js";
@@ -4358,7 +4358,7 @@ async function* Ou(e, o, n, r) {
       let M = await Co;
       if (M) yield M;
     }
-    if (V.transition?.reason === "refusal_retry") od({ sentOn: V.transition.model, servedBy: Ae, lastMessage: se.at(-1), withheldRecoverable: No });
+    if (V.transition?.reason === "refusal_retry") od({ sentOn: V.transition.model, servedBy: Ae, lastMessage: se.at(-1), withheldRecoverable: No }), isDeliveredResponse(se.at(-1)) && !S.abortController.signal.aborted && adoptUploadIdentity(V.transition.uploadIdentity, q());
     if (V.transition?.reason === "malformed_tool_use_retry") {
       let M = se.at(-1);
       a("tengu_malformed_tool_use_retry_outcome", { model: wt(Ae), retry_count: Ln, outcome: c(_u(Ht.length, M?.message.stop_reason ?? Hn, M?.isApiErrorMessage, Ln)) });

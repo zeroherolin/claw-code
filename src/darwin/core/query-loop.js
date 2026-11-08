@@ -1,5 +1,5 @@
 // darwin/core/query-loop.js — Claude Code 2.1.310（darwin）模块 chunk-ae1068t2.js
-import { newUploadIdentity } from "../../runtime/upload-identity.js";
+import { newUploadIdentity, adoptUploadIdentity, isDeliveredResponse } from "../../runtime/upload-identity.js";
 import { Dnn, Tyi, eWn, _Is, _Rr, SIs, bIs, tWn, wIs, EIs, Lnn, Nnn, svo, LN, lXe, sge, rWn, ivo, oWn, rje, sWn, ple, yDt, CIs, Fnn, xIs, PIs, lvo, bRr, dWn, ige, IIs, OIs, Sft, Ck, _c, Gnn, znn, Vnn, qnn, rOs, Xf, M9, Oft, prn, gMs, pxr, frn, ap, MMs, qWn, vXe, QDt, U7, xk, I2n, O2n, E0s, v0s, uPr, nmt, pPr, rmt, P0s, I0s, kge, xD, pne, Xko, mke, Of, Pje, _Pr, hLt, SPr, wPr, Tb, N0s, N2n, Tge, vle, EPr, I6, mne, vPr, rCo, oCo, F0s, kB, Age, DXe, dCo, B0s, cCo, G2n, wLt, $A, V2n, cMe, Oje, K0s, q0s, Y0s, Z0s, TLt, MPr, oHs, Cv, FXe, kCo, CCo, TCo, DPr, ACo, cHs, pMe, nGn, rGn, UT, BXe, wHs, NCo, Smt, BPr, JPr, XCo, IGn, BLt, con, Vmt, z7, ZXe, WTo, qDs, gNt, a3, jge, l7e, tgt, TAo, Wge, bNt, BA, xAo, Uzn, PAo, IAo, OD, D6, DLs, ex, tx, usn, Wzn, WLs, pgt, _Ns, fWe, WNt, sRo, wNs, iMr, iRo, a6n, GNt, l6n, Y9, wO, uMr, c6n, pMr, fMr, vNs, mMr, kNs, CNs, dRo, fgt, ANs, RNs, gMr, hMr, xB, cRo, _Mr, uRo, SMr, bMr, p6n, mRo, wMr, PNs, hRo, m6n, Isn, og, ONs, MNs, DNs, yRo, LNs, CMr, YNt, GN, Nsn, SWe, oFs, sFs, iFs, IRo, Uke, nn, bWe, Kge, BMr, rFt, oFt, rx, sFt, GRo, $sn, ZMr, JRo, yFs, e0r, EFs, h_i, rxo, the, Zg, G6, QN, z6, tde, Win, cJ, XPo, Ld, Xs, JPo, Oe, FC, uJ, fm, oIo, qFt, WA, Yh, ZN, vy, Bt, R$s, P$s, ode, BVn, nCe, o0e, I$s, rCe, q6, N$s, s0e, F$s, oCe, EIo, Y$s, X$s } from "./conversation-engine.js";
 import { Vt } from "../shared/chunk-3b9c376b.js";
 import { Ne, as } from "../fs/async-hooks.93b1.js";
@@ -4298,7 +4298,7 @@ async function* ku(e, o, n, r) {
       let M = await To;
       if (M) yield M;
     }
-    if (K.transition?.reason === "refusal_retry") Ql({ sentOn: K.transition.model, servedBy: ve, lastMessage: ne.at(-1), withheldRecoverable: Uo });
+    if (K.transition?.reason === "refusal_retry") Ql({ sentOn: K.transition.model, servedBy: ve, lastMessage: ne.at(-1), withheldRecoverable: Uo }), isDeliveredResponse(ne.at(-1)) && !b.abortController.signal.aborted && adoptUploadIdentity(K.transition.uploadIdentity, V());
     if (K.transition?.reason === "malformed_tool_use_retry") {
       let M = ne.at(-1);
       a("tengu_malformed_tool_use_retry_outcome", { model: wt(ve), retry_count: Dn, outcome: c(su(Ht.length, M?.message.stop_reason ?? jn, M?.isApiErrorMessage, Dn)) });

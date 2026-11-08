@@ -2,6 +2,7 @@
 import { __asset_src, __asset_text } from "../../runtime/assets.js";
 import { memoryReadGuard } from "../../runtime/memory-guard.js";
 import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
+import { promptIdFor } from "../../runtime/upload-identity.js";
 import { tp } from "../shared/chunk-b5845da6.js";
 import { De, MKo, L_e, HKo, itr, atr, _Vr, MEt, MAe, dtr, ctr } from "../telemetry/chunk-1bb3c64e.js";
 import { S, c, ce, Kr, ZK, Vu, Ka, $S, Dn, Jw, U7r } from "../agents/third-party.js";
@@ -65455,7 +65456,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
     a("tengu_off_switch_query", { tier: S("per_model_block") }), yield Xs({ content: Ce, error: "rate_limit" });
     return;
   }
-  let xe = W_r(e), Me = Q.uploadIdentity?.promptId ?? gWe(e, Q.agentContext), We = C5s(Q.agentContext, Me);
+  let xe = W_r(e), Me = promptIdFor(Q.uploadIdentity, gWe(e, Q.agentContext), V()), We = C5s(Q.agentContext, Me);
   if (We && Qs()) T5s(We);
   let Ge = z_r(e), Je2 = q_r(e), rt = PHr(e), lt = KJe(e), pt = Te() === "bedrock" && Q.model.includes("application-inference-profile") ? await fLe(Fn(Q.model)) ?? Q.model : Q.model;
   if (wRe(Q.model, Q.querySource), MEe()) await ehn(Q.model, Q.credentials, Q.storageV5);

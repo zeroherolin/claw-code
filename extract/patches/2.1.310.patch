@@ -1,8 +1,15 @@
 diff --git a/src/darwin/api/anthropic-client.js b/src/darwin/api/anthropic-client.js
-index 37754dd..23b7fbc 100644
+index 37754dd..575eb7e 100644
 --- a/src/darwin/api/anthropic-client.js
 +++ b/src/darwin/api/anthropic-client.js
-@@ -6278,6 +6278,7 @@ function pfn() {
+@@ -1,5 +1,6 @@
+ // darwin/api/anthropic-client.js — Claude Code 2.1.310（darwin）模块 chunk-7pf88165.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { uploadIdentityFor } from "../../runtime/upload-identity.js";
+ import { Vt } from "../shared/chunk-3b9c376b.js";
+ import { Ne, as, He } from "../fs/async-hooks.93b1.js";
+ import { F, U, V, Fc, aN, WK, I3e, Nns, TXr, Fns, Hz, Dz, pfe, Yns, Xns, rrs, RXr, xXr, ors, PXr, qdr, ye, Wr, mos, Dit, k_, J, Il, Pee, g$ } from "../context/not-admin-owned.js";
+@@ -6278,6 +6279,7 @@ function pfn() {
  }
  var sb = /* @__PURE__ */ new Set(["cyber", "frontier_llm"]);
  function z1o(e, { visibleRouteDeclined: n = false, apiRefusalCategory: r, responseSwapped: s = false } = {}) {
@@ -10,7 +17,7 @@ index 37754dd..23b7fbc 100644
    if (!n && vSt(e)) return;
    if (!pfn()) return;
    let h = Fn(e);
-@@ -7310,8 +7311,8 @@ async function pl(e, n) {
+@@ -7310,8 +7312,8 @@ async function pl(e, n) {
  function T5s(e) {
    pl(new Headers(), e);
  }
@@ -21,12 +28,12 @@ index 37754dd..23b7fbc 100644
  }
  function dce() {
    let e = new Set(u5o());
-@@ -7324,7 +7325,7 @@ function KYn(e, n = []) {
+@@ -7324,7 +7326,7 @@ function KYn(e, n = []) {
    return e.map((s) => "name" in s ? s.name : `mcp__${s.type}`);
  }
  async function bF(e) {
 -  let { apiKey: n, maxRetries: r, model: s, fetchOverride: h, source: b, querySource: y = b, requestClass: w, agentContext: E, promptId: P, ccsSender: H, permissionContext: O, toolNames: M = [], classifierJudgesServedCall: A, credentials: L, storageV5: K, signal: G, clock: Q = Jl, noResponseRetryLedger: z } = e, ee = process.env.CLAUDE_CODE_CONTAINER_ID, X = process.env.CLAUDE_CODE_REMOTE_SESSION_ID, j = process.env.CLAUDE_AGENT_SDK_CLIENT_APP, re = _X() ? i.CLAUDE_CODE_SESSION_ORIGIN : void 0, te = Up(E) ? void 0 : E, ie = IYn(), se = ie ? Lni(b, E, w) : void 0, ae = ie ? Nni(b, E) : void 0, ne = { userTurn: b !== "side_query" && Hni(y) && jG() === void 0 && k_() === void 0 && (E.agentType === "main" || E.isBackgroundAgent === false) }, Be = vjt(), bt = await Tp({ querySource: y, permissionContext: O, toolNames: M, classifierJudgesServedCall: A }), je = { ...ml(), ...Be, ...o1(), ...ee && { "x-claude-remote-container-id": ee }, ...X && { "x-claude-remote-session-id": X }, ...re && { [aKr]: re }, ...j && { "x-client-app": j }, ...te?.agentId && { "x-claude-code-agent-id": z3r(te.agentId) }, ...te?.parentAgentId && { "x-claude-code-parent-agent-id": z3r(te.parentAgentId) }, ...se && { [Bzt]: se }, ...ae && { [sKr]: z3r(ae) }, ...ie && P !== void 0 && Vt(P) !== null && { [iKr]: P } };
-+  let { apiKey: n, maxRetries: r, model: s, fetchOverride: h, source: b, querySource: y = b, requestClass: w, agentContext: E, promptId: P, ccsSender: H, permissionContext: O, toolNames: M = [], classifierJudgesServedCall: A, credentials: L, storageV5: K, signal: G, clock: Q = Jl, noResponseRetryLedger: z, uploadIdentity } = e, ee = process.env.CLAUDE_CODE_CONTAINER_ID, X = process.env.CLAUDE_CODE_REMOTE_SESSION_ID, j = process.env.CLAUDE_AGENT_SDK_CLIENT_APP, re = _X() ? i.CLAUDE_CODE_SESSION_ORIGIN : void 0, te = Up(E) ? void 0 : E, ie = IYn(), se = ie ? Lni(b, E, w) : void 0, ae = ie ? Nni(b, E) : void 0, ne = { userTurn: b !== "side_query" && Hni(y) && jG() === void 0 && k_() === void 0 && (E.agentType === "main" || E.isBackgroundAgent === false) }, Be = vjt(), bt = await Tp({ querySource: y, permissionContext: O, toolNames: M, classifierJudgesServedCall: A }), je = { ...ml(uploadIdentity?.sessionId), ...Be, ...o1(), ...ee && { "x-claude-remote-container-id": ee }, ...X && { "x-claude-remote-session-id": X }, ...re && { [aKr]: re }, ...j && { "x-client-app": j }, ...te?.agentId && { "x-claude-code-agent-id": z3r(te.agentId) }, ...te?.parentAgentId && { "x-claude-code-parent-agent-id": z3r(te.parentAgentId) }, ...se && { [Bzt]: se }, ...ae && { [sKr]: z3r(ae) }, ...ie && P !== void 0 && Vt(P) !== null && { [iKr]: P } };
++  let { apiKey: n, maxRetries: r, model: s, fetchOverride: h, source: b, querySource: y = b, requestClass: w, agentContext: E, promptId: P, ccsSender: H, permissionContext: O, toolNames: M = [], classifierJudgesServedCall: A, credentials: L, storageV5: K, signal: G, clock: Q = Jl, noResponseRetryLedger: z, uploadIdentity } = e, ee = process.env.CLAUDE_CODE_CONTAINER_ID, X = process.env.CLAUDE_CODE_REMOTE_SESSION_ID, j = process.env.CLAUDE_AGENT_SDK_CLIENT_APP, re = _X() ? i.CLAUDE_CODE_SESSION_ORIGIN : void 0, te = Up(E) ? void 0 : E, ie = IYn(), se = ie ? Lni(b, E, w) : void 0, ae = ie ? Nni(b, E) : void 0, ne = { userTurn: b !== "side_query" && Hni(y) && jG() === void 0 && k_() === void 0 && (E.agentType === "main" || E.isBackgroundAgent === false) }, Be = vjt(), bt = await Tp({ querySource: y, permissionContext: O, toolNames: M, classifierJudgesServedCall: A }), je = { ...ml(uploadIdentityFor(uploadIdentity, V())?.sessionId), ...Be, ...o1(), ...ee && { "x-claude-remote-container-id": ee }, ...X && { "x-claude-remote-session-id": X }, ...re && { [aKr]: re }, ...j && { "x-client-app": j }, ...te?.agentId && { "x-claude-code-agent-id": z3r(te.agentId) }, ...te?.parentAgentId && { "x-claude-code-parent-agent-id": z3r(te.parentAgentId) }, ...se && { [Bzt]: se }, ...ae && { [sKr]: z3r(ae) }, ...ie && P !== void 0 && Vt(P) !== null && { [iKr]: P } };
    if (t(`[API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: ${!!process.env.ANTHROPIC_CUSTOM_HEADERS}, has Authorization header: ${!!Be.Authorization}`, { level: "verbose" }), i.CLAUDE_CODE_ADDITIONAL_PROTECTION) je["x-anthropic-additional-protection"] = "true";
    if (Te() === "gateway" && !Wr() && !Dit()) {
      if (fd()) throw z_n("Cloud gateway");
@@ -96,18 +103,19 @@ index 72fe144..1775c25 100644
    ar();
    let h = Bp() && !uQ();
 diff --git a/src/darwin/core/conversation-engine.js b/src/darwin/core/conversation-engine.js
-index 7926d09..4c235f2 100644
+index 7926d09..8f5c258 100644
 --- a/src/darwin/core/conversation-engine.js
 +++ b/src/darwin/core/conversation-engine.js
-@@ -1,5 +1,7 @@
+@@ -1,5 +1,8 @@
  // darwin/core/conversation-engine.js — Claude Code 2.1.310（darwin）模块 chunk-31gxg38t.js
  import { __asset_src, __asset_text } from "../../runtime/assets.js";
 +import { memoryReadGuard } from "../../runtime/memory-guard.js";
 +import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
++import { promptIdFor } from "../../runtime/upload-identity.js";
  import { tp } from "../shared/chunk-b5845da6.js";
  import { De, MKo, L_e, HKo, itr, atr, _Vr, MEt, MAe, dtr, ctr } from "../telemetry/chunk-1bb3c64e.js";
  import { S, c, ce, Kr, ZK, Vu, Ka, $S, Dn, Jw, U7r } from "../agents/third-party.js";
-@@ -34899,8 +34901,7 @@ function cFs(e, n, r) {
+@@ -34899,8 +34902,7 @@ function cFs(e, n, r) {
    return pYe(e, n, r, n).includePaths;
  }
  function oKo(e) {
@@ -117,7 +125,7 @@ index 7926d09..4c235f2 100644
  }
  function sKo() {
    return process.env.CLAUDE_COWORK_MEMORY_INDEX_CONTENT;
-@@ -35347,7 +35348,7 @@ async function xKo(e, n, r, s, h, y) {
+@@ -35347,7 +35349,7 @@ async function xKo(e, n, r, s, h, y) {
      await bH().warmCanonicalWcRoot();
      let ro = uQ(), Do = sKo();
      if (!ro && Do !== "") {
@@ -126,7 +134,7 @@ index 7926d09..4c235f2 100644
        if (Oo === null && Do === void 0 && !s && !zoe() && !i.CLAUDE_CODE_REMOTE && Ho && await YYt(e.host, vo)) Oo = await Rr(N4t(ho));
        if (Oo) {
          let kr = ru(Oo.path);
-@@ -59436,6 +59437,7 @@ function Kpn(e) {
+@@ -59436,6 +59438,7 @@ function Kpn(e) {
  }
  var vNs = Object.freeze({ visibleModel: void 0, serverLane: void 0, shouldLogSuppression: false });
  function mMr(e) {
@@ -134,7 +142,7 @@ index 7926d09..4c235f2 100644
    let n = q2(), r = p5s({ requestDialog: e.requestDialog, isMainThread: e.isMainThread, consumerLacksDialogCapability: e.consumerLacksDialogCapability }), s = e.inCascadeEpisode ? e.cascadeNext : D1o(e.currentModel), h = !e.alreadyUsed && !e.declined && n && !r ? s : void 0, y = h !== void 0 && !e.inCascadeEpisode && !e.threadedRequest && !e.preferenceQuestionPending && X4s() && !Vf(e.sticky, Bj), b = y && qpn({ primaryModel: e.currentModel, sticky: e.sticky, serverDefaultFallbacksEnabled: e.serverDefaultFallbacksEnabled, selfTargetDefaultFallbacksEnabled: e.selfTargetDefaultFallbacksEnabled }) ? "default" : "explicit", w = y && (b === "default" || !kSt(e.currentModel, h)) ? { forModel: e.currentModel, model: h, mode: b } : void 0;
    return { visibleModel: h, serverLane: w, shouldLogSuppression: !e.suppressionAlreadyLogged && n && r && s !== void 0 };
  }
-@@ -61680,7 +61682,7 @@ function bhn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
+@@ -61680,7 +61683,7 @@ function bhn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
      a("tengu_auto_mode_context_withheld", { reason: S("field_over_ceiling"), bytes: h });
      return;
    }
@@ -143,7 +151,7 @@ index 7926d09..4c235f2 100644
  }
  function zgr(e, n, r, s, h, y) {
    let b = (ve, Ce, xe, Me, We, Ge) => {
-@@ -62877,7 +62879,7 @@ function Yhr(e, n) {
+@@ -62877,7 +62880,7 @@ function Yhr(e, n) {
    let r = n.effort === void 0 ? void 0 : Array(e.length), s = n.now === void 0 ? void 0 : Array(e.length), { effort: h, now: y } = n;
    for (let b = e.length - 1; b >= 0; b--) {
      let w = e[b];
@@ -152,7 +160,7 @@ index 7926d09..4c235f2 100644
      if (r !== void 0) r[b] = h;
      if (s !== void 0) s[b] = y;
    }
-@@ -64996,7 +64998,7 @@ function U_r(e) {
+@@ -64996,7 +64999,7 @@ function U_r(e) {
    }
  }
  async function* j_r(e, n, r, s, h, y) {
@@ -161,16 +169,16 @@ index 7926d09..4c235f2 100644
      let we = w.now(), ve = Lm(), Ce = r(be);
      s(Se, we, Ce.max_tokens);
      let xe = bkr(Ce, ekn);
-@@ -65453,7 +65455,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -65453,7 +65456,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
      a("tengu_off_switch_query", { tier: S("per_model_block") }), yield Xs({ content: Ce, error: "rate_limit" });
      return;
    }
 -  let xe = W_r(e), Me = gWe(e, Q.agentContext), We = C5s(Q.agentContext, Me);
-+  let xe = W_r(e), Me = Q.uploadIdentity?.promptId ?? gWe(e, Q.agentContext), We = C5s(Q.agentContext, Me);
++  let xe = W_r(e), Me = promptIdFor(Q.uploadIdentity, gWe(e, Q.agentContext), V()), We = C5s(Q.agentContext, Me);
    if (We && Qs()) T5s(We);
    let Ge = z_r(e), Je2 = q_r(e), rt = PHr(e), lt = KJe(e), pt = Te() === "bedrock" && Q.model.includes("application-inference-profile") ? await fLe(Fn(Q.model)) ?? Q.model : Q.model;
    if (wRe(Q.model, Q.querySource), MEe()) await ehn(Q.model, Q.credentials, Q.storageV5);
-@@ -65786,7 +65788,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -65786,7 +65789,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
        l(N(Qn));
      }
    };
@@ -179,7 +187,7 @@ index 7926d09..4c235f2 100644
    let T6 = Q.enablePromptCaching ?? Ule(Jt), TI = Q.forkPointUuid !== void 0 && Up(Q.agentContext), RA = Mve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || TI ? Jt : void 0 }), KR = RA.ttl === "1h" ? "1h" : void 0, NE = pkr(RA.ttl) === "1h" ? "1h" : void 0, Mie = NE !== KR;
    if (ii) {
      if (Cns(KR === "1h" ? eA : uj, Q.model, RA.reason === "live_5m_cache"), Mie) mkr();
-@@ -65990,6 +65992,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -65990,6 +65993,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
        if (oRe(Qn, Q.agentId)) {
          let Ma = q_n(e, Ys);
          if (eh = N_n({ engine: xi, previousMessageId: ir, anchorRewritten: Ma !== null && W_n(Ma, ir), messages: Ys, agentId: Q.agentId, model: Q.model, modelHeldStateless: TA, relayHeldStateless: L_, classifierHeldStateless: w6, creditRetryStateless: Pie, dropHeldStateless: eLe, toolResultClearingHeldStateless: BE !== void 0, clock: Se }), Ma !== null) K_n(Ma, { sourceCategory: Qn, messageCount: Ys.length, anchorMessageId: ir });
@@ -187,7 +195,7 @@ index 7926d09..4c235f2 100644
        }
      }
    }
-@@ -66138,7 +66141,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -66138,7 +66142,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
      Rf = j9t(Rf, dt);
      let Jh = eh !== null ? eh.shapeInheritedFields(uS, { system: VR, tools: Rf }) : { system: VR, tools: Rf };
      pw = VR, v$ = Rf, $W = Jh.system !== VR, BW = uS !== null;
@@ -196,7 +204,7 @@ index 7926d09..4c235f2 100644
      LW = BE !== void 0 && Yc.context_management === qE, zI = rP && Yc.messages.some((Aa) => Aa.clear_at !== void 0);
      let Xc = D_r(Yc.thinking, Q.querySource, !hyt);
      if (Xc !== Yc.thinking) hyt = true, Yc.thinking = Xc;
-@@ -66707,7 +66710,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -66707,7 +66711,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
      yield* V_t.splice(0);
    }
    async function* X_t(Qn, ir) {
@@ -205,7 +213,7 @@ index 7926d09..4c235f2 100644
        let Qh = T$(dc);
        if (Qh !== void 0) return Qh;
        let bw = await Lyt(dc);
-@@ -66813,7 +66816,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -66813,7 +66817,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
          }, VS);
        };
        if (Eh = void 0, og("query_client_creation_start"), ve) tx("request_build"), ex("client_creation");
@@ -214,7 +222,7 @@ index 7926d09..4c235f2 100644
          if (KI === void 0) Xy("attempt_errored", yl ?? null, null);
          if (Hy = Gl, XI = Tg.fastMode ?? false, U_ = Se.monotonicNow(), Eh = void 0, HW.push(U_), og("query_client_creation_end"), ve) tx("client_creation"), ex("request_build");
          let fh = ELe(Tg);
-@@ -70555,7 +70558,7 @@ async function BT(e, n, r, s) {
+@@ -70555,7 +70559,7 @@ async function BT(e, n, r, s) {
      }
      if (s?.planModeWriteFloor === true && Zye(r.session, e.name) === void 0 && H.behavior === "passthrough" && YRe(e, n, r)) return Yee(e);
    }
@@ -223,7 +231,7 @@ index 7926d09..4c235f2 100644
    let q = _f(h, e, n, "ask");
    if (q) return H?.behavior === "ask" ? { ...H, matchedAskRule: q } : { behavior: "ask", decisionReason: { type: "rule", rule: q }, message: id(e.name) };
    if (gon(e, s?.hookUpdatedInput) && !(s?.hookAsked === true && !e.requiresUserInteraction?.())) return H?.behavior === "ask" ? H : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -70637,7 +70640,7 @@ async function wwn(e, n, r, s, h = Cv, y) {
+@@ -70637,7 +70641,7 @@ async function wwn(e, n, r, s, h = Cv, y) {
      else if (!Q) K = { behavior: "passthrough", message: id(e.name), checkIncomplete: true };
      if (K.behavior === "passthrough" && YRe(e, n, r)) K = K.checkIncomplete === true ? { ...Yee(e), checkIncomplete: true } : Yee(e);
    }
@@ -232,7 +240,7 @@ index 7926d09..4c235f2 100644
    let Se = _f(b, e, n, "ask");
    if (Se) return K?.behavior === "ask" ? { ...K, matchedAskRule: Se } : { behavior: "ask", decisionReason: { type: "rule", rule: Se }, message: id(e.name) };
    if (e.requiresUserInteraction?.()) return K?.behavior === "ask" ? K : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -73276,7 +73279,7 @@ async function DEn(e, n) {
+@@ -73276,7 +73280,7 @@ async function DEn(e, n) {
      if (q.scrubCredentialEnv) Je2.push(kli({ sandboxMasked: q.sandboxMaskedEnv }));
      let dt = q.shellToolCommand ? rUs() : void 0;
      if (dt !== void 0) Je2.push(dt);
@@ -241,7 +249,7 @@ index 7926d09..4c235f2 100644
      let bt = Je2.join(" && "), gt = i.CLAUDE_CODE_SHELL_PREFIX;
      if (gt) bt = ime(gt, bt);
      return { commandString: bt, cwdFilePath: xe };
-@@ -79032,6 +79035,7 @@ async function m$r(e, n) {
+@@ -79032,6 +79036,7 @@ async function m$r(e, n) {
  var g$r = /* @__PURE__ */ new Set(["extract_memories", "auto_dream", awe, "prompt_suggestion", "compact"]);
  function oFs(e, n, r, s) {
    let h = n.memorySelector;
@@ -249,7 +257,7 @@ index 7926d09..4c235f2 100644
    if (!h || n.agentId || g$r.has(r)) return;
    let y = Bp() && zoe(), b = Ixe?.isAccountRecallOn() === true && !Kvt();
    if (!y && !b) return;
-@@ -97609,6 +97613,7 @@ import { chmod as yhs, mkdir as m1n, readFile as _hs, rename as uut, rm as cut,
+@@ -97609,6 +97614,7 @@ import { chmod as yhs, mkdir as m1n, readFile as _hs, rename as uut, rm as cut,
  import { dirname as h1n, join as fut, resolve as y1n, sep as khs } from "path";
  var _1n = "https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official", k1n = "marketplaces/claude-plugins-official/";
  async function B6n(e, n, r) {
@@ -257,7 +265,7 @@ index 7926d09..4c235f2 100644
    let s = y1n(n), h = y1n(e);
    if (h !== s && !h.startsWith(s + khs)) return t(`fetchOfficialMarketplaceFromGcs: refusing path outside cache dir: ${e}`, { level: "error" }), null;
    await FCn();
-@@ -111924,6 +111929,7 @@ import { randomBytes as JEs } from "crypto";
+@@ -111924,6 +111930,7 @@ import { randomBytes as JEs } from "crypto";
  import { rmSync as ZEs, watch as Jpt } from "fs";
  import { lstat as $Ne, mkdir as eRs, readdir as Zpt, readFile as tRs, unlink as nRs, writeFile as oRs } from "fs/promises";
  import { basename as Qpt, dirname as LQn, isAbsolute as rRs, join as h6, sep as YF } from "path";
@@ -265,7 +273,7 @@ index 7926d09..4c235f2 100644
  var jQn = 5e3, sRs = 64, WQn = 256, iRs = 1e3, aRs = 8, lRs = 2e4, zQn = 3e4, dRs = 200, qQn = 250, FQn = { grace: 30, quiet: 60 }, $Qn = 300, zk = Ee(/* @__PURE__ */ new Map(), () => {
    uRs();
  }), BS = /* @__PURE__ */ new Map(), _W = null, m6 = null, BQn = false;
-@@ -115918,7 +115924,7 @@ ${d$}`, isMeta: true })]);
+@@ -115918,7 +115925,7 @@ ${d$}`, isMeta: true })]);
    let n = oLr().safeParse(e);
    if (!n.success) return [];
    return Vl([Oe({ content: QBs(n.data.available, n.data.available && n.data.abbreviated), isMeta: true })]);
@@ -275,12 +283,12 @@ index 7926d09..4c235f2 100644
    return e === "poll_events" || e === "project_doc_reads";
  }
 diff --git a/src/darwin/core/query-loop.js b/src/darwin/core/query-loop.js
-index 53bc03d..ea7f554 100644
+index 53bc03d..242a784 100644
 --- a/src/darwin/core/query-loop.js
 +++ b/src/darwin/core/query-loop.js
 @@ -1,4 +1,5 @@
  // darwin/core/query-loop.js — Claude Code 2.1.310（darwin）模块 chunk-ae1068t2.js
-+import { newUploadIdentity } from "../../runtime/upload-identity.js";
++import { newUploadIdentity, adoptUploadIdentity, isDeliveredResponse } from "../../runtime/upload-identity.js";
  import { Dnn, Tyi, eWn, _Is, _Rr, SIs, bIs, tWn, wIs, EIs, Lnn, Nnn, svo, LN, lXe, sge, rWn, ivo, oWn, rje, sWn, ple, yDt, CIs, Fnn, xIs, PIs, lvo, bRr, dWn, ige, IIs, OIs, Sft, Ck, _c, Gnn, znn, Vnn, qnn, rOs, Xf, M9, Oft, prn, gMs, pxr, frn, ap, MMs, qWn, vXe, QDt, U7, xk, I2n, O2n, E0s, v0s, uPr, nmt, pPr, rmt, P0s, I0s, kge, xD, pne, Xko, mke, Of, Pje, _Pr, hLt, SPr, wPr, Tb, N0s, N2n, Tge, vle, EPr, I6, mne, vPr, rCo, oCo, F0s, kB, Age, DXe, dCo, B0s, cCo, G2n, wLt, $A, V2n, cMe, Oje, K0s, q0s, Y0s, Z0s, TLt, MPr, oHs, Cv, FXe, kCo, CCo, TCo, DPr, ACo, cHs, pMe, nGn, rGn, UT, BXe, wHs, NCo, Smt, BPr, JPr, XCo, IGn, BLt, con, Vmt, z7, ZXe, WTo, qDs, gNt, a3, jge, l7e, tgt, TAo, Wge, bNt, BA, xAo, Uzn, PAo, IAo, OD, D6, DLs, ex, tx, usn, Wzn, WLs, pgt, _Ns, fWe, WNt, sRo, wNs, iMr, iRo, a6n, GNt, l6n, Y9, wO, uMr, c6n, pMr, fMr, vNs, mMr, kNs, CNs, dRo, fgt, ANs, RNs, gMr, hMr, xB, cRo, _Mr, uRo, SMr, bMr, p6n, mRo, wMr, PNs, hRo, m6n, Isn, og, ONs, MNs, DNs, yRo, LNs, CMr, YNt, GN, Nsn, SWe, oFs, sFs, iFs, IRo, Uke, nn, bWe, Kge, BMr, rFt, oFt, rx, sFt, GRo, $sn, ZMr, JRo, yFs, e0r, EFs, h_i, rxo, the, Zg, G6, QN, z6, tde, Win, cJ, XPo, Ld, Xs, JPo, Oe, FC, uJ, fm, oIo, qFt, WA, Yh, ZN, vy, Bt, R$s, P$s, ode, BVn, nCe, o0e, I$s, rCe, q6, N$s, s0e, F$s, oCe, EIo, Y$s, X$s } from "./conversation-engine.js";
  import { Vt } from "../shared/chunk-3b9c376b.js";
  import { Ne, as } from "../fs/async-hooks.93b1.js";
@@ -348,6 +356,15 @@ index 53bc03d..ea7f554 100644
              if (w.type === "tool_drain_tick") {
                yield* Wn();
                continue;
+@@ -4296,7 +4298,7 @@ async function* ku(e, o, n, r) {
+       let M = await To;
+       if (M) yield M;
+     }
+-    if (K.transition?.reason === "refusal_retry") Ql({ sentOn: K.transition.model, servedBy: ve, lastMessage: ne.at(-1), withheldRecoverable: Uo });
++    if (K.transition?.reason === "refusal_retry") Ql({ sentOn: K.transition.model, servedBy: ve, lastMessage: ne.at(-1), withheldRecoverable: Uo }), isDeliveredResponse(ne.at(-1)) && !b.abortController.signal.aborted && adoptUploadIdentity(K.transition.uploadIdentity, V());
+     if (K.transition?.reason === "malformed_tool_use_retry") {
+       let M = ne.at(-1);
+       a("tengu_malformed_tool_use_retry_outcome", { model: wt(ve), retry_count: Dn, outcome: c(su(Ht.length, M?.message.stop_reason ?? jn, M?.isApiErrorMessage, Dn)) });
 @@ -4335,12 +4337,13 @@ async function* ku(e, o, n, r) {
          let oe = vn(Ce.streamingToolExecutor, "same_model_retry");
          if (q = oe.removes, Ce.rebuildStreamingToolExecutor(), oe.startedToolUseIds.length > 0) ai(b.options, Pn);
@@ -365,10 +382,16 @@ index 53bc03d..ea7f554 100644
      if (tr(on) && on === Uo) yield* Ai(on);
      if (!Ce.needsFollowUp) {
 diff --git a/src/darwin/core/system-prompt-blocks.js b/src/darwin/core/system-prompt-blocks.js
-index df849dd..b5fdb49 100644
+index df849dd..be7b257 100644
 --- a/src/darwin/core/system-prompt-blocks.js
 +++ b/src/darwin/core/system-prompt-blocks.js
-@@ -172,14 +172,14 @@ function HIo(e, n) {
+@@ -1,4 +1,5 @@
+ // darwin/core/system-prompt-blocks.js — Claude Code 2.1.310（darwin）模块 chunk-dpjpry6w.js
++import { uploadIdentityFor } from "../../runtime/upload-identity.js";
+ import { Ne, He } from "../fs/async-hooks.93b1.js";
+ import { wn, U, V, WCn, ye } from "../context/not-admin-owned.js";
+ import { S, c, ce } from "../agents/third-party.js";
+@@ -172,14 +173,14 @@ function HIo(e, n) {
    if (w) y.push({ text: w, cacheScope: "org" });
    return y;
  }
@@ -381,7 +404,7 @@ index df849dd..b5fdb49 100644
      else t(`CLAUDE_CODE_EXTRA_METADATA env var must be a JSON object, but was given ${s}`, { level: "error" });
    }
 -  let d = {}, m, p = Gx(), h = Ne(i.CLAUDE_CODE_REMOTE) && $n() ? YLe(e) : void 0, y = { ...m && { ti: m }, device_id: EH(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || sT()?.accountUuid || gn()?.accountUuid || "", session_id: V(), ...p && { parent_session_id: p }, ...h && { tk: h } }, w = { ...d, ...r, ...y };
-+  let d = {}, m, p = Gx(), h = Ne(i.CLAUDE_CODE_REMOTE) && $n() ? YLe(e) : void 0, y = { ...m && { ti: m }, device_id: uploadIdentity?.deviceId ?? EH(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || sT()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentity?.sessionId ?? V(), ...p && { parent_session_id: p }, ...h && { tk: h } }, w = { ...d, ...r, ...y };
++  let d = {}, m, p = Gx(), h = Ne(i.CLAUDE_CODE_REMOTE) && $n() ? YLe(e) : void 0, y = { ...m && { ti: m }, device_id: uploadIdentityFor(uploadIdentity, V())?.deviceId ?? EH(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || sT()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentityFor(uploadIdentity, V())?.sessionId ?? V(), ...p && { parent_session_id: p }, ...h && { tk: h } }, w = { ...d, ...r, ...y };
    if ((Object.keys(r).length > 0 || Object.keys(d).length > 0) && _(w).length > ie) {
      if (w = { ...d, ...y }, _(w).length > ie) w = y;
    }
@@ -526,10 +549,17 @@ index 79ed248..4b2f5be 100644
    if (r.some((i) => (i.endsWith(".bat") || i.endsWith(".cmd") || i.endsWith(".ps1")) && i !== "gradlew.bat" && i !== "gradlew.cmd" && i !== "mvnw.bat" && i !== "mvnw.cmd")) return "windows_scripts";
    return "none";
 diff --git a/src/linux/api/anthropic-client.js b/src/linux/api/anthropic-client.js
-index ffd60bf..9f1fb93 100644
+index ffd60bf..60ab94d 100644
 --- a/src/linux/api/anthropic-client.js
 +++ b/src/linux/api/anthropic-client.js
-@@ -6277,6 +6277,7 @@ function qfn() {
+@@ -1,5 +1,6 @@
+ // linux/api/anthropic-client.js — Claude Code 2.1.310（linux）模块 chunk-bbw420pv.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { uploadIdentityFor } from "../../runtime/upload-identity.js";
+ import { Kt } from "../shared/chunk-3b9c376b.js";
+ import { Ne, is, De } from "../fs/async-hooks.93b1.js";
+ import { F, U, q, $c, rN, Mq, EYe, nns, tXr, rns, T2, A2, spe, mns, gns, vns, rXr, oXr, Ens, sXr, Odr, ye, Wr, Mrs, Rit, E_, J, Il, vee, uF } from "../context/not-admin-owned.js";
+@@ -6277,6 +6278,7 @@ function qfn() {
  }
  var ob = /* @__PURE__ */ new Set(["cyber", "frontier_llm"]);
  function iBo(e, { visibleRouteDeclined: n = false, apiRefusalCategory: r, responseSwapped: s = false } = {}) {
@@ -537,7 +567,7 @@ index ffd60bf..9f1fb93 100644
    if (!n && pbt(e)) return;
    if (!qfn()) return;
    let h = $n(e);
-@@ -7329,8 +7330,8 @@ async function pl(e, n) {
+@@ -7329,8 +7331,8 @@ async function pl(e, n) {
  function x5s(e) {
    pl(new Headers(), e);
  }
@@ -548,12 +578,12 @@ index ffd60bf..9f1fb93 100644
  }
  function tce() {
    let e = new Set(L5o());
-@@ -7343,7 +7344,7 @@ function E9n(e, n = []) {
+@@ -7343,7 +7345,7 @@ function E9n(e, n = []) {
    return e.map((s) => "name" in s ? s.name : `mcp__${s.type}`);
  }
  async function m$(e) {
 -  let { apiKey: n, maxRetries: r, model: s, fetchOverride: h, source: y, querySource: w = y, requestClass: S, agentContext: v, promptId: P, ccsSender: D, permissionContext: C, toolNames: M = [], classifierJudgesServedCall: A, credentials: L, storageV5: j, signal: K, clock: Q = Jl, noResponseRetryLedger: G } = e, ee = process.env.CLAUDE_CODE_CONTAINER_ID, X = process.env.CLAUDE_CODE_REMOTE_SESSION_ID, V = process.env.CLAUDE_AGENT_SDK_CLIENT_APP, re = cX() ? i.CLAUDE_CODE_SESSION_ORIGIN : void 0, te = Bf(v) ? void 0 : v, ie = a9n(), se = ie ? Qti(y, v, S) : void 0, ae = ie ? Zti(y, v) : void 0, ne = { userTurn: y !== "side_query" && Xti(w) && Mz() === void 0 && E_() === void 0 && (v.agentType === "main" || v.isBackgroundAgent === false) }, Be = ljt(), yt = await Op({ querySource: w, permissionContext: C, toolNames: M, classifierJudgesServedCall: A }), je = { ...ml(), ...Be, ...ZU(), ...ee && { "x-claude-remote-container-id": ee }, ...X && { "x-claude-remote-session-id": X }, ...re && { [UVr]: re }, ...V && { "x-client-app": V }, ...te?.agentId && { "x-claude-code-agent-id": kYr(te.agentId) }, ...te?.parentAgentId && { "x-claude-code-parent-agent-id": kYr(te.parentAgentId) }, ...se && { [x2t]: se }, ...ae && { [$Vr]: kYr(ae) }, ...ie && P !== void 0 && Kt(P) !== null && { [FVr]: P } };
-+  let { apiKey: n, maxRetries: r, model: s, fetchOverride: h, source: y, querySource: w = y, requestClass: S, agentContext: v, promptId: P, ccsSender: D, permissionContext: C, toolNames: M = [], classifierJudgesServedCall: A, credentials: L, storageV5: j, signal: K, clock: Q = Jl, noResponseRetryLedger: G, uploadIdentity } = e, ee = process.env.CLAUDE_CODE_CONTAINER_ID, X = process.env.CLAUDE_CODE_REMOTE_SESSION_ID, V = process.env.CLAUDE_AGENT_SDK_CLIENT_APP, re = cX() ? i.CLAUDE_CODE_SESSION_ORIGIN : void 0, te = Bf(v) ? void 0 : v, ie = a9n(), se = ie ? Qti(y, v, S) : void 0, ae = ie ? Zti(y, v) : void 0, ne = { userTurn: y !== "side_query" && Xti(w) && Mz() === void 0 && E_() === void 0 && (v.agentType === "main" || v.isBackgroundAgent === false) }, Be = ljt(), yt = await Op({ querySource: w, permissionContext: C, toolNames: M, classifierJudgesServedCall: A }), je = { ...ml(uploadIdentity?.sessionId), ...Be, ...ZU(), ...ee && { "x-claude-remote-container-id": ee }, ...X && { "x-claude-remote-session-id": X }, ...re && { [UVr]: re }, ...V && { "x-client-app": V }, ...te?.agentId && { "x-claude-code-agent-id": kYr(te.agentId) }, ...te?.parentAgentId && { "x-claude-code-parent-agent-id": kYr(te.parentAgentId) }, ...se && { [x2t]: se }, ...ae && { [$Vr]: kYr(ae) }, ...ie && P !== void 0 && Kt(P) !== null && { [FVr]: P } };
++  let { apiKey: n, maxRetries: r, model: s, fetchOverride: h, source: y, querySource: w = y, requestClass: S, agentContext: v, promptId: P, ccsSender: D, permissionContext: C, toolNames: M = [], classifierJudgesServedCall: A, credentials: L, storageV5: j, signal: K, clock: Q = Jl, noResponseRetryLedger: G, uploadIdentity } = e, ee = process.env.CLAUDE_CODE_CONTAINER_ID, X = process.env.CLAUDE_CODE_REMOTE_SESSION_ID, V = process.env.CLAUDE_AGENT_SDK_CLIENT_APP, re = cX() ? i.CLAUDE_CODE_SESSION_ORIGIN : void 0, te = Bf(v) ? void 0 : v, ie = a9n(), se = ie ? Qti(y, v, S) : void 0, ae = ie ? Zti(y, v) : void 0, ne = { userTurn: y !== "side_query" && Xti(w) && Mz() === void 0 && E_() === void 0 && (v.agentType === "main" || v.isBackgroundAgent === false) }, Be = ljt(), yt = await Op({ querySource: w, permissionContext: C, toolNames: M, classifierJudgesServedCall: A }), je = { ...ml(uploadIdentityFor(uploadIdentity, q())?.sessionId), ...Be, ...ZU(), ...ee && { "x-claude-remote-container-id": ee }, ...X && { "x-claude-remote-session-id": X }, ...re && { [UVr]: re }, ...V && { "x-client-app": V }, ...te?.agentId && { "x-claude-code-agent-id": kYr(te.agentId) }, ...te?.parentAgentId && { "x-claude-code-parent-agent-id": kYr(te.parentAgentId) }, ...se && { [x2t]: se }, ...ae && { [$Vr]: kYr(ae) }, ...ie && P !== void 0 && Kt(P) !== null && { [FVr]: P } };
    if (t(`[API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: ${!!process.env.ANTHROPIC_CUSTOM_HEADERS}, has Authorization header: ${!!Be.Authorization}`, { level: "verbose" }), i.CLAUDE_CODE_ADDITIONAL_PROTECTION) je["x-anthropic-additional-protection"] = "true";
    if (Ae() === "gateway" && !Wr() && !Rit()) {
      if (pd()) throw R_n("Cloud gateway");
@@ -623,18 +653,19 @@ index 7abd32b..70da82c 100644
    ar();
    let h = jf() && !r7();
 diff --git a/src/linux/core/conversation-engine.js b/src/linux/core/conversation-engine.js
-index 8b67836..bd08a4d 100644
+index 8b67836..d75df73 100644
 --- a/src/linux/core/conversation-engine.js
 +++ b/src/linux/core/conversation-engine.js
-@@ -1,5 +1,7 @@
+@@ -1,5 +1,8 @@
  // linux/core/conversation-engine.js — Claude Code 2.1.310（linux）模块 chunk-j0tbz6ra.js
  import { __asset_src, __asset_text } from "../../runtime/assets.js";
 +import { memoryReadGuard } from "../../runtime/memory-guard.js";
 +import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
++import { promptIdFor } from "../../runtime/upload-identity.js";
  import { tf } from "../shared/chunk-b5845da6.js";
  import { He, oqo, x_e, sqo, jer, Wer, JKr, Avt, CCe, zer, Ker } from "../telemetry/chunk-1bb3c64e.js";
  import { b, c, ce, Vr, Wq, Ku, Ka, $b, Hn, Xw, gJr } from "../agents/third-party.js";
-@@ -34897,8 +34899,7 @@ function TNs(e, n, r) {
+@@ -34897,8 +34900,7 @@ function TNs(e, n, r) {
    return yYe(e, n, r, n).includePaths;
  }
  function SKo(e) {
@@ -644,7 +675,7 @@ index 8b67836..bd08a4d 100644
  }
  function bKo() {
    return process.env.CLAUDE_COWORK_MEMORY_INDEX_CONTENT;
-@@ -35345,7 +35346,7 @@ async function OKo(e, n, r, s, h, y) {
+@@ -35345,7 +35347,7 @@ async function OKo(e, n, r, s, h, y) {
      await hH().warmCanonicalWcRoot();
      let ro = r7(), Do = bKo();
      if (!ro && Do !== "") {
@@ -653,7 +684,7 @@ index 8b67836..bd08a4d 100644
        if (Oo === null && Do === void 0 && !s && !$oe() && !i.CLAUDE_CODE_REMOTE && Ho && await T4t(e.host, To)) Oo = await Tr(p6t(ho));
        if (Oo) {
          let kr = nu(Oo.path);
-@@ -59422,6 +59423,7 @@ function nmn(e) {
+@@ -59422,6 +59424,7 @@ function nmn(e) {
  }
  var $0s = Object.freeze({ visibleModel: void 0, serverLane: void 0, shouldLogSuppression: false });
  function qOr(e) {
@@ -661,7 +692,7 @@ index 8b67836..bd08a4d 100644
    let n = $G(), r = g5s({ requestDialog: e.requestDialog, isMainThread: e.isMainThread, consumerLacksDialogCapability: e.consumerLacksDialogCapability }), s = e.inCascadeEpisode ? e.cascadeNext : XUo(e.currentModel), h = !e.alreadyUsed && !e.declined && n && !r ? s : void 0, y = h !== void 0 && !e.inCascadeEpisode && !e.threadedRequest && !e.preferenceQuestionPending && ZYs() && !Kp(e.sticky, Dj), S = y && tmn({ primaryModel: e.currentModel, sticky: e.sticky, serverDefaultFallbacksEnabled: e.serverDefaultFallbacksEnabled, selfTargetDefaultFallbacksEnabled: e.selfTargetDefaultFallbacksEnabled }) ? "default" : "explicit", w = y && (S === "default" || !mbt(e.currentModel, h)) ? { forModel: e.currentModel, model: h, mode: S } : void 0;
    return { visibleModel: h, serverLane: w, shouldLogSuppression: !e.suppressionAlreadyLogged && n && r && s !== void 0 };
  }
-@@ -61666,7 +61668,7 @@ function khn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
+@@ -61666,7 +61669,7 @@ function khn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
      a("tengu_auto_mode_context_withheld", { reason: b("field_over_ceiling"), bytes: h });
      return;
    }
@@ -670,7 +701,7 @@ index 8b67836..bd08a4d 100644
  }
  function Qgr(e, n, r, s, h, y) {
    let S = (Te, Ee, xe, Me, je, Ge) => {
-@@ -62863,7 +62865,7 @@ function tyr(e, n) {
+@@ -62863,7 +62866,7 @@ function tyr(e, n) {
    let r = n.effort === void 0 ? void 0 : Array(e.length), s = n.now === void 0 ? void 0 : Array(e.length), { effort: h, now: y } = n;
    for (let S = e.length - 1; S >= 0; S--) {
      let w = e[S];
@@ -679,7 +710,7 @@ index 8b67836..bd08a4d 100644
      if (r !== void 0) r[S] = h;
      if (s !== void 0) s[S] = y;
    }
-@@ -64982,7 +64984,7 @@ function K_r(e) {
+@@ -64982,7 +64985,7 @@ function K_r(e) {
    }
  }
  async function* V_r(e, n, r, s, h, y) {
@@ -688,16 +719,16 @@ index 8b67836..bd08a4d 100644
      let we = w.now(), Te = Lm(), Ee = r(be);
      s(Se, we, Ee.max_tokens);
      let xe = Ckr(Ee, $En);
-@@ -65439,7 +65441,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -65439,7 +65442,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
      a("tengu_off_switch_query", { tier: b("per_model_block") }), yield Xs({ content: Ee, error: "rate_limit" });
      return;
    }
 -  let xe = Y_r(e), Me = sWe(e, Q.agentContext), je = R5s(Q.agentContext, Me);
-+  let xe = Y_r(e), Me = Q.uploadIdentity?.promptId ?? sWe(e, Q.agentContext), je = R5s(Q.agentContext, Me);
++  let xe = Y_r(e), Me = promptIdFor(Q.uploadIdentity, sWe(e, Q.agentContext), q()), je = R5s(Q.agentContext, Me);
    if (je && Qs()) x5s(je);
    let Ge = Q_r(e), Je2 = J_r(e), rt = cHr(e), lt = KJe(e), ft = Ae() === "bedrock" && Q.model.includes("application-inference-profile") ? await a0e($n(Q.model)) ?? Q.model : Q.model;
    if (TRe(Q.model, Q.querySource), pEe()) await ehn(Q.model, Q.credentials, Q.storageV5);
-@@ -65772,7 +65774,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -65772,7 +65775,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
        l(N(Qn));
      }
    };
@@ -706,7 +737,7 @@ index 8b67836..bd08a4d 100644
    let J6 = Q.enablePromptCaching ?? Ile(Jt), RI = Q.forkPointUuid !== void 0 && Bf(Q.agentContext), AA = Cve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || RI ? Jt : void 0 }), BR = AA.ttl === "1h" ? "1h" : void 0, dE = kkr(AA.ttl) === "1h" ? "1h" : void 0, Pie = dE !== BR;
    if (ii) {
      if (Gts(BR === "1h" ? JA : oj, Q.model, AA.reason === "live_5m_cache"), Pie) Skr();
-@@ -65976,6 +65978,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -65976,6 +65979,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
        if (sRe(Qn, Q.agentId)) {
          let Da = W_n(e, Ys);
          if (eh = N_n({ engine: xi, previousMessageId: sr, anchorRewritten: Da !== null && U_n(Da, sr), messages: Ys, agentId: Q.agentId, model: Q.model, modelHeldStateless: CA, relayHeldStateless: H_, classifierHeldStateless: Q6, creditRetryStateless: Aie, dropHeldStateless: SLe, toolResultClearingHeldStateless: yE !== void 0, clock: Se }), Da !== null) G_n(Da, { sourceCategory: Qn, messageCount: Ys.length, anchorMessageId: sr });
@@ -714,7 +745,7 @@ index 8b67836..bd08a4d 100644
        }
      }
    }
-@@ -66124,7 +66127,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -66124,7 +66128,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
      Pf = B9t(Pf, dt);
      let Jh = eh !== null ? eh.shapeInheritedFields(kS, { system: HR, tools: Pf }) : { system: HR, tools: Pf };
      fw = HR, h$ = Pf, DW = Jh.system !== HR, NW = kS !== null;
@@ -723,7 +754,7 @@ index 8b67836..bd08a4d 100644
      OW = yE !== void 0 && Vc.context_management === wE, WI = lP && Vc.messages.some((Oa) => Oa.clear_at !== void 0);
      let Yc = H_r(Vc.thinking, Q.querySource, !yyt);
      if (Yc !== Vc.thinking) yyt = true, Vc.thinking = Yc;
-@@ -66693,7 +66696,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -66693,7 +66697,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
      yield* V_t.splice(0);
    }
    async function* Q_t(Qn, sr) {
@@ -732,7 +763,7 @@ index 8b67836..bd08a4d 100644
        let Qh = p$(dc);
        if (Qh !== void 0) return Qh;
        let bw = await jyt(dc);
-@@ -66799,7 +66802,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -66799,7 +66803,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
          }, ub);
        };
        if (Eh = void 0, og("query_client_creation_start"), Te) QR("request_build"), JR("client_creation");
@@ -741,7 +772,7 @@ index 8b67836..bd08a4d 100644
          if (zI === void 0) Yy("attempt_errored", Sl ?? null, null);
          if (Fy = Gl, VI = Tg.fastMode ?? false, j_ = Se.monotonicNow(), Eh = void 0, LW.push(j_), og("query_client_creation_end"), Te) QR("client_creation"), JR("request_build");
          let fh = GLe(Tg);
-@@ -70541,7 +70544,7 @@ async function $A(e, n, r, s) {
+@@ -70541,7 +70545,7 @@ async function $A(e, n, r, s) {
      }
      if (s?.planModeWriteFloor === true && Vye(r.session, e.name) === void 0 && D.behavior === "passthrough" && YRe(e, n, r)) return Yee(e);
    }
@@ -750,7 +781,7 @@ index 8b67836..bd08a4d 100644
    let K = bp(h, e, n, "ask");
    if (K) return D?.behavior === "ask" ? { ...D, matchedAskRule: K } : { behavior: "ask", decisionReason: { type: "rule", rule: K }, message: id(e.name) };
    if (eon(e, s?.hookUpdatedInput) && !(s?.hookAsked === true && !e.requiresUserInteraction?.())) return D?.behavior === "ask" ? D : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -70623,7 +70626,7 @@ async function Rwn(e, n, r, s, h = kE, y) {
+@@ -70623,7 +70627,7 @@ async function Rwn(e, n, r, s, h = kE, y) {
      else if (!Q) V = { behavior: "passthrough", message: id(e.name), checkIncomplete: true };
      if (V.behavior === "passthrough" && YRe(e, n, r)) V = V.checkIncomplete === true ? { ...Yee(e), checkIncomplete: true } : Yee(e);
    }
@@ -759,7 +790,7 @@ index 8b67836..bd08a4d 100644
    let Se = bp(S, e, n, "ask");
    if (Se) return V?.behavior === "ask" ? { ...V, matchedAskRule: Se } : { behavior: "ask", decisionReason: { type: "rule", rule: Se }, message: id(e.name) };
    if (e.requiresUserInteraction?.()) return V?.behavior === "ask" ? V : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -73262,7 +73265,7 @@ async function xEn(e, n) {
+@@ -73262,7 +73266,7 @@ async function xEn(e, n) {
      if (K.scrubCredentialEnv) Je2.push(Wai({ sandboxMasked: K.sandboxMaskedEnv }));
      let dt = K.shellToolCommand ? _Fs() : void 0;
      if (dt !== void 0) Je2.push(dt);
@@ -768,7 +799,7 @@ index 8b67836..bd08a4d 100644
      let St = Je2.join(" && "), mt = i.CLAUDE_CODE_SHELL_PREFIX;
      if (mt) St = ime(mt, St);
      return { commandString: St, cwdFilePath: xe };
-@@ -79018,6 +79021,7 @@ async function tBr(e, n) {
+@@ -79018,6 +79022,7 @@ async function tBr(e, n) {
  var nBr = /* @__PURE__ */ new Set(["extract_memories", "auto_dream", iwe, "prompt_suggestion", "compact"]);
  function bNs(e, n, r, s) {
    let h = n.memorySelector;
@@ -776,7 +807,7 @@ index 8b67836..bd08a4d 100644
    if (!h || n.agentId || nBr.has(r)) return;
    let y = jf() && $oe(), S = wxe?.isAccountRecallOn() === true && !UEt();
    if (!y && !S) return;
-@@ -97595,6 +97599,7 @@ import { chmod as hhs, mkdir as O1n, readFile as yhs, rename as dut, rm as uut,
+@@ -97595,6 +97600,7 @@ import { chmod as hhs, mkdir as O1n, readFile as yhs, rename as dut, rm as uut,
  import { dirname as D1n, join as cut, resolve as N1n, sep as _hs } from "path";
  var L1n = "https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official", F1n = "marketplaces/claude-plugins-official/";
  async function SKn(e, n, r) {
@@ -784,7 +815,7 @@ index 8b67836..bd08a4d 100644
    let s = N1n(n), h = N1n(e);
    if (h !== s && !h.startsWith(s + _hs)) return t(`fetchOfficialMarketplaceFromGcs: refusing path outside cache dir: ${e}`, { level: "error" }), null;
    await wTn();
-@@ -111910,6 +111915,7 @@ import { randomBytes as QEs } from "crypto";
+@@ -111910,6 +111916,7 @@ import { randomBytes as QEs } from "crypto";
  import { rmSync as JEs, watch as tht } from "fs";
  import { lstat as WNe, mkdir as ZEs, readdir as rht, readFile as eRs, unlink as tRs, writeFile as nRs } from "fs/promises";
  import { basename as Vgt, dirname as iQn, isAbsolute as oRs, join as z6, sep as PF } from "path";
@@ -792,7 +823,7 @@ index 8b67836..bd08a4d 100644
  var pQn = 5e3, rRs = 64, gQn = 256, sRs = 1e3, iRs = 8, aRs = 2e4, hQn = 3e4, lRs = 200, yQn = 250, aQn = { grace: 30, quiet: 60 }, lQn = 300, Gk = ve(/* @__PURE__ */ new Map(), () => {
    dRs();
  }), eb = /* @__PURE__ */ new Map(), SW = null, W6 = null, dQn = false;
-@@ -115904,7 +115910,7 @@ ${IF}`, isMeta: true })]);
+@@ -115904,7 +115911,7 @@ ${IF}`, isMeta: true })]);
    let n = XLr().safeParse(e);
    if (!n.success) return [];
    return Kl([Oe({ content: C1s(n.data.available, n.data.available && n.data.abbreviated), isMeta: true })]);
@@ -802,12 +833,12 @@ index 8b67836..bd08a4d 100644
    return e === "poll_events" || e === "project_doc_reads";
  }
 diff --git a/src/linux/core/query-loop.js b/src/linux/core/query-loop.js
-index ea66962..7e18812 100644
+index ea66962..fcf02ae 100644
 --- a/src/linux/core/query-loop.js
 +++ b/src/linux/core/query-loop.js
 @@ -1,4 +1,5 @@
  // linux/core/query-loop.js — Claude Code 2.1.310（linux）模块 chunk-tqjdehqd.js
-+import { newUploadIdentity } from "../../runtime/upload-identity.js";
++import { newUploadIdentity, adoptUploadIdentity, isDeliveredResponse } from "../../runtime/upload-identity.js";
  import { Snn, Whi, Mjn, MPs, QCr, DPs, HPs, Djn, LPs, NPs, wnn, vnn, Pvo, ON, eXe, ege, Ljn, Ivo, Njn, V1e, $jn, rle, sLt, UPs, Enn, GPs, zPs, Mvo, eRr, jjn, tge, KPs, VPs, fpt, kk, _c, xnn, Pnn, Inn, Mnn, _Is, Xp, E3, Tpt, Jnn, POs, KRr, Qnn, lf, qOs, CWn, gXe, ULt, OJ, Rk, cGn, uGn, NMs, $Ms, zxr, Ypt, Kxr, Xpt, zMs, KMs, bge, AL, rne, wko, lke, Op, Sje, Qxr, o0t, Zxr, tPr, TS, QMs, hGn, wge, mle, nPr, SK, sne, rPr, Rko, xko, ZMs, _1, vge, CXe, Dko, nDs, Hko, EGn, d0t, LC, TGn, oMe, vje, lDs, dDs, cDs, mDs, m0t, pPr, bDs, kE, PXe, Yko, Xko, Jko, gPr, Qko, TDs, iMe, HGn, LGn, NA, MXe, LDs, lTo, fmt, wPr, IPr, wTo, czn, x0t, Yrn, Fmt, NJ, zXe, mAo, dLs, rNt, J4, Nge, eJe, qmt, JAo, $ge, lNt, $C, eCo, b2n, tCo, nCo, xL, kK, XLs, JR, QR, Xon, v2n, o0s, sgt, M0s, rWe, INt, PCo, L0s, UOr, ICo, U2n, ONt, B2n, F3, hO, zOr, W2n, KOr, VOr, $0s, qOr, F0s, U0s, DCo, igt, j0s, W0s, YOr, XOr, E1, HCo, QOr, LCo, ZOr, eMr, z2n, FCo, tMr, z0s, BCo, V2n, hsn, og, V0s, q0s, X0s, jCo, J0s, sMr, NNt, UN, vsn, dWe, bNs, SNs, wNs, nRo, Dke, nn, cWe, jge, wMr, zNt, KNt, ex, VNt, gRo, ksn, MMr, vRo, ONs, DMr, NNs, Myi, RRo, Xge, Zg, MK, qN, DK, Kle, Rin, nQ, wPo, Ld, Xs, vPo, Oe, LT, rQ, pm, xPo, L$t, UC, Yh, YN, wy, Bt, W$s, z$s, Yle, SVn, Xke, QMe, K$s, Jke, NK, Q$s, ZMe, Z$s, Qke, VPo, cFs, uFs } from "./conversation-engine.js";
  import { Kt } from "../shared/chunk-3b9c376b.js";
  import { Ne, is } from "../fs/async-hooks.93b1.js";
@@ -875,6 +906,15 @@ index ea66962..7e18812 100644
              if (w.type === "tool_drain_tick") {
                yield* Qn();
                continue;
+@@ -4356,7 +4358,7 @@ async function* Ou(e, o, n, r) {
+       let M = await Co;
+       if (M) yield M;
+     }
+-    if (V.transition?.reason === "refusal_retry") od({ sentOn: V.transition.model, servedBy: Ae, lastMessage: se.at(-1), withheldRecoverable: No });
++    if (V.transition?.reason === "refusal_retry") od({ sentOn: V.transition.model, servedBy: Ae, lastMessage: se.at(-1), withheldRecoverable: No }), isDeliveredResponse(se.at(-1)) && !S.abortController.signal.aborted && adoptUploadIdentity(V.transition.uploadIdentity, q());
+     if (V.transition?.reason === "malformed_tool_use_retry") {
+       let M = se.at(-1);
+       a("tengu_malformed_tool_use_retry_outcome", { model: wt(Ae), retry_count: Ln, outcome: c(_u(Ht.length, M?.message.stop_reason ?? Hn, M?.isApiErrorMessage, Ln)) });
 @@ -4395,12 +4397,13 @@ async function* Ou(e, o, n, r) {
          let ne = wn(Me.streamingToolExecutor, "same_model_retry");
          if (G = ne.removes, Me.rebuildStreamingToolExecutor(), ne.startedToolUseIds.length > 0) di(S.options, Dn);
@@ -892,10 +932,16 @@ index ea66962..7e18812 100644
      if (nr(sn) && sn === No) yield* xi(sn);
      if (!Me.needsFollowUp) {
 diff --git a/src/linux/core/system-prompt-blocks.js b/src/linux/core/system-prompt-blocks.js
-index 95085fa..1ab5541 100644
+index 95085fa..2216288 100644
 --- a/src/linux/core/system-prompt-blocks.js
 +++ b/src/linux/core/system-prompt-blocks.js
-@@ -172,14 +172,14 @@ function sIo(e, n) {
+@@ -1,4 +1,5 @@
+ // linux/core/system-prompt-blocks.js — Claude Code 2.1.310（linux）模块 chunk-f7aya6cs.js
++import { uploadIdentityFor } from "../../runtime/upload-identity.js";
+ import { Ne, De } from "../fs/async-hooks.93b1.js";
+ import { wn, U, q, ATn, ye } from "../context/not-admin-owned.js";
+ import { b, c, ce } from "../agents/third-party.js";
+@@ -172,14 +173,14 @@ function sIo(e, n) {
    if (S) y.push({ text: S, cacheScope: "org" });
    return y;
  }
@@ -908,7 +954,7 @@ index 95085fa..1ab5541 100644
      else t(`CLAUDE_CODE_EXTRA_METADATA env var must be a JSON object, but was given ${s}`, { level: "error" });
    }
 -  let d = {}, f, m = jx(), h = Ne(i.CLAUDE_CODE_REMOTE) && Fn() ? W0e(e) : void 0, y = { ...f && { ti: f }, device_id: _H(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || rA()?.accountUuid || gn()?.accountUuid || "", session_id: q(), ...m && { parent_session_id: m }, ...h && { tk: h } }, S = { ...d, ...r, ...y };
-+  let d = {}, f, m = jx(), h = Ne(i.CLAUDE_CODE_REMOTE) && Fn() ? W0e(e) : void 0, y = { ...f && { ti: f }, device_id: uploadIdentity?.deviceId ?? _H(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || rA()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentity?.sessionId ?? q(), ...m && { parent_session_id: m }, ...h && { tk: h } }, S = { ...d, ...r, ...y };
++  let d = {}, f, m = jx(), h = Ne(i.CLAUDE_CODE_REMOTE) && Fn() ? W0e(e) : void 0, y = { ...f && { ti: f }, device_id: uploadIdentityFor(uploadIdentity, q())?.deviceId ?? _H(), account_uuid: Ne(i.CLAUDE_CODE_REMOTE) && i.CLAUDE_CODE_ACCOUNT_UUID || rA()?.accountUuid || gn()?.accountUuid || "", session_id: uploadIdentityFor(uploadIdentity, q())?.sessionId ?? q(), ...m && { parent_session_id: m }, ...h && { tk: h } }, S = { ...d, ...r, ...y };
    if ((Object.keys(r).length > 0 || Object.keys(d).length > 0) && _(S).length > ie) {
      if (S = { ...d, ...y }, _(S).length > ie) S = y;
    }
