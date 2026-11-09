@@ -126,4 +126,10 @@ describe("手写文档", () => {
     expect(bad).toEqual([]);
     expect(checked).toBeGreaterThan(0);
   });
+
+  test("不用 Markdown 链接指向某个系统的生成源码", () => {
+    const RE_LINK = new RegExp(String.raw`\]\((?:\.\.?/)*src/(?:${Object.keys(SYSTEMS).join("|")})/[^)]*\)`, "g");
+    const bad = DOCS.flatMap((doc) => [...fs.readFileSync(path.join(ROOT, doc), "utf8").matchAll(RE_LINK)].map(([link]) => `${doc}: ${link}`));
+    expect(bad).toEqual([]);
+  });
 });

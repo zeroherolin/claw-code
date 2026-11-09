@@ -69,7 +69,7 @@ npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 ## 测试
 
 ```sh
-npm test               # 单元、完整性、冒烟测试（几秒钟）
+npm test               # 单元、完整性、冒烟测试（十几秒）
 npm run test:parity    # 与当前平台的官方可执行程序逐项对比（约 3 分钟）
 ```
 
