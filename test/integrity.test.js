@@ -106,7 +106,7 @@ describe("手写文档", () => {
   // 文档用“路径”或“路径「特征字符串」”指向生成源码，例如 `core/query-loop.js`「hook_stopped_continuation」：
   // 不写某个系统的行号和混淆名，路径与特征字符串须在每个系统中都成立；
   // 只属于某个系统的写成 `src/<系统>/…`，只在该系统中检查。
-  const DOCS = ["README.md", "docs/architecture.md", "docs/runtime.md", "extract/README.md"];
+  const DOCS = ["README.md", "docs/architecture.md", "docs/runtime.md", "docs/identifiers.md", "extract/README.md"];
   const areas = [...new Set(Object.values(trees).flatMap((t) => [...t.keys()].map((p) => p.split("/")[0])))].filter((d) => !d.endsWith(".js"));
   const RE = new RegExp(String.raw`(?<![\w./-])\`(?:src/(${Object.keys(SYSTEMS).join("|")})/)?((?:${areas.join("|")})/[\w./-]+\.js|cli\.js)\`(?:「([^」]+)」)?`, "g");
 
@@ -125,5 +125,11 @@ describe("手写文档", () => {
     }
     expect(bad).toEqual([]);
     expect(checked).toBeGreaterThan(0);
+  });
+
+  test("不用 Markdown 链接指向某个系统的生成源码", () => {
+    const RE_LINK = new RegExp(String.raw`\]\((?:\.\.?/)*src/(?:${Object.keys(SYSTEMS).join("|")})/[^)]*\)`, "g");
+    const bad = DOCS.flatMap((doc) => [...fs.readFileSync(path.join(ROOT, doc), "utf8").matchAll(RE_LINK)].map(([link]) => `${doc}: ${link}`));
+    expect(bad).toEqual([]);
   });
 });

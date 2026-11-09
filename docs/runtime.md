@@ -8,7 +8,7 @@
 | 内嵌的 ripgrep / bfs / ugrep（argv0 分发） | `embedded-tools.js` 按 argv0 转交给系统工具 |
 | 模块图里 hash 命名的虚拟文件 `/$bunfs/root/<name>` | `assets.js` 按逻辑路径定位 `assets/` 与 `src/` |
 
-原版代码本身只改了排版和引用路径（Linux 版另把写死的架构名改回 `process.arch`，见 [extract/README.md](../extract/README.md#架构还原)），没有因为这些差异改动任何逻辑。`dev` 分支例外：时区、遥测、GPU 信息与记忆内容有意与原版不同，见[固定的环境变量](#固定的环境变量)。
+原版代码本身只改了排版和引用路径（Linux 版另把写死的架构名改回 `process.arch`，见 [extract/README.md](../extract/README.md#架构还原)），没有因为这些差异改动任何逻辑。`dev` 分支例外：有意与原版不同的行为见[固定的环境变量](#固定的环境变量)及其后各节。
 
 入口 `src/main.js` 按 `process.platform` 加载 `src/darwin/` 或 `src/linux/`；平台不在 `src/runtime/platforms.js` 中时提示并退出。
 
@@ -193,7 +193,7 @@ external: ["/$bunfs/*", "./*", "../*"],
 
 实测（隔离 HOME，本地 MITM 代理，假 API 直连，环境和 settings.json 都故意把该变量设成空串）：`-p` 与交互界面启动后都没有任何外部请求；只剩发往 `ANTHROPIC_BASE_URL` 的模型对话。真实登录后的 OAuth 刷新等请求只读了代码，没有实测。
 
-关闭遥测的代价：GrowthBook 不再拉取，特性开关只用离线默认值；从 Claude Desktop 远程发起到本机的 Remote Control 会话可能被拒绝（原版提示 "feature-flag evaluation is off"）。
+关闭遥测的代价：GrowthBook 不拉取，特性开关只用离线默认值；从 Claude Desktop 远程发起到本机的 Remote Control 会话可能被拒绝（原版提示 "feature-flag evaluation is off"）。
 
 下面的改动作用于两个系统的生成代码，统一保存在 `extract/patches/2.1.310.patch`。`npm run extract` 会在临时目录自动校验并应用补丁，全部成功后才替换项目源码；升级时须迁移补丁，不匹配或缺失时提取直接失败：
 
@@ -201,17 +201,17 @@ external: ["/$bunfs/*", "./*", "../*"],
 |---|---|
 | `core/conversation-engine.js`「export TZ=America/Los_Angeles」 | Bash 工具的每条命令在 `eval` 前导出固定的 `TZ`，排在 shell 快照、`~/.zshenv` 与 SessionStart hook 环境脚本之后，用户的 shell 配置覆盖不了 |
 | `core/conversation-engine.js`「Number.isNaN(Date.parse(w.perTurnTiming))」 | 续上旧会话时，记录中保存的每轮时间戳按固定时区重新格式化后再发送 |
-| `mcp/bridge-host-profile-collect.js` | Remote Control 主机画像不再探测 `nvidia-smi`、`/usr/local/cuda/version.json`、`/proc/driver/nvidia/version` |
-| `vendor/google-auth/xcode-project.js` | 项目扫描不再识别 CUDA 项目（`.cu`/`.cuh`、CMake、conda），`tengu_init` 的 `os_locked_toolchain` 不会为 `cuda` |
+| `mcp/bridge-host-profile-collect.js` | Remote Control 主机画像不探测 `nvidia-smi`、`/usr/local/cuda/version.json`、`/proc/driver/nvidia/version` |
+| `vendor/google-auth/xcode-project.js` | 项目扫描不识别 CUDA 项目（`.cu`/`.cuh`、CMake、conda），`tengu_init` 的 `os_locked_toolchain` 不会为 `cuda` |
 | `core/conversation-engine.js`「(path only; contents not loaded)」 | 消息里的 `MEMORY.md`（含宿主经 `CLAUDE_COWORK_MEMORY_INDEX_CONTENT` 注入的索引）只检查文件是否存在，正文换成这一句占位文本，路径照发 |
-| `core/conversation-engine.js`「if (true) return; // 记忆内容不发送」 | 关闭相关记忆召回：选择器不再把记忆文件的描述发给模型，召回的正文也不再放进消息 |
-| `core/conversation-engine.js`「cowork_memory_context: () => [], account_memory_recall: () => []」 | 账号记忆与 cowork 记忆快照不再渲染进消息 |
+| `core/conversation-engine.js`「if (true) return; // 记忆内容不发送」 | 关闭相关记忆召回：选择器不把记忆文件的描述发给模型，召回的正文也不放进消息 |
+| `core/conversation-engine.js`「cowork_memory_context: () => [], account_memory_recall: () => []」 | 账号记忆与 cowork 记忆快照不渲染进消息 |
 | `context/org-memory-writes-setting-changed.js`「Memory access policy」 | 系统提示词的 `# Memory` 一节后追加一段：只发了记忆文件的路径，用户没有明确要求时不要读取、搜索或打开记忆目录里的文件；子代理记忆与团队记忆索引同样只给路径 |
-| `context/extract-memories-extraction.js`「记忆内容不发送：不运行后台记忆提取」 | 不再运行后台记忆提取（它会把已有记忆的清单和对话发给模型） |
-| `context/auto-dream-skipped.js`「记忆内容不发送：不运行记忆整理」 | 不再运行记忆整理（它会把记忆文件读给模型） |
-| `core/conversation-engine.js`「redactClassifierContext」 | 发往服务端分类器的 `safeguards.classifier_context` 在构造函数（darwin 的 `bhn`、linux 的 `khn`）返回前统一脱敏，见下文「safeguards 脱敏」 |
-| `core/conversation-engine.js`「非必要流量已关闭：不下载官方插件市场」 | 官方插件市场从 GCS 下载的函数（darwin 的 `B6n`、linux 的 `SKn`）开头加一道 essential-traffic 判断。原版这一处没有检查该开关，设了变量仍会访问 `downloads.claude.ai` |
-| `core/conversation-engine.js`「memoryReadGuard」 | 权限检查链（`BT` / `wwn`，darwin 与 linux 的变量名不同）在 `tool.checkPermissions` 及其后的几步之后，追加一步 `memoryReadGuard`，见下文「读取记忆文件需要确认」 |
+| `context/extract-memories-extraction.js`「记忆内容不发送：不运行后台记忆提取」 | 不运行后台记忆提取（它会把已有记忆的清单和对话发给模型） |
+| `context/auto-dream-skipped.js`「记忆内容不发送：不运行记忆整理」 | 不运行记忆整理（它会把记忆文件读给模型） |
+| `core/conversation-engine.js`「redactClassifierContext」 | 发往服务端分类器的 `safeguards.classifier_context` 在构造它的函数返回前统一脱敏，见下文「safeguards 脱敏」 |
+| `core/conversation-engine.js`「非必要流量已关闭：不下载官方插件市场」 | 官方插件市场从 GCS 下载的函数开头加一道 essential-traffic 判断。原版这一处没有检查该开关，设了变量仍会访问 `downloads.claude.ai` |
+| `core/conversation-engine.js`「memoryReadGuard」 | 权限检查链在 `tool.checkPermissions` 及其后的几步之后，追加一步 `memoryReadGuard`，见下文「读取记忆文件需要确认」 |
 | `permissions/classifier-transcript-too-long.js`「memoryRead:」 | 断路器表新增 `memoryRead`，与 `outsideReadsBlocked` 同级：`bypassImmune`（bypassPermissions 模式也要问）、不走分类器、只能由人回答 |
 | `core/query-loop.js`「REFUSAL_RETRY_MAX」 | 同模型重试从 1 次改为最多连续 10 轮（`refusalRetrySpent` 由布尔值改成计数，上一步不是拒答重试就按 0 起算），每轮的界面提示带轮数 `(n/10)`；第 10 轮之后仍被拦截，补齐没执行的工具结果后正常结束本轮，把拒答作为 API 错误输出，不再继续请求 |
 | `core/conversation-engine.js`「拒答后不切换模型」 | 拒答后回退模型的选择函数（darwin 的 `mMr`、linux 的 `qOr`）不再给出任何回退模型，原版的“换模型并继续”提示与静默换模型都不会触发 |
@@ -263,7 +263,14 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，原
 
 任何会读到记忆目录里的文件的工具调用，一律先询问用户，不论权限模式、allow 规则、hook 还是自动模式的分类器怎么判断。实现在 `src/runtime/memory-guard.js`，由权限检查链在 `tool.checkPermissions` 之后调用；返回的是带 `safetyCheck` 的 `ask`，断路器名 `memoryRead`，`personOnly`，`hooksMayAllow: false`，`suppressAlwaysAllowRule: true`，所以 hook 的 allow 不起作用，界面上也不提供「以后都允许」。
 
-记忆目录包括：自动记忆目录（`<配置目录>/projects/<项目>/memory`，也含其他项目的）、`<配置目录>`、`~/.claude`、当前项目 `.claude` 下的 `agent-memory` 与 `agent-memory-local`，以及设置了 `CLAUDE_CODE_REMOTE_MEMORY_DIR` 时它下面的 `agent-memory` 与 `projects`。
+记忆目录包括：
+
+- 当前项目的自动记忆目录，取原版解析出的路径，通常是 `<配置目录>/projects/<项目>/memory`；
+- 其他项目的自动记忆目录：`<配置目录>/projects/*/memory` 与 `~/.claude/projects/*/memory`；
+- `agent-memory` 与 `agent-memory-local`：`<配置目录>`、`~/.claude` 与当前项目 `.claude` 下的这两个目录，以及任何位置上的 `.claude/agent-memory`、`.claude/agent-memory-local`；
+- 设置了 `CLAUDE_CODE_REMOTE_MEMORY_DIR` 时，它下面的 `agent-memory` 与 `projects`。
+
+`<配置目录>` 与 `~/.claude` 中的其他文件（`settings.json`、会话记录等）不在记忆目录里，直接读取不触发这项询问。
 
 | 调用 | 如何判断 | 可靠程度 |
 |---|---|---|
@@ -294,14 +301,14 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，原
 
 `npm run install-cli`（`scripts/install.js`）先构建，再在 `~/.local/bin` 创建符号链接 `claw-code -> <项目>/dist/claude`。只有一个链接，重新构建后立即生效。`--bin-dir <目录>` 换安装目录，`--name <名字>` 换命令名（不接受 `claude`），`--no-build` 跳过构建，`--uninstall` 卸载。不覆盖不是自己创建的文件（要覆盖加 `--force`），卸载只删除指向本项目 `dist/claude` 的链接。
 
-**共享的**：配置目录（`~/.claude` 或 `CLAUDE_CONFIG_DIR`）下的会话记录、`settings.json`、skills、插件、记忆，全局配置 `~/.claude.json`，以及登录凭据——钥匙串条目名只取决于配置目录，与可执行文件无关（读代码得出，`auth/claude-code-user.js` 的 `Jj`，没有用真实钥匙串测过）。实测原版 2.1.292 写的会话，`claw-code --continue` 能续上并带出历史，反过来也行。
+**共享的**：配置目录（`~/.claude` 或 `CLAUDE_CONFIG_DIR`）下的会话记录、`settings.json`、skills、插件、记忆，全局配置 `~/.claude.json`，以及登录凭据——钥匙串条目名只取决于配置目录（设置了 `CLAUDE_SECURESTORAGE_CONFIG_DIR` 时取它），与可执行文件无关（读代码得出，`auth/claude-code-user.js`「OAUTH_FILE_SUFFIX」，没有用真实钥匙串测过）。实测原版 2.1.292 写的会话，`claw-code --continue` 能续上并带出历史，反过来也行。
 
 **会冲突的两处，已关掉**：
 
 | 位置 | 改动 |
 |---|---|
-| `fs/deep-link-register-failed.js` 的注册函数（darwin 的 `Rls`、linux 的 `hls`） | 不再自动注册 `claude-cli://` 处理程序。原版每次交互使用提交第一条消息后，发现处理程序没指向当前可执行文件就改注册到自己，会抢走已安装的 `claude` 的注册（macOS 上是 `~/Applications/Claude Code URL Handler.app`，Linux 上是 `.desktop` 文件）。从网页深链接拉起的仍是原版 |
-| `fs/auto-updater-forced-downgrade.js` 的 `update` / `upgrade`，`fs/setup-token-command.js` 的 `install`（darwin 的 `xki`、linux 的 `VEi`） | 直接提示后退出。`update` 会下载官方版本，并把共享配置里的 `installMethod` 改成 `native`；`install` 会把官方原生版本装进 `~/.local/bin/claude`。升级 claw-code 的办法是更新项目后重新执行 `npm run install-cli` |
+| `fs/deep-link-register-failed.js`「不注册 claude-cli:// 处理程序」 | 不自动注册 `claude-cli://` 处理程序。原版每次交互使用提交第一条消息后，发现处理程序没指向当前可执行文件就改注册到自己，会抢走已安装的 `claude` 的注册（macOS 上是 `~/Applications/Claude Code URL Handler.app`，Linux 上是 `.desktop` 文件）。从网页深链接拉起的仍是原版 |
+| `fs/auto-updater-forced-downgrade.js`「claw-code does not update itself」（`update` / `upgrade`），`fs/setup-token-command.js`「claw-code does not install itself」（`install`） | 直接提示后退出。`update` 会下载官方版本，并把共享配置里的 `installMethod` 改成 `native`；`install` 会把官方原生版本装进 `~/.local/bin/claude`。升级 claw-code 的办法是更新项目后重新执行 `npm run install-cli` |
 
 **共用同一个配置目录的其他状态**：`~/.claude.json` 里的 `lastOnboardingVersion`、`numStartups` 等字段两边都会写；后台守护进程、会话锁等运行时状态也在同一个配置目录里。这几项没有专门测过两个版本同时运行的情形，只验证了上面说的会话互通。
 

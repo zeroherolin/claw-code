@@ -1,6 +1,6 @@
 # 标识信息与发送位置
 
-本页依据当前 dev 的源码和隔离 HOME 下的假 API 验证整理。只记录字段和数据流，不记录真实账号、设备或凭据的值。两个平台使用相同的语义路径，下面链接以 macOS 源码为例。
+本页依据当前 dev 的源码和隔离 HOME 下的假 API 验证整理。只记录字段和数据流，不记录真实账号、设备或凭据的值。下文的模块路径对两个系统都成立，位置用"路径「特征字符串」"标注，写法同 [architecture.md](architecture.md)。
 
 关闭遥测和非必要网络流量不会删除本地标识，也不会去掉模型请求中的标识。普通 Messages 请求仍有：
 
@@ -12,7 +12,7 @@
 }
 ```
 
-`metadata.user_id` 是一个 JSON 字符串，内部还有一层对象。子会话可以增加 `parent_session_id`，特定远程路由可以增加 `tk`；`CLAUDE_CODE_EXTRA_METADATA` 可以附加额外字段。组装见 [system-prompt-blocks.js](../src/darwin/core/system-prompt-blocks.js) 的 `function t2e`。默认请求头 `X-Claude-Code-Session-Id` 也携带当前会话 ID，见 [anthropic-client.js](../src/darwin/api/anthropic-client.js) 的 `function ml`。
+`metadata.user_id` 是一个 JSON 字符串，内部还有一层对象。子会话可以增加 `parent_session_id`，特定远程路由可以增加 `tk`；`CLAUDE_CODE_EXTRA_METADATA` 可以附加额外字段。组装见 `core/system-prompt-blocks.js`「CLAUDE_CODE_EXTRA_METADATA env var must be a JSON object」。默认请求头 `X-Claude-Code-Session-Id` 也携带当前会话 ID，见 `api/anthropic-client.js`「"cli-bg"」。
 
 服务端拒答后的每次同模型重试生成一份临时上传身份：会话 UUID、设备 ID（32 个随机字节的十六进制，与 `userID` 同形）和提示 UUID。会话 ID 用于 `metadata.user_id.session_id` 与 `X-Claude-Code-Session-Id`，设备 ID 用于 `metadata.user_id.device_id`，提示 ID 用于 `x-claude-code-prompt-id` 与系统提示词首段账单头里的 `cc_prompt_id`；原本会续接的 `thread.continue` 改为 `thread.create`。该身份只替换发往服务端的值，不替换本地会话 ID 或磁盘上的 `userID`，也不改变持久化记录、`--continue`、账号 ID、鉴权、父子会话、Agent、工具调用或本地消息 UUID。重试请求也不指向被拦截的那一次：系统提示词首段账单头不带 `cc_prev_req`，请求体 `diagnostics.previous_message_id` 为 `null`；重试得到完整的响应（不是拒答、不是错误；输出被 `max_tokens` 或上下文窗口截断也算，因为服务端已受理）后，该身份被采用：此后所有发往模型的请求，包括同一问的工具轮、标题等辅助请求、下一条消息和子代理，都沿用它，不再回到原来的 ID，并照常指向上一次成功的请求和消息；下一次重试成功再换成新的一份。重试又被拒或遇到 API 错误，那一份作废；连续 10 轮用尽也不采用，之后的请求沿用此前采用的身份，没有就用本地 ID。会话 ID 记在本地会话名下，设备 ID 在进程内通用；/clear 或 /resume 换了本地会话时，会话 ID 用新会话自己的。采用的身份只在进程内存里，不写盘，重启进程（含 `--continue`）从本地 ID 开始。仍与被拦截那一轮相同的有：消息历史（被拦截那一轮的提问、已输出的文字，以及 `tool_use` 的 id 和对应的 `tool_result`）和 `account_uuid`；保留历史是保留已做部分的前提，这些换不掉。一次提问里的提示 ID 随请求头 `x-claude-code-prompt-id` 与账单头 `cc_prompt_id` 一起换，同一问的工具轮沿用换过的，下一问是新生成的。自定义 `ANTHROPIC_BASE_URL`（中转站）下，`x-claude-code-prompt-id`、`x-client-request-id`、`cc_prev_req`、`diagnostics` 和消息线程本来就不发送，只更换 `metadata.user_id` 里的会话 ID、设备 ID 和 `X-Claude-Code-Session-Id`。`x-client-request-id` 与查询链 ID 本来就是每个请求各自生成，不在其中。实现和端到端验证见 `docs/runtime.md` 的「拒答后的重试与换模型」。
 
@@ -35,13 +35,22 @@
 
 全局配置通常是 `~/.claude.json`；配置目录和存储后端可改变位置。默认安装的 `claw-code` 与官方 `claude` 共用配置、会话和登录凭据，因此通常也会复用上述持久化 ID。分开命令名本身不建立独立身份。
 
-另有 `summonSidKey`：全局配置中的 32 字节随机密钥，用来通过 HMAC 派生 16 位十六进制的会话标记，见 [artifact-changed.js](../src/darwin/tasks/artifact-changed.js) 的 `createHmac`。这属于本地密钥，不是适合公开的设备 ID。
+另有 `summonSidKey`：全局配置中的 32 字节随机密钥，用来通过 HMAC 派生 16 位十六进制的会话标记，见 `tasks/artifact-changed.js`「createHmac」。这属于本地密钥，不是适合公开的设备 ID。
 
 来源：
 
-- [global-config-and-gates.js](../src/darwin/settings/global-config-and-gates.js)：`function EH`、`function Jvt`、`function z4o`、`remoteControlMachineId`、`oauthAccount`。
-- [not-admin-owned.js](../src/darwin/context/not-admin-owned.js)：会话创建 `function Er` 与当前会话 `function V`；[chunk-3b9c376b.js](../src/darwin/shared/chunk-3b9c376b.js)：UUID 和本地代理 ID 的生成。
-- [device-key-store.js](../src/darwin/auth/device-key-store.js)：P-256 密钥、账号键控存储与远程设备注册；[bridge-env-reregister.js](../src/darwin/remote/bridge-env-reregister.js)：桥接环境与主机注册。
-- [claude-code-error-tracking.js](../src/darwin/remote/claude-code-error-tracking.js)：`host_name_redacted`；[mcp-session-id.js](../src/darwin/auth/mcp-session-id.js)：MCP 传输会话。
+| 内容 | 位置 |
+|---|---|
+| `userID` 的生成与保存 | `settings/global-config-and-gates.js`「generatedUserID」 |
+| `machineID` 的生成与保存 | `settings/global-config-and-gates.js`「generatedMachineID」 |
+| `summonSidKey` 的生成与保存 | `settings/global-config-and-gates.js`「generatedSummonSidKey」 |
+| `remoteControlMachineId` | `settings/global-config-and-gates.js`「remoteControlMachineId」 |
+| `oauthAccount`（账号与组织 UUID） | `settings/global-config-and-gates.js`「oauthAccount」 |
+| 会话的创建与当前会话 ID | `context/not-admin-owned.js`「project: { originalCwd」 |
+| UUID 与本地代理 ID 的生成 | `shared/chunk-3b9c376b.js`「randomUUID」 |
+| P-256 设备密钥、账号键控存储与远程设备注册 | `auth/device-key-store.js`「Claude Code-device-keys」；文件后端的文件名在 `shell/sandbox.js`「".device-keys.json"」 |
+| 桥接环境与主机注册 | `remote/bridge-env-reregister.js`「machine_id」 |
+| 错误上报的 `host_name_redacted` | `remote/claude-code-error-tracking.js`「host_name_redacted」 |
+| MCP 传输会话 | `auth/mcp-session-id.js`「mcp-session-id」 |
 
 隔离验证：同一个临时 HOME 连续启动两个独立会话，确认 `device_id` 都是 64 位且保持相同，`session_id` 改变，会话请求头等于 metadata 中的会话 ID，假 API key 环境的 `account_uuid` 为空串。此验证没有使用真实账号；OAuth、设备注册和云服务 ID 的说明依据源码。
