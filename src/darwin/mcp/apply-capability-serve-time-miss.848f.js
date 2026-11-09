@@ -1,5 +1,6 @@
 // darwin/mcp/apply-capability-serve-time-miss.848f.js — Claude Code 2.1.310（darwin）模块 chunk-pghmrbdg.js
 import { __asset_src } from "../../runtime/assets.js";
+import { mcpClientSessionId } from "../../runtime/upload-identity.js";
 import { fOe, Dte, v9, _en, ea, mOe, H$, gOe, cUn, kCr, ipt, ave, wUn, CCr, K8e, ben, TCr, wen, ACr, Een, RCr, ven, EUn, P0t, lve, H_o, ken, D_o, PCr, q8e, I0t, ICr, aBe, O0t, lBe, OCr, MCr, Mi } from "../vendor/mcp-sdk/input-required.88fd.js";
 import { V8e, S7, x0t, hen, iUn, yen, aUn, lUn } from "../vendor/mcp-sdk/input-required.1d23.js";
 import "../fs/chunk-1ddab6d4.js";
@@ -1896,7 +1897,7 @@ var Qe = h1n(async (e, r, n, s, h, y, T) => {
       se(e, `Using claude.ai proxy at ${x}`);
       let Q = oa({ url: x }), fe = Cn(Tt(Zut(void 0, Q)), h), ge = YUn(), Se = ge || kt(r);
       if (Se) se(e, ge ? "GET notification stream disabled for claude.ai connectors; a GET the SDK sends to the proxy URL is answered locally with 405" : "GET notification stream disabled (stateless connector); if the SDK requests it, it gets a local 405");
-      let Ne = { fetch: Se ? Oo(Bt(fe, r), x) : Bt(fe, r), requestInit: { ...Q, headers: { "User-Agent": N4(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": V() } } };
+      let Ne = { fetch: Se ? Oo(Bt(fe, r), x) : Bt(fe, r), requestInit: { ...Q, headers: { "User-Agent": N4(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": mcpClientSessionId } } };
       J = new Q$n(new URL(x), Ne), se(e, "claude.ai proxy transport created successfully");
     } else if ($Y(r) && vE(e)) {
       let { isClaudeInChromeAllowed: M } = await import("../ide/adopt-hosted-claude-in-chrome.js");

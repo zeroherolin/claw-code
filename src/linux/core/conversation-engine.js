@@ -2,7 +2,7 @@
 import { __asset_src, __asset_text } from "../../runtime/assets.js";
 import { memoryReadGuard } from "../../runtime/memory-guard.js";
 import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
-import { promptIdFor } from "../../runtime/upload-identity.js";
+import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
 import { tf } from "../shared/chunk-b5845da6.js";
 import { He, oqo, x_e, sqo, jer, Wer, JKr, Avt, CCe, zer, Ker } from "../telemetry/chunk-1bb3c64e.js";
 import { b, c, ce, Vr, Wq, Ku, Ka, $b, Hn, Xw, gJr } from "../agents/third-party.js";
@@ -65775,7 +65775,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
       l(N(Qn));
     }
   };
-  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
+  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: turnPositionFor(Q.uploadIdentity, Je2, q()) });
   let J6 = Q.enablePromptCaching ?? Ile(Jt), RI = Q.forkPointUuid !== void 0 && Bf(Q.agentContext), AA = Cve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || RI ? Jt : void 0 }), BR = AA.ttl === "1h" ? "1h" : void 0, dE = kkr(AA.ttl) === "1h" ? "1h" : void 0, Pie = dE !== BR;
   if (ii) {
     if (Gts(BR === "1h" ? JA : oj, Q.model, AA.reason === "live_5m_cache"), Pie) Skr();

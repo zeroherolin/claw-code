@@ -111,6 +111,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       clientRequest: q.headers["x-client-request-id"],
       prevRequest: JSON.stringify(q.body.system).match(/cc_prev_req=(req_[\w-]+)/)?.[1], // 账单头里的上一个请求 ID，没有就是 undefined
       prevMessage: q.body.diagnostics?.previous_message_id, // 缓存诊断里的上一条消息 ID，null 表示不指向任何消息
+      position: JSON.stringify(q.body.system).match(/cc_prompt_index=\d+; cc_turn_index=\d+/)?.[0], // 账单头里按本地会话计数的问数与轮数
       thread: q.body.thread?.type,
     };
   };
@@ -143,6 +144,9 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       expect(x.prevMessage).toBeNull();
     }
     for (const q of fake.requests) expect(JSON.stringify(q.body.diagnostics ?? {})).not.toMatch(/"m_\d/);
+    // 问数与轮数按本地会话计数：本地会话 ID 下照常带，换了会话 ID 的重试不带
+    expect(first.position).toBe("cc_prompt_index=0; cc_turn_index=1");
+    for (const x of retries) expect(x.position).toBeUndefined();
     expect(new Set(w.map((x) => x.account)).size).toBe(1); // 账号不变
     for (const q of fake.requests.slice(1)) {
       const raw = JSON.stringify(q);
@@ -167,6 +171,9 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(afterTool.prevRequest).toBe("req_2");
     expect(afterTool.prevMessage).toBe("m_2");
     expect(afterTool.thread).toBe("continue");
+    expect(first.position).toBeDefined();
+    expect(retry.position).toBeUndefined();
+    expect(afterTool.position).toBeUndefined(); // 采用的会话 ID 下同样不带
   });
 
   // 采用的标识只放在进程内存里：不写盘，不改变本地会话。重启进程（--continue）从本地标识开始
@@ -210,7 +217,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     for (const key of ["session", "device"]) expect(new Set(w.map((x) => x[key])).size).toBe(3);
     for (const x of w) {
       expect(x.sessionHeader).toBe(x.session);
-      for (const key of ["promptHeader", "clientRequest", "prevRequest", "thread"]) expect(x[key]).toBeUndefined();
+      for (const key of ["promptHeader", "clientRequest", "prevRequest", "position", "thread"]) expect(x[key]).toBeUndefined();
     }
     for (const q of fake.requests) expect(q.body.diagnostics).toBeUndefined();
   });
@@ -300,6 +307,13 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
   };
   const SECOND_THIRD = [[0.5, "first message"], [1.0, "\r"], [9, "second message"], [10, "\r"], [18, "third message"], [19, "\r"]];
+  // 账单头的问数与轮数按本地会话计数，只在本地会话 ID 下出现：换过会话 ID 的请求都不带，否则新 ID 会接着原会话往下数
+  const expectPositionOnlyUnderLocal = (local, requests) => {
+    for (const x of requests) {
+      if (x.session !== local) expect(x.position).toBeUndefined();
+      else if (x.main) expect(x.position).toBeDefined();
+    }
+  };
 
   test("交互界面里拒答重试成功后，后续所有请求（含标题等辅助请求）沿用成功那次的会话与设备 ID，不再回到本地 ID", async () => {
     const { local, requests, runs } = await ptyIdentityRuns((n) => (n === 1 ? "refuse" : "ok"), SECOND_THIRD);
@@ -312,6 +326,21 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(runs[1].items.some((x) => x.main && x.asks.includes("third"))).toBe(true); // 第三问的主请求
     for (const x of requests) expect(x.sessionHeader).toBe(x.session); // 请求头与 metadata 一致
     expect(new Set(requests.map((x) => x.session + x.device)).size).toBe(2);
+    expectPositionOnlyUnderLocal(local, requests);
+  }, 180_000);
+
+  test("交互界面里第二问被拒：重试与之后的请求不带接着原会话往下数的问数与轮数", async () => {
+    const { local, requests, runs } = await ptyIdentityRuns((n) => (n === 2 ? "refuse" : "ok"), SECOND_THIRD);
+    expect(runs.length).toBe(2);
+    const main = (asks) => requests.filter((x) => x.main && x.asks.at(-1) === asks);
+    expect(main("first").map((x) => x.position)).toEqual(["cc_prompt_index=1; cc_turn_index=1"]);
+    const [refused, retry] = main("second");
+    expect(refused.session).toBe(local);
+    expect(refused.position).toBe("cc_prompt_index=2; cc_turn_index=2");
+    expect(retry.session).not.toBe(local);
+    expect(retry.position).toBeUndefined(); // 原版会是 2、2：新会话 ID 接着原会话的序号
+    expect(main("third").length).toBeGreaterThan(0);
+    expectPositionOnlyUnderLocal(local, requests);
   }, 180_000);
 
   test("交互界面里拒答重试：被拒的候选标识不采用，之后的重试成功再换成新的，始终不回头", async () => {
@@ -325,15 +354,17 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(runs[3].items.some((x) => x.main && x.asks.includes("third"))).toBe(true); // 第三问用候选 3
     for (const x of requests) expect(x.sessionHeader).toBe(x.session);
     expect(new Set(requests.map((x) => x.session + x.device)).size).toBe(4);
+    expectPositionOnlyUnderLocal(local, requests);
   }, 200_000);
 
   test("交互界面里重试 10 轮用尽也没通：不采用任何候选标识，下一问从本地标识开始", async () => {
-    const { local, runs } = await ptyIdentityRuns((n) => (n <= 11 ? "refuse" : "ok"), [[0.5, "first message"], [1.0, "\r"], [14, "second message"], [15, "\r"]]);
+    const { local, requests, runs } = await ptyIdentityRuns((n) => (n <= 11 ? "refuse" : "ok"), [[0.5, "first message"], [1.0, "\r"], [14, "second message"], [15, "\r"]]);
     expect(runs.length).toBe(12); // 本地 + 10 个被拒的候选 + 回到本地
     expect(runs[0].session).toBe(local);
     expect(runs.at(-1).session).toBe(local);
     expect(runs.slice(1, -1).some((r) => r.session === local)).toBe(false);
     expect(runs.at(-1).items.some((x) => x.main && x.asks.includes("second"))).toBe(true);
+    expectPositionOnlyUnderLocal(local, requests); // 回到本地会话 ID 后序号也回来，与本地会话一致
   }, 200_000);
 
   // 读记忆目录里的文件一律先问用户：不论权限模式、allow 规则还是 hook。-p 模式没人可答，询问记为 permission_denial，内容不进请求

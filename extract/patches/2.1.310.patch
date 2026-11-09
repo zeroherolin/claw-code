@@ -103,7 +103,7 @@ index 72fe144..1775c25 100644
    ar();
    let h = Bp() && !uQ();
 diff --git a/src/darwin/core/conversation-engine.js b/src/darwin/core/conversation-engine.js
-index 7926d09..8f5c258 100644
+index 7926d09..7f2e922 100644
 --- a/src/darwin/core/conversation-engine.js
 +++ b/src/darwin/core/conversation-engine.js
 @@ -1,5 +1,8 @@
@@ -111,7 +111,7 @@ index 7926d09..8f5c258 100644
  import { __asset_src, __asset_text } from "../../runtime/assets.js";
 +import { memoryReadGuard } from "../../runtime/memory-guard.js";
 +import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
-+import { promptIdFor } from "../../runtime/upload-identity.js";
++import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
  import { tp } from "../shared/chunk-b5845da6.js";
  import { De, MKo, L_e, HKo, itr, atr, _Vr, MEt, MAe, dtr, ctr } from "../telemetry/chunk-1bb3c64e.js";
  import { S, c, ce, Kr, ZK, Vu, Ka, $S, Dn, Jw, U7r } from "../agents/third-party.js";
@@ -183,7 +183,7 @@ index 7926d09..8f5c258 100644
      }
    };
 -  vA(), n = lUs(n, lLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: xe, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
-+  vA(), n = lUs(n, lLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
++  vA(), n = lUs(n, lLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: turnPositionFor(Q.uploadIdentity, Je2, V()) });
    let T6 = Q.enablePromptCaching ?? Ule(Jt), TI = Q.forkPointUuid !== void 0 && Up(Q.agentContext), RA = Mve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || TI ? Jt : void 0 }), KR = RA.ttl === "1h" ? "1h" : void 0, NE = pkr(RA.ttl) === "1h" ? "1h" : void 0, Mie = NE !== KR;
    if (ii) {
      if (Cns(KR === "1h" ? eA : uj, Q.model, RA.reason === "live_5m_cache"), Mie) mkr();
@@ -446,6 +446,46 @@ index e346381..399f5e9 100644
    if (i.DISABLE_UPDATES) process.stdout.write(`Updates are disabled by your administrator. Contact your IT team to get the latest version.
  `), process.exit(0);
    let { awaitPolicyLimitsColdStart: f } = await import("../cli/admit-prefetched-policy-limits.js");
+diff --git a/src/darwin/mcp/apply-capability-serve-time-miss.848f.js b/src/darwin/mcp/apply-capability-serve-time-miss.848f.js
+index cfa8130..e0f43db 100644
+--- a/src/darwin/mcp/apply-capability-serve-time-miss.848f.js
++++ b/src/darwin/mcp/apply-capability-serve-time-miss.848f.js
+@@ -1,5 +1,6 @@
+ // darwin/mcp/apply-capability-serve-time-miss.848f.js — Claude Code 2.1.310（darwin）模块 chunk-pghmrbdg.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { mcpClientSessionId } from "../../runtime/upload-identity.js";
+ import { fOe, Dte, v9, _en, ea, mOe, H$, gOe, cUn, kCr, ipt, ave, wUn, CCr, K8e, ben, TCr, wen, ACr, Een, RCr, ven, EUn, P0t, lve, H_o, ken, D_o, PCr, q8e, I0t, ICr, aBe, O0t, lBe, OCr, MCr, Mi } from "../vendor/mcp-sdk/input-required.88fd.js";
+ import { V8e, S7, x0t, hen, iUn, yen, aUn, lUn } from "../vendor/mcp-sdk/input-required.1d23.js";
+ import "../fs/chunk-1ddab6d4.js";
+@@ -1896,7 +1897,7 @@ var Qe = h1n(async (e, r, n, s, h, y, T) => {
+       se(e, `Using claude.ai proxy at ${x}`);
+       let Q = oa({ url: x }), fe = Cn(Tt(Zut(void 0, Q)), h), ge = YUn(), Se = ge || kt(r);
+       if (Se) se(e, ge ? "GET notification stream disabled for claude.ai connectors; a GET the SDK sends to the proxy URL is answered locally with 405" : "GET notification stream disabled (stateless connector); if the SDK requests it, it gets a local 405");
+-      let Ne = { fetch: Se ? Oo(Bt(fe, r), x) : Bt(fe, r), requestInit: { ...Q, headers: { "User-Agent": N4(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": V() } } };
++      let Ne = { fetch: Se ? Oo(Bt(fe, r), x) : Bt(fe, r), requestInit: { ...Q, headers: { "User-Agent": N4(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": mcpClientSessionId } } };
+       J = new Q$n(new URL(x), Ne), se(e, "claude.ai proxy transport created successfully");
+     } else if ($Y(r) && vE(e)) {
+       let { isClaudeInChromeAllowed: M } = await import("../ide/adopt-hosted-claude-in-chrome.js");
+diff --git a/src/darwin/mcp/apply-capability-serve-time-miss.fa8e.js b/src/darwin/mcp/apply-capability-serve-time-miss.fa8e.js
+index be66f86..bd6d621 100644
+--- a/src/darwin/mcp/apply-capability-serve-time-miss.fa8e.js
++++ b/src/darwin/mcp/apply-capability-serve-time-miss.fa8e.js
+@@ -1,5 +1,6 @@
+ // darwin/mcp/apply-capability-serve-time-miss.fa8e.js — Claude Code 2.1.310（darwin）模块 chunk-3j3bmr6w.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { mcpClientSessionId } from "../../runtime/upload-identity.js";
+ import { bpt, kOe, K1n, aO, Yae, wpt, oHt, Ept, aYe, sHt, htn, lYe, ytn, _tn, Stn, iHt, dYe, btn, aHt, wtn, Pq, ii, Si, IC, ta, Ad, $te, cTr, COe, _ve, q1n, uTr, rbo, pTr, obo, uHt, Etn, lO, abo, hTr, Y1n, vtn } from "../vendor/mcp-sdk/not-in-era.js";
+ import "../fs/chunk-1ddab6d4.js";
+ import { f } from "../shared/chunk-2fe3b2b7.js";
+@@ -2377,7 +2378,7 @@ var jt = h1n(async (e, n, r, s, h, y, w) => {
+       be = ue;
+       let kt = { fetch: Bo(xo(Ke ? Os(oo(ve, n), Q) : oo(ve, n), () => {
+         $e = true;
+-      }), ue), requestInit: { ...fe, headers: { "User-Agent": N4(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": V() } } };
++      }), ue), requestInit: { ...fe, headers: { "User-Agent": N4(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": mcpClientSessionId } } };
+       _e = () => ($o(ue), new vtn(new URL(Q), kt)), ne = _e(), se(e, "claude.ai proxy transport created successfully");
+     } else if ($Y(n) && vE(e)) {
+       let { isClaudeInChromeAllowed: L } = await import("../ide/adopt-hosted-claude-in-chrome.js");
 diff --git a/src/darwin/mcp/bridge-host-profile-collect.js b/src/darwin/mcp/bridge-host-profile-collect.js
 index b90943b..434a39c 100644
 --- a/src/darwin/mcp/bridge-host-profile-collect.js
@@ -653,7 +693,7 @@ index 7abd32b..70da82c 100644
    ar();
    let h = jf() && !r7();
 diff --git a/src/linux/core/conversation-engine.js b/src/linux/core/conversation-engine.js
-index 8b67836..d75df73 100644
+index 8b67836..5712b84 100644
 --- a/src/linux/core/conversation-engine.js
 +++ b/src/linux/core/conversation-engine.js
 @@ -1,5 +1,8 @@
@@ -661,7 +701,7 @@ index 8b67836..d75df73 100644
  import { __asset_src, __asset_text } from "../../runtime/assets.js";
 +import { memoryReadGuard } from "../../runtime/memory-guard.js";
 +import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
-+import { promptIdFor } from "../../runtime/upload-identity.js";
++import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
  import { tf } from "../shared/chunk-b5845da6.js";
  import { He, oqo, x_e, sqo, jer, Wer, JKr, Avt, CCe, zer, Ker } from "../telemetry/chunk-1bb3c64e.js";
  import { b, c, ce, Vr, Wq, Ku, Ka, $b, Hn, Xw, gJr } from "../agents/third-party.js";
@@ -733,7 +773,7 @@ index 8b67836..d75df73 100644
      }
    };
 -  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: xe, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
-+  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: Je2 });
++  xA(), n = EFs(n, RLe, { fingerprint: cyt, agentContext: Q.agentContext, previousRequestId: Q.uploadIdentity === void 0 ? xe : void 0, promptId: Me, turnOrigin: Ge, turnPosition: turnPositionFor(Q.uploadIdentity, Je2, q()) });
    let J6 = Q.enablePromptCaching ?? Ile(Jt), RI = Q.forkPointUuid !== void 0 && Bf(Q.agentContext), AA = Cve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || RI ? Jt : void 0 }), BR = AA.ttl === "1h" ? "1h" : void 0, dE = kkr(AA.ttl) === "1h" ? "1h" : void 0, Pie = dE !== BR;
    if (ii) {
      if (Gts(BR === "1h" ? JA : oj, Q.model, AA.reason === "live_5m_cache"), Pie) Skr();
@@ -996,6 +1036,46 @@ index a61d0d7..7e73e73 100644
    if (i.DISABLE_UPDATES) process.stdout.write(`Updates are disabled by your administrator. Contact your IT team to get the latest version.
  `), process.exit(0);
    let { awaitPolicyLimitsColdStart: f } = await import("../cli/admit-prefetched-policy-limits.js");
+diff --git a/src/linux/mcp/apply-capability-serve-time-miss.848f.js b/src/linux/mcp/apply-capability-serve-time-miss.848f.js
+index 1fa5403..d05be84 100644
+--- a/src/linux/mcp/apply-capability-serve-time-miss.848f.js
++++ b/src/linux/mcp/apply-capability-serve-time-miss.848f.js
+@@ -1,5 +1,6 @@
+ // linux/mcp/apply-capability-serve-time-miss.848f.js — Claude Code 2.1.310（linux）模块 chunk-34bfdsb0.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { mcpClientSessionId } from "../../runtime/upload-identity.js";
+ import { aOe, Ate, p3, ZZt, ea, lOe, PF, dOe, BFn, tTr, Qut, tEe, QFn, nTr, N8e, ten, rTr, nen, oTr, ren, sTr, oen, ZFn, yDt, nEe, Qyo, sen, Zyo, aTr, $8e, _Dt, lTr, JBe, bDt, QBe, dTr, cTr, Mi } from "../vendor/mcp-sdk/input-required.88fd.js";
+ import { w3e, JX, tOt, HJt, jHn, LJt, WHn, GHn } from "../vendor/mcp-sdk/input-required.1d23.js";
+ import "../fs/chunk-1ddab6d4.js";
+@@ -1893,7 +1894,7 @@ var Qe = iBn(async (e, r, n, s, h, y, C) => {
+       se(e, `Using claude.ai proxy at ${U}`);
+       let Q = oa({ url: U }), fe = _n(St(Xut(void 0, Q)), h), ge = FUn(), Te = ge || kt(r);
+       if (Te) se(e, ge ? "GET notification stream disabled for claude.ai connectors; a GET the SDK sends to the proxy URL is answered locally with 405" : "GET notification stream disabled (stateless connector); if the SDK requests it, it gets a local 405");
+-      let Ne = { fetch: Te ? Oo(Bt(fe, r), U) : Bt(fe, r), requestInit: { ...Q, headers: { "User-Agent": A5(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": q() } } };
++      let Ne = { fetch: Te ? Oo(Bt(fe, r), U) : Bt(fe, r), requestInit: { ...Q, headers: { "User-Agent": A5(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": mcpClientSessionId } } };
+       J = new $Fn(new URL(U), Ne), se(e, "claude.ai proxy transport created successfully");
+     } else if (Y_e(r) && vv(e)) {
+       let { isClaudeInChromeAllowed: v } = await import("../ide/adopt-hosted-claude-in-chrome.js");
+diff --git a/src/linux/mcp/apply-capability-serve-time-miss.fa8e.js b/src/linux/mcp/apply-capability-serve-time-miss.fa8e.js
+index a9e26f5..894cea7 100644
+--- a/src/linux/mcp/apply-capability-serve-time-miss.fa8e.js
++++ b/src/linux/mcp/apply-capability-serve-time-miss.fa8e.js
+@@ -1,5 +1,6 @@
+ // linux/mcp/apply-capability-serve-time-miss.fa8e.js — Claude Code 2.1.310（linux）模块 chunk-r4g83g7p.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { mcpClientSessionId } from "../../runtime/upload-identity.js";
+ import { aft, pOe, PUn, tO, Fae, lft, MDt, dft, z8e, DDt, zen, K8e, Ken, Ven, qen, HDt, V8e, Yen, LDt, Xen, y4, ii, bi, RT, ta, Cd, Pte, FTr, mOe, sEe, IUn, UTr, hbo, BTr, ybo, UDt, Jen, nO, Sbo, zTr, OUn, Qen } from "../vendor/mcp-sdk/not-in-era.js";
+ import "../fs/chunk-1ddab6d4.js";
+ import { p } from "../shared/chunk-2fe3b2b7.js";
+@@ -2374,7 +2375,7 @@ var jt = iBn(async (e, n, r, s, h, y, C) => {
+       Re = ue;
+       let kt = { fetch: Bo(xo(qe ? Os(oo(be, n), Q) : oo(be, n), () => {
+         Ue = true;
+-      }), ue), requestInit: { ...ge, headers: { "User-Agent": A5(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": q() } } };
++      }), ue), requestInit: { ...ge, headers: { "User-Agent": A5(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": mcpClientSessionId } } };
+       _e = () => ($o(ue), new Qen(new URL(Q), kt)), ne = _e(), se(e, "claude.ai proxy transport created successfully");
+     } else if (Y_e(n) && vv(e)) {
+       let { isClaudeInChromeAllowed: D } = await import("../ide/adopt-hosted-claude-in-chrome.js");
 diff --git a/src/linux/mcp/bridge-host-profile-collect.js b/src/linux/mcp/bridge-host-profile-collect.js
 index afd51e2..1859a57 100644
 --- a/src/linux/mcp/bridge-host-profile-collect.js

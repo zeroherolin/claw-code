@@ -4,7 +4,8 @@ import { spawnSync } from "child_process";
 import fs from "fs";
 import os from "os";
 import path from "path";
-import { adoptUploadIdentity, isDeliveredResponse, newUploadIdentity, promptIdFor, uploadIdentityFor } from "../../src/runtime/upload-identity.js";
+import { adoptUploadIdentity, isDeliveredResponse, mcpClientSessionId, newUploadIdentity, promptIdFor, turnPositionFor, uploadIdentityFor } from "../../src/runtime/upload-identity.js";
+import { SYSTEMS } from "../../src/runtime/platforms.js";
 
 const ROOT = path.resolve(import.meta.dir, "../..");
 const RUNTIME = path.join(ROOT, "src/runtime");
@@ -525,6 +526,34 @@ describe("upload-identity", () => {
     adoptUploadIdentity(a, undefined);
     adoptUploadIdentity(undefined, "x");
     expect(uploadIdentityFor(undefined, local())?.sessionId).toBeUndefined();
+  });
+
+  test("问数与轮数：会话 ID 是本地 ID 时原样，重试的候选身份和采用后的会话 ID 下都不带", () => {
+    const s = local(), pos = { promptIndex: 2, turnIndex: 2 };
+    expect(turnPositionFor(undefined, pos, s)).toBe(pos);
+    expect(turnPositionFor(newUploadIdentity(), pos, s)).toBeUndefined();
+    adoptUploadIdentity(newUploadIdentity(), s);
+    expect(turnPositionFor(undefined, pos, s)).toBeUndefined();
+    // 换了本地会话：设备 ID 仍是采用的，会话 ID 是那个会话自己的，序号与它一致，照常带
+    expect(turnPositionFor(undefined, pos, local())).toBe(pos);
+    expect(turnPositionFor(undefined, undefined, local())).toBeUndefined();
+  });
+
+  test("claude.ai 连接器代理的客户端会话头：进程内固定的 UUID，与会话 ID 无关", () => {
+    expect(mcpClientSessionId).toMatch(UUID);
+    const s = local(), a = newUploadIdentity();
+    adoptUploadIdentity(a, s);
+    expect([s, a.sessionId, uploadIdentityFor(undefined, s)?.sessionId]).not.toContain(mcpClientSessionId);
+  });
+
+  // 这条路要 claude.ai 登录、连接器和官方代理地址（不能改指本机），冒烟测试走不到；这里检查两个系统的生成源码都接上了
+  test("两个系统的生成源码里，claude.ai 连接器代理的客户端会话头都用 mcpClientSessionId", () => {
+    const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(dir, e.name)) : e.name.endsWith(".js") ? [path.join(dir, e.name)] : []));
+    for (const system of Object.keys(SYSTEMS)) {
+      const values = walk(path.join(ROOT, "src", system)).flatMap((f) => [...fs.readFileSync(f, "utf8").matchAll(/"X-Mcp-Client-Session-Id": ([^ ,}]+)/g)].map((m) => m[1]));
+      expect(values.length).toBeGreaterThan(0);
+      expect(new Set(values)).toEqual(new Set(["mcpClientSessionId"]));
+    }
   });
 
   test("完整送达的判定：有停止原因的助手消息才算，拒答、API 错误、没结束的都不算", () => {

@@ -3,6 +3,8 @@
 // 身份只替换发往 API 的三个字段：metadata 与默认请求头里的会话 ID、metadata 里的设备 ID、提示 ID（请求头与账单头）。
 // 本地会话 ID、磁盘上的 userID、历史和存储都不动。设备 ID 的形状与 userID 相同（32 个随机字节的十六进制），
 // 不用 UUID 拼接：UUID 的版本位和变体位是固定的，拼出来的值会带有可识别的规律。
+// 另有两处随之调整：会话 ID 不是本地 ID 时，账单头不带按本地会话计数的问数与轮数（turnPositionFor）；
+// claude.ai 连接器代理的客户端会话头改用与会话 ID 无关的进程级 ID（mcpClientSessionId）。
 //
 // 生命周期：
 //   1. 每次拒答重试生成一份候选身份，只用于这一次重试请求；
@@ -51,6 +53,22 @@ export function promptIdFor(candidate, naturalPromptId, localSessionId) {
   if (naturalPromptId === undefined) return undefined;
   return adoptedBySession.get(localSessionId)?.prompts.get(naturalPromptId) ?? naturalPromptId;
 }
+
+/**
+ * 账单头里 cc_prompt_index / cc_turn_index 的来源（本会话第几问、第几轮）。它们由历史算出，换会话 ID 时不会重新计数：
+ * 新的会话 ID 配上接着原会话往下数的序号，等于把新 ID 连回原会话。所以这次请求的会话 ID 不是本地 ID 时
+ * （重试的候选身份或已采用的身份）不带序号。原版一方端点的主请求都带序号（压缩之后也照常计数），不带与原版不同，
+ * 但不指向原会话；不改成从 1 重新计数：那是编出来的序号，和请求里已有的多轮历史对不上。
+ */
+export function turnPositionFor(candidate, turnPosition, localSessionId) {
+  return uploadIdentityFor(candidate, localSessionId)?.sessionId === undefined ? turnPosition : undefined;
+}
+
+// claude.ai 连接器经 MCP 代理调用时，请求头 X-Mcp-Client-Session-Id 的值。代理连接在启动时建立，
+// 服务端下发的 mcp-session-id 在整条连接上不变；原版这个头放的是本地会话 ID，重试换了会话 ID 之后，
+// 原 ID 仍出现在同一连接的每次工具调用里，并且和换过之后的调用同属一条连接。改为进程内一个独立的随机 UUID：
+// 形状与会话 ID 相同，各连接共用（原版各连接共用当时的会话 ID），与任何发往模型的会话 ID 都不同。
+export const mcpClientSessionId = randomUUID();
 
 /** 采用候选身份：此后的请求都用它，直到被下一次采用取代 */
 export function adoptUploadIdentity(identity, localSessionId) {

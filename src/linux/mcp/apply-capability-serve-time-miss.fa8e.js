@@ -1,5 +1,6 @@
 // linux/mcp/apply-capability-serve-time-miss.fa8e.js — Claude Code 2.1.310（linux）模块 chunk-r4g83g7p.js
 import { __asset_src } from "../../runtime/assets.js";
+import { mcpClientSessionId } from "../../runtime/upload-identity.js";
 import { aft, pOe, PUn, tO, Fae, lft, MDt, dft, z8e, DDt, zen, K8e, Ken, Ven, qen, HDt, V8e, Yen, LDt, Xen, y4, ii, bi, RT, ta, Cd, Pte, FTr, mOe, sEe, IUn, UTr, hbo, BTr, ybo, UDt, Jen, nO, Sbo, zTr, OUn, Qen } from "../vendor/mcp-sdk/not-in-era.js";
 import "../fs/chunk-1ddab6d4.js";
 import { p } from "../shared/chunk-2fe3b2b7.js";
@@ -2374,7 +2375,7 @@ var jt = iBn(async (e, n, r, s, h, y, C) => {
       Re = ue;
       let kt = { fetch: Bo(xo(qe ? Os(oo(be, n), Q) : oo(be, n), () => {
         Ue = true;
-      }), ue), requestInit: { ...ge, headers: { "User-Agent": A5(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": q() } } };
+      }), ue), requestInit: { ...ge, headers: { "User-Agent": A5(), "Accept-Encoding": "identity", "X-Mcp-Client-Session-Id": mcpClientSessionId } } };
       _e = () => ($o(ue), new Qen(new URL(Q), kt)), ne = _e(), se(e, "claude.ai proxy transport created successfully");
     } else if (Y_e(n) && vv(e)) {
       let { isClaudeInChromeAllowed: D } = await import("../ide/adopt-hosted-claude-in-chrome.js");
