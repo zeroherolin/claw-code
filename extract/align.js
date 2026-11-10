@@ -1,6 +1,8 @@
-// 跨系统对齐：找出两个系统中一一对应的模块，对应的模块在 src/<系统>/ 下使用相同的路径。
+// 跨系统对齐：找出各系统中互相对应的模块，对应的模块在 src/<系统>/ 下使用相同的路径。
 //
-// 有固定名字的模块（入口 cli、hooks worker、原生模块的 JS 包装）按名字配对，不参与下面按内容的配对。
+// alignSystems 以第一个系统为基准，其余系统逐个与它对齐（alignModules），再合成分组。
+//
+// 一对系统的对齐：有固定名字的模块（入口 cli、hooks worker、原生模块的 JS 包装）按名字配对，不参与按内容的配对。
 // 其余模块各系统分别打包，混淆名不同、平台相关的分支被裁掉，chunk id 也不同，只能按内容配对:
 //   1. 形状相同（标识符统一为 $，模块引用换成占位符）且一对一 → 配对；
 //   2. 把“引用了哪些已配对模块”、“被哪些已配对模块引用”（均按集合，不计顺序）加入形状，
@@ -11,7 +13,7 @@
 //      后者用于一族几乎相同的模块），3-gram 相似度本身不低于 0.3；
 //   2、3 交替进行直到不再增加；
 //   4. 仍无法区分的同形模块（形状与引用关系都相同）按 chunk id 顺序配对。
-// 配不上的模块是某个系统独有的，或被平台分支改得面目全非，各自单独命名。
+// 未配对的模块只属于其中一个系统，或因平台分支差异过大而无法识别，各自单独命名。
 import { tokens } from "./lib.js";
 
 function shapeOf(code, names) {
@@ -52,6 +54,7 @@ const dice = (x, y) => {
 };
 
 /**
+ * 对齐一对系统。
  * @param a { id, code }[]：系统甲的模块（code 为原版源码）
  * @param b { id, code }[]：系统乙的模块
  * @returns {Map<string, string>} 甲的 chunk id → 乙的 chunk id
@@ -73,7 +76,7 @@ export function alignModules(a, b) {
   B.list = B.list.filter((m) => m.id.startsWith("chunk-") || ba.has(m.id));
   // 以甲的 id 作为配对标识；未配对记为 ?
   const tagA = (id) => (ab.has(id) ? id : "?"), tagB = (id) => ba.get(id) ?? "?";
-  // 引用按集合比较：两次打包的 import 先后顺序可能不同
+  // 引用按集合比较：各次打包的 import 先后顺序可能不同
   const keyOf = (m, tag, level) => (level === 0 ? m.shape
     : m.shape + "\0" + m.refs.map(tag).sort().join(",") + (level === 2 ? "\0" + m.importers.map(tag).sort().join(",") : ""));
 
@@ -146,4 +149,28 @@ export function alignModules(a, b) {
     for (let i = 0; i < n; i++) link(g.a[i], g.b[i]);
   }
   return ab;
+}
+
+/**
+ * 把各系统的模块分组：互相对应的模块为一组，没有对应模块的单独成组。
+ * 以第一个系统为基准，其余系统逐个与它对齐。基准系统中没有对应模块的，各自单独成组；
+ * 其中语义名相同的由组装阶段合并（见 assemble.planLayout）。
+ * @param mods { [系统]: { id, code }[] }（code 为原版源码）
+ * @returns {{ [系统]: string }[]} 每组为 系统 → chunk id；顺序为与基准系统配对的组、基准系统独有的、其余各系统独有的
+ */
+export function alignSystems(mods) {
+  const [base, ...others] = Object.keys(mods);
+  const matched = new Map(); // 基准系统的 chunk id → 所在的组
+  const unmatched = [];
+  for (const system of others) {
+    const map = alignModules(mods[base], mods[system]);
+    for (const [a, b] of map) {
+      if (!matched.has(a)) matched.set(a, { [base]: a });
+      matched.get(a)[system] = b;
+    }
+    const taken = new Set(map.values());
+    for (const m of mods[system]) if (!taken.has(m.id)) unmatched.push({ [system]: m.id });
+  }
+  const baseOnly = mods[base].filter((m) => !matched.has(m.id)).map((m) => ({ [base]: m.id }));
+  return [...matched.values(), ...baseOnly, ...unmatched];
 }

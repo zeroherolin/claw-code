@@ -1,5 +1,5 @@
 // 组装阶段：把各系统的原版 JS 模块整理成 src/<系统>/ 下按功能分目录、语义化命名的可读源码。
-// 两个系统中对应的模块（见 align.js；按内容未配上、但语义名在各系统中唯一相同的也算）使用相同的路径。
+// 各系统中对应的模块（见 align.js；按内容未配对、但语义名相同且在每个系统中至多出现一次的也算）使用相同的路径。
 //
 // 只改“位置与排版”（架构还原见 unfold.js）:
 //   1. 去掉 Bun 字节码标记与法律声明头；esbuild 等价重新打印；第三方许可注释抽出由 LICENSE 汇总
@@ -78,12 +78,11 @@ export function planLayout(groups, mods, owners, curated) {
     const lost = Object.entries(named[s]).filter(([id]) => !planned.some((p) => p.fixed && p.group[s] === id));
     if (lost.length) throw new Error(`人工命名的模块在各系统中没有互相对应：${lost.map(([, rel]) => rel).join("、")}`);
   }
-  // 按内容没能配对、但语义名相同且在每个系统的未配对模块中都恰好出现一次的，视为对应模块，合为一组
-  const lonely = new Map();
-  for (const p of planned) if (p.base && !p.fixed && Object.keys(p.group).length === 1) (lonely.get(p.base) ?? lonely.set(p.base, []).get(p.base)).push(p);
-  for (const list of lonely.values()) {
-    const by = Object.groupBy(list, (p) => Object.keys(p.group)[0]);
-    if (list.length !== systems.length || systems.some((s) => by[s]?.length !== 1)) continue;
+  // 按内容未配对、但语义名相同的组：每个系统至多出现在其中一组时，视为对应模块，合为一组
+  const partial = new Map();
+  for (const p of planned) if (p.base && !p.fixed && Object.keys(p.group).length < systems.length) (partial.get(p.base) ?? partial.set(p.base, []).get(p.base)).push(p);
+  for (const list of partial.values()) {
+    if (list.length < 2 || systems.some((s) => list.filter((p) => s in p.group).length > 1)) continue;
     const [first, ...rest] = list;
     for (const p of rest) Object.assign(first.group, p.group), planned.splice(planned.indexOf(p), 1);
   }
