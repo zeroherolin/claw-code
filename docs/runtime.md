@@ -137,7 +137,7 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 
 ```js
 entrypoints: ["scripts/boot.js", "src/main.js", ...src/runtime/ 与 src/<目标系统>/ 下全部 .js],
-compile: { outfile: "dist/claude", assets: [<组装好的 assets/>], target: "bun-<平台>" },
+compile: { outfile: "dist/claude", assets: [<组装好的 assets/>], target: "bun-<平台>", autoloadDotenv: false, autoloadBunfig: false },
 naming: "[dir]/[name].[ext]",
 bytecode: true,
 external: ["/$bunfs/*", "./*", "../*"],
@@ -146,18 +146,21 @@ external: ["/$bunfs/*", "./*", "../*"],
 - **只嵌入目标平台需要的内容**：目标系统的源码；资源中原生模块只取 `assets/native/<目标平台>/`。`compile.assets` 中的目录以自身名字嵌入根目录，因此先在临时目录里组装一份 `assets/` 再传入。
 - **每个模块各作一个入口，模块间的相对引用全部 external**：打包器不合并、不移动模块，输出保持原目录结构 `/$bunfs/root/src/…`。原版代码里有 500 多处运行期执行的相对路径 `import.meta.require("./x.js")`，以及大量动态 `import()`，模块位置不变，这些路径才能继续生效。
 - **字节码**：每个模块预编译为 JavaScriptCore 字节码，启动时不必重新解析约 115 万行源码。一次 `-p` 请求约 0.23 秒，不用字节码时约 0.8 秒，原版约 0.15 秒（Apple M 系列，中位数）。
+- **不加载当前目录中的 `.env` 与 `bunfig.toml`**：公开版 Bun 的编译产物默认加载二者，`.env` 中的变量进入进程环境，`bunfig.toml` 的 `preload` 脚本在入口之前执行；原版的可执行程序都不加载。`autoloadDotenv: false` 与 `autoloadBunfig: false` 关闭这两项。
 - 入口 `boot.js` 只做一件事：运行期 `import("/$bunfs/root/src/main.js")`。
+
+公开版 Bun 的编译产物在环境变量 `BUN_BE_BUN=1` 时作为 Bun 本身运行，不进入 Claude Code；Bun 没有关闭它的编译选项，原版不识别这个变量。
 
 ## 开发模式与构建产物的差异
 
-`npm start` 和 `bin/claude` 直接用 Bun 运行 `src/main.js`。与 `dist/claude` 相比，有两处行为不同，都是原版代码自身的判断造成的：
+`bin/claude` 用 Bun 直接运行 `src/main.js`，`npm start` 调用的也是它。启动器带 `--no-env-file --config=/dev/null`，Bun 因此不加载调用者所在目录中的 `.env` 与 `bunfig.toml`，与构建产物相同。与 `dist/claude` 相比，有两处行为不同，都是原版代码自身的判断造成的：
 
 | 场景 | 原因 | 开发模式下的表现 |
 |---|---|---|
 | 内置 hooks 模块 | "是否以单文件可执行程序方式运行"（`shared/environment.js`「isStandaloneExecutable」）为假时，原版会去找源码树中的 `hooks/register.ts`，而发布包里没有这个文件 | 内置 hooks 模块不加载，debug 日志中可见 |
 | Bash 中的 `find`、`grep`、`rg` 函数 | 函数以指定的 argv0 回调 `$CLAUDE_CODE_EXECPATH`；开发模式下它是 `bun` 本身，argv0 分发到不了 `src/main.js` | 这三个函数会报错；直接调用 `/usr/bin/find` 等命令不受影响 |
 
-另外，以下行为也取决于是否以单文件可执行程序方式运行：子进程重启 CLI 自身时 argv 的构造方式（`fs/chunk-dacd9872.js`「process.execPath」），以及 ripgrep 的运行方式（见上文）。开发模式下它们执行的是原版为"以脚本方式运行"准备的分支，只有 `dist/claude` 与官方可执行程序一致。
+另外，以下行为也取决于是否以单文件可执行程序方式运行：子进程重启 CLI 自身时 argv 的构造方式（`fs/chunk-dacd9872.js`「process.execPath」），以及 ripgrep 的运行方式（见上文）。开发模式下它们执行的是原版为"以脚本方式运行"准备的分支，只有 `dist/claude` 与官方可执行程序一致。其中重启自身的子进程（后台守护进程、Chrome native host、self-hosted runner、plugin eval）以 `process.execPath` 加 `process.argv[1]` 启动，启动器传给 Bun 的选项不在其中，这些子进程按 Bun 的默认行为加载其当前目录中的 `.env` 与 `bunfig.toml`。
 
 开发模式适合阅读、调试和快速试验；需要与原版完全一致的行为时使用 `dist/claude`。
 

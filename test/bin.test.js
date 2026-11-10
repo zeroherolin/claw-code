@@ -23,7 +23,7 @@ beforeEach(() => {
   fs.writeFileSync(path.join(project, "src/main.js"), `
     const [flag, code] = process.argv.slice(2);
     if (flag === "--exit") process.exit(Number(code));
-    console.log(JSON.stringify({ args: process.argv.slice(2), cwd: process.cwd(), main: import.meta.path }));
+    console.log(JSON.stringify({ args: process.argv.slice(2), cwd: process.cwd(), main: import.meta.path, dotenv: process.env.CLAW_BIN_TEST_DOTENV ?? null }));
   `);
   fs.symlinkSync(process.execPath, path.join(project, "node_modules/.bin/bun"));
 });
@@ -78,6 +78,17 @@ describe("运行方式", () => {
   test("退出码原样透传", () => {
     expect(run(launcher(), ["--exit", "7"]).code).toBe(7);
   });
+
+  test("不加载调用者所在目录中的 .env 与 bunfig.toml", () => {
+    const marker = path.join(tmp, "preload-ran");
+    fs.writeFileSync(path.join(work, ".env"), "CLAW_BIN_TEST_DOTENV=loaded\n");
+    fs.writeFileSync(path.join(work, "preload.js"), `require("fs").writeFileSync(${JSON.stringify(marker)}, "");\n`);
+    fs.writeFileSync(path.join(work, "bunfig.toml"), 'preload = ["./preload.js"]\n');
+    const r = run(launcher());
+    expect(r.err).toBe("");
+    expect(JSON.parse(r.out).dotenv).toBeNull();
+    expect(fs.existsSync(marker)).toBe(false);
+  });
 });
 
 describe("选择 Bun", () => {
@@ -89,8 +100,8 @@ describe("选择 Bun", () => {
 
   test("没有固定版本时回退到 PATH 里的 bun", () => {
     fs.rmSync(path.join(project, "node_modules"), { recursive: true });
-    const dir = fakeBun(path.join(tmp, "fallback"), '#!/bin/sh\necho "fallback-bun $1 $2"\n');
-    expect(run(launcher(), ["x"], { extraPath: dir }).out.trim()).toBe(`fallback-bun ${mainJs()} x`);
+    const dir = fakeBun(path.join(tmp, "fallback"), '#!/bin/sh\necho "fallback-bun $*"\n');
+    expect(run(launcher(), ["x"], { extraPath: dir }).out.trim()).toBe(`fallback-bun --no-env-file --config=/dev/null ${mainJs()} x`);
   });
 
   test("项目与 PATH 中都没有 Bun 时给出提示，退出码 127", () => {
@@ -103,6 +114,10 @@ describe("选择 Bun", () => {
 });
 
 describe("真实项目", () => {
+  test("npm start 经启动器运行，不直接调用 bun", () => {
+    expect(JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8")).scripts.start).toBe("bin/claude");
+  });
+
   test("bin/claude 可执行，npm 只注册 claw-code 命令", () => {
     const declared = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8")).bin;
     expect(declared).toEqual({ "claw-code": "bin/claude" });

@@ -1,5 +1,5 @@
 #!/bin/sh
-# 开发模式启动器：用项目固定版本的 Bun 直接运行 src/，无需构建。
+# 开发模式启动器：用项目固定版本的 Bun 直接运行 src/，无需构建。npm start 调用的也是它。
 # 与 dist/claude 的行为差异见 docs/runtime.md#开发模式与构建产物的差异。
 set -eu
 
@@ -20,4 +20,6 @@ bun=$root/node_modules/.bin/bun
   echo "claw-code: 找不到 bun。请在项目根目录执行 npm install（安装固定版本），或自行安装 Bun。" >&2
   exit 127
 }
-exec "$bun" "$root/src/main.js" "$@"
+# 不加载调用者所在目录中的 .env 与 bunfig.toml：Bun 默认加载二者，原版的可执行程序都不加载。
+# --config 指向空文件时，Bun 不查找当前目录的 bunfig.toml。
+exec "$bun" --no-env-file --config=/dev/null "$root/src/main.js" "$@"

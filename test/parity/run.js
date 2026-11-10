@@ -8,7 +8,8 @@
 //
 // 用例:
 //   cli       CLI 自身输出（--version、--help、子命令帮助）
-//   print     -p 非交互：输出（text / json / stream-json）以及发往 API 的每一个请求
+//   print     -p 非交互：输出（text / json / stream-json）以及发往 API 的每一个请求；
+//             用例可带 before（先运行一次）与 files（先写入工作目录的文件）
 //   tui       交互界面：scenarios/*.json 的按键脚本在固定尺寸伪终端中运行，比较最终屏幕的每个格子
 //
 // 场景文件：{ keys: [[秒, 按键文本], ...], args?, cols?, rows?, fresh? }
@@ -39,6 +40,11 @@ const PRINT_CASES = {
   findgrep: ["-p", "CALL_FINDGREP please", "--allowedTools", "Bash"], // Bash 中 find/grep/rg 使用内嵌工具
   // 先完成一次会话，再接续它：比较接续时的输出，以及两次运行的全部请求（第二次含从磁盘恢复的历史消息）
   continue: { before: ["-p", "say hi"], args: ["-p", "--continue", "and again"] },
+  // 工作目录中的 .env 与 bunfig.toml：原版的可执行程序都不加载。被加载时，请求带上 .env 设置的请求头，preload 脚本向输出写入一行
+  dotenv: {
+    files: { ".env": "ANTHROPIC_CUSTOM_HEADERS=anthropic-from-dotenv: 1\n", "bunfig.toml": 'preload = ["./preload.js"]\n', "preload.js": 'console.log("preloaded");\n' },
+    args: ["-p", "say hi"],
+  },
 };
 const SCENARIO_DIR = path.join(import.meta.dir, "scenarios");
 
@@ -88,8 +94,9 @@ for (const args of CLI_CASES) {
 console.log("\n非交互模式（-p）");
 for (const [name, spec] of Object.entries(PRINT_CASES)) {
   if (filter && !filter.test(name)) continue;
-  const { before, args } = Array.isArray(spec) ? { args: spec } : spec;
+  const { before, files, args } = Array.isArray(spec) ? { args: spec } : spec;
   const [o, n] = await both({}, async (bin, c) => {
+    for (const [name, content] of Object.entries(files ?? {})) fs.writeFileSync(path.join(c.work, name), content);
     if (before) await runCli([bin], before, { cwd: c.work, env: c.env });
     return runCli([bin], args, { cwd: c.work, env: c.env });
   });
