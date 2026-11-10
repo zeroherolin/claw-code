@@ -40,7 +40,8 @@ fs.cpSync(path.join(ROOT, "assets"), path.join(tmp, "assets"), {
 const t0 = performance.now();
 const result = await Bun.build({
   entrypoints: [path.join(ROOT, "scripts/boot.js"), src("main.js"), ...modules(src("runtime")), ...modules(src(system))],
-  compile: { outfile: path.resolve(ROOT, values.outfile), assets: [path.join(tmp, "assets")], target: `bun-${values.target}` },
+  // 原版的可执行程序不加载当前目录中的 .env 与 bunfig.toml；公开版 Bun 的编译产物默认加载，在此关闭
+  compile: { outfile: path.resolve(ROOT, values.outfile), assets: [path.join(tmp, "assets")], target: `bun-${values.target}`, autoloadDotenv: false, autoloadBunfig: false },
   root: ROOT,
   naming: "[dir]/[name].[ext]",
   format: "esm",

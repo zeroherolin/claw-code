@@ -9,7 +9,7 @@
     "claw-code": "bin/claude"
   },
   "scripts": {
-    "start": "bun src/main.js",
+    "start": "bin/claude",
     "build": "bun scripts/build.js",
     "install-cli": "bun scripts/install.js",
     "test": "bun test",

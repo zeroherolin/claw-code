@@ -38,7 +38,7 @@ npm run install-cli   # 构建，并在 ~/.local/bin 创建 claw-code 链接
 - 为其他平台编译：`npm run build -- --target linux-arm64`。
 - 建议安装 ripgrep、bfs（3.3 或更新）、ugrep，例如 `brew install ripgrep bfs ugrep` 或 `apt install ripgrep bfs ugrep`。原版把这三个工具内嵌在可执行文件里，本项目改为调用系统里的同名工具；bfs 缺失或过旧时改用系统的 find，详见 [docs/runtime.md](docs/runtime.md#内嵌命令行工具)。
 
-开发模式不需要构建：`bin/claude -p "hello"` 直接运行 `src/`，在调用者的当前目录工作，可用于任意项目（`npm start` 同样是开发模式，但 npm 总是在本项目根目录里运行）。开发模式有两处与原版不同：内置 hooks 模块不加载，Bash 工具里的 `find`、`grep`、`rg` 函数不可用，原因见 [docs/runtime.md](docs/runtime.md#开发模式与构建产物的差异)。
+开发模式不需要构建：`bin/claude -p "hello"` 直接运行 `src/`，在调用者的当前目录工作，可用于任意项目（`npm start` 调用同一个启动器，但 npm 总是在本项目根目录里运行）。开发模式有两处与原版不同：内置 hooks 模块不加载，Bash 工具里的 `find`、`grep`、`rg` 函数不可用，原因见 [docs/runtime.md](docs/runtime.md#开发模式与构建产物的差异)。
 
 ## 目录结构
 
@@ -85,14 +85,15 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 
 ## 行为一致性
 
-`npm run test:parity` 把官方可执行程序和 `dist/claude` 放在相同的隔离环境中运行同一组用例，逐项比较。在每个支持的平台上，33 项全部一致：
+`npm run test:parity` 把官方可执行程序和 `dist/claude` 放在相同的隔离环境中运行同一组用例，逐项比较。在每个支持的平台上，34 项全部一致：
 
 - **CLI 输出**（6 项）：`--version`、`--help`，以及 `mcp`、`plugin`、`config`、`doctor` 子命令的帮助。
-- **非交互模式**（9 项）：
+- **非交互模式**（10 项）：
   - `-p` 的 text、json、stream-json 输出；
   - Bash 和 Read 的工具循环、`--model`、`--append-system-prompt`；
   - Bash 工具里的 find、grep、rg；
-  - `--continue` 接续已保存的会话。
+  - `--continue` 接续已保存的会话；
+  - 工作目录中有 `.env` 与 `bunfig.toml` 时不加载它们。
   - 以上每一项都同时比较发往 API 的每个请求（系统提示词、工具定义、消息、请求头），要求逐字节一致。
 - **交互界面**（18 项）：在固定尺寸的伪终端中，等启动输出静止后按相同的节奏发送按键，输出再次静止后比较屏幕每个格子的字符、颜色和样式。场景包括首次引导、启动页、中日文与 emoji 输入、键帽和国旗等特殊 emoji 字素、斜杠命令菜单、`/help`、对话回合、工具调用、权限确认对话框、Markdown 渲染、长输出、多行输入、Esc、Shift+Tab 切换模式、60 列窄屏和 160 列宽屏。
 
@@ -103,3 +104,4 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 - 内部 Bun 的 `Bun.ant.*` 原生能力中，本项目补上了没有回退的两个，其余由原版代码自带回退，见 [docs/runtime.md](docs/runtime.md#bunant)。
 - 启动稍慢：一次 `-p` 请求约 0.23 秒，原版约 0.15 秒，见 [docs/runtime.md](docs/runtime.md#编译方式)。
 - 可执行文件的体积和 Bun 版本串不同，且本项目的可执行文件没有代码签名。
+- 环境变量 `BUN_BE_BUN=1` 时，本项目的可执行文件作为 Bun 本身运行；原版不识别这个变量，见 [docs/runtime.md](docs/runtime.md#编译方式)。
