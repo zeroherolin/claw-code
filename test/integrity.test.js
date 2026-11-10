@@ -3,7 +3,7 @@ import { describe, expect, test } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
 import { ROOT } from "./harness.js";
-import { SYSTEMS } from "../src/runtime/platforms.js";
+import { PLATFORMS, SYSTEMS } from "../src/runtime/platforms.js";
 
 const SRC = path.join(ROOT, "src");
 const ASSETS = path.join(ROOT, "assets");
@@ -28,6 +28,11 @@ describe("源码", () => {
     expect(fs.readdirSync(SRC).sort()).toEqual(["main.js", "runtime", ...Object.keys(SYSTEMS)].sort());
   });
 
+  test("CI 的平台矩阵与 src/runtime/platforms.js 中的平台一致", () => {
+    const workflow = fs.readFileSync(path.join(ROOT, ".github/workflows/test.yml"), "utf8");
+    expect([...workflow.matchAll(/\bplatform: ([\w-]+),/g)].map((m) => m[1]).sort()).toEqual([...PLATFORMS].sort());
+  });
+
   test.each(Object.keys(SYSTEMS))("%s：模块数量与 module-map.json 一致，路径一一对应", (system) => {
     const mapped = Object.entries(moduleMap).filter(([, v]) => v[system]).map(([p]) => p).sort();
     expect([...trees[system].keys()].sort()).toEqual(mapped);
@@ -35,7 +40,7 @@ describe("源码", () => {
 
   test("相对路径的静态 import / export from / import() / import.meta.require 全部可解析", () => {
     const missing = [];
-    // 只认语句级的引用（行首的 import / export，或调用形式），避免把提示文案里的示例代码当成真实 import
+    // 只识别语句级的引用（行首的 import / export，或调用形式），避免把提示文案中的示例代码当作真实 import
     const RE = /(?:^(?:import|export)\b[^"\n]*?\bfrom\s*|^import\s*|\bimport\(\s*|\.require\(\s*)"(\.\.?\/[^"]+)"/gm;
     for (const { file, code } of sources) {
       for (const m of code.matchAll(RE)) {
@@ -83,7 +88,7 @@ describe("参考资料", () => {
     const tools = JSON.parse(fs.readFileSync(path.join(ROOT, "reference", system, "tools.json"), "utf8"));
     const bad = tools.filter((t) => {
       const line = trees[system].get(t.path)?.split("\n")[t.line - 1] ?? "";
-      return !t.keys.some((k) => line.includes(`${k}:`) || line.includes(`${k}(`)); // 定义的首行至少写着它的一个属性
+      return !t.keys.some((k) => line.includes(`${k}:`) || line.includes(`${k}(`)); // 定义的首行至少包含它的一个属性
     }).map((t) => `${t.name} → ${t.path}:${t.line}`);
     expect(tools.length).toBeGreaterThan(0);
     expect(bad).toEqual([]);
@@ -110,8 +115,7 @@ describe("资源", () => {
   });
 
   test("原生模块按平台存放：每个支持的平台一个目录，且只有这些目录", () => {
-    const platforms = Object.entries(SYSTEMS).flatMap(([s, arches]) => arches.map((a) => `${s}-${a}`)).sort();
-    expect(fs.readdirSync(path.join(ASSETS, "native")).filter((d) => d !== ".DS_Store").sort()).toEqual(platforms);
+    expect(fs.readdirSync(path.join(ASSETS, "native")).filter((d) => d !== ".DS_Store").sort()).toEqual([...PLATFORMS].sort());
   });
 });
 

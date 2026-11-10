@@ -1,5 +1,5 @@
 // 版本补丁：有意改动生成源码的分支，把改动按上游版本保存为标准 diff（extract/patches/<版本>.patch）。
-// 提取时先在项目外的临时目录完整校验，再应用。没有补丁时什么都不做，生成的源码与原版只差位置和排版。
+// 提取时先在项目外的临时目录完整校验，再应用。没有补丁时不做任何处理，生成的源码与原版只差位置和排版。
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -8,14 +8,14 @@ const PATCH_DIR = path.join(import.meta.dir, "patches");
 
 /**
  * 本版本的补丁文件；一个补丁都没有时返回 null。
- * 有别的版本的补丁、却没有本版本的，说明升级时漏了迁移：直接失败，不生成丢掉这些改动的源码。
+ * 存在其他版本的补丁而没有本版本的，说明升级时遗漏了迁移：直接失败，不生成缺少这些改动的源码。
  */
 export function sourcePatchForVersion(version, dir = PATCH_DIR) {
   if (!/^\d+\.\d+\.\d+$/.test(version)) throw new Error(`无效的上游版本 ${version}`);
   const patch = path.join(dir, `${version}.patch`);
   if (fs.existsSync(patch)) return patch;
   const others = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(".patch")).sort() : [];
-  if (others.length) throw new Error(`缺少源码补丁 extract/patches/${version}.patch（现有 ${others.join("、")}）：升级前须迁移并审查补丁，不能生成丢掉这些改动的版本`);
+  if (others.length) throw new Error(`缺少源码补丁 extract/patches/${version}.patch（现有 ${others.join("、")}）：升级前须迁移并审查补丁，不能生成缺少这些改动的版本`);
   return null;
 }
 

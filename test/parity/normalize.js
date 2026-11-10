@@ -70,7 +70,7 @@ const DEFAULT_ATTR = "0.-1/0.-1";
 
 /**
  * 归一化一行：去掉随机文本；返回 { text } 或可逐格比较的 { cells: Map<列, "字符|属性"> }。
- * HOME 与端口通常已在字节流上替换（normalizeStream），这里兜底处理被转义序列隔开等情况。
+ * HOME 与端口通常已在字节流上替换（normalizeStream），这里再处理一次，覆盖被转义序列隔开等情况。
  */
 function normalizeRow({ text, cells }, home) {
   let t = text;

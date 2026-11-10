@@ -2,7 +2,7 @@
 
 本文列出 Claude Code 2.1.310 使用的各种标识：怎么生成、存在哪里、发到哪里。只记录字段和数据流，不记录真实账号、设备或凭据的值。
 
-- 模块路径对两个系统都成立，位置用"路径「特征字符串」"标注，写法同 [architecture.md](architecture.md)。
+- 模块路径对每个系统都成立，位置用"路径「特征字符串」"标注，写法同 [architecture.md](architecture.md)。
 - 标注"实测"的结论在隔离 HOME 下用假 API 验证过；其余依据源码。OAuth、设备注册和云服务相关的标识没有用真实账号验证。
 
 ## 模型请求中的标识
@@ -19,11 +19,11 @@
 
 - 子会话另带 `parent_session_id`，特定远程路由另带 `tk`，`CLAUDE_CODE_EXTRA_METADATA` 可以附加字段。组装见 `core/system-prompt-blocks.js`「CLAUDE_CODE_EXTRA_METADATA env var must be a JSON object」。
 - 默认请求头 `X-Claude-Code-Session-Id` 携带同一个会话 ID，见 `api/anthropic-client.js`「"cli-bg"」。
-- 设置 `DISABLE_TELEMETRY` 或 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` 不会去掉这些字段，也不会删除本地保存的标识。
+- 设置 `DISABLE_TELEMETRY` 或 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` 不会移除这些字段，也不会删除本地保存的标识。
 
 实测：同一个 HOME 连续启动两个会话，`device_id` 都是 64 位十六进制且相同，`session_id` 不同，会话请求头等于 metadata 中的会话 ID；用 API key 而没有登录账号时 `account_uuid` 为空串。
 
-下面这些只在一方端点形态下发送（实测）；自定义 `ANTHROPIC_BASE_URL`（中转站）时都不带：
+下列内容只在一方端点形态下发送（实测）；自定义 `ANTHROPIC_BASE_URL`（中转站）时都不发送：
 
 | 位置 | 内容 |
 |---|---|
@@ -58,7 +58,7 @@
 | OAuth `CLIENT_ID`、云服务的 workspace / project / tenant ID | OAuth client ID 是应用标识常量，可按配置覆盖；云服务的 ID 来自所选提供方的配置和身份 | 登录、选择工作区或云租户。OAuth client ID 不是每台设备独有的；API key、OAuth token 和设备私钥是凭据，不能当成普通 ID 处理 |
 | `summonSidKey` | 全局配置中的 32 字节随机密钥 | 经 HMAC 派生 16 位十六进制的会话标记，见 `tasks/artifact-changed.js`「createHmac」。它是本地密钥，不是可以公开的标识 |
 
-全局配置通常是 `~/.claude.json`，配置目录和存储后端可以改变它的位置。`claw-code` 与已安装的 `claude` 共用配置、会话和登录凭据（见 [runtime.md](runtime.md#安装与共存)），因此也共用上面这些保存在本地的标识；换一个命令名并不建立独立的身份。
+全局配置通常是 `~/.claude.json`，配置目录和存储后端可以改变它的位置。`claw-code` 与已安装的 `claude` 共用配置、会话和登录凭据（见 [runtime.md](runtime.md#安装与共存)），因此也共用上面这些保存在本地的标识；更换命令名不会建立独立的身份。
 
 `/ultrareview` 的预检请求也在 `X-Claude-Code-Session-Id` 里带会话 ID，见 `git/review-remote-precondition-failed.js`「/v1/ultrareview/preflight」。
 

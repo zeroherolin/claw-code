@@ -1,7 +1,7 @@
 // bin/claude 启动器：跟随符号链接找到项目根目录，在调用者所在的目录运行，透传参数与退出码，
 // 优先使用项目固定版本的 Bun，找不到 Bun 时给出明确提示。
 //
-// 被测脚本会被复制进临时目录里搭出的最小"项目"（路径里带空格，检验引号处理），其中 src/main.js
+// 被测脚本复制到临时目录中构造的最小"项目"里（路径里带空格，检验引号处理），其中 src/main.js
 // 换成只打印运行环境的桩，因此不依赖真实的 Claude Code 代码，也不访问任何服务。
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 import fs from "node:fs";
@@ -84,7 +84,7 @@ describe("选择 Bun", () => {
   test("优先使用项目固定版本的 Bun，而不是 PATH 里的", () => {
     const decoy = fakeBun(path.join(tmp, "decoy"), "#!/bin/sh\necho decoy-bun\n");
     const r = run(launcher(), [], { extraPath: decoy });
-    expect(JSON.parse(r.out).main).toBe(mainJs()); // 用了 decoy 的话输出是 "decoy-bun"，这里会解析失败
+    expect(JSON.parse(r.out).main).toBe(mainJs()); // 若使用了 decoy，输出为 "decoy-bun"，JSON 解析失败
   });
 
   test("没有固定版本时回退到 PATH 里的 bun", () => {
@@ -93,7 +93,7 @@ describe("选择 Bun", () => {
     expect(run(launcher(), ["x"], { extraPath: dir }).out.trim()).toBe(`fallback-bun ${mainJs()} x`);
   });
 
-  test("两者都没有时给出提示，退出码 127", () => {
+  test("项目与 PATH 中都没有 Bun 时给出提示，退出码 127", () => {
     fs.rmSync(path.join(project, "node_modules"), { recursive: true });
     const r = run(launcher());
     expect(r.code).toBe(127);
