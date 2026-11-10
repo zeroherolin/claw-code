@@ -306,7 +306,7 @@ export class CellSegmenter {
       const ch = charMap[g] ?? 0;
       if (w >= 2) {
         if (col + 1 >= screenWidth) {
-          // 宽字符放不下：行尾放占位
+          // 行尾只剩一格，容纳不下宽字符：在该格写入行尾占位
           put(col, spacerChar, base | (s?.spacerHead ?? 3));
           col += 1;
           continue;

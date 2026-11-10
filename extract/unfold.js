@@ -136,7 +136,7 @@ export function unfoldArch(baseArch, base, others) {
       const exact = hit.length > 1 ? hit.findIndex((o) => exactKey.get(o) === maskedKey(baseToks.get(m.id), null)) : -1;
       pairs.push([m.id, exact >= 0 ? hit.splice(exact, 1)[0] : hit.pop()]);
     }
-    // 只差对象简写的模块屏蔽后键仍不同：在剩余模块中按长度就近找能完整归类的那个
+    // 只差对象简写的模块屏蔽后键仍不同：在剩余模块中按长度由近及远查找差异可以完整归类的模块
     const rest = [...pool.values()].flat();
     for (const id of unpaired) {
       const n = baseToks.get(id).length, len = (o) => Math.abs(otherToks.get(o).length - n);

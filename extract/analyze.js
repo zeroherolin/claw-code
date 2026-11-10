@@ -164,7 +164,7 @@ function retLiteral(fn) {
 
 export function analyzeTools(mods) {
   const relevant = mods.filter((m) => /inputSchema/.test(m.code));
-  // 工具名可能是从别的模块导入的字符串常量：先建"导出名 → 常量值"表
+  // 工具名可能是从其他模块导入的字符串常量：先建立"导出名 → 常量值"表
   const exportConst = {}, localConst = {}, imports = {};
   for (const mod of relevant) {
     const ast = astOf(mod), lc = {}, ex = {}, im = {};
