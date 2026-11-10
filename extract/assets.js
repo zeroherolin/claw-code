@@ -39,7 +39,7 @@ export function scanAssetRefs(modules) {
       importsOf[id].push({ from: m[2], imported: a.trim(), local: (b || a).trim() });
     }
   }
-  // 跨 chunk：从别的模块导入的资源变量
+  // 跨 chunk：从其他模块导入的资源变量
   for (const { id } of js) for (const { from, imported, local } of importsOf[id]) {
     const asset = varAsset[from]?.[exportsOf[from]?.[imported]];
     if (asset && !varAsset[id][local]) varAsset[id][local] = asset;

@@ -16,7 +16,7 @@ import { semanticName } from "./naming.js";
 
 const HANDWRITTEN = ["main.js", "runtime"]; // src/ 下手写、重新生成时保留的条目
 const HOOKS_WORKER_ID = "src/plugins/functionHooks/hooks-worker/hooks-worker.js";
-const NATIVE_WRAPPER = /^(?!chunk-)[\w-]+\.js$/; // 原生模块的 JS 包装（audio-capture.js 等），模块名本身就是文件名
+const NATIVE_WRAPPER = /^(?!chunk-)[\w-]+\.js$/; // 原生模块的 JS 包装（audio-capture.js 等），模块名即文件名
 
 /**
  * 按特征字符串定位人工命名的模块：每条的 match 须全部出现在且只出现在一个模块的源码中。

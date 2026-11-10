@@ -20,7 +20,7 @@ describe("screenDiff", () => {
     expect(diffs[0]).toContain("列 6 b|"); // 中、文各占两列，"b" 在第 6 列
   });
 
-  test("只有属性不同也算差异", async () => {
+  test("只有属性不同时同样报告差异", async () => {
     expect(screenDiff(await screen("x"), await screen("\x1b[2mx\x1b[0m"), "/h1", "/h2")).toHaveLength(1);
   });
 

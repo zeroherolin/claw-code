@@ -60,7 +60,7 @@ npm run install-cli   # 构建，并在 ~/.local/bin 创建 claw-code 链接
 
 "生成"的内容由 `npm run extract` 产出，不要手工修改；有意改动生成源码的分支用版本补丁保存改动，见 [extract/README.md](extract/README.md#版本补丁)。
 
-- **文件命名**：`<语义名>.js`，例如 `tools/agent-tool.js`；名字重复的加上短哈希，如 `ui/aria-hidden.12aa.js`；约 730 个模块找不到可靠的名字，命名为 `chunk-<哈希>.js`。各系统中对应的模块使用同一路径，只属于某个系统的模块只出现在该系统的目录中。
+- **文件命名**：`<语义名>.js`，例如 `tools/agent-tool.js`；名字重复的加上短哈希，如 `ui/aria-hidden.12aa.js`；约 730 个模块无法确定可靠的名字，命名为 `chunk-<哈希>.js`。各系统中对应的模块使用同一路径，只属于某个系统的模块只出现在该系统的目录中。
 - **源码只改了位置和排版**：用 esbuild 等价格式化；模块引用改为相对路径；资源引用改为 `__asset_*()`；有多个架构的系统另把硬编码的架构名改回 `process.arch`。标识符仍是原版混淆后的名字，各系统不同。
 
 ## 文档
@@ -82,10 +82,11 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 ```
 
 - 对比测试默认使用 `extract/upstream/claude-code-<系统>-<架构>/` 中的官方可执行程序，获取方式见 [extract/README.md](extract/README.md#获取官方发布内容)。也可以用参数或 `CLAUDE_ORIG_BIN` 指定其他位置。
-- 只跑部分用例：`npm run test:parity -- --filter '^(text|markdown)'`。
-- `dev` 分支的 `npm test` 另外运行 `test/dev/` 下的用例，共约 4.5 分钟，主要用于 `test/dev/smoke.test.js`；只运行其中的单元测试：`npm test -- test/dev/runtime.test.js`。
+- 只运行部分用例：`npm run test:parity -- --filter '^(text|markdown)'`。
 - 全部测试都在隔离的 HOME 下运行，使用假 API key，只连接 127.0.0.1 上的假 API，不访问真实服务。
 - CI（`.github/workflows/test.yml`）：每次 push 和 PR 在每个支持的平台上分别构建，运行 `npm test`，并与该平台的官方可执行程序做对比测试。
+
+`dev` 分支的 `npm test` 另外运行 `test/dev/` 下的用例，共约 4.5 分钟，主要用于 `test/dev/smoke.test.js`；只运行其中的单元测试：`npm test -- test/dev/runtime.test.js`。
 
 ## 行为一致性
 

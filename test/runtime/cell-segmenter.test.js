@@ -133,7 +133,7 @@ describe("CellSegmenter.paint / setCell", () => {
     expect(damage).toEqual({ x1: 0, x2: 3, col: 3 });
   });
 
-  test("行尾放不下的宽字符写入行首占位", () => {
+  test("行尾容纳不下宽字符时，在最后一格写入行尾占位", () => {
     const { row, damage } = paint("abc你", 4);
     expect(row[3]).toEqual([1, 3]);
     expect(damage.col).toBe(4);

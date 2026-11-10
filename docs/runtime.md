@@ -52,7 +52,7 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
     runs[2r+1]  = uris 下标（OSC 8 超链接，0 表示无）
 
 .paint(screenCells, screenWidth, x, y, cells, count, order, charMap, words) → damage
-    把 segment 的结果写入屏幕缓冲：宽字符写本体 + 尾随占位；行尾放不下的宽字符写行首占位；
+    把 segment 的结果写入屏幕缓冲：宽字符写本体 + 尾随占位；行尾剩余一格、容纳不下宽字符时，在该格写入行尾占位（spacerHead）；
     tab 展开到下一个制表位。
     damage = x1·2^20 + x2·2^36 + 结束列
 
@@ -61,7 +61,7 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 
 以下要点会直接影响逐格一致性：
 
-- **字素切分**：用 `Intl.Segmenter`，宽度用 `Bun.stringWidth`（`ambiguousIsNarrow`）。组合字符、ZWJ 序列、肤色修饰符都算一个字素。
+- **字素切分**：用 `Intl.Segmenter`，宽度用 `Bun.stringWidth`（`ambiguousIsNarrow`）。组合字符、ZWJ 序列、肤色修饰符各自与前面的字符合为一个字素。
   - 宽度不能只看首字符：键帽 emoji（如 `1️⃣`）以 ASCII 字符开头，占两格。
 - **控制字符与零宽字符**：不占格。substitute 区间内的码点替换为 U+FFFD。
 - **SGR 状态**：按"类别"保存，即粗体、暗淡、斜体、下划线、前景色、背景色等各占一类。
