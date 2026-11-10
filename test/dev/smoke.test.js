@@ -3,7 +3,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { ROOT, DIST, makeHome, cleanEnv, startFakeApi, runCli, runInPty, renderScreen } from "../harness.js";
+import { ROOT, DIST, makeHome, cleanEnv, startFakeApi, runCli, runInPty, renderScreen, trapExternalAccess } from "../harness.js";
 import { startScriptedApi } from "./scripted-api.js";
 
 let home, api;
@@ -569,6 +569,28 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       proxy.stop(true);
       fake.stop();
       h.remove();
+    }
+  }, 60_000);
+
+  // 原版在交互界面启动时自动安装官方插件市场，在首次引导开始时检查连通性；二者都不受 CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC 控制。
+  // 这里去掉测试环境中关闭自动安装的变量，用替身与代理记录外部访问（见 harness.js 的 trapExternalAccess）
+  test("非必要网络流量始终关闭：交互界面启动与首次引导不访问外部服务", async () => {
+    for (const fresh of [false, true]) {
+      const h = makeHome({ fresh }), fake = startFakeApi(h.work);
+      const env = cleanEnv(h.home, fake.url);
+      delete env.CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL;
+      delete env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC;
+      const trap = trapExternalAccess(env, path.join(h.home, "trap"));
+      try {
+        // 输出静止 4 秒后结束：原版的自动安装在启动约 3 秒后开始克隆
+        const { timedOut } = await runInPty([DIST], { cwd: h.work, env: trap.env, cols: 100, rows: 30, keys: [], idle: 4000 });
+        expect(timedOut).toBe(false);
+        expect([fresh, trap.attempts()]).toEqual([fresh, []]);
+      } finally {
+        trap.stop();
+        fake.stop();
+        h.remove();
+      }
     }
   }, 60_000);
 

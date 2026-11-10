@@ -688,7 +688,7 @@ function Xt({ host: u, onDone: c }) {
     E(b ? 2 : 1);
   }
   let R = [];
-  if (o && !h) R.push({ id: "preflight", component: ue });
+  if (false && o && !h) R.push({ id: "preflight", component: ue }); // 非必要流量已关闭：首次引导不检查连通性（它访问 api.anthropic.com 与 platform.claude.com）
   if (R.push({ id: "theme", component: le }), J) {
     let T = e(Ycr, { customApiKeyTruncated: J, onDone: fe });
     R.push({ id: "api-key", component: x ? e(jmr, { children: T }) : T });

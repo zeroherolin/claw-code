@@ -10,7 +10,7 @@
 |---|---|---|
 | 时区 | 发出的时间信息一律使用美国太平洋时间（`America/Los_Angeles`），包括 Bash 工具执行的命令 | [固定的环境变量](#固定的环境变量) |
 | 遥测 | 无条件关闭：1P 事件日志、Datadog、BigQuery 指标、错误上报、GrowthBook、OpenTelemetry 导出、反馈问卷 | [固定的环境变量](#固定的环境变量) |
-| 非必要网络流量 | 无条件关闭：登录引导、更新检查、MCP 官方目录、插件市场、远程会话、团队记忆同步等都不发请求，相应功能不可用 | [固定的环境变量](#固定的环境变量) |
+| 非必要网络流量 | 无条件关闭：登录引导、更新检查、MCP 官方目录、官方插件市场的自动安装、首次引导的连通性检查、远程会话、团队记忆同步等都不发请求，相应功能不可用 | [固定的环境变量](#固定的环境变量) |
 | GPU 信息 | 不收集、不发送 | [GPU 信息](#gpu-信息) |
 | 记忆 | 只发送记忆文件的路径，不发送正文；模型读取记忆目录中的文件前一律先询问用户 | [记忆](#记忆) |
 | `safeguards` | 发给分类器的上下文脱敏（服务端分类器的 `safeguards` 字段、本地分类器的请求）：不带用户名、规则原文和仓库信息 | [safeguards 脱敏](#safeguards-脱敏) |
@@ -39,7 +39,8 @@
 - 有两处差异会出现在请求中，登记在 `test/parity/intentional.js`。比较前从原版与本项目的请求中去掉，其余内容仍逐字比较：
   - 系统提示词中追加的 `# Memory access policy` 段落。按原文逐字匹配；补丁中的措辞改动而登记未同步时，对比报告不一致。
   - 「Today's date」的取值。本机时区与美国太平洋时间不在同一天时，日期不同。
-- 其余改动（拒答重试、记忆读取确认、脱敏、共存）在对比用例的场景中不触发，由 `test/dev/` 单独验证。
+- 首次引导场景（`onboarding`）中，原版先检查连通性，`dev` 不检查。截屏时二者都已进入主题选择，屏幕相同；连通性检查失败时（如没有网络），原版停在报错页，这一项不一致。
+- 其余改动（拒答重试、记忆读取确认、脱敏、共存、官方插件市场的自动安装）在对比用例的场景中不触发，由 `test/dev/` 单独验证。
 
 ## 固定的环境变量
 
@@ -87,17 +88,27 @@
 - 远程会话、Remote Control、`/teleport`、从 claude.ai 发起到本机的会话；
 - 团队记忆同步、claude.ai 插件同步、设计同步、`DesignSync` / `Projects` 工具；
 - 自动更新检查与版本提示、更新日志（本机缓存中的除外）；
-- 官方 MCP 目录（`/mcp-registry`）、官方插件市场的下载与更新；
+- 官方 MCP 目录（`/mcp-registry`）；
+- 官方插件市场的自动安装，以及从 `downloads.claude.ai` 下载与更新官方插件市场；
+- 首次引导开始时的连通性检查；
 - 登录引导（bootstrap）：不获取服务端下发的模型列表等附加信息，使用内置的默认值；
 - 内置 `gh api`、文件上传到 Anthropic、会话反馈问卷、终端标题等。
 
-官方插件市场从 GCS 下载的函数在原版中没有检查这个开关，设置变量后仍会访问 `downloads.claude.ai`；补丁在函数开头加入了判断（`core/conversation-engine.js`「非必要流量已关闭：不下载官方插件市场」）。
+原版有三处访问不受这个开关控制，由补丁关闭：
+
+| 原版的行为 | 补丁 |
+|---|---|
+| 从 GCS 下载官方插件市场，访问 `downloads.claude.ai` | 下载函数的开头加入判断（`core/conversation-engine.js`「非必要流量已关闭：不下载官方插件市场」） |
+| 交互界面启动后自动安装官方插件市场：下载失败时用 `ssh` 探测 `github.com`，再从 GitHub 克隆到 `<配置目录>/plugins/marketplaces` | 自动安装的入口加入判断（`ui/repl-screen.js`「非必要流量已关闭：不自动安装官方插件市场」） |
+| 首次引导开始时检查连通性，访问 `api.anthropic.com` 与 `platform.claude.com` | 引导流程不加入这一步（`ui/preflight-check-failed.js`「非必要流量已关闭：首次引导不检查连通性」） |
+
+用户执行 `plugin marketplace add`、`plugin marketplace update` 时仍按原版访问所指定的 Git 仓库；更新官方插件市场时不经 `downloads.claude.ai`，直接从 GitHub 克隆。首次引导不检查连通性的代价：无法连接服务端时，引导不提示，问题在第一次模型请求时才报告。
 
 关闭遥测的代价：GrowthBook 不拉取，特性开关只使用离线默认值；从 Claude Desktop 远程发起到本机的 Remote Control 会话可能被拒绝（原版提示 "feature-flag evaluation is off"）。
 
-验证范围：隔离 HOME、本地 MITM 代理、假 API 直连，环境变量和 `settings.json` 都把该变量设为空串；`-p` 与交互界面启动后没有任何外部请求，只有发往 `ANTHROPIC_BASE_URL` 的模型对话。真实登录后的 OAuth 刷新等请求依据源码，未实测。
+验证范围：隔离 HOME、假 API 直连，环境变量和 `settings.json` 都把该变量设为空串，测试环境中关闭官方插件市场自动安装的变量也去掉。外部访问用只做记录的 HTTP 代理和 `ssh`、`git` 的替身记录（`test/harness.js` 的 `trapExternalAccess`）：`-p`、交互界面启动并完成一轮对话、首次引导都没有外部访问，只有发往 `ANTHROPIC_BASE_URL` 的模型对话。真实登录后的 OAuth 刷新等请求依据源码，未实测。
 
-测试：`test/dev/runtime.test.js` 的 `pinned-env`（固定值、锁定、子进程与 Worker 的继承语义），`test/dev/smoke.test.js` 的「非必要网络流量始终关闭」。
+测试：`test/dev/runtime.test.js` 的 `pinned-env`（固定值、锁定、子进程与 Worker 的继承语义），`test/dev/smoke.test.js` 的两个「非必要网络流量始终关闭」用例（`-p`；交互界面启动与首次引导）。
 
 ## GPU 信息
 
@@ -345,6 +356,7 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，每
 | `context/extract-memories-extraction.js`、`context/auto-dream-skipped.js` | 不运行后台记忆提取与记忆整理 | 记忆 |
 | `permissions/classifier-transcript-too-long.js` | 断路器表新增 `memoryRead` | 记忆 |
 | `mcp/bridge-host-profile-collect.js`、`vendor/google-auth/xcode-project.js` | 去掉 GPU 与 CUDA 探测 | GPU 信息 |
+| `ui/repl-screen.js`、`ui/preflight-check-failed.js` | 不自动安装官方插件市场；首次引导不检查连通性 | 非必要网络流量 |
 | `fs/deep-link-register-failed.js`、`fs/auto-updater-forced-downgrade.js`、`fs/setup-token-command.js` | 不注册处理程序；`update`、`upgrade`、`install` 直接退出 | 共存 |
 
 改动生成源码后须重新生成补丁，做法与检查见 [extract/README.md](../extract/README.md#版本补丁)。

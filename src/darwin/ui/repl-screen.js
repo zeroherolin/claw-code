@@ -41738,7 +41738,7 @@ async function vvt(h) {
 var Cvt = { id: "official-marketplace-check", deps: (h) => [h.store, h.storageV5], setup() {
   let h = false;
   return ({ store: x, storageV5: D }) => {
-    if (Pn() || h) return;
+    if (Pn() || h || St()) return; // 非必要流量已关闭：不自动安装官方插件市场（它在下载失败后用 ssh 探测 github.com 并从 GitHub 克隆）
     h = true, vvt(D).then((H) => {
       let J = !H.installed && H.skipped && H.reason === "unknown" ? 1 : 0;
       v2("plugins", J), x.setState((Z) => {
