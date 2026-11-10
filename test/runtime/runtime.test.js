@@ -1,5 +1,5 @@
 // 运行时层：内嵌工具分发、Bun.ant 补丁、资源定位。
-import { describe, expect, test } from "bun:test";
+import { afterAll, describe, expect, test } from "bun:test";
 import { spawnSync } from "child_process";
 import fs from "fs";
 import os from "os";
@@ -22,9 +22,15 @@ console.log("NOT_DISPATCHED");\n`);
   }
 }
 
-// 创建只含指定工具的 PATH 目录（工具由 shell 脚本模拟，打印收到的参数）；scripts 可替换某个工具的脚本体
+// 创建只含指定工具的 PATH 目录（工具由 shell 脚本模拟，打印收到的参数）；scripts 可替换某个工具的脚本体。
+// 目录在全部用例结束后删除
+const fakePaths = [];
+afterAll(() => {
+  for (const dir of fakePaths) fs.rmSync(dir, { recursive: true, force: true });
+});
 function fakePath(tools, scripts = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "claw-path-"));
+  fakePaths.push(dir);
   for (const t of tools) {
     const p = path.join(dir, t);
     fs.writeFileSync(p, `#!/bin/sh\n${scripts[t] ?? ""}\necho "${t}:$*"\n`);
