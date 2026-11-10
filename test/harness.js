@@ -16,8 +16,8 @@ const CLEAN_PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sb
 /**
  * 创建一个隔离的 HOME：已完成引导、已批准假 API key、已信任工作目录 <home>/work。
  * fresh 为 true 时不写全局配置，保留全新状态（用于测试首次引导）。
- * settings 写入 <home>/.claude/settings.json。默认关掉 claude-cli:// 处理程序的自动注册：交互使用时 CLI 会把处理程序
- * 注册到当前可执行文件，在 macOS 的 Launch Services 里留下指向临时目录的登记，目录删掉后登记仍在。
+ * settings 写入 <home>/.claude/settings.json。默认关闭 claude-cli:// 处理程序的自动注册：交互使用时 CLI 会把处理程序
+ * 注册为当前可执行文件，在 macOS 的 Launch Services 里留下指向临时目录的登记，目录删除后登记仍然保留。
  * 返回真实路径（macOS 上 /var → /private/var），CLI 报告的路径都是解析过符号链接的。
  */
 export function makeHome({ fresh = false, settings = { disableDeepLinkRegistration: "disable" } } = {}) {
@@ -139,8 +139,8 @@ export async function runCli(cmd, args, { cwd, env, timeout = 60_000 }) {
  *   2. 按 keys 发送按键，时刻相对第 1 步结束时（秒），保持按键之间的间隔（如双击 Esc）；
  *   3. 从最后一次按键或输出起，静止 idle 毫秒后结束。
  * 以输出静止为准而不是固定时刻：机器繁忙时启动或回合变慢，不会截到中间状态。
- * 按键也算作一次活动：否则按键前已静止了一段时间时，程序还没来得及响应就会被判定为静止。
- * 启动后约 10 秒 CLI 会自行撤掉启动提示，截屏须在此之前完成，因此 idle 不宜过大。
+ * 按键也计为一次活动：否则按键前已静止一段时间时，程序尚未响应就会被判定为静止。
+ * 启动后约 10 秒 CLI 会自行移除启动提示，截屏须在此之前完成，因此 idle 不宜过大。
  * @param keys [[秒, 按键文本], ...]
  * @returns {{ bytes: Buffer, timedOut: boolean }} timedOut：timeout 毫秒内输出始终没有静止
  */

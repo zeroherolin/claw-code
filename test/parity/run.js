@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// 与官方可执行程序做行为对比：两边在相同的隔离环境中运行同一组用例，逐项比较输出、API 请求与终端屏幕。
+// 与官方可执行程序做行为对比：原版与本项目在相同的隔离环境中运行同一组用例，逐项比较输出、API 请求与终端屏幕。
 //
 //   bun test/parity/run.js [官方可执行程序] [--filter <正则>]
 //
@@ -36,8 +36,8 @@ const PRINT_CASES = {
   read: ["-p", "CALL_READ please"],
   model: ["-p", "say hi", "--model", "sonnet"],
   sysprompt: ["-p", "say hi", "--append-system-prompt", "EXTRA RULE"],
-  findgrep: ["-p", "CALL_FINDGREP please", "--allowedTools", "Bash"], // Bash 中 find/grep/rg 走内嵌工具
-  // 先完成一次会话，再续上它：比较续上那次的输出，以及两次的全部请求（第二次含从磁盘恢复的历史消息）
+  findgrep: ["-p", "CALL_FINDGREP please", "--allowedTools", "Bash"], // Bash 中 find/grep/rg 使用内嵌工具
+  // 先完成一次会话，再接续它：比较接续时的输出，以及两次运行的全部请求（第二次含从磁盘恢复的历史消息）
   continue: { before: ["-p", "say hi"], args: ["-p", "--continue", "and again"] },
 };
 const SCENARIO_DIR = path.join(import.meta.dir, "scenarios");

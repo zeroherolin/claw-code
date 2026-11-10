@@ -1,11 +1,11 @@
-// 架构还原：同一系统的各架构构建，打包时把 process.arch 写死成了字面量，
+// 架构还原：同一系统的各架构构建，打包时把 process.arch 替换成了字面量，
 // 构建常量对象中的 DD_SOURCEMAP_GROUP 也只出现在部分架构里。以基准架构格式化后的源码为准，
 // 逐 token 对照其他架构的同一模块，把这些位置改回运行时判断，使一份源码适用于该系统的全部架构。
 //
 // 只接受三类差异，其余一律报错：
 //   1. 字符串、模板字符串或属性名中的架构名      "x64-linux" → `${process.arch}-linux`，o.x64 → o[process.arch]
 //   2. 只在部分架构中出现的 DD_SOURCEMAP_GROUP   值改为 process.arch === "<架构>" ? <值> : void 0
-//   3. 对象属性简写与否（{ a } 与 { a: b }）     混淆名碰巧相同造成，不是真实差异，忽略
+//   3. 对象属性简写与否（{ a } 与 { a: b }）     混淆名偶然相同所致，不是真实差异，忽略
 import { tokens } from "./lib.js";
 
 const DD = "DD_SOURCEMAP_GROUP";
@@ -98,7 +98,7 @@ export function unfoldArch(baseArch, base, others) {
   const classify = (x, y, otherArch, out, label) => {
     const hunks = diff(x, y);
     if (!hunks) return out && problems.push(`${label}：无法逐 token 对齐`), false;
-    // 两边等长的差异块（相邻几处架构名之间只隔着相同的 token）拆成逐 token 的差异
+    // x 与 y 等长的差异块（相邻几处架构名之间只隔着相同的 token）拆成逐 token 的差异
     const single = hunks.flatMap(([i0, i1, j0, j1]) => (i1 - i0 === j1 - j0 && i1 - i0 > 1
       ? Array.from({ length: i1 - i0 }, (_, n) => [i0 + n, i0 + n + 1, j0 + n, j0 + n + 1]).filter(([i, , j]) => x[i].k !== y[j].k)
       : [[i0, i1, j0, j1]]));
@@ -122,7 +122,7 @@ export function unfoldArch(baseArch, base, others) {
 
   for (const { arch, mods } of others) {
     const otherToks = new Map(mods.map((m) => [m.id, normalize(m.code)]));
-    // 按屏蔽架构名后的键配对；同键有多个候选时，优先选连架构名也相同的（即该模块本身不含写死的架构名）
+    // 按屏蔽架构名后的键配对；同键有多个候选时，优先选架构名也相同的（即该模块本身不含硬编码的架构名）
     const pool = new Map(), exactKey = new Map();
     for (const m of mods) {
       const key = maskedKey(otherToks.get(m.id), archRe);

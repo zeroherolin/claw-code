@@ -7,7 +7,7 @@ export const BUNFS = "/$bunfs/root/";
 
 // ---------- Bun standalone 模块图 ----------
 //
-// 模块图存放在 Mach-O 的 __BUN,__bun 段或 ELF 的 .bun 节，两者布局相同（Bun 1.4.x）:
+// 模块图存放在 Mach-O 的 __BUN,__bun 段或 ELF 的 .bun 节，内容的布局相同（Bun 1.4.x）:
 //   [u64 payload_len][payload]
 //   payload 末尾: [Offsets 32 字节]["\n---- Bun! ----\n"]
 //     Offsets = u64 byte_count, u32 modules.off, u32 modules.len, u32 entry_id,

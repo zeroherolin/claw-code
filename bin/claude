@@ -13,7 +13,7 @@ while [ -L "$self" ]; do
     *) self=$(dirname "$self")/$target ;;
   esac
 done
-root=$(cd -P "$(dirname "$self")/.." && pwd -P) # -P：bin/ 本身是符号链接时也能走到真实的项目根目录
+root=$(cd -P "$(dirname "$self")/.." && pwd -P) # -P：bin/ 本身是符号链接时也解析到真实的项目根目录
 
 bun=$root/node_modules/.bin/bun
 [ -x "$bun" ] || bun=$(command -v bun) || {

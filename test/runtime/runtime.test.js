@@ -8,7 +8,7 @@ import path from "path";
 const ROOT = path.resolve(import.meta.dir, "../..");
 const RUNTIME = path.join(ROOT, "src/runtime");
 
-// 写一个只调用 dispatchEmbeddedTool() 的小入口，以指定 argv0 启动
+// 生成只调用 dispatchEmbeddedTool() 的入口脚本，以指定 argv0 启动
 function dispatch(argv0, args, env = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "claw-dispatch-"));
   const entry = path.join(dir, "entry.js");
@@ -22,7 +22,7 @@ console.log("NOT_DISPATCHED");\n`);
   }
 }
 
-// 造一个只含指定工具的 PATH 目录（用 shell 脚本冒充，打印收到的参数）；scripts 可替换某个工具的脚本体
+// 创建只含指定工具的 PATH 目录（工具由 shell 脚本模拟，打印收到的参数）；scripts 可替换某个工具的脚本体
 function fakePath(tools, scripts = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "claw-path-"));
   for (const t of tools) {
@@ -35,11 +35,11 @@ function fakePath(tools, scripts = {}) {
 
 // Bash 快照中的 find 函数固定传入的选项，以及一段典型的用户参数
 const FIND_ARGS = ["-S", "dfs", "-regextype", "findutils-default", ".", "-name", "*.txt"];
-// 旧版 bfs（3.3 之前）：不认识 -regextype findutils-default
+// 旧版 bfs（3.3 之前）：不支持 -regextype findutils-default
 const OLD_BFS = 'case "$*" in *findutils-default*) echo "bfs: error: unknown regex type" >&2; exit 1;; esac';
 
 describe("embedded-tools", () => {
-  test("argv0 不是内嵌工具名时不做任何事", () => {
+  test("argv0 不是内嵌工具名时不做任何处理", () => {
     const r = dispatch("claude", ["--x"]);
     expect(r.stdout.trim()).toBe("NOT_DISPATCHED");
   });

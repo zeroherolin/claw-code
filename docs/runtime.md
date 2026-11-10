@@ -8,25 +8,25 @@
 | 内嵌的 ripgrep / bfs / ugrep（argv0 分发） | `embedded-tools.js` 按 argv0 转交给系统工具 |
 | 模块图里 hash 命名的虚拟文件 `/$bunfs/root/<name>` | `assets.js` 按逻辑路径定位 `assets/` 与 `src/` |
 
-原版代码本身只改了排版和引用路径（Linux 版另把写死的架构名改回 `process.arch`，见 [extract/README.md](../extract/README.md#架构还原)），没有因为这些差异改动任何逻辑。
+原版代码本身只改了排版和引用路径（有多个架构的系统另把硬编码的架构名改回 `process.arch`，见 [extract/README.md](../extract/README.md#架构还原)），没有因为这些差异改动任何逻辑。
 
-入口 `src/main.js` 按 `process.platform` 加载 `src/darwin/` 或 `src/linux/`；平台不在 `src/runtime/platforms.js` 中时提示并退出。
+入口 `src/main.js` 按 `process.platform` 加载对应的 `src/<系统>/`；平台不在 `src/runtime/platforms.js` 中时提示并退出。
 
 ## Bun.ant
 
-公开版 Bun 没有 `Bun.ant`。两个系统的原版代码各调用 12 个原生能力，合计 13 个，其中 11 个两边都有。没有回退、由本项目实现的是 `CellSegmenter` 与 `setDumpable`：
+公开版 Bun 没有 `Bun.ant`。macOS 与 Linux 的原版代码各调用 12 个原生能力，合计 13 个，其中 11 个是共有的。没有回退、由本项目实现的是 `CellSegmenter` 与 `setDumpable`：
 
 | API | 系统 | 用途 | 调用位置 | 缺失时原版的行为 |
 |---|---|---|---|---|
-| `CellSegmenter` | 两者 | 终端渲染：带 ANSI 的文本 → 屏幕格子 | `terminal/cell-segmenter-factory.js`「Bun.ant.CellSegmenter」 | **抛错，界面无法渲染** → 本项目实现 |
+| `CellSegmenter` | 全部 | 终端渲染：带 ANSI 的文本 → 屏幕格子 | `terminal/cell-segmenter-factory.js`「Bun.ant.CellSegmenter」 | **抛错，界面无法渲染** → 本项目实现 |
 | `setDumpable` | Linux | `prctl(PR_SET_DUMPABLE)`：禁止同一用户的其他进程读取本进程内存 | `src/linux/shared/chunk-960c3301.js`「Bun.ant.setDumpable」 | try/catch → 代码审查会话**拒绝启动**，其他场景记录警告 → 本项目实现 |
-| `getPeerPid` / `getPeerUid` | 两者 | daemon Unix socket 对端校验 | `settings/global-config-and-gates.js`「Bun.ant?.getPeerPid」、`telemetry/harbor-kite-pacing-off.js`「Bun.ant.getPeerUid」 | `typeof` 检查不通过 → 不启用依赖它的能力，只记录警告 |
-| `loginTty` | 两者 | 后台会话获取控制终端 | `core/conversation-engine.js`「Bun.ant.loginTty」 | try/catch → 返回 `"ffi_unavailable"`，跳过 |
-| `ttyName` | 两者 | 查询终端设备名 | `telemetry/terminal-nonblocking-stdout.js`「Bun.ant.ttyName」 | try/catch → undefined |
-| `memoryPressureLevel` | 两者 | 内存压力（后台任务降载） | `context/bg-attach-upgrade.js`「Bun.ant.memoryPressureLevel」 | try/catch → undefined，改用其他内存指标 |
-| `posixFsAt` | 两者 | macOS 沙箱的 anchor 后端 | `fs/unstable-identity.js`「ant?.posixFsAt」 | 记录警告，不启用该后端（Linux 使用 procfs 后端，不需要它） |
+| `getPeerPid` / `getPeerUid` | 全部 | daemon Unix socket 对端校验 | `settings/global-config-and-gates.js`「Bun.ant?.getPeerPid」、`telemetry/harbor-kite-pacing-off.js`「Bun.ant.getPeerUid」 | `typeof` 检查不通过 → 不启用依赖它的能力，只记录警告 |
+| `loginTty` | 全部 | 后台会话获取控制终端 | `core/conversation-engine.js`「Bun.ant.loginTty」 | try/catch → 返回 `"ffi_unavailable"`，跳过 |
+| `ttyName` | 全部 | 查询终端设备名 | `telemetry/terminal-nonblocking-stdout.js`「Bun.ant.ttyName」 | try/catch → undefined |
+| `memoryPressureLevel` | 全部 | 内存压力（后台任务降载） | `context/bg-attach-upgrade.js`「Bun.ant.memoryPressureLevel」 | try/catch → undefined，改用其他内存指标 |
+| `posixFsAt` | 全部 | macOS 沙箱的 anchor 后端 | `fs/unstable-identity.js`「ant?.posixFsAt」 | 记录警告，不启用该后端（Linux 使用 procfs 后端，不需要它） |
 | `waitForUrlEvent` | macOS | `claude://` 深链接（只在 .app 包装内） | `src/darwin/ui/handle-deep-link-uri.js`「Bun.ant.waitForUrlEvent」 | 只在特定 bundle id 下调用；try/catch → null |
-| `windowsFolderSecurity` / `windowsProcessList` / `windowsProcessCreationTime` / `windowsSandboxDeniesArg` | 两者 | Windows 专用 | `shell/sandbox.js`「windowsSandboxDeniesArg」、`settings/global-config-and-gates.js`「Bun.ant?.windowsProcessList」、`fs/chunk-b6c2193e.js`「windowsProcessCreationTime」 | 非 Windows 平台不调用 |
+| `windowsFolderSecurity` / `windowsProcessList` / `windowsProcessCreationTime` / `windowsSandboxDeniesArg` | 全部 | Windows 专用 | `shell/sandbox.js`「windowsSandboxDeniesArg」、`settings/global-config-and-gates.js`「Bun.ant?.windowsProcessList」、`fs/chunk-b6c2193e.js`「windowsProcessCreationTime」 | 非 Windows 平台不调用 |
 
 `src/runtime/bun-ant.js` 的处理方式：
 
@@ -76,7 +76,7 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 
 - 调用约定：`setDumpable(flag)` 把进程设为可转储（`true`）或不可转储（`false`），成功时返回 `true`。
 - 实现：经 `bun:ffi` 调用 glibc 的 `prctl(PR_SET_DUMPABLE, flag)`。`prctl` 的参数是 `unsigned long`，按 64 位传入。
-- 原版在代码审查会话中先把进程设为不可转储，使审查时运行的命令无法经 ptrace 或 `/proc/<pid>/mem` 读取内存中的 token；做不到时拒绝启动（`src/linux/cli/main.js`「could not make itself non-dumpable」）。
+- 原版在代码审查会话中先把进程设为不可转储，使审查时运行的命令无法经 ptrace 或 `/proc/<pid>/mem` 读取内存中的 token；设置失败时拒绝启动（`src/linux/cli/main.js`「could not make itself non-dumpable」）。
 - `test/runtime/runtime.test.js` 在 Linux 上用 `PR_GET_DUMPABLE` 读回，验证设置生效。
 
 ## 内嵌命令行工具
@@ -100,10 +100,10 @@ new CellSegmenter({ ambiguousIsNarrow, substitute: [[first, last], …], screen?
 | `ugrep` | 系统 `ugrep` | `grep` | `--ignore-files`、`--hidden`、`-I`、`-G` |
 
 - find 函数固定传入 `-S dfs -regextype findutils-default`。bfs 3.3 起才支持 `findutils-default`，发行版自带的往往更旧（如 Ubuntu 24.04 为 3.1，Debian 12 为 2.6）。因此先用这组选项探测系统 bfs，不接受时视同没有安装，改用 find。
-- `findutils-default` 就是 GNU find 的默认正则类型，回退时去掉它不改变行为；GNU find 也不接受它出现在路径之前。
+- `findutils-default` 即 GNU find 的默认正则类型，回退时去掉它不改变行为；GNU find 也不接受它出现在路径之前。
 - 找工具时会排除自身（`process.execPath`），避免递归调用。
 - 都不可用时，打印安装提示，以 127 退出。
-- Bash 中 find、grep、rg 的输出与原版一致，已由对比测试中的 `findgrep` 用例在每个平台上验证：macOS 上使用 Homebrew 的 bfs 4.x，Ubuntu 24.04 上自带的 bfs 3.1 过旧，走 GNU find 回退。
+- Bash 中 find、grep、rg 的输出与原版一致，已由对比测试中的 `findgrep` 用例在每个平台上验证：macOS 上使用 Homebrew 的 bfs 4.x，Ubuntu 24.04 上自带的 bfs 3.1 过旧，使用 GNU find 回退。
 
 ## 资源定位
 
@@ -157,9 +157,9 @@ external: ["/$bunfs/*", "./*", "../*"],
 | 内置 hooks 模块 | "是否以单文件可执行程序方式运行"（`shared/environment.js`「isStandaloneExecutable」）为假时，原版会去找源码树中的 `hooks/register.ts`，而发布包里没有这个文件 | 内置 hooks 模块不加载，debug 日志中可见 |
 | Bash 中的 `find`、`grep`、`rg` 函数 | 函数以指定的 argv0 回调 `$CLAUDE_CODE_EXECPATH`；开发模式下它是 `bun` 本身，argv0 分发到不了 `src/main.js` | 这三个函数会报错；直接调用 `/usr/bin/find` 等命令不受影响 |
 
-另外，以下行为也取决于是否以单文件可执行程序方式运行：子进程重启 CLI 自身时 argv 的构造方式（`fs/chunk-dacd9872.js`「process.execPath」），以及 ripgrep 的运行方式（见上文）。开发模式下它们走的是原版为"以脚本方式运行"准备的分支，只有 `dist/claude` 与官方可执行程序一致。
+另外，以下行为也取决于是否以单文件可执行程序方式运行：子进程重启 CLI 自身时 argv 的构造方式（`fs/chunk-dacd9872.js`「process.execPath」），以及 ripgrep 的运行方式（见上文）。开发模式下它们执行的是原版为"以脚本方式运行"准备的分支，只有 `dist/claude` 与官方可执行程序一致。
 
-开发模式适合阅读、调试和快速试验；需要与原版完全一致的行为时，请用 `dist/claude`。
+开发模式适合阅读、调试和快速试验；需要与原版完全一致的行为时使用 `dist/claude`。
 
 ## 安装与共存
 
@@ -173,23 +173,23 @@ external: ["/$bunfs/*", "./*", "../*"],
 | `--force` | 覆盖不是本脚本创建的同名文件；默认不覆盖 |
 | `--uninstall` | 卸载；只删除指向本项目 `dist/claude` 的链接 |
 
-`claw-code` 与已安装的 `claude` 是同一套代码，按同样的规则定位数据，因此下列内容两边共用：
+`claw-code` 与已安装的 `claude` 是同一套代码，按同样的规则定位数据，因此二者共用下列内容：
 
 - 配置目录（`~/.claude` 或 `CLAUDE_CONFIG_DIR`）下的会话记录、`settings.json`、skills、插件、记忆；
 - 全局配置 `~/.claude.json`；
 - 登录凭据：钥匙串条目名只取决于配置目录（设置了 `CLAUDE_SECURESTORAGE_CONFIG_DIR` 时取它），与可执行文件无关，见 `auth/claude-code-user.js`「OAUTH_FILE_SUFFIX」。
 
-会话可以互相续上：原版 2.1.310 写的会话，`claw-code --continue` 能续上并带出历史，反过来也行（隔离 HOME 下用假 API 实测）。
+会话可以互相接续：原版 2.1.310 保存的会话，`claw-code --continue` 可以接续并带出历史，反之亦然（隔离 HOME 下用假 API 实测）。
 
 原版代码有两处会影响已安装的 `claude`：
 
 | 行为 | 位置 | 影响 | 避免方式 |
 |---|---|---|---|
-| 自动注册 `claude-cli://` 处理程序 | `fs/deep-link-register-failed.js`「Auto-registered claude-cli:// deep link protocol handler」 | 交互使用并提交第一条消息后，发现处理程序没有指向当前可执行文件，就改注册到自己：macOS 上是 `~/Applications/Claude Code URL Handler.app`，Linux 上是 `~/.local/share/applications/claude-code-url-handler.desktop`。此后从网页深链接拉起的是 `claw-code` | 在 `settings.json` 中设置 `"disableDeepLinkRegistration": "disable"` |
+| 自动注册 `claude-cli://` 处理程序 | `fs/deep-link-register-failed.js`「Auto-registered claude-cli:// deep link protocol handler」 | 交互使用并提交第一条消息后，若处理程序没有指向当前可执行文件，则改注册为当前可执行文件：macOS 上是 `~/Applications/Claude Code URL Handler.app`，Linux 上是 `~/.local/share/applications/claude-code-url-handler.desktop`。此后网页深链接启动的是 `claw-code` | 在 `settings.json` 中设置 `"disableDeepLinkRegistration": "disable"` |
 | `update`、`upgrade`、`install` 子命令 | `fs/auto-updater-forced-downgrade.js`「Checking for updates to」、`fs/setup-token-command.js`「awaitPolicyLimitsColdStart」 | 从 `downloads.claude.ai` 下载官方原生版本，装进 `~/.local/bin/claude`，并把共享配置里的 `installMethod` 改成 `native`（`telemetry/version-lock-acquired.js`「Set installMethod to "native"」） | 不要对 `claw-code` 执行这三个子命令；环境变量 `DISABLE_UPDATES=1` 会让它们直接退出 |
 
-`settings.json` 与环境变量两边共用，上面两个设置对已安装的 `claude` 同样生效。升级 `claw-code` 的办法是更新项目后重新执行 `npm run install-cli`。
+`settings.json` 与环境变量由二者共用，上述两个设置对已安装的 `claude` 同样生效。升级 `claw-code` 的方式是更新项目后重新执行 `npm run install-cli`。
 
-以上两处行为与避免方式都在隔离 HOME 下实测；钥匙串条目名依据源码，没有用真实钥匙串测过。`~/.claude.json` 里的 `numStartups` 等字段两边都会写，后台守护进程、会话锁等运行时状态也在同一个配置目录里，两个版本同时运行的情形没有专门测过。
+以上两处行为与避免方式都在隔离 HOME 下实测；钥匙串条目名依据源码，未用真实钥匙串验证。`~/.claude.json` 里的 `numStartups` 等字段二者都会写入，后台守护进程、会话锁等运行时状态也在同一个配置目录里；二者同时运行的情形未专门验证。
 
-测试：`test/install.test.js` 覆盖安装、重复安装、不覆盖他人文件、拒绝 `claude` 这个名字、卸载只删自己的链接。测试用的隔离 HOME 默认带上 `disableDeepLinkRegistration`（`test/harness.js` 的 `makeHome`），不在系统里留下指向临时目录的处理程序登记。
+测试：`test/install.test.js` 覆盖安装、重复安装、不覆盖其他来源的文件、拒绝 `claude` 这个名字、卸载只删除本项目创建的链接。测试用的隔离 HOME 默认设置 `disableDeepLinkRegistration`（`test/harness.js` 的 `makeHome`），避免在系统里留下指向临时目录的处理程序登记。

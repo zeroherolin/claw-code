@@ -19,7 +19,7 @@ import { readBunModules, readVersion, formatModule, HEADER_RE, readJson, writeJs
 import { scanAssetRefs, writeAssets } from "./assets.js";
 import { unfoldArch } from "./unfold.js";
 import { analyzeStrings, analyzeTools, analyzeGates, analyzeCli } from "./analyze.js";
-import { alignModules } from "./align.js";
+import { alignSystems } from "./align.js";
 import { planLayout, clearGenerated, writeSources } from "./assemble.js";
 import { applySourcePatch, patchLineShift, sourcePatchForVersion } from "./patches.js";
 import { writeReference } from "./reference.js";
@@ -66,7 +66,7 @@ process.on("exit", () => fs.rmSync(tmpAssets, { recursive: true, force: true }))
 const { assets, bySystem } = writeAssets(platforms, refs, layout.assets, tmpAssets);
 fs.mkdirSync(path.join(tmpAssets, "sdk"), { recursive: true });
 fs.copyFileSync(path.join(mainPkg, "sdk-tools.d.ts"), path.join(tmpAssets, "sdk/sdk-tools.d.ts"));
-fs.chmodSync(tmpAssets, 0o755); // mkdtemp 建出的目录是 0700
+fs.chmodSync(tmpAssets, 0o755); // mkdtemp 创建的目录权限为 0700
 step(`资源：${assets.length} 个（其中原生模块 ${assets.filter((a) => a.platforms).length} 个）`);
 
 // 3. 格式化与架构还原
@@ -94,16 +94,9 @@ for (const [system, mods] of Object.entries(js)) {
 }
 
 // 5. 跨系统对齐与命名
-const [sa, sb] = Object.keys(SYSTEMS);
-const strip = (mods) => mods.map((m) => ({ id: m.id, code: m.raw.replace(HEADER_RE, "") }));
-const pairs = alignModules(strip(js[sa]), strip(js[sb]));
-const paired = new Set(pairs.values());
-const groups = [
-  ...[...pairs].map(([a, b]) => ({ [sa]: a, [sb]: b })),
-  ...js[sa].filter((m) => !pairs.has(m.id)).map((m) => ({ [sa]: m.id })),
-  ...js[sb].filter((m) => !paired.has(m.id)).map((m) => ({ [sb]: m.id })),
-];
-step(`对齐：${pairs.size} 组对应模块，${sa} 独有 ${js[sa].length - pairs.size} 个，${sb} 独有 ${js[sb].length - pairs.size} 个`);
+const groups = alignSystems(Object.fromEntries(Object.entries(js).map(([system, mods]) => [system, mods.map((m) => ({ id: m.id, code: m.raw.replace(HEADER_RE, "") }))])));
+const unpaired = (system) => groups.filter((g) => Object.keys(g).length === 1 && g[system] !== undefined).length;
+step(`对齐：${groups.filter((g) => Object.keys(g).length > 1).length} 组对应模块；${Object.keys(js).map((s) => `${s} 独有 ${unpaired(s)} 个`).join("，")}`);
 const owners = {};
 for (const [system, a] of Object.entries(analysis)) {
   const o = (owners[system] = { tool: new Map(), command: new Map(), skill: new Map() });
@@ -117,7 +110,7 @@ for (const [system, a] of Object.entries(analysis)) {
 }
 const plan = planLayout(groups, js, owners, layout.modules);
 
-// 6. 写出源码与资源。源码先生成到项目外的临时目录（git apply 须在仓库之外运行），有版本补丁时在那里校验并应用；
+// 6. 写出源码与资源。源码先生成到项目外的临时目录（git apply 须在仓库之外运行），有版本补丁时在该目录中校验并应用；
 //    全部成功后才清空旧源码、替换资源（从这里开始写入项目目录）
 const staged = fs.mkdtempSync(path.join(os.tmpdir(), "claw-extract-"));
 process.on("exit", () => fs.rmSync(staged, { recursive: true, force: true }));
@@ -174,7 +167,7 @@ writeLicense(path.join(ROOT, "LICENSE"), {
   version,
   packages: ["@anthropic-ai/claude-code", ...platforms.map((p) => p.pkg)],
   upstreamLicense: fs.readFileSync(path.join(mainPkg, "LICENSE.md"), "utf8").trim(),
-  upstreamHeader: js[sa].find((m) => m.id === "cli").raw.match(/^\/\/ @bun @bytecode\n((?:\/\/.*\n|\n)*?)\/\/ Version:/)?.[1] ?? "",
+  upstreamHeader: Object.values(js)[0].find((m) => m.id === "cli").raw.match(/^\/\/ @bun @bytecode\n((?:\/\/.*\n|\n)*?)\/\/ Version:/)?.[1] ?? "",
   legal,
 });
 step(`LICENSE：${legal.size} 段第三方许可声明`);

@@ -1,8 +1,8 @@
 # 架构与运行流程
 
-本文描述 Claude Code 2.1.310 从启动到完成一次对话回合的运行路径、各目录的职责，以及两个系统的代码差异。
+本文描述 Claude Code 2.1.310 从启动到完成一次对话回合的运行路径、各目录的职责，以及各系统之间的代码差异。
 
-- `src/darwin/` 与 `src/linux/` 结构相同，对应的模块路径相同。下文的模块路径对两个系统都成立，只属于某个系统的写成 `src/<系统>/…`。
+- 每个支持的系统有一份生成代码 `src/<系统>/`（`src/darwin/`、`src/linux/`），结构相同，对应的模块路径相同。下文的模块路径对每个系统都成立，只属于某个系统的写成 `src/<系统>/…`。
 - 位置用"路径「特征字符串」"标注，例如 `core/query-loop.js`「hook_stopped_continuation」：在该文件中搜索这个字符串即可定位。函数名是原版混淆后的名字，各系统不同，因此不在文中使用。
 - 模块在各系统中的原始 chunk id 见 `reference/module-map.json`。
 
@@ -15,7 +15,7 @@
     runtime/embedded-tools.js   argv0 为 rg / bfs / ugrep 时转交系统工具
     runtime/platforms.js        支持的平台；不支持时提示并退出
     runtime/bun-ant.js          补齐 Bun.ant 中没有回退的原生能力
-    import ./<系统>/cli.js      按 process.platform 选择 darwin 或 linux
+    import ./<系统>/cli.js      按 process.platform 选择当前系统的目录
   src/runtime/assets.js         资源定位：assets/、当前平台的原生模块、src/ 的绝对路径
 
 原版代码（每个系统一份，只改了排版和引用路径）
@@ -63,7 +63,7 @@
   - `runOnboarding`：首次引导；
   - `showSecurityDialog`、`handleInvalidSettings` 等界面回调。
 - 随后注册子命令：`mcp`、`plugin`、`auth`、`setup-token`、`auto-mode`、`gateway` 等，完整列表见各系统的 CLI 参考（[darwin](reference/darwin/CLI.md)、[linux](reference/linux/CLI.md)）。最后执行 `program.parseAsync(process.argv)`（`cli/main.js`「parseAsync」）。
-- 带 `-p` 时只注册根命令，然后立即解析，跳过子命令注册，这样启动更快。
+- 带 `-p` 时只注册根命令，然后立即解析，跳过子命令注册，以缩短启动时间。
 
 ### 2.4 根命令 `cli/root-command`
 
@@ -128,7 +128,7 @@
 **Bash 工具的 shell**：
 
 - 首次执行时，在 `~/.claude/shell-snapshots/` 生成 shell 快照，用来复用用户 shell 的 PATH、别名和函数。
-- 快照里会注入 `find`、`grep`、`rg` 三个函数（`core/conversation-engine.js`「exec -a」）。这些函数把 argv0 设为 `bfs`、`ugrep` 或 `rg`，回调 `$CLAUDE_CODE_EXECPATH`，也就是当前可执行文件（启动 shell 时设为 `process.execPath`），从而用上内嵌工具。
+- 快照里会注入 `find`、`grep`、`rg` 三个函数（`core/conversation-engine.js`「exec -a」）。这些函数把 argv0 设为 `bfs`、`ugrep` 或 `rg`，回调 `$CLAUDE_CODE_EXECPATH`，即当前可执行文件（启动 shell 时设为 `process.execPath`），从而使用内嵌工具。
 
 **沙箱**：
 
@@ -211,11 +211,11 @@
 
 除原生模块外，资源在各系统中完全相同，只存一份。
 
-## 7. 两个系统的差异
+## 7. 各系统之间的差异
 
-两个系统的原版代码来自同一份源码，分别打包。打包时 `process.platform` 被替换成字面量，只适用于其他系统的分支被裁掉，因此：
+各系统的原版代码来自同一份源码，分别打包。打包时 `process.platform` 被替换成字面量，只适用于其他系统的分支被删除，因此：
 
-- **对应的模块**：两个系统共有约 2530 组，路径相同。其中约四分之三去掉混淆名后完全相同；其余的差异来自平台分支，例如路径规范化、钥匙串、桌面应用检测、语音录制（macOS 用 SoX，Linux 用 arecord）。
+- **对应的模块**：macOS 与 Linux 之间约 2530 组，路径相同。其中约四分之三去掉混淆名后完全相同；其余的差异来自平台分支，例如路径规范化、钥匙串、桌面应用检测、语音录制（macOS 用 SoX，Linux 用 arecord）。
 - **只属于一个系统的模块**：macOS 约 30 个（多为 `computer-use/` 下的计算机操作），Linux 约 15 个（如 `src/linux/native/clipboard-napi.js`）。
-- **原生能力**：两个系统使用的 `Bun.ant` 能力略有不同，见 [runtime.md](runtime.md#bunant)；例如 Linux 版在代码审查会话中会把进程设为不可转储（`src/linux/cli/main.js`「could not make itself non-dumpable」）。
-- **混淆名**：各系统分别混淆，同一个函数在两个系统中的名字不同，`diff src/darwin/x.js src/linux/x.js` 会显示大量名字差异；比较时宜先找特征字符串，再对照上下文。
+- **原生能力**：各系统使用的 `Bun.ant` 能力略有不同，见 [runtime.md](runtime.md#bunant)；例如 Linux 版在代码审查会话中会把进程设为不可转储（`src/linux/cli/main.js`「could not make itself non-dumpable」）。
+- **混淆名**：各系统分别混淆，同一个函数在各系统中的名字不同，对不同系统的同名文件直接 `diff` 会显示大量名字差异；比较时先定位特征字符串，再对照上下文。

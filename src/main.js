@@ -11,5 +11,5 @@ if (!PLATFORMS.includes(platform)) {
   process.stderr.write(`claw-code: unsupported platform ${platform} (supported: ${PLATFORMS.join(", ")})\n`);
   process.exit(1);
 }
-installBunAnt(); // Bun.ant.CellSegmenter
+installBunAnt(); // 补齐 Bun.ant 中没有回退的原生能力
 await import(`./${process.platform}/cli.js`);

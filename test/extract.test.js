@@ -1,8 +1,10 @@
-// 版本补丁机制（extract/patches.js）：按版本选取补丁，完整校验后才应用，并换算补丁造成的行号变化。
+// 提取流水线中可单独验证的部分：版本补丁机制（extract/patches.js）、跨系统对齐与路径规划（extract/align.js、extract/assemble.js）。
 import { describe, expect, test } from "bun:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { alignSystems } from "../extract/align.js";
+import { planLayout } from "../extract/assemble.js";
 import { applySourcePatch, patchLineShift, sourcePatchForVersion } from "../extract/patches.js";
 import { SYSTEMS } from "../src/runtime/platforms.js";
 import { ROOT, VERSION } from "./harness.js";
@@ -33,7 +35,7 @@ describe("sourcePatchForVersion", () => {
     expect(sourcePatchForVersion("1.2.3", dir)).toBe(path.join(dir, "1.2.3.patch"));
   }));
 
-  test("只有别的版本的补丁时失败：升级时不能丢掉这些改动", () => inTmp((dir) => {
+  test("只有其他版本的补丁时失败：升级时不能遗漏这些改动", () => inTmp((dir) => {
     fs.writeFileSync(path.join(dir, "1.2.3.patch"), F_PATCH);
     expect(() => sourcePatchForVersion("1.2.4", dir)).toThrow("缺少源码补丁 extract/patches/1.2.4.patch（现有 1.2.3.patch）");
   }));
@@ -98,4 +100,42 @@ describe.skipIf(!current)("本版本的补丁", () => {
     applySourcePatch(dir, current);
     for (const f of files) expect(read(dir, f).equals(read(ROOT, f))).toBe(true);
   }));
+});
+
+// 对齐与路径规划不限定系统数量：三个虚构的系统，标识符各不相同，结构对应
+describe("跨系统对齐与路径规划", () => {
+  const CLI = `console.log("entry");\n`;
+  const parse = (fn, arg) => `function ${fn}(${arg}) {\n  return ${arg} + 1;\n}\nexport { ${fn} as parseAlphaValue };\n`;
+  const render = (fn, arg) => `function ${fn}(${arg}) {\n  return [${arg}, "beta"];\n}\nexport { ${fn} as renderBetaList };\n`;
+  const helper = (fn) => `function ${fn}() {\n  return { kind: "gamma", size: 3 };\n}\nexport { ${fn} as sharedGammaHelper };\n`;
+  // 第一个系统是基准；y、z 各有一个基准系统中没有的模块，x 有一个 z 中没有的模块
+  const SOURCES = {
+    x: { cli: CLI, "chunk-x1.js": parse("a", "b"), "chunk-x2.js": render("c", "d") },
+    y: { cli: CLI, "chunk-y1.js": parse("e", "f"), "chunk-y2.js": render("g", "h"), "chunk-y3.js": helper("i") },
+    z: { cli: CLI, "chunk-z1.js": parse("j", "k"), "chunk-z3.js": helper("l") },
+  };
+  const mods = (key) => Object.fromEntries(Object.entries(SOURCES).map(([s, files]) => [s, Object.entries(files).map(([id, code]) => ({ id, [key]: code }))]));
+
+  test("以第一个系统为基准逐个对齐：对应的模块成组，没有对应模块的单独成组", () => {
+    expect(alignSystems(mods("code"))).toEqual([
+      { x: "cli", y: "cli", z: "cli" },
+      { x: "chunk-x1.js", y: "chunk-y1.js", z: "chunk-z1.js" },
+      { x: "chunk-x2.js", y: "chunk-y2.js" },
+      { y: "chunk-y3.js" },
+      { z: "chunk-z3.js" },
+    ]);
+  });
+
+  test("对应的模块在各系统中路径相同；基准系统中没有、语义名相同的模块也归到同一路径", () => {
+    const owners = Object.fromEntries(Object.keys(SOURCES).map((s) => [s, { tool: new Map(), command: new Map(), skill: new Map() }]));
+    const plan = planLayout(alignSystems(mods("code")), mods("raw"), owners, {});
+    expect(plan.x.cli).toBe("cli.js");
+    expect(new Set([plan.x.cli, plan.y.cli, plan.z.cli]).size).toBe(1);
+    expect(plan.x["chunk-x1.js"]).toMatch(/\/parse-alpha-value\.js$/);
+    expect(new Set([plan.x["chunk-x1.js"], plan.y["chunk-y1.js"], plan.z["chunk-z1.js"]]).size).toBe(1);
+    expect(plan.y["chunk-y2.js"]).toBe(plan.x["chunk-x2.js"]);
+    expect(plan.y["chunk-y3.js"]).toMatch(/\/shared-gamma-helper\.js$/);
+    expect(plan.z["chunk-z3.js"]).toBe(plan.y["chunk-y3.js"]);
+    for (const s of Object.keys(SOURCES)) expect(new Set(Object.values(plan[s])).size).toBe(Object.keys(SOURCES[s]).length); // 同一系统内路径不重复
+  });
 });

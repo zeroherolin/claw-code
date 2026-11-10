@@ -5,13 +5,13 @@
 // find / grep / rg 函数、ripgrep 的 embedded 模式，见 docs/runtime.md）。
 //
 // 公开版 Bun 没有这些工具，这里在入口最前面按 argv0 转交给系统里的同名工具；bfs、ugrep 不存在或
-// 版本过旧时按原版自己的回退语义改用 find、grep，并去掉它们不认识的参数。
+// 版本过旧时按原版的回退语义改用 find、grep，并去掉它们不支持的参数。
 import { spawnSync } from "node:child_process";
 import { basename } from "node:path";
 
 // probe：系统里的工具须能接受的参数，不能接受时视同没有安装。
 // Bash 快照中的 find 函数固定传入 -S dfs -regextype findutils-default，bfs 3.3 起才支持；
-// 发行版自带的往往更旧（如 Ubuntu 24.04 的 3.1、Debian 12 的 2.6）
+// 发行版自带的版本通常更旧（如 Ubuntu 24.04 的 3.1、Debian 12 的 2.6）
 const TOOLS = {
   rg: { install: "ripgrep" },
   bfs: { install: "bfs", minimum: "3.3", fallback: "find", probe: ["-S", "dfs", "-regextype", "findutils-default", "/", "-quit"] },
@@ -37,7 +37,7 @@ function accepts(file, probe) {
   return !probe || spawnSync(file, probe, { stdio: "ignore" }).status === 0;
 }
 
-/** PATH 中的命令，排除自身（避免回调自己形成递归） */
+/** PATH 中的命令，排除自身（避免递归调用） */
 function which(cmd) {
   const p = Bun.which(cmd);
   return p && p !== process.execPath ? p : null;

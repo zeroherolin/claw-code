@@ -6,7 +6,7 @@
 //
 // 只创建一个符号链接，指向本项目的 dist/claude：重新构建后立即生效，不复制 290 MB 的可执行文件。
 // 配置、会话记录、登录凭据都由原版代码按同样的规则定位（~/.claude、~/.claude.json、钥匙串），所以与 claude 共用。
-// 不会覆盖不是自己创建的文件；卸载只删除指向本项目 dist/claude 的链接。
+// 不覆盖不是本脚本创建的文件；卸载只删除指向本项目 dist/claude 的链接。
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -30,7 +30,7 @@ if (!/^[A-Za-z0-9._-]+$/.test(values.name) || values.name === "claude") {
 const binDir = path.resolve(values["bin-dir"]);
 const link = path.join(binDir, values.name);
 
-/** link 是否是指向 dist/claude 的符号链接（目标不存在也算，卸载时要能清掉失效的链接） */
+/** link 是否是指向 dist/claude 的符号链接（目标不存在时同样成立，使卸载能清除失效的链接） */
 function isOurs() {
   try {
     return fs.lstatSync(link).isSymbolicLink() && path.resolve(binDir, fs.readlinkSync(link)) === DIST;
@@ -67,7 +67,7 @@ fs.rmSync(link, { force: true });
 fs.symlinkSync(DIST, link);
 console.log(`${link} -> ${DIST}`);
 
-// 提醒：目录不在 PATH 中，或 PATH 里排在前面的另有同名命令
+// 目录不在 PATH 中，或 PATH 中靠前的目录里另有同名命令时，给出提示
 const dirs = (process.env.PATH ?? "").split(path.delimiter).filter(Boolean).map((d) => path.resolve(d));
 if (!dirs.includes(binDir)) {
   console.log(`\n${binDir} 不在 PATH 中。把下面这行加进 shell 配置后重新打开终端：\n  export PATH="${binDir}:$PATH"`);

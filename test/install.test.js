@@ -15,7 +15,7 @@ beforeEach(() => {
 });
 afterEach(() => fs.rmSync(tmp, { recursive: true, force: true }));
 
-/** 运行安装脚本。PATH 只有系统目录和 extraPath，HOME 指向临时目录，不碰真实的 ~/.local/bin */
+/** 运行安装脚本。PATH 只有系统目录和 extraPath，HOME 指向临时目录，不涉及真实的 ~/.local/bin */
 function install(args, { extraPath } = {}) {
   const r = Bun.spawnSync([process.execPath, SCRIPT, "--no-build", "--bin-dir", bin, ...args], {
     env: { PATH: [extraPath, "/usr/bin", "/bin"].filter(Boolean).join(":"), HOME: tmp },
@@ -33,7 +33,7 @@ describe.skipIf(!fs.existsSync(DIST))("scripts/install.js", () => {
     expect(run.stdout.toString().trim()).toBe(`${VERSION} (Claude Code)`);
   });
 
-  test("重复安装没有问题", () => {
+  test("可重复安装", () => {
     expect(install([]).code).toBe(0);
     expect(install([]).code).toBe(0);
     expect(linkTarget()).toBe(DIST);
@@ -51,7 +51,7 @@ describe.skipIf(!fs.existsSync(DIST))("scripts/install.js", () => {
     expect(r.out).toContain(`${path.join(other, "claw-code")} 排在前面`);
   });
 
-  test("不覆盖不是自己创建的文件，加 --force 才覆盖", () => {
+  test("不覆盖不是本脚本创建的文件，加 --force 才覆盖", () => {
     fs.mkdirSync(bin);
     fs.writeFileSync(path.join(bin, "claw-code"), "mine\n");
     const r = install([]);
@@ -62,7 +62,7 @@ describe.skipIf(!fs.existsSync(DIST))("scripts/install.js", () => {
     expect(linkTarget()).toBe(DIST);
   });
 
-  test("不接受 claude 这个名字，不会动已安装的原版", () => {
+  test("不接受 claude 这个名字，不改动已安装的原版", () => {
     const r = install(["--name", "claude"]);
     expect(r.code).toBe(2);
     expect(fs.existsSync(path.join(bin, "claude"))).toBe(false);
@@ -76,6 +76,6 @@ describe.skipIf(!fs.existsSync(DIST))("scripts/install.js", () => {
     expect(install(["--uninstall", "--name", "foreign"]).code).toBe(1);
     expect(install(["--uninstall"]).code).toBe(0);
     expect(fs.readdirSync(bin).sort()).toEqual(["foreign", "other"]);
-    expect(install(["--uninstall"]).out).toContain("无需卸载"); // 已经卸载过
+    expect(install(["--uninstall"]).out).toContain("无需卸载"); // 已卸载
   });
 });

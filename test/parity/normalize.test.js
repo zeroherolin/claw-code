@@ -24,7 +24,7 @@ describe("screenDiff", () => {
     expect(screenDiff(await screen("x"), await screen("\x1b[2mx\x1b[0m"), "/h1", "/h2")).toHaveLength(1);
   });
 
-  test("两边各自的 HOME 与端口不算差异", async () => {
+  test("原版与本项目各自的 HOME 与端口不计为差异", async () => {
     const home1 = "/private/var/folders/T/claw-test-aaaaaa", home2 = "/private/var/folders/T/claw-test-bbbbbb";
     const at = (home, port) => normalizeStream(`cwd ${home}/work api 127.0.0.1:${port}`, home);
     expect(screenDiff(await screen(at(home1, 4001)), await screen(at(home2, 59999)), home1, home2)).toEqual([]);
