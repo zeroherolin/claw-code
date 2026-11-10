@@ -13,7 +13,7 @@
 | 非必要网络流量 | 无条件关闭：登录引导、更新检查、MCP 官方目录、插件市场、远程会话、团队记忆同步等都不发请求，这些功能不可用 | [固定的环境变量](#固定的环境变量) |
 | GPU 信息 | 不收集、不发送 | [GPU 信息](#gpu-信息) |
 | 记忆 | 只发记忆文件的路径，不发正文；模型要读记忆目录里的文件时一律先询问 | [记忆](#记忆) |
-| `safeguards` | 发往服务端分类器的上下文脱敏，字段本身仍发送 | [safeguards 脱敏](#safeguards-脱敏) |
+| `safeguards` | 发往服务端分类器的上下文脱敏，字段本身仍发送；退回本地分类器时不脱敏 | [safeguards 脱敏](#safeguards-脱敏) |
 | 服务端拒答 | 用原模型最多连续重试 10 轮，不换模型；每次重试更换会话 ID、设备 ID 和提示 ID | [拒答后的重试](#拒答后的重试) |
 | 与 `claude` 共存 | 不注册 `claude-cli://` 处理程序；`update`、`upgrade`、`install` 直接退出 | [与已安装的 claude 共存](#与已安装的-claude-共存) |
 
@@ -183,12 +183,20 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，原
 
 保留的字段：`v`、`permission_mode`、`platform`、`live_cwd`、`trusted_directories.primary`、`block_reads_outside_working_directories` 与其他布尔标志、`git_state.cwd`、`git_state.status.clean`。`live_cwd` 保留是因为分类器要用它判断命令是否在工作目录内，主请求的 `Environment` 里本来也有这个路径。
 
-代价：服务端分类器看不到用户配置的权限规则、`autoMode` 规则、`--add-dir` 目录和仓库信息，判断依据变少。预期分类器对「这条命令在这个环境里是否被允许」更保守，更多调用要手动确认。分类质量没有用真实服务端验证过。
+代价：服务端分类器看不到用户配置的权限规则、`autoMode` 规则、`--add-dir` 目录和仓库信息，判断依据变少。预期分类器对「这条命令在这个环境里是否被允许」更保守，更多调用要手动确认。经中转站实测，带脱敏后 `safeguards` 的请求被正常受理；中转站没有实现服务端分类器，所以分类质量仍没有在一方端点上验证过。
+
+**脱敏只覆盖服务端分类器，不覆盖本地分类器**。端点没有实现服务端分类器时（自定义 `ANTHROPIC_BASE_URL` 的中转站通常如此，界面会提示 "isn't compatible with this update"），原版自动退回本地分类器（`core/conversation-engine.js`「arbiterWithLocalFallback」）：另发一个不带工具的请求，让模型判断这次调用。这个请求不经过 `redactClassifierContext`，经中转站实测，它的系统提示词里有：
+
+- 用户名（`core/conversation-engine.js`「## Session Context」，取值与 `user_identity` 相同）；
+- `autoMode` 的 `environment`、`allow` 等规则原文；
+- 权限 deny 规则原文。
+
+消息部分是用户提示原文和待判断的工具调用。只读命令（如 `echo`）不触发分类，也就不发这个请求。
 
 没有改动的：
 
 - 主请求里原有的内容，包括 `gitStatus` 块里的当前分支名和主分支名；
-- 本地分类器路径（`CLAUDE_CODE_AUTO_MODE_SERVER=0`）不经过这里。它会把 CLAUDE.md、用户提示原文和 Bash 命令发给模型，数据量更大，所以没有启用；
+- 本地分类器的请求，见上；
 - 其他权限模式（default、acceptEdits、dontAsk、bypassPermissions）本来就不发 `safeguards`。
 
 测试：`test/dev/runtime.test.js` 的 `safeguards-redact`（输入的形状取自原版的真实输出）；`test/dev/smoke.test.js` 的「safeguards 脱敏」（真实二进制，把用户名、分支、remote、权限规则、autoMode 规则、`--add-dir` 都设成可识别的值，检查一个都不出现，且路径只剩工作目录）。
