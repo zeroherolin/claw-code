@@ -83,7 +83,7 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 
 - 对比测试默认使用 `extract/upstream/claude-code-<系统>-<架构>/` 中的官方可执行程序，获取方式见 [extract/README.md](extract/README.md#获取官方发布内容)。也可以用参数或 `CLAUDE_ORIG_BIN` 指定其他位置。
 - 只运行部分用例：`npm run test:parity -- --filter '^(text|markdown)'`。
-- 全部测试都在隔离的 HOME 下运行，使用假 API key，只连接 127.0.0.1 上的假 API，不访问真实服务。
+- 全部测试都在隔离的 HOME 下运行，使用假 API key，模型请求只发往 127.0.0.1 上的假 API。隔离环境关闭了遥测、非必要网络流量和官方插件市场的自动安装（`test/harness.js` 的 `cleanEnv`）。对比测试的首次引导场景（`onboarding`）是例外：原版在引导开始时检查连通性，访问 `api.anthropic.com` 与 `platform.claude.com`（`ui/preflight-check-failed.js`「/v1/oauth/hello」），请求不带凭据，原版没有关闭这项检查的开关。
 - CI（`.github/workflows/test.yml`）：每次 push 和 PR 在每个支持的平台上分别构建，运行 `npm test`，并与该平台的官方可执行程序做对比测试。
 
 `dev` 分支的 `npm test` 另外运行 `test/dev/` 下的用例，共约 4.5 分钟，主要用于 `test/dev/smoke.test.js`；只运行其中的单元测试：`npm test -- test/dev/runtime.test.js`。
