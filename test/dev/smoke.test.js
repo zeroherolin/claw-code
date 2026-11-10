@@ -405,6 +405,19 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       }
     }, 60_000);
 
+    test("写在引号内或选项里的记忆路径：allow 规则和 bypass 模式下都先询问，内容不进入请求", async () => {
+      for (const variant of [VARIANTS["allow 规则"], VARIANTS.bypassPermissions]) {
+        for (const toolOf of [
+          ({ mem }) => ["Bash", { command: `bash -c "cat ${path.join(mem, "deploy.md")}"` }],
+          ({ mem }) => ["Bash", { command: `grep --file=${path.join(mem, "deploy.md")} x.txt` }],
+        ]) {
+          const result = await run(variant, toolOf);
+          expect(result.leaked).toBe(false);
+          expect(result.denials.length).toBe(1);
+        }
+      }
+    }, 60_000);
+
     test("对照：工作目录里的普通文件、普通命令不受影响", async () => {
       for (const toolOf of [({ work }) => ["Read", { file_path: path.join(work, "fixture.txt") }], () => ["Bash", { command: "echo plain", description: "x" }]]) {
         const r = await run(VARIANTS.bypassPermissions, toolOf);

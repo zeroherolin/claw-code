@@ -187,6 +187,37 @@ describe("memory-guard", () => {
       expect(ask("cat ${HOME}/.claude/agent-memory/foo/MEMORY.md")).toBe("ask");
       expect(ask("cat link/MEMORY.md")).toBe("ask"); // 经符号链接
       expect(ask(`F=${file} cat x`)).toBe("ask"); // VAR=路径
+      expect(ask(`F="${file}" cat x`)).toBe("ask"); // 引号与相邻的片段合成一个词
+      expect(ask(`cat ${file.replace(/-/g, "\\-")}`)).toBe("ask"); // 反斜杠转义
+    } finally { c.cleanup(); }
+  });
+
+  test("Bash：写在选项里的路径同样识别（--选项=路径、-x路径）；不含路径的选项不受影响", async () => {
+    const c = await setup();
+    try {
+      const ask = (command) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, c.hostFns)?.behavior;
+      const file = path.join(c.mem, "MEMORY.md");
+      for (const command of [`cat --number=${file}`, `grep --file="${file}" a.txt`, `grep -f${file} a.txt`, `tar -xzf${file}`, "grep -f~/.claude/agent-memory/foo/MEMORY.md a.txt"]) {
+        expect([command, ask(command)]).toEqual([command, "ask"]);
+      }
+      for (const command of ["ls --color=auto -la", "head -n5 a.txt", "git log --format=%h -n5", `grep --file=${path.join(c.work, "a.txt")} a.txt`]) {
+        expect([command, ask(command)]).toEqual([command, undefined]);
+      }
+    } finally { c.cleanup(); }
+  });
+
+  test("Bash：引号内的文本同样检查（sh -c、eval、命令替换、解释器的内联代码中原样写出的路径）；只提到名字的不拦截", async () => {
+    const c = await setup();
+    try {
+      const ask = (command) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, c.hostFns)?.behavior;
+      const file = path.join(c.mem, "MEMORY.md");
+      for (const command of [
+        `bash -c "cat ${file}"`, `sh -c 'head -5 ${file}'`, `env X=1 bash -lc "cat ${file}"`, `eval "cat ${file}"`,
+        `echo "$(cat ${file})"`, `python3 -c "print(open('${file}').read())"`, `bash -c "cd ${c.mem} && cat ./MEMORY.md"`,
+      ]) expect([command, ask(command)]).toEqual([command, "ask"]);
+      for (const command of [`bash -c "cat a.txt"`, "git commit -m 'update MEMORY.md and agent-memory notes'", `sh -c 'echo "memory usage is fine"'`, `echo "don't worry"`]) {
+        expect([command, ask(command)]).toEqual([command, undefined]);
+      }
     } finally { c.cleanup(); }
   });
 
@@ -213,6 +244,9 @@ describe("memory-guard", () => {
         `find ${projects} -type f -exec cat {} +`, `find -L ${projects} -type f -exec cat {} +`, "grep -R SENTINEL all-projects",
         `cd ${parent} && grep -R SENTINEL .`, `echo ready; rg SENTINEL ${parent}`,
         `Get-ChildItem -Recurse ${parent} | Select-String SENTINEL`,
+        // 交给 shell 再次解释的文本中的搜索：sh -c、eval、命令替换
+        `bash -c "rg SENTINEL ${parent}"`, `eval "grep -R SENTINEL ${parent}"`, `cd ${parent} && sh -c 'grep -R SENTINEL .'`,
+        `echo "$(rg SENTINEL ${parent})"`, `echo $(rg SENTINEL ${parent})`, "echo `rg SENTINEL " + parent + "`",
       ]) expect([command, ask(command)]).toEqual([command, "ask"]);
       for (const command of ["rg SENTINEL", "grep -R SENTINEL", "rg --glob '*.md' SENTINEL", "find . -type f -exec cat {} +"]) {
         expect([command, ask(command, parent)]).toEqual([command, "ask"]);
@@ -220,7 +254,31 @@ describe("memory-guard", () => {
       fs.mkdirSync(path.join(c.work, ".claude/agent-memory/test"), { recursive: true });
       fs.mkdirSync(path.join(c.work, "src"));
       expect(ask("rg SENTINEL .")).toBe("ask");
-      for (const command of ["rg SENTINEL src", "grep -rn SENTINEL src", "ls -la", `ls ${parent}`, "echo rg SENTINEL ."]) {
+      // 引号内不会被执行的文本不是命令：当前目录包含记忆目录时，下列最后两条仍不询问
+      for (const command of ["rg SENTINEL src", "grep -rn SENTINEL src", "ls -la", `ls ${parent}`, "echo rg SENTINEL .", `echo "rg SENTINEL ."`, "echo '$(rg SENTINEL .)'"]) {
+        expect([command, ask(command)]).toEqual([command, undefined]);
+      }
+    } finally { c.cleanup(); }
+  });
+
+  // 不成对的引号不能把之后的命令变成引号内的文本：下列命令末尾都另有一个引号，可与前面的撇号配对
+  test("Bash：注释、heredoc 正文中不成对的引号只分开词，其后的命令仍然检查", async () => {
+    const c = await setup();
+    try {
+      const ask = (command) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, c.hostFns)?.behavior;
+      const parent = path.dirname(c.mem), file = path.join(c.mem, "MEMORY.md");
+      for (const command of [
+        `# don't forget\nrg SENTINEL ${parent}; echo 'done'`,
+        `echo ok # user's note\ncat ${file}; echo 'done'`,
+        `cat > n.md <<EOF\nit's\nEOF\nrg SENTINEL ${parent}; echo 'done'`,
+        `cat > n.md <<'EOF'\nit's\nEOF\ncat ${file}; echo 'done'`,
+        `cat > n.md <<-EOF\n\tit's\n\tEOF\nrg SENTINEL ${parent}; echo 'done'`,
+        `cat <<A <<B\nit's\nA\nit's\nB\nrg SENTINEL ${parent}; echo 'done'`,
+        `echo $'it\\'s'; rg SENTINEL ${parent}; echo 'done'`,
+        `bash <<EOF\nrg SENTINEL ${parent}\nEOF`, // 正文交给 shell 执行
+      ]) expect([command, ask(command)]).toEqual([command, "ask"]);
+      // 成对的引号内的文本不是命令；注释里的命令不执行；<<< 不是 heredoc
+      for (const command of [`echo 'a; rg SENTINEL ${parent}; b'`, `# rg SENTINEL ${parent}\nls`, `cat <<< 'x'; echo "rg SENTINEL ${parent}"`]) {
         expect([command, ask(command)]).toEqual([command, undefined]);
       }
     } finally { c.cleanup(); }
@@ -248,6 +306,18 @@ describe("memory-guard", () => {
       const ask = (command) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, c.hostFns)?.behavior;
       expect(ask(`d=${path.dirname(c.mem)}; cat $d/mem*/*.md`)).toBeUndefined();
       expect(ask(`cd ${path.dirname(c.mem)} && cat memory/*.md`)).toBeUndefined(); // 通配符
+    } finally { c.cleanup(); }
+  });
+
+  test("已知的盲区（见 docs/dev.md）：解释器的内联代码中计算得出的路径、未识别的递归工具与包装命令", async () => {
+    const c = await setup();
+    try {
+      const ask = (command) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, c.hostFns)?.behavior;
+      const projects = path.dirname(path.dirname(c.mem));
+      expect(ask(`python3 -c "import os; print(open(os.path.join(os.path.expanduser('~'), '.claude', 'agent-memory', 'foo', 'MEMORY.md')).read())"`)).toBeUndefined();
+      for (const command of [`tree ${projects}`, `tar cf - ${projects} | tar xOf -`, `cp -r ${projects} /tmp/copy`, `timeout 5 rg SENTINEL ${projects}`]) {
+        expect([command, ask(command)]).toEqual([command, undefined]);
+      }
     } finally { c.cleanup(); }
   });
 });
