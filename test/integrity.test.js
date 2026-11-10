@@ -77,6 +77,19 @@ describe("源码", () => {
   });
 });
 
+describe("参考资料", () => {
+  // 行号在提取时由原版模块中的位置换算而来（说明头、import 行、版本补丁都会使行号移动），这里确认换算后仍指向工具定义
+  test.each(Object.keys(SYSTEMS))("%s：tools.json 中每个工具的行号指向它的定义", (system) => {
+    const tools = JSON.parse(fs.readFileSync(path.join(ROOT, "reference", system, "tools.json"), "utf8"));
+    const bad = tools.filter((t) => {
+      const line = trees[system].get(t.path)?.split("\n")[t.line - 1] ?? "";
+      return !t.keys.some((k) => line.includes(`${k}:`) || line.includes(`${k}(`)); // 定义的首行至少写着它的一个属性
+    }).map((t) => `${t.name} → ${t.path}:${t.line}`);
+    expect(tools.length).toBeGreaterThan(0);
+    expect(bad).toEqual([]);
+  });
+});
+
 describe("资源", () => {
   const index = JSON.parse(fs.readFileSync(path.join(ASSETS, "INDEX.json"), "utf8"));
 
@@ -103,10 +116,11 @@ describe("资源", () => {
 });
 
 describe("手写文档", () => {
+  // 手写文档：README、docs/ 下的 .md（docs/reference/ 是生成的）、extract/README
+  const DOCS = ["README.md", ...fs.readdirSync(path.join(ROOT, "docs")).filter((f) => f.endsWith(".md")).sort().map((f) => `docs/${f}`), "extract/README.md"];
   // 文档用“路径”或“路径「特征字符串」”指向生成源码，例如 `core/query-loop.js`「hook_stopped_continuation」：
   // 不写某个系统的行号和混淆名，路径与特征字符串须在每个系统中都成立；
   // 只属于某个系统的写成 `src/<系统>/…`，只在该系统中检查。
-  const DOCS = ["README.md", "docs/architecture.md", "docs/runtime.md", "docs/identifiers.md", "extract/README.md"];
   const areas = [...new Set(Object.values(trees).flatMap((t) => [...t.keys()].map((p) => p.split("/")[0])))].filter((d) => !d.endsWith(".js"));
   const RE = new RegExp(String.raw`(?<![\w./-])\`(?:src/(${Object.keys(SYSTEMS).join("|")})/)?((?:${areas.join("|")})/[\w./-]+\.js|cli\.js)\`(?:「([^」]+)」)?`, "g");
 
@@ -131,5 +145,34 @@ describe("手写文档", () => {
     const RE_LINK = new RegExp(String.raw`\]\((?:\.\.?/)*src/(?:${Object.keys(SYSTEMS).join("|")})/[^)]*\)`, "g");
     const bad = DOCS.flatMap((doc) => [...fs.readFileSync(path.join(ROOT, doc), "utf8").matchAll(RE_LINK)].map(([link]) => `${doc}: ${link}`));
     expect(bad).toEqual([]);
+  });
+
+  // 指向标题的链接：文档里的 [文字](文件.md#标题) 与 [文字](#标题)，以及手写代码的注释里写成「文档路径#标题」的引用
+  test("指向文档标题的链接都能找到对应的标题", () => {
+    // GitHub 的锚点规则：小写，去掉字母、数字、空格、- 和 _ 以外的字符，空格换成 -
+    const slug = (title) => title.trim().toLowerCase().replace(/[^\p{L}\p{N} _-]/gu, "").replace(/ /g, "-");
+    const anchors = new Map(DOCS.map((doc) => [doc, new Set([...fs.readFileSync(path.join(ROOT, doc), "utf8").matchAll(/^#{1,6} (.+)$/gm)].map((m) => slug(m[1])))]));
+    const bad = [];
+    let checked = 0;
+    const check = (from, doc, anchor) => {
+      checked++;
+      if (!anchors.has(doc)) bad.push(`${from}: ${doc} 不是手写文档`);
+      else if (!anchors.get(doc).has(anchor)) bad.push(`${from}: ${doc} 中没有标题 #${anchor}`);
+    };
+    for (const doc of DOCS) {
+      for (const [, target, anchor] of fs.readFileSync(path.join(ROOT, doc), "utf8").matchAll(/\]\(([^)#\s]*)#([^)\s]+)\)/g)) {
+        if (/^[a-z]+:/.test(target) || target.includes("/reference/")) continue; // 外部链接；生成的参考手册不在检查范围内
+        check(doc, target ? rel(path.resolve(ROOT, path.dirname(doc), target)) : doc, decodeURIComponent(anchor));
+      }
+    }
+    const handwritten = [
+      ...sources.map((x) => x.file).filter((f) => !Object.keys(SYSTEMS).some((s) => rel(f).startsWith(`src/${s}/`))),
+      ...["scripts", "bin", "test", "extract"].flatMap((d) => [...walk(path.join(ROOT, d))]).filter((f) => !rel(f).startsWith("extract/upstream/") && (f.endsWith(".js") || rel(f).startsWith("bin/"))),
+    ];
+    for (const file of handwritten) {
+      for (const [, doc, anchor] of fs.readFileSync(file, "utf8").matchAll(/((?:docs|extract)\/[\w./-]+\.md)#([^\s)）。，；、`"']+)/g)) check(rel(file), doc, anchor);
+    }
+    expect(bad).toEqual([]);
+    expect(checked).toBeGreaterThan(0);
   });
 });

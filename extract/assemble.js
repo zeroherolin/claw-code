@@ -115,12 +115,15 @@ export function clearGenerated(srcDir) {
  * @param mods    { id, code, legal }[]：格式化（并完成架构还原）的源码与抽出的许可注释
  * @param plan    chunk id → src/<系统>/ 下的相对路径
  * @param ctx     { system, version, srcDir, loaderOf: bunfs 名 → loader, assets: bunfs 名 → { path } | { native } }
- * @returns {{ legal: Map<string, Set<string>>, stat: object }} 第三方许可注释 → 出现的文件（相对 src/）
+ * @returns {{ legal: Map<string, Set<string>>, stat: object, offsets: Map<string, number> }}
+ *   legal：第三方许可注释 → 出现的文件（相对 src/）；
+ *   offsets：模块路径 → 写出的文件相对格式化源码多出的行数（说明头 1 行 + 可选的 runtime/assets.js import 1 行）
  */
 export function writeSources(mods, plan, { system, version, srcDir, loaderOf, assets }) {
   const outDir = path.join(srcDir, system);
   const legal = new Map();
   const stat = { text: 0, file: 0, napi: 0, module: 0 };
+  const offsets = new Map();
   for (const { id, code: formatted, legal: notices } of mods) {
     const dst = path.join(outDir, plan[id]);
     const fromDir = path.dirname(dst);
@@ -150,12 +153,7 @@ export function writeSources(mods, plan, { system, version, srcDir, loaderOf, as
     const imp = helpers.size ? `import { ${[...helpers].sort().join(", ")} } from ${JSON.stringify(relTo(path.join(srcDir, "runtime/assets.js")))};\n` : "";
     fs.mkdirSync(fromDir, { recursive: true });
     fs.writeFileSync(dst, header + imp + code);
+    offsets.set(plan[id], 1 + (imp ? 1 : 0));
   }
-  return { legal, stat };
-}
-
-/** 新文件相对格式化源码的行偏移：说明头 1 行 + 可选的 runtime/assets.js import 1 行 */
-export function lineOffset(file) {
-  const second = fs.readFileSync(file, "utf8").split("\n", 2)[1] ?? "";
-  return 1 + (second.startsWith("import { __asset") ? 1 : 0);
+  return { legal, stat, offsets };
 }

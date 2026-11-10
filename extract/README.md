@@ -13,11 +13,10 @@ npm run extract                       # 默认读取 extract/upstream/
 npm run extract -- --upstream <目录>
 ```
 
-整个流程依赖 Bun、Git 和项目的 devDependencies（esbuild、acorn），约 1 分钟完成。Git 只用于在临时目录校验和应用版本补丁，不修改仓库索引。
+整个流程只依赖 Bun 和项目的 devDependencies（esbuild、acorn），约 1 分钟完成；有[版本补丁](#版本补丁)时还需要 Git。
 
 - 输出是确定的：对同一份输入运行两次，结果逐字节相同。
-- 读取与分析全部成功后才写入项目目录；输入缺失或分析出错时，项目保持原样。
-- `dev` 的生成源码改动保存在 `patches/<版本>.patch`。源码先生成到项目外的临时目录，补丁全部校验并应用成功后才替换项目中的源码和资源；补丁缺失、不匹配时直接失败，不生成丢失隐私策略的版本。
+- 读取与分析全部成功、源码在项目外的临时目录里生成完毕后，才写入项目目录；输入缺失、分析出错或版本补丁不匹配时，项目保持原样。
 
 ## 目录
 
@@ -32,9 +31,8 @@ extract/
 ├── areas.js        功能区规则：模块放进 src/<系统>/ 的哪个目录
 ├── naming.js       自动命名规则
 ├── assemble.js     组装：确定各模块路径、改写模块与资源引用、写出 src/<系统>/
-├── patches.js      在临时目录完整校验并应用 dev 的版本补丁
-├── patches/
-│   └── 2.1.310.patch  两个系统生成源码上的 dev 改动
+├── patches.js      版本补丁：校验并应用 patches/<版本>.patch，换算补丁造成的行号变化
+├── patches/        各版本的补丁 <版本>.patch（可选，见「版本补丁」）
 ├── reference.js    写 reference/<系统>/*.json 与 docs/reference/<系统>/*.md
 ├── license.js      写 LICENSE：原版声明 + 本项目许可 + 第三方许可注释
 ├── layout/
@@ -69,8 +67,8 @@ rm ./*.tgz
 | 3. 格式化与架构还原 | `lib.js` `unfold.js` | 用 esbuild 格式化各平台的 JS 模块；同一系统有多个架构时，把写死的架构名改回 `process.arch` |
 | 4. 分析 | `analyze.js` | 对每个系统做 AST 分析，结果供命名与参考资料使用 |
 | 5. 对齐与命名 | `align.js` `assemble.js` `areas.js` `naming.js` | 找出两个系统中对应的模块，为每组确定目录和文件名 |
-| 6. 写出 | `assemble.js` `patches.js` | 改写引用，临时生成源码，校验并应用 dev 版本补丁，然后替换 `src/<系统>/` 与 `assets/`（含 `INDEX.json`） |
-| 7. 参考资料 | `reference.js` | 把分析结果中的位置换算到 `src/<系统>/` 下的新路径和行号，写 `reference/<系统>/` 与 `docs/reference/<系统>/`；`reference/module-map.json` 为模块路径与各系统原 chunk id 的对照 |
+| 6. 写出 | `assemble.js` `patches.js` | 改写模块与资源引用，在临时目录里生成源码；有版本补丁时校验并应用；然后替换 `src/<系统>/` 与 `assets/`（含 `INDEX.json`） |
+| 7. 参考资料 | `reference.js` | 把分析结果中的位置换算到 `src/<系统>/` 下的新路径和行号（有版本补丁时指向应用补丁之后的行），写 `reference/<系统>/` 与 `docs/reference/<系统>/`；`reference/module-map.json` 为模块路径与各系统原 chunk id 的对照 |
 | 8. LICENSE | `license.js` | 汇总原版 LICENSE.md、模块头部的条款声明、第三方库许可注释 |
 
 组装阶段只改位置和排版，不改语义：
@@ -80,7 +78,7 @@ rm ./*.tgz
 - `"/$bunfs/root/<chunk>.js"` 改成相对路径；
 - 资源引用改成 `__asset_text()`、`__asset_path()`、`__asset_native()`、`__asset_src()`（见 `src/runtime/assets.js`）。
 
-上述组装不包含 dev 的行为改动；这些改动统一由版本补丁应用，范围见 [runtime.md](../docs/runtime.md#固定的环境变量)。架构还原的范围见下节。
+架构还原是唯一改动表达式的步骤，范围见下节。
 
 ## 架构还原
 
@@ -93,6 +91,15 @@ rm ./*.tgz
 | 对象属性简写与否 | `{ a }` 与 `{ a: b }` | 混淆名碰巧相同造成，不是真实差异，忽略 |
 
 `unfold.js` 以基准架构（`src/runtime/platforms.js` 中每个系统的第一个架构）格式化后的源码为准，逐 token 对照其他架构的同一模块，只按上表改写；遇到其他差异立即报错，不做猜测。当前 Linux 版改写了 89 个模块：架构名 25 处，`DD_SOURCEMAP_GROUP` 300 处。
+
+## 版本补丁
+
+有意改动生成源码的分支（如 `dev`）把改动保存为 `patches/<版本>.patch`：一份标准 diff，路径形如 `src/<系统>/…`，内容就是该分支与 `main` 在各系统生成源码上的差异。`main` 没有补丁，生成的源码与原版只差位置和排版。
+
+- **应用**：源码先生成到项目外的临时目录，用 `git apply` 完整校验后再应用；任何一处不匹配都直接失败，项目保持原样。Git 只用来应用补丁，不访问仓库索引。
+- **不会漏掉**：`patches/` 里有其他版本的补丁、却没有当前版本的，提取在写入前停止，不生成丢掉这些改动的源码。
+- **行号**：参考资料里的行号按补丁换算，指向应用补丁之后的源码。
+- **维护**：改动生成源码后重新生成补丁，例如 `git diff main -- src/darwin src/linux > extract/patches/<版本>.patch`。`npm test` 检查补丁能从当前的生成源码完整逆向、再重放回原样（`test/extract.test.js`）。
 
 ## 跨系统对齐
 
@@ -152,7 +159,7 @@ rm ./*.tgz
 
 内部 chunk id 和资源名中的 hash 每个版本都会变。新版本需要一份新的 `layout/<版本>.json`：
 
-1. 按上文获取新版本全部平台的官方发布内容，然后复制上一版的 layout 文件并改名。同时迁移 `patches/<版本>.patch`，审查两个系统中的每一处行为改动；没有相应版本的补丁时，提取会在写入前停止。
+1. 按上文获取新版本全部平台的官方发布内容，然后复制上一版的 layout 文件并改名。有版本补丁的分支同时把补丁迁移到新版本的 `patches/<版本>.patch`，逐处审查改动是否仍然适用。
 2. 运行 `npm run extract`。没有归档规则的资源会被逐个列出，并注明各系统中引用它的 chunk。按提示更新 `assets` 中的规则：锚点资源与 `named` 的键是带 hash 的资源名，需要换成新版本的名字。
 3. 人工命名按 `match` 自动定位。某条在某个系统中命中 0 个或多个模块时，提取会列出命中情况并停止，项目保持原样。处理方式：
    - 按 `why` 的说明在新版本的源码中重新挑选特征字符串；

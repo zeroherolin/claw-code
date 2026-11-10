@@ -1,4 +1,4 @@
-// 脱敏发往服务端分类器的 `safeguards.classifier_context`。这是本项目对原版有意做的改动，见 docs/runtime.md#safeguards-脱敏。
+// 脱敏发往服务端分类器的 `safeguards.classifier_context`。这是本项目对原版有意做的改动，见 docs/dev.md#safeguards-脱敏。
 //
 // 原版在 auto / plan 模式下，每个请求都带一份 classifier_context：权限规则原文、autoMode 槽位的自然语言规则、用户名、
 // git 分支与 remote 的 owner/repo、home 目录等。这里在请求发出前统一抹掉可以识别用户、机器和项目的字段，

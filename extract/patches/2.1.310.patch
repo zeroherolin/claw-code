@@ -103,7 +103,7 @@ index 72fe144..1775c25 100644
    ar();
    let h = Bp() && !uQ();
 diff --git a/src/darwin/core/conversation-engine.js b/src/darwin/core/conversation-engine.js
-index 7926d09..7f2e922 100644
+index 7926d09..660cfcc 100644
 --- a/src/darwin/core/conversation-engine.js
 +++ b/src/darwin/core/conversation-engine.js
 @@ -1,5 +1,8 @@
@@ -147,7 +147,7 @@ index 7926d09..7f2e922 100644
      return;
    }
 -  return s;
-+  return redactClassifierContext(s); // safeguards 脱敏，见 docs/runtime.md
++  return redactClassifierContext(s); // safeguards 脱敏，见 docs/dev.md
  }
  function zgr(e, n, r, s, h, y) {
    let b = (ve, Ce, xe, Me, We, Ge) => {
@@ -693,7 +693,7 @@ index 7abd32b..70da82c 100644
    ar();
    let h = jf() && !r7();
 diff --git a/src/linux/core/conversation-engine.js b/src/linux/core/conversation-engine.js
-index 8b67836..5712b84 100644
+index 8b67836..c0b692b 100644
 --- a/src/linux/core/conversation-engine.js
 +++ b/src/linux/core/conversation-engine.js
 @@ -1,5 +1,8 @@
@@ -737,7 +737,7 @@ index 8b67836..5712b84 100644
      return;
    }
 -  return s;
-+  return redactClassifierContext(s); // safeguards 脱敏，见 docs/runtime.md
++  return redactClassifierContext(s); // safeguards 脱敏，见 docs/dev.md
  }
  function Qgr(e, n, r, s, h, y) {
    let S = (Te, Ee, xe, Me, je, Ge) => {

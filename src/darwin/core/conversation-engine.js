@@ -61683,7 +61683,7 @@ function bhn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
     a("tengu_auto_mode_context_withheld", { reason: S("field_over_ceiling"), bytes: h });
     return;
   }
-  return redactClassifierContext(s); // safeguards 脱敏，见 docs/runtime.md
+  return redactClassifierContext(s); // safeguards 脱敏，见 docs/dev.md
 }
 function zgr(e, n, r, s, h, y) {
   let b = (ve, Ce, xe, Me, We, Ge) => {

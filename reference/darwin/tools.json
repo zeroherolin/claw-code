@@ -154,7 +154,7 @@
   "maxResultSizeChars": "<expr>",
   "alwaysLoad": "<expr>",
   "path": "mcp/apply-capability-serve-time-miss.848f.js",
-  "line": 2582
+  "line": 2583
  },
  {
   "name": "(dynamic) MCP server tool wrapper",
@@ -194,7 +194,7 @@
   "maxResultSizeChars": "<expr>",
   "alwaysLoad": "<expr>",
   "path": "mcp/apply-capability-serve-time-miss.fa8e.js",
-  "line": 3291
+  "line": 3292
  },
  {
   "name": "(dynamic) mcp__<server>__authenticate stub",
@@ -498,7 +498,7 @@
   "strict": true,
   "ruleContentField": "command",
   "path": "core/conversation-engine.js",
-  "line": 112841
+  "line": 112848
  },
  {
   "name": "ClaudeDesign",
@@ -694,7 +694,7 @@
   "strict": true,
   "ruleContentField": "file_path",
   "path": "core/conversation-engine.js",
-  "line": 108471
+  "line": 108477
  },
  {
   "name": "EndConversation",
@@ -956,7 +956,7 @@
   "maxResultSizeChars": 100000,
   "ruleContentField": "path",
   "path": "core/conversation-engine.js",
-  "line": 38382
+  "line": 38384
  },
  {
   "name": "Grep",
@@ -998,7 +998,7 @@
   "strict": true,
   "ruleContentField": "path",
   "path": "core/conversation-engine.js",
-  "line": 38471
+  "line": 38473
  },
  {
   "name": "ListAgents",
@@ -1234,7 +1234,7 @@
   "maxResultSizeChars": "<expr>",
   "shouldDefer": false,
   "path": "core/conversation-engine.js",
-  "line": 38786
+  "line": 38788
  },
  {
   "name": "memory_write",
@@ -1334,7 +1334,7 @@
   "shouldDefer": true,
   "ruleContentField": "notebook_path",
   "path": "core/conversation-engine.js",
-  "line": 108722
+  "line": 108728
  },
  {
   "name": "ObserverReport",
@@ -1687,7 +1687,7 @@
   "strict": true,
   "ruleContentField": "file_path",
   "path": "core/conversation-engine.js",
-  "line": 75443
+  "line": 75447
  },
  {
   "name": "ReadMcpResourceDirTool",
@@ -2873,7 +2873,7 @@
   "backgrounding": "never",
   "maxResultSizeChars": 100000,
   "path": "core/conversation-engine.js",
-  "line": 42869
+  "line": 42871
  },
  {
   "name": "WaitForMcpServers",
@@ -2901,7 +2901,7 @@
   "backgrounding": "never",
   "maxResultSizeChars": 10000,
   "path": "core/conversation-engine.js",
-  "line": 61366
+  "line": 61369
  },
  {
   "name": "WebFetch",
@@ -2941,7 +2941,7 @@
   "ruleContentField": "url",
   "skipAggregateToolResultBudget": true,
   "path": "core/conversation-engine.js",
-  "line": 58554
+  "line": 58556
  },
  {
   "name": "WebSearch",
@@ -3054,6 +3054,6 @@
   "strict": true,
   "ruleContentField": "file_path",
   "path": "core/conversation-engine.js",
-  "line": 37728
+  "line": 37730
  }
 ]
