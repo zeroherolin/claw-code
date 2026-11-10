@@ -104,7 +104,7 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 
 比较前只归一化与运行环境有关的内容：路径、端口、时间、随机 id、动画相位。规则见 `test/parity/normalize.js`；分支有意与原版不同的内容登记在 `test/parity/intentional.js`，`main` 上为空。
 
-`dev` 登记了两处（记忆政策段落、「Today's date」的取值），其余内容仍逐字比较，33 项全部一致，见 [docs/dev.md](docs/dev.md#与对比测试的关系)。
+`dev` 登记了两处（记忆政策段落、「Today's date」的取值），其余内容仍逐字比较，34 项全部一致，见 [docs/dev.md](docs/dev.md#与对比测试的关系)。
 
 已知差异（不影响对话、工具和界面）：
 
