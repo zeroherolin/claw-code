@@ -1,6 +1,8 @@
-// 测试工具自身的测试：伪终端驱动在按键后等到程序响应再结束。
+// 测试工具自身的测试：伪终端驱动在按键后等到程序响应再结束；隔离环境中的 CLI 不访问外部服务。
 import { describe, expect, test } from "bun:test";
-import { runInPty } from "./harness.js";
+import fs from "node:fs";
+import path from "node:path";
+import { DIST, cleanEnv, makeHome, runInPty, startFakeApi, trapExternalAccess } from "./harness.js";
 
 describe("runInPty", () => {
   test("按键前已长时间静止时，仍等到程序对按键的响应", async () => {
@@ -12,4 +14,20 @@ describe("runInPty", () => {
     expect(timedOut).toBe(false);
     expect(bytes.toString()).toContain("ready got:hi");
   });
+});
+
+describe.skipIf(!fs.existsSync(DIST))("cleanEnv", () => {
+  test("交互界面启动时不访问外部服务：不调用 ssh，git 不执行网络操作，不经代理连接外部主机", async () => {
+    const h = makeHome(), api = startFakeApi(h.work);
+    const trap = trapExternalAccess(cleanEnv(h.home, api.url), path.join(h.home, "trap"));
+    try {
+      const { timedOut } = await runInPty([DIST], { cwd: h.work, env: trap.env, cols: 100, rows: 30, keys: [] });
+      expect(timedOut).toBe(false);
+      expect(trap.attempts()).toEqual([]);
+    } finally {
+      trap.stop();
+      api.stop();
+      h.remove();
+    }
+  }, 60_000);
 });

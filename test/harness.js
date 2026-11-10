@@ -1,5 +1,6 @@
 // 测试共用：隔离的运行环境、本地假 Anthropic API、在伪终端里驱动 CLI 并回放屏幕。
-// 所有测试都只连接 127.0.0.1 上的假 API，使用假 API key，不访问真实服务。
+// 所有测试都使用假 API key，模型请求只发往 127.0.0.1 上的假 API；隔离环境关闭了其余的外部访问（见 cleanEnv），
+// 例外是首次引导时原版的连通性检查（对比测试的 onboarding 场景，见 README 的「测试」一节）。
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -38,14 +39,51 @@ export function makeHome({ fresh = false, settings = { disableDeepLinkRegistrati
   return { home, work, remove: () => fs.rmSync(home, { recursive: true, force: true }) };
 }
 
-/** 干净的进程环境：不继承当前 shell 的任何变量 */
+/**
+ * 干净的进程环境：不继承当前 shell 的任何变量。
+ * 关闭官方插件市场的自动安装：交互界面启动时，CLI 从 downloads.claude.ai 下载官方插件市场，失败时用 ssh 探测
+ * github.com 并从 GitHub 克隆到 <配置目录>/plugins/marketplaces；CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC 不关闭这一步。
+ * 克隆的目标位于隔离的 HOME 中：测试结束 CLI 时克隆可能仍在进行，它的写入、清理与删除 HOME 同时发生时，
+ * rmSync 不报错而目录保留。
+ */
 export function cleanEnv(home, apiUrl, extra = {}) {
   return {
     PATH: CLEAN_PATH, HOME: home, CLAUDE_CONFIG_DIR: path.join(home, ".claude"),
     TERM: "xterm-256color", COLORTERM: "truecolor",
     DISABLE_AUTOUPDATER: "1", DISABLE_TELEMETRY: "1", CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+    CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL: "1",
     ANTHROPIC_BASE_URL: apiUrl, ANTHROPIC_API_KEY: FAKE_KEY,
     ...extra,
+  };
+}
+
+// ---------- 外部访问 ----------
+
+/**
+ * 拦截并记录 CLI 对外部服务的访问：PATH 最前面放 ssh 与 git 的替身，另启动一个只做记录的 HTTP 代理。
+ * 替身与代理都使访问失败，没有请求离开本机。git 的替身只拦截网络子命令（clone、fetch、pull、push、ls-remote），
+ * 其余转交真实的 git：CLI 用本地的 git 命令判断 git 是否可用。
+ * @param env 进程环境（cleanEnv 的结果）
+ * @param dir 放置替身的目录，不存在时创建
+ * @returns {{ env: object, attempts: () => string[], stop: () => void }} env 为加入替身与代理之后的环境
+ */
+export function trapExternalAccess(env, dir) {
+  const log = path.join(dir, "attempts.log");
+  const git = Bun.which("git", { PATH: env.PATH });
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(log, "");
+  fs.writeFileSync(path.join(dir, "ssh"), `#!/bin/sh\necho "ssh $*" >> '${log}'\nexit 255\n`, { mode: 0o755 });
+  if (git) fs.writeFileSync(path.join(dir, "git"), `#!/bin/sh\nfor a in "$@"; do case $a in clone|fetch|pull|push|ls-remote) echo "git $a" >> '${log}'; exit 128;; esac; done\nexec '${git}' "$@"\n`, { mode: 0o755 });
+  const connects = [];
+  const proxy = Bun.listen({
+    hostname: "127.0.0.1", port: 0,
+    socket: { data(socket, chunk) { connects.push(String(chunk).split("\r\n")[0]); socket.end("HTTP/1.1 502 Bad Gateway\r\n\r\n"); } },
+  });
+  const url = `http://127.0.0.1:${proxy.port}`;
+  return {
+    env: { ...env, PATH: `${dir}:${env.PATH}`, HTTPS_PROXY: url, HTTP_PROXY: url, NO_PROXY: "127.0.0.1,localhost" },
+    attempts: () => [...fs.readFileSync(log, "utf8").split("\n").filter(Boolean), ...connects],
+    stop: () => proxy.stop(true),
   };
 }
 
