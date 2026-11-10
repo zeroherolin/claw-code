@@ -27,10 +27,12 @@ Claude Code **2.1.310** 的可读、可运行重组版本，运行在公开版 B
 npm install           # 安装固定版本的 Bun 与开发依赖
 npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 ./dist/claude         # 交互模式；用法与原版相同，例如 ./dist/claude -p "hello"
+npm run install-cli   # 构建并安装：在 ~/.local/bin 创建 claw-code 链接，之后输入 claw-code 即可启动
 ```
 
-- `dist/claude` 是自包含的单文件可执行程序，可以拷到别处，也可以链接到 PATH 中的目录以便随处使用，例如 `ln -s "$PWD/dist/claude" ~/.local/bin/claw-code`。
-- `npm link` 将开发模式启动器注册为 `claw-code`，避免覆盖已有的 `claude` 命令；配置、会话与登录凭据仍按原版规则共享。
+- `npm run install-cli` 安装的 `claw-code` 与已安装的 `claude` 共存，共用会话记录、配置文件和登录凭据。原版代码有两处会影响已安装的 `claude`：交互使用后把 `claude-cli://` 深链接改注册到自己；`update`、`install` 子命令下载官方版本并改写共享配置。避免方式、安装目录、命令名和卸载见 [docs/runtime.md](docs/runtime.md#安装与共存)。
+- `npm link` 也只注册 `claw-code` 命令，指向开发模式启动器 `bin/claude`；需要与原版一致的行为时用 `npm run install-cli` 安装构建产物。
+- `dist/claude` 是自包含的单文件可执行程序，可以拷到别处。不要把它链接成 `claude`：那会顶替已安装的原版。
 - 为其他平台编译：`npm run build -- --target linux-arm64`。
 - 建议安装 ripgrep、bfs（3.3 或更新）、ugrep，例如 `brew install ripgrep bfs ugrep` 或 `apt install ripgrep bfs ugrep`。原版把这三个工具内嵌在可执行文件里，本项目改为调用系统里的同名工具；bfs 缺失或过旧时改用系统的 find，详见 [docs/runtime.md](docs/runtime.md#内嵌命令行工具)。
 
@@ -46,7 +48,7 @@ npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 | `assets/` | 资源：提示词、skill 文档、字体等各系统共用；原生 `.node` 模块按平台放在 `native/<系统>-<架构>/`；清单见 `INDEX.json` | 生成 |
 | `reference/` | 机器可读的参考数据：`module-map.json` 为模块路径与各系统原 chunk id 的对照；`<系统>/` 下为工具、命令、特性开关、提示词全文等 | 生成 |
 | `docs/` | 架构与运行时文档；`docs/reference/<系统>/` 为参考手册 | 手写 + 生成 |
-| `scripts/` | `build.js` 编译单文件可执行程序，`boot.js` 是它的入口 | 手写 |
+| `scripts/` | `build.js` 编译单文件可执行程序，`boot.js` 是它的入口，`install.js` 构建并安装 `claw-code` 命令 | 手写 |
 | `bin/claude` | 开发模式启动器：直接运行 `src/`，无需构建；与原版有两处行为差异，见 [runtime.md](docs/runtime.md#开发模式与构建产物的差异) | 手写 |
 | `dist/claude` | `npm run build` 的产物：自包含的单文件可执行程序（约 290 MB，含 Bun 运行时、目标系统的源码及其字节码、资源），行为与原版一致 | 构建，不提交 |
 | `test/` | 单元、完整性、冒烟测试；`parity/` 为与原版的对比测试 | 手写 |
@@ -62,7 +64,7 @@ npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 | 文档 | 内容 |
 |---|---|
 | [docs/architecture.md](docs/architecture.md) | 启动流程、一次对话回合的运行路径、各目录职责、两个系统的差异 |
-| [docs/runtime.md](docs/runtime.md) | 与原版运行时的差异：Bun.ant、内嵌工具、资源定位、编译方式、开发模式的限制 |
+| [docs/runtime.md](docs/runtime.md) | 与原版运行时的差异：Bun.ant、内嵌工具、资源定位、编译方式、开发模式的限制、安装与共存 |
 | [extract/README.md](extract/README.md) | 重新生成、架构还原、跨系统对齐、命名与归档规则、升级到新版本 |
 | [docs/reference/](docs/reference) | 自动生成，每个系统一份：工具、斜杠命令、Skill、CLI、环境变量、特性开关、提示词（[darwin](docs/reference/darwin/TOOLS.md)、[linux](docs/reference/linux/TOOLS.md)） |
 

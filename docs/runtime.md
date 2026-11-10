@@ -160,3 +160,36 @@ external: ["/$bunfs/*", "./*", "../*"],
 另外，以下行为也取决于是否以单文件可执行程序方式运行：子进程重启 CLI 自身时 argv 的构造方式（`fs/chunk-dacd9872.js`「process.execPath」），以及 ripgrep 的运行方式（见上文）。开发模式下它们走的是原版为"以脚本方式运行"准备的分支，只有 `dist/claude` 与官方可执行程序一致。
 
 开发模式适合阅读、调试和快速试验；需要与原版完全一致的行为时，请用 `dist/claude`。
+
+## 安装与共存
+
+`npm run install-cli`（`scripts/install.js`）先构建，再在 `~/.local/bin` 创建符号链接 `claw-code -> <项目>/dist/claude`。只有一个链接，重新构建后立即生效。
+
+| 选项 | 作用 |
+|---|---|
+| `--bin-dir <目录>` | 换安装目录 |
+| `--name <名字>` | 换命令名；不接受 `claude`，那是已安装的原版 |
+| `--no-build` | 跳过构建，`dist/claude` 不存在时仍会构建 |
+| `--force` | 覆盖不是本脚本创建的同名文件；默认不覆盖 |
+| `--uninstall` | 卸载；只删除指向本项目 `dist/claude` 的链接 |
+
+`claw-code` 与已安装的 `claude` 是同一套代码，按同样的规则定位数据，因此下列内容两边共用：
+
+- 配置目录（`~/.claude` 或 `CLAUDE_CONFIG_DIR`）下的会话记录、`settings.json`、skills、插件、记忆；
+- 全局配置 `~/.claude.json`；
+- 登录凭据：钥匙串条目名只取决于配置目录（设置了 `CLAUDE_SECURESTORAGE_CONFIG_DIR` 时取它），与可执行文件无关，见 `auth/claude-code-user.js`「OAUTH_FILE_SUFFIX」。
+
+会话可以互相续上：原版 2.1.310 写的会话，`claw-code --continue` 能续上并带出历史，反过来也行（隔离 HOME 下用假 API 实测）。
+
+原版代码有两处会影响已安装的 `claude`：
+
+| 行为 | 位置 | 影响 | 避免方式 |
+|---|---|---|---|
+| 自动注册 `claude-cli://` 处理程序 | `fs/deep-link-register-failed.js`「Auto-registered claude-cli:// deep link protocol handler」 | 交互使用并提交第一条消息后，发现处理程序没有指向当前可执行文件，就改注册到自己：macOS 上是 `~/Applications/Claude Code URL Handler.app`，Linux 上是 `~/.local/share/applications/claude-code-url-handler.desktop`。此后从网页深链接拉起的是 `claw-code` | 在 `settings.json` 中设置 `"disableDeepLinkRegistration": "disable"` |
+| `update`、`upgrade`、`install` 子命令 | `fs/auto-updater-forced-downgrade.js`「Checking for updates to」、`fs/setup-token-command.js`「awaitPolicyLimitsColdStart」 | 从 `downloads.claude.ai` 下载官方原生版本，装进 `~/.local/bin/claude`，并把共享配置里的 `installMethod` 改成 `native`（`telemetry/version-lock-acquired.js`「Set installMethod to "native"」） | 不要对 `claw-code` 执行这三个子命令；环境变量 `DISABLE_UPDATES=1` 会让它们直接退出 |
+
+`settings.json` 与环境变量两边共用，上面两个设置对已安装的 `claude` 同样生效。升级 `claw-code` 的办法是更新项目后重新执行 `npm run install-cli`。
+
+以上两处行为与避免方式都在隔离 HOME 下实测；钥匙串条目名依据源码，没有用真实钥匙串测过。`~/.claude.json` 里的 `numStartups` 等字段两边都会写，后台守护进程、会话锁等运行时状态也在同一个配置目录里，两个版本同时运行的情形没有专门测过。
+
+测试：`test/install.test.js` 覆盖安装、重复安装、不覆盖他人文件、拒绝 `claude` 这个名字、卸载只删自己的链接。测试用的隔离 HOME 默认带上 `disableDeepLinkRegistration`（`test/harness.js` 的 `makeHome`），不在系统里留下指向临时目录的处理程序登记。

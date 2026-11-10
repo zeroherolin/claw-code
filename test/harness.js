@@ -15,16 +15,19 @@ const CLEAN_PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sb
 
 /**
  * 创建一个隔离的 HOME：已完成引导、已批准假 API key、已信任工作目录 <home>/work。
- * fresh 为 true 时只建目录，保留全新状态（用于测试首次引导）。
+ * fresh 为 true 时不写全局配置，保留全新状态（用于测试首次引导）。
+ * settings 写入 <home>/.claude/settings.json。默认关掉 claude-cli:// 处理程序的自动注册：交互使用时 CLI 会把处理程序
+ * 注册到当前可执行文件，在 macOS 的 Launch Services 里留下指向临时目录的登记，目录删掉后登记仍在。
  * 返回真实路径（macOS 上 /var → /private/var），CLI 报告的路径都是解析过符号链接的。
  */
-export function makeHome({ fresh = false } = {}) {
+export function makeHome({ fresh = false, settings = { disableDeepLinkRegistration: "disable" } } = {}) {
   const home = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "claw-test-")));
   const work = path.join(home, "work");
   fs.mkdirSync(path.join(home, ".claude"), { recursive: true });
   fs.mkdirSync(work);
   fs.writeFileSync(path.join(work, "fixture.txt"), "fixture-content-123\n");
   fs.writeFileSync(path.join(work, "x.txt"), "alpha\nneedle here\n");
+  fs.writeFileSync(path.join(home, ".claude/settings.json"), JSON.stringify(settings));
   if (!fresh) {
     fs.writeFileSync(path.join(home, ".claude/.claude.json"), JSON.stringify({
       numStartups: 5, theme: "dark", hasCompletedOnboarding: true, lastOnboardingVersion: VERSION, tipsHistory: {},
