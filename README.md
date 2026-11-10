@@ -65,6 +65,7 @@ npm run install-cli   # 构建并安装：在 ~/.local/bin 创建 claw-code 链�
 |---|---|
 | [docs/architecture.md](docs/architecture.md) | 启动流程、一次对话回合的运行路径、各目录职责、两个系统的差异 |
 | [docs/runtime.md](docs/runtime.md) | 与原版运行时的差异：Bun.ant、内嵌工具、资源定位、编译方式、开发模式的限制、安装与共存 |
+| [docs/identifiers.md](docs/identifiers.md) | 会话、设备、账号、请求等标识的来源、存储与发送位置 |
 | [extract/README.md](extract/README.md) | 重新生成、架构还原、跨系统对齐、命名与归档规则、升级到新版本 |
 | [docs/reference/](docs/reference) | 自动生成，每个系统一份：工具、斜杠命令、Skill、CLI、环境变量、特性开关、提示词（[darwin](docs/reference/darwin/TOOLS.md)、[linux](docs/reference/linux/TOOLS.md)） |
 
