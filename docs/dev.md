@@ -17,7 +17,7 @@
 | 服务端拒答 | 使用原模型最多连续重试 10 轮，不换模型；每次重试更换会话 ID、设备 ID 和提示 ID | [拒答后的重试](#拒答后的重试) |
 | 与 `claude` 共存 | 不注册 `claude-cli://` 处理程序；`update`、`upgrade`、`install` 直接退出 | [与已安装的 claude 共存](#与已安装的-claude-共存) |
 
-改动分布在四个位置，`git diff main` 的内容即由它们构成：
+改动分布在下列位置：
 
 | 位置 | 内容 |
 |---|---|
@@ -25,6 +25,11 @@
 | `src/runtime/` | `pinned-env.js`、`pinned-env-worker.js`（固定环境变量），`memory-guard.js`（读取记忆需要确认），`safeguards-redact.js`（脱敏），`upload-identity.js`（拒答重试的临时上传身份） |
 | `extract/patches/2.1.310.patch` | 各系统生成源码上的改动，见[生成源码上的改动](#生成源码上的改动)；补丁机制见 [extract/README.md](../extract/README.md#版本补丁) |
 | `test/dev/`、`test/parity/intentional.js` | 上述改动的测试，以及对比测试中登记的有意差异 |
+
+`git diff main` 的内容由上表中的文件、补丁对应的 `src/<系统>/` 改动，以及随之变化的下列文件构成：
+
+- 本文，以及 `README.md`、`docs/architecture.md`、`docs/identifiers.md` 中说明 `dev` 分支的几行；
+- `reference/<系统>/tools.json` 与 `docs/reference/<系统>/TOOLS.md` 中工具定义的行号：行号按补丁换算，见 [extract/README.md](../extract/README.md#版本补丁)。
 
 ## 与对比测试的关系
 
