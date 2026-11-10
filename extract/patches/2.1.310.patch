@@ -38,7 +38,7 @@ index 37754dd..575eb7e 100644
    if (Te() === "gateway" && !Wr() && !Dit()) {
      if (fd()) throw z_n("Cloud gateway");
 diff --git a/src/darwin/context/auto-dream-skipped.js b/src/darwin/context/auto-dream-skipped.js
-index 6c896e6..bf858a1 100644
+index 6c896e6..4e61f6d 100644
 --- a/src/darwin/context/auto-dream-skipped.js
 +++ b/src/darwin/context/auto-dream-skipped.js
 @@ -29,10 +29,7 @@ function bYt() {
@@ -49,7 +49,7 @@ index 6c896e6..bf858a1 100644
 -  let e = mt().autoDreamEnabled;
 -  if (e !== void 0) return e;
 -  return K()?.enabled === true;
-+  return false; // 记忆内容不发送：不运行记忆整理（它会把记忆文件读给模型）
++  return false; // 记忆内容不发送：不运行记忆整理（它会把记忆文件的内容发给模型）
  }
  class Z {
    runner = null;
@@ -447,19 +447,19 @@ index a148906..a5347ea 100644
  `), await Xn(0);
    a("tengu_update_check", {}), Ur(`Current version: ${{ ISSUES_EXPLAINER: "report the issue at https://github.com/anthropics/claude-code/issues", PACKAGE_URL: "@anthropic-ai/claude-code", README_URL: "https://code.claude.com/docs/en/overview", VERSION: "2.1.310", FEEDBACK_CHANNEL: "https://github.com/anthropics/claude-code/issues", BUILD_TIME: "2026-10-23T17:43:32Z", GIT_SHA: "0d2056ecf42d9452a8cd8e054600024e7c557add", HOOKS_WORKER_URL: __asset_src("darwin/hooks/hooks-worker.js"), DD_SOURCEMAP_GROUP: "darwin" }.VERSION}
 diff --git a/src/darwin/fs/deep-link-register-failed.js b/src/darwin/fs/deep-link-register-failed.js
-index bd2cad1..b3883e4 100644
+index bd2cad1..73e45e6 100644
 --- a/src/darwin/fs/deep-link-register-failed.js
 +++ b/src/darwin/fs/deep-link-register-failed.js
 @@ -132,6 +132,7 @@ async function S(e) {
    }
  }
  async function Rls(e) {
-+  if (true) return; // claw-code：不注册 claude-cli:// 处理程序，免得抢走已安装的 claude 的注册
++  if (true) return; // claw-code：不注册 claude-cli:// 处理程序，避免覆盖已安装的 claude 的注册
    if (mt().disableDeepLinkRegistration === "disable") return;
    if (!["darwin", "linux", "win32"].includes("darwin")) return;
    let r = await E();
 diff --git a/src/darwin/fs/setup-token-command.js b/src/darwin/fs/setup-token-command.js
-index e346381..399f5e9 100644
+index e346381..4610228 100644
 --- a/src/darwin/fs/setup-token-command.js
 +++ b/src/darwin/fs/setup-token-command.js
 @@ -152,6 +152,8 @@ function b(c) {
@@ -467,7 +467,7 @@ index e346381..399f5e9 100644
  }
  async function xki(c, d, t) {
 +  if (true) process.stdout.write(`claw-code does not install itself. Run \`npm run install-cli\` in the claw-code repository instead.
-+`), process.exit(0); // claw-code：install 会把官方原生版本装进 ~/.local/bin/claude
++`), process.exit(0); // claw-code：install 会把官方原生版本安装到 ~/.local/bin/claude
    if (i.DISABLE_UPDATES) process.stdout.write(`Updates are disabled by your administrator. Contact your IT team to get the latest version.
  `), process.exit(0);
    let { awaitPolicyLimitsColdStart: f } = await import("../cli/admit-prefetched-policy-limits.js");
@@ -653,7 +653,7 @@ index ffd60bf..60ab94d 100644
    if (Ae() === "gateway" && !Wr() && !Rit()) {
      if (pd()) throw R_n("Cloud gateway");
 diff --git a/src/linux/context/auto-dream-skipped.js b/src/linux/context/auto-dream-skipped.js
-index a667e47..d9d1b99 100644
+index a667e47..3115283 100644
 --- a/src/linux/context/auto-dream-skipped.js
 +++ b/src/linux/context/auto-dream-skipped.js
 @@ -29,10 +29,7 @@ function u9t() {
@@ -664,7 +664,7 @@ index a667e47..d9d1b99 100644
 -  let e = pt().autoDreamEnabled;
 -  if (e !== void 0) return e;
 -  return K()?.enabled === true;
-+  return false; // 记忆内容不发送：不运行记忆整理（它会把记忆文件读给模型）
++  return false; // 记忆内容不发送：不运行记忆整理（它会把记忆文件的内容发给模型）
  }
  class Z {
    runner = null;
@@ -1062,19 +1062,19 @@ index 84db8e2..fe5e5f0 100644
  `), await Xn(0);
    a("tengu_update_check", {}), Ur(`Current version: ${{ ISSUES_EXPLAINER: "report the issue at https://github.com/anthropics/claude-code/issues", PACKAGE_URL: "@anthropic-ai/claude-code", README_URL: "https://code.claude.com/docs/en/overview", VERSION: "2.1.310", FEEDBACK_CHANNEL: "https://github.com/anthropics/claude-code/issues", BUILD_TIME: "2026-10-23T17:43:32Z", GIT_SHA: "0d2056ecf42d9452a8cd8e054600024e7c557add", HOOKS_WORKER_URL: __asset_src("linux/hooks/hooks-worker.js"), DD_SOURCEMAP_GROUP: process.arch === "x64" ? "default" : void 0 }.VERSION}
 diff --git a/src/linux/fs/deep-link-register-failed.js b/src/linux/fs/deep-link-register-failed.js
-index 103d700..f475806 100644
+index 103d700..b3f713d 100644
 --- a/src/linux/fs/deep-link-register-failed.js
 +++ b/src/linux/fs/deep-link-register-failed.js
 @@ -132,6 +132,7 @@ async function v(e) {
    }
  }
  async function hls(e) {
-+  if (true) return; // claw-code：不注册 claude-cli:// 处理程序，免得抢走已安装的 claude 的注册
++  if (true) return; // claw-code：不注册 claude-cli:// 处理程序，避免覆盖已安装的 claude 的注册
    if (pt().disableDeepLinkRegistration === "disable") return;
    if (!["darwin", "linux", "win32"].includes("linux")) return;
    let r = await P();
 diff --git a/src/linux/fs/setup-token-command.js b/src/linux/fs/setup-token-command.js
-index a61d0d7..7e73e73 100644
+index a61d0d7..6d7da22 100644
 --- a/src/linux/fs/setup-token-command.js
 +++ b/src/linux/fs/setup-token-command.js
 @@ -152,6 +152,8 @@ function b(c) {
@@ -1082,7 +1082,7 @@ index a61d0d7..7e73e73 100644
  }
  async function VEi(c, d, t) {
 +  if (true) process.stdout.write(`claw-code does not install itself. Run \`npm run install-cli\` in the claw-code repository instead.
-+`), process.exit(0); // claw-code：install 会把官方原生版本装进 ~/.local/bin/claude
++`), process.exit(0); // claw-code：install 会把官方原生版本安装到 ~/.local/bin/claude
    if (i.DISABLE_UPDATES) process.stdout.write(`Updates are disabled by your administrator. Contact your IT team to get the latest version.
  `), process.exit(0);
    let { awaitPolicyLimitsColdStart: f } = await import("../cli/admit-prefetched-policy-limits.js");

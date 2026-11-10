@@ -3,7 +3,7 @@
 // 原版从 process.env 读取时区和遥测开关，运行期还会把 settings.json 的 env、插件 hooks 等写回 process.env。
 // 这里在加载原版代码之前写入固定值（或删除），然后把 process.env 换成一个 Proxy，对这些键的写入和删除一律忽略。
 //
-// 子进程与 Worker：Bun 里不传 env 的 Bun.spawn / spawnSync 和 new Worker，继承的是进程启动时的环境，看不到运行期对
+// 子进程与 Worker：Bun 里不传 env 的 Bun.spawn / spawnSync 和 new Worker，继承进程启动时的环境，不包含运行期对
 // process.env 的修改；node:child_process 则显式传入当前的 process.env。这里保持这些语义不变，只在每个子进程和 Worker
 // 的环境里套用固定的 TZ（Worker 另外套用全部固定值，并在 Worker 内再次调用 pinEnvironment()）。
 // 唯一的例外是对 ps 显式指定的 TZ=UTC：原版用 UTC 解析 ps 的 lstart 输出，结果只在本机使用。
@@ -29,7 +29,7 @@ export const PINNED = {
 
 const isPinned = (k) => typeof k === "string" && Object.hasOwn(PINNED, k);
 
-/** 进程（或 Worker）启动时的环境，已套用固定的环境变量（TZ 除外，TZ 在 childEnv / workerOptions 里套用）；不传 env 的子进程和 Worker 以它为底 */
+/** 进程（或 Worker）启动时的环境，已套用固定的环境变量（TZ 除外，TZ 在 childEnv / workerOptions 里套用）；不传 env 的子进程和 Worker 以它为基础 */
 let startupEnv = {};
 
 /** 在环境对象上套用全部固定值（原地修改并返回） */
@@ -44,14 +44,14 @@ function applyPinned(env) {
 /** 原版只对 ps 显式指定 TZ=UTC（解析 lstart 输出），保留这一处 */
 const isPs = (cmd) => Array.isArray(cmd) && /(^|\/)ps$/.test(String(cmd[0]));
 
-/** 子进程的环境：调用方给出的 env（没给就是启动时的环境），套用固定的 TZ */
+/** 子进程的环境：调用方给出的 env（未给出时为启动时的环境），套用固定的 TZ */
 function childEnv(env, cmd) {
   const out = { ...(env ?? startupEnv) };
   if (!(out.TZ === "UTC" && isPs(cmd))) out.TZ = PINNED.TZ;
   return out;
 }
 
-/** 包装 Bun.spawn / spawnSync：数组形式与对象形式都补上固定的环境；其他调用形式原样转发 */
+/** 包装 Bun.spawn / spawnSync：数组形式与对象形式都套用固定的环境；其他调用形式原样转发 */
 function wrapSpawn(spawn) {
   return function (cmdOrOptions, options) {
     if (Array.isArray(cmdOrOptions)) return spawn.call(this, cmdOrOptions, { ...options, env: childEnv(options?.env, cmdOrOptions) });
@@ -60,10 +60,10 @@ function wrapSpawn(spawn) {
   };
 }
 
-/** Worker 里先运行的模块：在 Worker 内再次固定环境，使 Worker 里的 process.env、子进程也受同样的约束 */
+/** Worker 中最先运行的模块：在 Worker 内再次固定环境，使 Worker 中的 process.env、子进程受同样的约束 */
 const WORKER_PRELOAD = new URL("./pinned-env-worker.js", import.meta.url).href;
 
-/** Worker 的选项：环境为调用方给出的 env（没给就是启动时的环境）套用全部固定值，并加上 preload */
+/** Worker 的选项：环境为调用方给出的 env（未给出时为启动时的环境）套用全部固定值，并加上 preload */
 function workerOptions(options) {
   const out = { ...options };
   const env = out.env === undefined ? startupEnv : out.env;
@@ -96,5 +96,5 @@ export function pinEnvironment() {
   Bun.spawn = wrapSpawn(Bun.spawn);
   Bun.spawnSync = wrapSpawn(Bun.spawnSync);
   globalThis.Worker = wrapWorker(globalThis.Worker);
-  workerThreads.Worker = wrapWorker(workerThreads.Worker); // 覆盖 require("worker_threads").Worker；ESM 具名导入拿不到这个替换，生成代码里只有 require 与全局两种用法
+  workerThreads.Worker = wrapWorker(workerThreads.Worker); // 覆盖 require("worker_threads").Worker；ESM 具名导入不受这一替换影响；生成代码中只有 require 与全局两种用法
 }

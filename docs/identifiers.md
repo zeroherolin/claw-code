@@ -4,7 +4,7 @@
 
 - 模块路径对每个系统都成立，位置用"路径「特征字符串」"标注，写法同 [architecture.md](architecture.md)。
 - 标注"实测"的结论在隔离 HOME 下用假 API 验证过；其余依据源码。OAuth、设备注册和云服务相关的标识没有用真实账号验证。
-- 本文描述原版的行为。`dev` 分支在服务端拒答后的重试中更换会话 ID、设备 ID 和提示 ID，并改了 `X-Mcp-Client-Session-Id` 的取值，见 [dev.md](dev.md#临时上传身份)。
+- 本文描述原版的行为。`dev` 分支在服务端拒答后的重试中更换会话 ID、设备 ID 和提示 ID，并改变了 `X-Mcp-Client-Session-Id` 的取值，见 [dev.md](dev.md#临时上传身份)。
 
 ## 模型请求中的标识
 

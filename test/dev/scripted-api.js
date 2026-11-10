@@ -5,13 +5,13 @@
  * 步骤：
  *   "refuse"  先输出一段文字（PARTIAL_TEXT_ONE）和一个 Bash 调用（echo TOOL_ONE），再以 frontier_llm 拒答；
  *   "tool"    同样的文字和 Bash 调用，但正常停在 tool_use；
- *   { tool, input }  一个指定工具调用，停在 tool_use（拿到 tool_result 之后的请求回复 FINISHED）；
+ *   { tool, input }  一个指定工具调用，停在 tool_use（收到 tool_result 之后的请求回复 FINISHED）；
  *   "ok"      正常回复；
  *   "notfound"  流式请求返回 404，客户端会改用非流式请求重发（记在 nonStreaming 里）。
  * script 为数字 N 时等价于 N 个 "refuse"；为函数时每次收到请求体，返回该次的步骤。
- * 非流式请求（本地分类器等）不走脚本，一律回复 options.nonStreamingText。
+ * 非流式请求（本地分类器等）不按脚本回应，一律回复 options.nonStreamingText。
  * @returns {{ url: string, requests: {headers: object, body: object}[], nonStreaming: {headers: object, body: object}[], stop: () => void }}
- *   requests 为各流式请求的请求头与 JSON 体；nonStreaming 为非流式 /v1/messages 请求（count_tokens 不记）
+ *   requests 为各流式请求的请求头与 JSON 体；nonStreaming 为非流式 /v1/messages 请求（count_tokens 不记录）
  */
 export function startScriptedApi(script, options) {
   const nonStreamingText = options?.nonStreamingText ?? "OK";

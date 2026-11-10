@@ -6,16 +6,16 @@
 //     补丁去掉，redactRepoVisibility、redactGitStatus 处理插在待判断命令之前的两种元信息行。
 //
 // 原版在 auto / plan 模式下，每个请求都带一份 classifier_context：权限规则原文、autoMode 槽位的自然语言规则、用户名、
-// git 分支与 remote 的 owner/repo、home 目录等。这里在请求发出前统一抹掉可以识别用户、机器和项目的字段，
+// git 分支与 remote 的 owner/repo、home 目录等。这里在请求发出前统一清除可以识别用户、机器和项目的字段，
 // 保留分类器判断所需的最小结构：权限模式、平台、当前目录、是否限制读取等标志，以及各字段的形状（字段仍在，值为空），
-// 这样服务端的校验（字段必须存在、类型必须对）照常通过。
+// 使服务端的校验（字段必须存在、类型必须正确）仍然通过。
 //
-// 抹掉的字段：
+// 清除的字段：
 //   user_identity                        -> null
 //   home_dir                             -> 删除（schema 里可选）
 //   rule_roots                           -> {}
 //   rules.allow / deny / ask             -> []（权限规则原文，路径里常含用户名和项目名）
-//   auto_mode.*                          -> []（用户自己写的自然语言规则）
+//   auto_mode.*                          -> []（用户编写的自然语言规则）
 //   trusted_directories.additional/network -> []（--add-dir 目录和允许的网络域名）
 //   git_state.branch / default_branch    -> null
 //   git_state.root                       -> null
@@ -25,9 +25,9 @@
 //   artifacts                            -> 删除
 //   prior_turn_context                   -> 同样的 git_state 脱敏；live_cwd 保留
 //
-// 不抹掉的字段：v、permission_mode、platform、live_cwd、trusted_directories.primary、
+// 保留的字段：v、permission_mode、platform、live_cwd、trusted_directories.primary、
 //   block_reads_outside_working_directories、restricted、is_remote_mode、classify_all_shell 及其他布尔标志。
-// live_cwd 保留是因为分类器要用它判断命令是否在工作目录之内；主请求体里本来就有这个路径。
+// live_cwd 保留是因为分类器要用它判断命令是否在工作目录之内；主请求体中已包含这个路径。
 //
 // 本地分类器的元信息行：
 //   repoVisibility  -> remote、branch 只在待判断的命令中原样出现时保留（命令在同一个请求里），否则 remote 替换为占位符、

@@ -1,15 +1,15 @@
-// 读取记忆目录里的文件，一律先问用户。这是本项目对原版有意做的改动，见 docs/dev.md#读取记忆文件需要确认。
+// 读取记忆目录里的文件时，一律先询问用户。这是本项目对原版有意做的改动，见 docs/dev.md#读取记忆文件需要确认。
 //
-// 挂在权限检查链上（core/conversation-engine.js 里 tool.checkPermissions 之后）：任何会读到记忆目录的工具调用，
-// 不论权限模式、allow 规则、hook 还是自动模式的分类器怎么判断，都改成必须由用户回答的询问。
+// 挂在权限检查链上（core/conversation-engine.js 里 tool.checkPermissions 之后）：任何会读取记忆目录的工具调用，
+// 不论权限模式、allow 规则、hook 还是自动模式的分类器如何判断，都改为必须由用户回答的询问。
 // 做法与原版里「读取范围限制」「危险删除」等硬性检查相同：结果带 safetyCheck，断路器名为 memoryRead，
-// 该断路器在 core 的断路器表里标为绕不过（bypassImmune），因此 bypassPermissions 模式也照样询问。
+// 该断路器在断路器表中标记为不可绕过（bypassImmune），因此 bypassPermissions 模式下同样询问。
 //
 // 覆盖范围：
-//   - 带 getPath 的只读工具（Read 等）：按解析后的真实路径判断，符号链接不能绕开；
+//   - 带 getPath 的只读工具（Read 等）：按解析后的真实路径判断，符号链接无法绕过；
 //   - Grep / Glob 与常见递归搜索：搜索起点包含已存在的记忆目录时同样确认；
-//   - Bash / PowerShell：只能看命令文本，把每个词按真实路径判断，是尽力而为（见 commandMentionsMemory）。
-// 不覆盖：Edit、Write 这类写工具，保存记忆需要写入。
+//   - Bash / PowerShell：只能依据命令文本，把每个词按真实路径判断，属于尽力而为（见 commandMentionsMemory）。
+// 不覆盖：Edit、Write 等写工具，保存记忆需要写入。
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -87,7 +87,7 @@ export function isMemoryPath(p, host) {
   return false;
 }
 
-/** 递归搜索的范围是否包含已存在的记忆目录；不把尚不存在的 agent-memory 当成需要确认的目录。 */
+/** 递归搜索的范围是否包含已存在的记忆目录；尚不存在的 agent-memory 不视为需要确认的目录。 */
 export function containsMemoryPath(p, host) {
   const abs = resolveLoose(p, host.cwd());
   if (abs === null) return false;
@@ -121,14 +121,14 @@ function commandParts(command) {
   return parts.filter((part) => part.length);
 }
 
-/** 词里的 $HOME、${HOME} 展开成真实的 home 目录，其余变量不展开（展开不了的就是识别不了） */
+/** 把词中的 $HOME、${HOME} 展开为真实的 home 目录；其余变量不展开，含这类变量的词无法识别 */
 function expandHome(word) {
   return word.replace(/^\$\{HOME\}(?=\/|$)|^\$HOME(?=\/|$)/, () => os.homedir());
 }
 
 const SEARCH_VALUE_OPTIONS = new Set(["-e", "--regexp", "-f", "--file", "-g", "--glob", "--iglob", "-t", "--type", "-T", "--type-not", "--include", "--exclude", "--exclude-dir", "-m", "--max-count", "-A", "-B", "-C", "--after-context", "--before-context", "--context", "--max-depth", "--maxdepth", "--encoding", "--sort", "--sortr", "--threads", "-j"]);
 
-/** 常见递归搜索的起点；grep/rg 没写路径时搜索当前目录。 */
+/** 常见递归搜索的起点；grep/rg 未给出路径时搜索当前目录。 */
 function recursiveSearchPaths(words) {
   let first = 0;
   while (first < words.length && (/^[A-Za-z_]\w*=/.test(words[first]) || ["command", "exec", "env", "sudo"].includes(words[first]))) first++;
@@ -161,11 +161,11 @@ function recursiveSearchPaths(words) {
 }
 
 /**
- * 命令是否指向记忆目录。只看命令文本，所以是尽力而为；做法是把每个像路径的词按真实路径判断，
- * 而不是在整段命令里找字样，这样 `git add MEMORY.md`、`grep -rn agent-memory src/` 这类只是提到名字的命令不会被拦：
- *   能识别：词本身是记忆目录里的路径（绝对路径，或 ~、$HOME、相对路径展开后），包括经符号链接指过去的；
+ * 命令是否指向记忆目录。只依据命令文本，属于尽力而为：把每个形似路径的词按真实路径判断，
+ * 而不是在整段命令中查找字样，因此 `git add MEMORY.md`、`grep -rn agent-memory src/` 这类只提到名字的命令不会被拦截：
+ *   可识别：词本身是记忆目录里的路径（绝对路径，或 ~、$HOME、相对路径展开后），包括经符号链接指向记忆目录的；
  *           `cd <记忆目录>` 之后的相对路径（按命令里最后一个 cd 的目标解析）；
- *   识别不了：用变量或通配符拼出的路径、脚本和解释器内部间接读取。
+ *   不可识别：由变量或通配符拼接的路径、脚本和解释器内部的间接读取。
  * 返回命中的词，没有则返回 undefined。
  */
 export function commandMentionsMemory(command, host) {
@@ -183,7 +183,7 @@ export function commandMentionsMemory(command, host) {
     if (w.startsWith("-") && !w.includes("/")) continue; // 选项
     const eq = w.indexOf("=");
     const word = expandHome(eq > 0 && /^[A-Za-z_]\w*=/.test(w) ? w.slice(eq + 1) : w); // VAR=path 取等号右边
-    if (word === "" || /[*?$`]/.test(word)) continue; // 含通配符或没展开的变量：识别不了
+    if (word === "" || /[*?$`]/.test(word)) continue; // 含通配符或未展开的变量：无法识别
     if (isMemoryPath(word, { ...host, cwd: () => base })) return w;
   }
   base = host.cwd();
@@ -200,7 +200,7 @@ export function commandMentionsMemory(command, host) {
   }
 }
 
-/** 该工具调用会读到哪个记忆路径 / 命令片段；没有则 undefined */
+/** 该工具调用会读取的记忆路径或命令片段；没有则为 undefined */
 function findMemoryAccess(tool, input, context, host) {
   const name = tool?.name;
   if (name === "Bash" || name === "PowerShell") {
@@ -211,7 +211,7 @@ function findMemoryAccess(tool, input, context, host) {
   try {
     if (tool.isReadOnly?.(input, context) === false) return; // 写工具不在此列
   } catch {
-    // 判断不了是否只读时，按读处理
+    // 无法判断是否只读时，按读取处理
   }
   let p;
   try {
@@ -224,7 +224,7 @@ function findMemoryAccess(tool, input, context, host) {
   return isMemoryPath(p, host) || search && containsMemoryPath(p || host.cwd(), host) ? { kind: "path", detail: p || host.cwd() } : undefined;
 }
 
-/** 宿主给的函数可能抛错（如没有项目目录时取不到自动记忆目录）：取不到就退回默认值 */
+/** 宿主提供的函数可能抛错（如没有项目目录时无法取得自动记忆目录）：此时使用默认值 */
 function attempt(fn, fallback) {
   try {
     return fn() ?? fallback;
@@ -236,7 +236,7 @@ function attempt(fn, fallback) {
 /**
  * 权限检查链的挂接点。current 是 tool.checkPermissions 及之后各步给出的结果；返回新的结果，或 undefined（不干预）。
  * host: { autoMemDir: () => 自动记忆目录（可能抛错），cwd: () => 当前目录 }
- * 这里的任何失败都按「不干预」处理：判断不了就交给原版的权限流程，不能让守卫自己把工具调用弄坏。
+ * 守卫内部的任何失败都按「不干预」处理：无法判断时交给原版的权限流程，守卫不应导致工具调用失败。
  */
 export function memoryReadGuard(tool, input, current, context, host) {
   if (current?.behavior === "deny") return;

@@ -12,7 +12,7 @@ Claude Code **2.1.310** 的可读、可运行重组版本，运行在公开版 B
 
 本仓库有两个长期分支：`main` 的行为与原版一致；`dev` 在 `main` 的基础上有意改动了与隐私有关的行为（固定时区、关闭遥测与非必要网络流量、记忆只发路径、拒答后的重试等），说明见该分支的 `docs/dev.md`。
 
-**这是 `dev` 分支。** 上面的“行为与原版一致”只对没有改动的部分成立；改了哪八处、各自的代价和测试见 [docs/dev.md](docs/dev.md)。
+**这是 `dev` 分支。** 上文的“行为与原版一致”只对未改动的部分成立；八处改动的内容、代价和测试见 [docs/dev.md](docs/dev.md)。
 
 版权与许可见 [LICENSE](LICENSE)。
 
@@ -70,7 +70,7 @@ npm run install-cli   # 构建，并在 ~/.local/bin 创建 claw-code 链接
 | [docs/architecture.md](docs/architecture.md) | 启动流程、一次对话回合的运行路径、各目录职责、各系统之间的差异 |
 | [docs/runtime.md](docs/runtime.md) | 与原版运行时的差异：Bun.ant、内嵌工具、资源定位、编译方式、开发模式的限制、安装与共存 |
 | [docs/identifiers.md](docs/identifiers.md) | 会话、设备、账号、请求等标识的来源、存储与发送位置 |
-| [docs/dev.md](docs/dev.md) | `dev` 分支有意改动的行为：每一处的做法、代价、已知的盲区和测试 |
+| [docs/dev.md](docs/dev.md) | `dev` 分支有意改动的行为：各项改动的做法、代价、已知的盲区和测试 |
 | [extract/README.md](extract/README.md) | 重新生成、架构还原、跨系统对齐、命名与归档规则、升级到新版本 |
 | [docs/reference/](docs/reference) | 自动生成，每个系统一份：工具、斜杠命令、Skill、CLI、环境变量、特性开关、提示词（[darwin](docs/reference/darwin/TOOLS.md)、[linux](docs/reference/linux/TOOLS.md)） |
 
@@ -83,7 +83,7 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 
 - 对比测试默认使用 `extract/upstream/claude-code-<系统>-<架构>/` 中的官方可执行程序，获取方式见 [extract/README.md](extract/README.md#获取官方发布内容)。也可以用参数或 `CLAUDE_ORIG_BIN` 指定其他位置。
 - 只跑部分用例：`npm run test:parity -- --filter '^(text|markdown)'`。
-- `dev` 分支的 `npm test` 另外运行 `test/dev/` 下的用例，共约 4.5 分钟，几乎都花在 `test/dev/smoke.test.js` 上；只跑其中的单元测试：`npm test -- test/dev/runtime.test.js`。
+- `dev` 分支的 `npm test` 另外运行 `test/dev/` 下的用例，共约 4.5 分钟，主要用于 `test/dev/smoke.test.js`；只运行其中的单元测试：`npm test -- test/dev/runtime.test.js`。
 - 全部测试都在隔离的 HOME 下运行，使用假 API key，只连接 127.0.0.1 上的假 API，不访问真实服务。
 - CI（`.github/workflows/test.yml`）：每次 push 和 PR 在每个支持的平台上分别构建，运行 `npm test`，并与该平台的官方可执行程序做对比测试。
 

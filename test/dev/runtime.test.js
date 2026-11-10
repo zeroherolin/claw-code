@@ -35,7 +35,7 @@ ${script}\n`);
     expect(r.env.ENABLE_BETA_TRACING_DETAILED).toBeUndefined();
   });
 
-  test("运行期赋值、Object.assign、delete 都改不动固定的键，其他键照常可写", () => {
+  test("运行期赋值、Object.assign、delete 都不能改变固定的键，其他键仍可写", () => {
     const r = pinned(`process.env.TZ = "Asia/Shanghai";
 Object.assign(process.env, { DISABLE_TELEMETRY: "", CLAUDE_CODE_ENABLE_TELEMETRY: "1", OTHER: "x" });
 delete process.env.DO_NOT_TRACK;
@@ -45,7 +45,7 @@ console.log(JSON.stringify({ intl: Intl.DateTimeFormat().resolvedOptions().timeZ
     expect(r.env.CLAUDE_CODE_ENABLE_TELEMETRY).toBeUndefined();
   });
 
-  test("子进程带上固定的 TZ：Bun.spawnSync、node:child_process，以及调用方显式给出的 env；ps 的 TZ=UTC 保留", () => {
+  test("子进程使用固定的 TZ：Bun.spawnSync、node:child_process，以及调用方显式给出的 env；ps 的 TZ=UTC 保留", () => {
     const r = pinned(`import cp from "node:child_process";
 const sh = ["sh", "-c", "echo $TZ"];
 console.log(JSON.stringify({
@@ -58,8 +58,8 @@ console.log(JSON.stringify({
     expect(r).toEqual({ bun: "America/Los_Angeles", node: "America/Los_Angeles", explicit: "America/Los_Angeles", ps: 0, psEnv: "America/Los_Angeles" });
   });
 
-  // 子进程继承语义与原版一致：Bun.spawn 不传 env 时只拿到启动时的环境，node:child_process 拿到当前的 process.env
-  test("子进程环境的继承语义不变：只多了固定的 TZ", () => {
+  // 子进程继承语义与原版一致：Bun.spawn 不传 env 时只继承启动时的环境，node:child_process 继承当前的 process.env
+  test("子进程环境的继承语义不变：只增加固定的 TZ", () => {
     const script = `import cp from "node:child_process";
 process.env.RUNTIME_WRITTEN = "yes";
 const sh = ["sh", "-c", "echo [$RUNTIME_WRITTEN][$STARTUP_VAR][$TZ]"];
@@ -74,8 +74,8 @@ console.log(JSON.stringify({
     expect(r).toEqual({ bunNoEnv: "[][s][America/Los_Angeles]", nodeNoEnv: "[yes][s][America/Los_Angeles]", explicit: "[explicit][s][America/Los_Angeles]" });
   });
 
-  // Worker 有自己的 process.env：不固定的话，用户设的时区和遥测开关在 Worker 里仍然生效
-  test("Worker 里同样固定：process.env、Intl、子进程，Worker 里的赋值也被忽略", () => {
+  // Worker 有独立的 process.env：不固定时，用户设置的时区和遥测开关在 Worker 中仍然生效
+  test("Worker 中同样固定：process.env、Intl、子进程；Worker 中的赋值同样被忽略", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "claw-pinned-w-"));
     fs.writeFileSync(path.join(dir, "child.mjs"), `import wt from "node:worker_threads";
 postMessage({
@@ -107,7 +107,7 @@ process.exit(0);`, { ...TELEMETRY_ON, STARTUP_VAR: "s" });
 });
 
 describe("memory-guard", () => {
-  // 在一次性目录里搭一个记忆目录；host 模拟生成代码里 ba() / ke() 的返回
+  // 在一次性目录中建立记忆目录；host 模拟生成代码传给守卫的宿主函数（自动记忆目录、当前目录）
   async function setup() {
     const { memoryReadGuard, isMemoryPath, containsMemoryPath, commandMentionsMemory } = await import("../../src/runtime/memory-guard.js");
     const root = fs.mkdtempSync(path.join(os.tmpdir(), "claw-memguard-"));
@@ -128,21 +128,21 @@ describe("memory-guard", () => {
   const writeTool = { name: "Write", getPath: (i) => i.file_path, isReadOnly: () => false };
   const bashTool = { name: "Bash" };
 
-  test("记忆目录里的路径：直接路径、相对路径、符号链接、~ 写法、agent-memory 都识别", async () => {
+  test("记忆目录里的路径：直接路径、相对路径、符号链接、~ 写法、agent-memory 都能识别", async () => {
     const c = await setup();
     try {
       expect(c.isMemoryPath(path.join(c.mem, "MEMORY.md"), c.host)).toBe(true);
       expect(c.isMemoryPath(path.join(c.work, "link/MEMORY.md"), c.host)).toBe(true); // 经符号链接
       expect(c.isMemoryPath(path.relative(c.work, path.join(c.mem, "MEMORY.md")), c.host)).toBe(true); // 相对路径带 ..
       expect(c.isMemoryPath("~/.claude/agent-memory/foo/MEMORY.md", c.host)).toBe(true);
-      expect(c.isMemoryPath(path.join(c.mem, "not-yet-created.md"), c.host)).toBe(true); // 目标还不存在
+      expect(c.isMemoryPath(path.join(c.mem, "not-yet-created.md"), c.host)).toBe(true); // 目标尚不存在
       expect(c.isMemoryPath(path.join(c.work, "a.txt"), c.host)).toBe(false);
       expect(c.isMemoryPath(path.join(c.home, ".claude/settings.json"), c.host)).toBe(false);
       expect(c.isMemoryPath("", c.host)).toBe(false);
     } finally { c.cleanup(); }
   });
 
-  test("读记忆目录的调用一律改成必须由人回答的询问，且不受 allow 结果影响", async () => {
+  test("读取记忆目录的调用一律改为必须由用户回答的询问，不受 allow 结果影响", async () => {
     const c = await setup();
     try {
       const allow = { behavior: "allow", updatedInput: {} };
@@ -150,7 +150,7 @@ describe("memory-guard", () => {
       expect(r).toMatchObject({ behavior: "ask", personOnly: true, hooksMayAllow: false, suppressAlwaysAllowRule: true });
       expect(r.decisionReason).toMatchObject({ type: "safetyCheck", circuitBreaker: "memoryRead", classifierApprovable: false });
       expect(r.message).toContain("memory directory");
-      // passthrough、ask 同样被接管
+      // passthrough、ask 同样改为该询问
       expect(c.memoryReadGuard(readTool, { file_path: path.join(c.mem, "MEMORY.md") }, { behavior: "passthrough" }, {}, c.hostFns)?.behavior).toBe("ask");
       expect(c.memoryReadGuard(readTool, { file_path: path.join(c.mem, "MEMORY.md") }, { behavior: "ask" }, {}, c.hostFns)?.behavior).toBe("ask");
     } finally { c.cleanup(); }
@@ -160,17 +160,17 @@ describe("memory-guard", () => {
     const c = await setup();
     try {
       const memFile = { file_path: path.join(c.mem, "MEMORY.md") };
-      expect(c.memoryReadGuard(readTool, memFile, { behavior: "deny" }, {}, c.hostFns)).toBeUndefined(); // 已经是 deny，保留
+      expect(c.memoryReadGuard(readTool, memFile, { behavior: "deny" }, {}, c.hostFns)).toBeUndefined(); // 已是 deny，保持不变
       expect(c.memoryReadGuard(readTool, { file_path: path.join(c.work, "a.txt") }, { behavior: "allow" }, {}, c.hostFns)).toBeUndefined();
       expect(c.memoryReadGuard(writeTool, memFile, { behavior: "allow" }, {}, c.hostFns)).toBeUndefined();
       expect(c.memoryReadGuard({ name: "TodoWrite" }, {}, { behavior: "allow" }, {}, c.hostFns)).toBeUndefined();
       const noMem = { cwd: () => c.work, autoMemDir: () => { throw new Error("no memory dir"); } };
       expect(c.memoryReadGuard(readTool, { file_path: path.join(c.work, "a.txt") }, { behavior: "allow" }, {}, noMem)).toBeUndefined();
-      expect(c.memoryReadGuard(readTool, { file_path: 123 }, { behavior: "allow" }, {}, c.hostFns)).toBeUndefined(); // 坏输入不抛错
+      expect(c.memoryReadGuard(readTool, { file_path: 123 }, { behavior: "allow" }, {}, c.hostFns)).toBeUndefined(); // 无效输入不抛错
     } finally { c.cleanup(); }
   });
 
-  test("Bash：命令里有指进记忆目录的路径就询问（绝对、~、$HOME、相对、引号、cd 之后、符号链接、VAR=路径）", async () => {
+  test("Bash：命令中含有指向记忆目录的路径时询问（绝对、~、$HOME、相对、引号、cd 之后、符号链接、VAR=路径）", async () => {
     const c = await setup();
     try {
       const ask = (command) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, c.hostFns)?.behavior;
@@ -179,7 +179,7 @@ describe("memory-guard", () => {
       expect(ask(`cat "${file}"`)).toBe("ask");
       expect(ask(`grep -r x '${c.mem}'`)).toBe("ask");
       expect(ask(`head -5 ${file} | wc -l`)).toBe("ask"); // 管道
-      expect(ask(`cat ${path.relative(c.work, file)}`)).toBe("ask"); // 相对路径指进去
+      expect(ask(`cat ${path.relative(c.work, file)}`)).toBe("ask"); // 相对路径指向记忆目录
       expect(ask(`cd ${c.mem} && cat ./MEMORY.md`)).toBe("ask"); // cd 之后
       expect(ask("head ~/.claude/agent-memory/foo/MEMORY.md")).toBe("ask");
       expect(ask("cat $HOME/.claude/agent-memory/foo/MEMORY.md")).toBe("ask");
@@ -189,7 +189,7 @@ describe("memory-guard", () => {
     } finally { c.cleanup(); }
   });
 
-  test("Bash：只是提到名字的命令不拦（项目自己的 MEMORY.md、文件名含 agent-memory、搜索字样）", async () => {
+  test("Bash：只提到名字的命令不拦截（项目自身的 MEMORY.md、文件名含 agent-memory、搜索字样）", async () => {
     const c = await setup();
     try {
       const ask = (command) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, c.hostFns)?.behavior;
@@ -225,7 +225,7 @@ describe("memory-guard", () => {
     } finally { c.cleanup(); }
   });
 
-  test("Grep / Glob 的上级搜索范围需要确认；Read 普通文件和不存在的记忆目录不误拦", async () => {
+  test("Grep / Glob 的上级搜索范围需要确认；Read 普通文件和不存在的记忆目录不误判", async () => {
     const c = await setup();
     try {
       const parent = path.dirname(c.mem);
@@ -241,7 +241,7 @@ describe("memory-guard", () => {
     } finally { c.cleanup(); }
   });
 
-  test("已知的盲区（文档里写明）：路径靠变量和通配符拼出来，Bash 这条识别不到", async () => {
+  test("已知的盲区（见 docs/dev.md）：由变量和通配符拼接的路径，Bash 命令检查无法识别", async () => {
     const c = await setup();
     try {
       const ask = (command) => c.memoryReadGuard(bashTool, { command }, { behavior: "allow" }, {}, c.hostFns)?.behavior;
@@ -275,7 +275,7 @@ describe("safeguards-redact", () => {
   });
   const load = async () => (await import("../../src/runtime/safeguards-redact.js")).redactClassifierContext;
 
-  test("能识别用户、机器、项目的内容全部抹掉", async () => {
+  test("可识别用户、机器、项目的内容全部清除", async () => {
     const out = JSON.stringify((await load())(REAL()));
     for (const secret of ["alice_dev", "acme-corp", "private-repo", "other-repo", "secret-person", "feature/secret-branch", "main", "internal.example", "build.corp.example", "bank.example", "Inbox", "secret artifact", "secret.txt", "/h/.claude", "may push to", "Bash(rm:*)", "Bash(git push", "/private/tmp"]) {
       expect(out).not.toContain(secret === "main" ? '"main"' : secret);
@@ -283,7 +283,7 @@ describe("safeguards-redact", () => {
     expect(out).not.toContain('"/h"'); // home_dir
   });
 
-  test("分类器要用的内容保留：权限模式、平台、当前目录、主目录、标志位、工作区是否干净", async () => {
+  test("分类器所需的内容保留：权限模式、平台、当前目录、主目录、标志位、工作区是否干净", async () => {
     const out = (await load())(REAL());
     expect(out).toMatchObject({ v: 1, permission_mode: "auto", platform: "macos", live_cwd: "/h/work", classify_all_shell: true, restricted: false, artifact_consent_holdback: false });
     expect(out.trusted_directories.primary).toEqual({ path: "/h/work", resolved: ["/h/work"] });
@@ -292,7 +292,7 @@ describe("safeguards-redact", () => {
     expect(out.git_state.visibility.origin.visibility).toBe("private");
   });
 
-  test("字段形状不变（必需的键仍在，类型不变），服务端校验照常通过", async () => {
+  test("字段形状不变：必需的键仍在，类型不变", async () => {
     const out = (await load())(REAL());
     expect(out.user_identity).toBeNull();
     expect(out.home_dir).toBeUndefined(); // 可选键
@@ -322,7 +322,7 @@ describe("safeguards-redact", () => {
   });
 
   // 本地分类器：插在待判断命令之前的两种元信息行
-  test("repoVisibility：仓库名与分支只在命令里原样出现时保留，可见性照发", async () => {
+  test("repoVisibility：仓库名与分支只在命令中原样出现时保留，可见性保留", async () => {
     const { redactRepoVisibility } = await import("../../src/runtime/safeguards-redact.js");
     const entry = { remote: "acme-corp/private-repo", branch: "feature/secret", visibility: "private" };
     expect(redactRepoVisibility(entry, "git push origin HEAD")).toEqual({ remote: "redacted", visibility: "private" });
@@ -361,7 +361,7 @@ describe("safeguards-redact", () => {
 
 describe("upload-identity", () => {
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
-  // 模块状态是进程级的，每个用例用自己的本地会话 ID，互不干扰
+  // 模块状态是进程级的，每个用例使用各自的本地会话 ID，互不干扰
   let n = 0;
   const local = () => `local-session-${++n}`;
 
@@ -373,7 +373,7 @@ describe("upload-identity", () => {
     expect(Object.keys(id).sort()).toEqual(["deviceId", "promptId", "sessionId"]);
   });
 
-  test("每次调用都不同；设备 ID 不是两个 UUID 拼接（拼接的话第 13 位恒为 4）", () => {
+  test("每次调用都不同；设备 ID 不是两个 UUID 拼接（若为拼接，第 13 位恒为 4）", () => {
     const ids = Array.from({ length: 200 }, () => newUploadIdentity());
     for (const key of ["sessionId", "deviceId", "promptId"]) expect(new Set(ids.map((i) => i[key])).size).toBe(200);
     expect(new Set(ids.map((i) => i.deviceId[12])).size).toBeGreaterThan(1);
@@ -387,14 +387,14 @@ describe("upload-identity", () => {
     expect(k).toBe(2);
   });
 
-  test("采用之前：没有候选就没有身份，提示 ID 原样", () => {
+  test("采用之前：没有候选身份时不返回身份，提示 ID 不变", () => {
     const s = local();
     expect(uploadIdentityFor(undefined, s)?.sessionId).toBeUndefined();
     expect(promptIdFor(undefined, "p1", s)).toBe("p1");
     expect(promptIdFor(undefined, undefined, s)).toBeUndefined();
   });
 
-  test("候选身份优先；重试请求的提示 ID 记下它顶替了谁", () => {
+  test("候选身份优先；重试请求记录它替换的提示 ID", () => {
     const s = local(), c = newUploadIdentity();
     expect(uploadIdentityFor(c, s)).toBe(c);
     expect(promptIdFor(c, "p1", s)).toBe(c.promptId);
@@ -409,19 +409,19 @@ describe("upload-identity", () => {
     expect(uploadIdentityFor(undefined, s)).toEqual({ sessionId: b.sessionId, deviceId: b.deviceId });
   });
 
-  test("会话 ID 记在本地会话名下：别的本地会话看不到；设备 ID 是装机级的，进程里通用", () => {
+  test("会话 ID 记在本地会话名下，对其他本地会话不可见；设备 ID 是安装级的，在进程内通用", () => {
     const s1 = local(), s2 = local(), a = newUploadIdentity();
     adoptUploadIdentity(a, s1);
     const other = uploadIdentityFor(undefined, s2);
-    expect(other?.sessionId).toBeUndefined(); // 换了本地会话（/clear、/resume）：用那个会话自己的 ID
+    expect(other?.sessionId).toBeUndefined(); // 切换本地会话（/clear、/resume）后使用该会话自身的 ID
     expect(other?.deviceId).toBe(a.deviceId); // 设备 ID 不回到真实值
   });
 
-  test("提示 ID：被顶替的那一问沿用顶替后的，下一问和未被顶替的保持自然值", () => {
+  test("提示 ID：被替换的那一问沿用替换后的，下一问和未被替换的保持自然值", () => {
     const s = local(), a = newUploadIdentity(), b = newUploadIdentity();
     promptIdFor(a, "ask-1", s);
     adoptUploadIdentity(a, s);
-    expect(promptIdFor(undefined, "ask-1", s)).toBe(a.promptId); // 同一问后面的工具轮
+    expect(promptIdFor(undefined, "ask-1", s)).toBe(a.promptId); // 同一问后续的工具轮
     expect(promptIdFor(undefined, "ask-2", s)).toBe("ask-2"); // 下一问
     promptIdFor(b, "ask-2", s);
     adoptUploadIdentity(b, s);
@@ -436,13 +436,13 @@ describe("upload-identity", () => {
     expect(uploadIdentityFor(undefined, local())?.sessionId).toBeUndefined();
   });
 
-  test("问数与轮数：会话 ID 是本地 ID 时原样，重试的候选身份和采用后的会话 ID 下都不带", () => {
+  test("问数与轮数：会话 ID 是本地 ID 时原样返回，重试的候选身份和采用后的会话 ID 下都不带", () => {
     const s = local(), pos = { promptIndex: 2, turnIndex: 2 };
     expect(turnPositionFor(undefined, pos, s)).toBe(pos);
     expect(turnPositionFor(newUploadIdentity(), pos, s)).toBeUndefined();
     adoptUploadIdentity(newUploadIdentity(), s);
     expect(turnPositionFor(undefined, pos, s)).toBeUndefined();
-    // 换了本地会话：设备 ID 仍是采用的，会话 ID 是那个会话自己的，序号与它一致，照常带
+    // 切换本地会话后：设备 ID 仍是已采用的，会话 ID 是该会话自身的，序号与之一致，因此带序号
     expect(turnPositionFor(undefined, pos, local())).toBe(pos);
     expect(turnPositionFor(undefined, undefined, local())).toBeUndefined();
   });
@@ -454,8 +454,8 @@ describe("upload-identity", () => {
     expect([s, a.sessionId, uploadIdentityFor(undefined, s)?.sessionId]).not.toContain(mcpClientSessionId);
   });
 
-  // 这条路要 claude.ai 登录、连接器和官方代理地址（不能改指本机），冒烟测试走不到；这里检查两个系统的生成源码都接上了
-  test("两个系统的生成源码里，claude.ai 连接器代理的客户端会话头都用 mcpClientSessionId", () => {
+  // 该路径需要 claude.ai 登录、连接器和官方代理地址（不能指向本机），冒烟测试无法覆盖；此处检查各系统的生成源码都已接入
+  test("各系统的生成源码：claude.ai 连接器代理的客户端会话头都使用 mcpClientSessionId", () => {
     const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(dir, e.name)) : e.name.endsWith(".js") ? [path.join(dir, e.name)] : []));
     for (const system of Object.keys(SYSTEMS)) {
       const values = walk(path.join(ROOT, "src", system)).flatMap((f) => [...fs.readFileSync(f, "utf8").matchAll(/"X-Mcp-Client-Session-Id": ([^ ,}]+)/g)].map((m) => m[1]));
@@ -464,7 +464,7 @@ describe("upload-identity", () => {
     }
   });
 
-  test("完整送达的判定：有停止原因的助手消息才算，拒答、API 错误、没结束的都不算", () => {
+  test("完整送达的判定：有停止原因的助手消息视为送达，拒答、API 错误、未结束的消息不视为送达", () => {
     const msg = (extra, stop) => ({ type: "assistant", ...extra, message: { stop_reason: stop } });
     expect(isDeliveredResponse(msg({}, "end_turn"))).toBe(true);
     expect(isDeliveredResponse(msg({}, "tool_use"))).toBe(true);

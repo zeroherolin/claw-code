@@ -153,7 +153,7 @@ function b(c) {
 }
 async function xki(c, d, t) {
   if (true) process.stdout.write(`claw-code does not install itself. Run \`npm run install-cli\` in the claw-code repository instead.
-`), process.exit(0); // claw-code：install 会把官方原生版本装进 ~/.local/bin/claude
+`), process.exit(0); // claw-code：install 会把官方原生版本安装到 ~/.local/bin/claude
   if (i.DISABLE_UPDATES) process.stdout.write(`Updates are disabled by your administrator. Contact your IT team to get the latest version.
 `), process.exit(0);
   let { awaitPolicyLimitsColdStart: f } = await import("../cli/admit-prefetched-policy-limits.js");

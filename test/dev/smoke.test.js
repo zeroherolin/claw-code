@@ -19,9 +19,9 @@ afterAll(() => {
 });
 
 describe("开发模式 bun src/main.js", () => {
-  // 请求的 metadata 由打过补丁的函数组装（拒答重试时换成临时身份）；补丁不能改变原版对这个变量的处理：
-  // 不是 JSON 对象时只记一条错误日志，请求照常发出
-  test("CLAUDE_CODE_EXTRA_METADATA 不是 JSON 对象时请求照常完成", async () => {
+  // 请求的 metadata 由补丁改动过的函数组装（拒答重试时替换为临时身份）；补丁不应改变原版对该变量的处理：
+  // 不是 JSON 对象时只记录一条错误日志，请求仍然发出
+  test("CLAUDE_CODE_EXTRA_METADATA 不是 JSON 对象时请求仍然完成", async () => {
     const env = cleanEnv(home.home, api.url, { CLAUDE_CODE_EXTRA_METADATA: "not json" });
     const r = await runCli(DEV, ["-p", "say hi"], { cwd: home.work, env });
     expect(r.output.trim()).toBe("PONG");
@@ -31,8 +31,8 @@ describe("开发模式 bun src/main.js", () => {
 
 describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
   // 服务端以 frontier_llm 拒答：重试和下一条消息的历史里，保留被拦截那一轮的提问、已输出的文字和工具调用，
-  // 但不再追加 "stopped by a safety classifier" 之类的提示
-  test("拒答后保留已做的部分，但历史里没有拒答提示", async () => {
+  // 但不再追加 "stopped by a safety classifier" 等提示
+  test("拒答后保留已完成的部分，历史中没有拒答提示", async () => {
     const h = makeHome();
     const fake = startScriptedApi(2);
     try {
@@ -71,7 +71,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
   };
 
-  test("拒答后最多重试 10 轮，显示轮数，始终用原模型", async () => {
+  test("拒答后最多重试 10 轮，显示轮数，始终使用原模型", async () => {
     const { r, fake, notices, result } = await retryRun(3);
     expect(r.code).toBe(0);
     expect(fake.requests.length).toBe(4);
@@ -80,8 +80,8 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(result.result).toBe("FINAL_ANSWER");
   });
 
-  // 每次拒答重试用一份临时上传身份。假 API 要像一方端点（否则请求里没有 prompt id 等头、也不启用消息线程），
-  // 下面的断言才不会因为字段不存在而空过
+  // 每次拒答重试使用一份临时上传身份。假 API 须按一方端点配置：否则请求中没有 prompt id 等头，也不启用消息线程，
+  // 后续断言没有检查对象
   const FIRST_PARTY = { _CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL: "1", CLAUDE_CODE_GATEWAY_HINT_HEADERS: "1", CLAUDE_CODE_TETHER_LIVE: "1" };
   const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
   const wire = (q) => {
@@ -92,21 +92,21 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       promptHeader: q.headers["x-claude-code-prompt-id"],
       billingPrompt: JSON.stringify(q.body.system).match(/cc_prompt_id=([0-9a-f-]{36})/)?.[1], // 系统提示词首段的账单头
       clientRequest: q.headers["x-client-request-id"],
-      prevRequest: JSON.stringify(q.body.system).match(/cc_prev_req=(req_[\w-]+)/)?.[1], // 账单头里的上一个请求 ID，没有就是 undefined
+      prevRequest: JSON.stringify(q.body.system).match(/cc_prev_req=(req_[\w-]+)/)?.[1], // 账单头里的上一个请求 ID，不存在时为 undefined
       prevMessage: q.body.diagnostics?.previous_message_id, // 缓存诊断里的上一条消息 ID，null 表示不指向任何消息
       position: JSON.stringify(q.body.system).match(/cc_prompt_index=\d+; cc_turn_index=\d+/)?.[0], // 账单头里按本地会话计数的问数与轮数
       thread: q.body.thread?.type,
     };
   };
 
-  test("拒答重试使用临时身份：会话、设备、提示 ID 每轮都换，线程新建，不指向被拦截的请求，本地标识不外泄", async () => {
+  test("拒答重试使用临时身份：会话、设备、提示 ID 每轮都更换，新建线程，不指向被拦截的请求，本地标识不外泄", async () => {
     const { r, fake, result } = await retryRun(3, FIRST_PARTY);
     expect(r.code).toBe(0);
     expect(fake.requests[0].headers["anthropic-beta"]).toContain("message-threads");
     const w = fake.requests.map(wire);
     expect(w.length).toBe(4);
     const [first, ...retries] = w;
-    expect(first.session).toBe(result.session_id); // 第一次请求用本地会话 ID
+    expect(first.session).toBe(result.session_id); // 第一次请求使用本地会话 ID
     for (const key of ["session", "device", "promptHeader"]) {
       const values = retries.map((x) => x[key]);
       expect(new Set(values).size).toBe(3);
@@ -117,17 +117,17 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       expect(x.sessionHeader).toBe(x.session); // 请求头与 metadata 一致
       expect(x.device).toMatch(/^[0-9a-f]{64}$/);
       expect(x.promptHeader).toMatch(UUID_V4);
-      expect(x.billingPrompt).toBe(x.promptHeader); // 账单头里的 cc_prompt_id 也跟着换
+      expect(x.billingPrompt).toBe(x.promptHeader); // 账单头里的 cc_prompt_id 同步更换
       expect(x.thread).toBe("create"); // 不续接旧线程
     }
-    expect(new Set(w.map((x) => x.clientRequest)).size).toBe(4); // x-client-request-id 本来就是每个请求各一个
-    // 重试不带上一个（被拦截的）请求和消息的 ID，服务端无法靠它们把重试连到上一轮
+    expect(new Set(w.map((x) => x.clientRequest)).size).toBe(4); // x-client-request-id 在原版中即为每个请求各自生成
+    // 重试不带上一个（被拦截的）请求和消息的 ID，服务端无法据此把重试关联到上一轮
     for (const x of w) {
       expect(x.prevRequest).toBeUndefined();
       expect(x.prevMessage).toBeNull();
     }
     for (const q of fake.requests) expect(JSON.stringify(q.body.diagnostics ?? {})).not.toMatch(/"m_\d/);
-    // 问数与轮数按本地会话计数：本地会话 ID 下照常带，换了会话 ID 的重试不带
+    // 问数与轮数按本地会话计数：本地会话 ID 下带，更换会话 ID 后的重试不带
     expect(first.position).toBe("cc_prompt_index=0; cc_turn_index=1");
     for (const x of retries) expect(x.position).toBeUndefined();
     expect(new Set(w.map((x) => x.account)).size).toBe(1); // 账号不变
@@ -138,7 +138,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
   });
 
-  test("拒答重试成功后，后面的工具轮沿用成功那次的标识，不回到本地标识", async () => {
+  test("拒答重试成功后，后续的工具轮沿用该次重试的标识，不回到本地标识", async () => {
     const { r, fake, result } = await retryRun(["refuse", "tool"], FIRST_PARTY);
     expect(r.code).toBe(0);
     expect(fake.requests.length).toBe(3);
@@ -148,7 +148,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       expect(retry[key]).not.toBe(first[key]);
       expect(afterTool[key]).toBe(retry[key]);
     }
-    // 重试本身不指向被拦截的请求；成功后的工具轮指向重试那一次，续接的也是重试那次建的线程（同一身份下的请求，服务端认识）
+    // 重试本身不指向被拦截的请求；成功后的工具轮指向该次重试，续接的也是该次重试新建的线程（属于同一身份下的请求）
     expect(retry.prevRequest).toBeUndefined();
     expect(retry.prevMessage).toBeNull();
     expect(afterTool.prevRequest).toBe("req_2");
@@ -159,7 +159,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(afterTool.position).toBeUndefined(); // 采用的会话 ID 下同样不带
   });
 
-  // 采用的标识只放在进程内存里：不写盘，不改变本地会话。重启进程（--continue）从本地标识开始
+  // 采用的标识只保存在进程内存中：不写盘，不改变本地会话。重启进程（--continue）从本地标识开始
   test("拒答重试采用的标识只在本进程内有效：--continue 新进程从本地标识开始", async () => {
     const h = makeHome();
     const fake = startScriptedApi(["refuse"]);
@@ -170,7 +170,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       const n = fake.requests.length;
       expect((await runCli([DIST], ["-p", "--continue", "second message", ...flags], { cwd: h.work, env })).code).toBe(0);
       const w = fake.requests.map(wire);
-      expect(w[1].session).not.toBe(w[0].session); // 进程 1：重试换了
+      expect(w[1].session).not.toBe(w[0].session); // 进程 1：重试更换了会话 ID
       expect(w[n].session).toBe(w[0].session); // 进程 2：回到本地标识
       expect(w[n].device).toBe(w[0].device);
     } finally {
@@ -190,8 +190,8 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
   });
 
   // 默认配置（假 API 在 127.0.0.1，不是一方端点）与经中转站使用的形态相同：
-  // 一方端点才有的头和字段本来就不发送，重试仍要更换 metadata 与默认会话请求头里的标识
-  test("中转站形态（默认）下拒答重试同样更换会话与设备 ID，且不发一方端点才有的字段", async () => {
+  // 一方端点才有的头和字段在原版中即不发送，重试仍须更换 metadata 与默认会话请求头里的标识
+  test("中转站形态（默认）下拒答重试同样更换会话与设备 ID，且不发送一方端点才有的字段", async () => {
     const { r, fake, result } = await retryRun(2);
     expect(r.code).toBe(0);
     const w = fake.requests.map(wire);
@@ -205,25 +205,25 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     for (const q of fake.requests) expect(q.body.diagnostics).toBeUndefined();
   });
 
-  test("第 10 次重试成功就算成功", async () => {
+  test("第 10 次重试成功时，本轮正常完成", async () => {
     const { r, fake, notices } = await retryRun(10);
     expect(r.code).toBe(0);
     expect(fake.requests.length).toBe(11);
     expect(notices.at(-1)).toContain("(10/10)");
   });
 
-  test("重试 10 轮后仍被拦截：正常中断结束，不换模型、不再请求", async () => {
+  test("重试 10 轮后仍被拦截：本轮以拒答错误结束，不换模型，不再发请求", async () => {
     const { fake, notices, result } = await retryRun(99);
     expect(fake.requests.length).toBe(11); // 1 次原请求 + 10 次重试
-    expect(new Set(fake.requests.map((q) => q.body.model)).size).toBe(1); // 一直是原模型
+    expect(new Set(fake.requests.map((q) => q.body.model)).size).toBe(1); // 始终是原模型
     expect(notices.length).toBe(10);
     expect(result.is_error).toBe(true);
     expect(result.terminal_reason).toBe("api_error");
     expect(result.stop_reason).toBe("refusal");
   });
 
-  // 重试预算按“连续被拦截的次数”计算：中间有过成功的响应（如正常停在 tool_use 并执行了工具）就清零
-  test("重试预算只计连续的拒答：中间有成功的步骤就清零", async () => {
+  // 重试预算按“连续被拦截的次数”计算：期间出现成功的响应（如正常停在 tool_use 并执行了工具）时清零
+  test("重试预算只计连续的拒答：出现成功的步骤后清零", async () => {
     const script = [];
     for (let i = 0; i < 12; i++) script.push("refuse", "tool"); // 12 次拒答，每次之后都有一步成功的工具调用
     const { r, fake, notices, result } = await retryRun(script);
@@ -234,7 +234,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(fake.requests.length).toBe(25); // 12 × (拒答 + 工具步) + 最后一次正常回复
   });
 
-  test("连续 10 次拒答后又夹着成功步骤：先用尽，仍按连续计数", async () => {
+  test("两段各 10 次的连续拒答之间有成功步骤：每段各自从 1 计数，都在第 10 次重试成功", async () => {
     const script = [...Array(10).fill("refuse"), "tool", ...Array(10).fill("refuse")];
     const { r, notices, result } = await retryRun(script);
     expect(r.code).toBe(0);
@@ -244,8 +244,8 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(result.terminal_reason).toBe("completed");
   });
 
-  // 终端界面：拒答用尽后不弹“换模型/改提示词”的底部选择框，输入框正常可用
-  test("交互界面里拒答用尽后没有换模型的底部选择框", async () => {
+  // 终端界面：重试用尽后不显示“换模型/改提示词”的底部选择框，输入框可用
+  test("交互界面：重试用尽后不显示换模型的底部选择框", async () => {
     const h = makeHome();
     const fake = startScriptedApi(99);
     try {
@@ -258,15 +258,15 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       expect(new Set(fake.requests.map((q) => q.body.model)).size).toBe(1);
       expect(text).toContain("(10/10)");
       expect(text).not.toMatch(/Model switch|Switch to|Stay on|keep going whenever this happens/);
-      expect(text).toContain("❯"); // 输入框还在
+      expect(text).toContain("❯"); // 输入框仍然显示
     } finally {
       fake.stop();
       h.remove();
     }
   }, 120_000);
 
-  // 交互界面是日常使用的形态。按请求顺序取出每个请求的会话 / 设备 ID，相邻相同的合成一段（run）。
-  // 一方端点形态下才有提示 ID 头，这里用它；标题等辅助请求不带工具，用 main 区分
+  // 交互界面下标识的采用与沿用。按请求顺序取出每个请求的会话 ID 与设备 ID，相邻且相同的合并为一段（run）。
+  // 一方端点形态下才有提示 ID 头，因此按一方端点配置；标题等辅助请求不带工具，以 main 区分
   const PTY_ENV = { CLAUDE_CODE_SKIP_ONBOARDING: "1", _CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL: "1", CLAUDE_CODE_GATEWAY_HINT_HEADERS: "1" };
   const ptyIdentityRuns = async (plan, keys) => {
     const h = makeHome();
@@ -283,14 +283,14 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
         if (runs.at(-1)?.session === x.session) runs.at(-1).items.push(x);
         else runs.push({ session: x.session, device: x.device, items: [x] });
       }
-      return { local: sessions[0].replace(".jsonl", ""), requests, runs }; // 会话文件名就是本地会话 ID
+      return { local: sessions[0].replace(".jsonl", ""), requests, runs }; // 会话文件名即本地会话 ID
     } finally {
       fake.stop();
       h.remove();
     }
   };
   const SECOND_THIRD = [[0.5, "first message"], [1.0, "\r"], [9, "second message"], [10, "\r"], [18, "third message"], [19, "\r"]];
-  // 账单头的问数与轮数按本地会话计数，只在本地会话 ID 下出现：换过会话 ID 的请求都不带，否则新 ID 会接着原会话往下数
+  // 账单头的问数与轮数按本地会话计数，只在本地会话 ID 下出现：更换会话 ID 后的请求都不带，否则新 ID 会延续原会话的序号
   const expectPositionOnlyUnderLocal = (local, requests) => {
     for (const x of requests) {
       if (x.session !== local) expect(x.position).toBeUndefined();
@@ -298,13 +298,13 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
   };
 
-  test("交互界面里拒答重试成功后，后续所有请求（含标题等辅助请求）沿用成功那次的会话与设备 ID，不再回到本地 ID", async () => {
+  test("交互界面：拒答重试成功后，后续所有请求（含标题等辅助请求）沿用该次重试的会话与设备 ID，不回到本地 ID", async () => {
     const { local, requests, runs } = await ptyIdentityRuns((n) => (n === 1 ? "refuse" : "ok"), SECOND_THIRD);
-    expect(runs.length).toBe(2); // 本地 → 重试成功的那一份，之后不再变
+    expect(runs.length).toBe(2); // 本地标识 → 重试成功的身份，此后不再变化
     expect(runs[0].session).toBe(local);
     expect(runs[1].session).not.toBe(local);
     expect(runs[1].device).not.toBe(runs[0].device);
-    expect(runs[1].items[0].main && runs[1].items[0].asks.join()).toBe("first"); // 第一个换了标识的是第一问的重试
+    expect(runs[1].items[0].main && runs[1].items[0].asks.join()).toBe("first"); // 第一个更换标识的请求是第一问的重试
     expect(runs[1].items.some((x) => !x.main)).toBe(true); // 之后的标题等辅助请求
     expect(runs[1].items.some((x) => x.main && x.asks.includes("third"))).toBe(true); // 第三问的主请求
     for (const x of requests) expect(x.sessionHeader).toBe(x.session); // 请求头与 metadata 一致
@@ -312,7 +312,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expectPositionOnlyUnderLocal(local, requests);
   }, 180_000);
 
-  test("交互界面里第二问被拒：重试与之后的请求不带接着原会话往下数的问数与轮数", async () => {
+  test("交互界面：第二问被拒时，重试与之后的请求不带延续原会话的问数与轮数", async () => {
     const { local, requests, runs } = await ptyIdentityRuns((n) => (n === 2 ? "refuse" : "ok"), SECOND_THIRD);
     expect(runs.length).toBe(2);
     const main = (asks) => requests.filter((x) => x.main && x.asks.at(-1) === asks);
@@ -321,36 +321,36 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(refused.session).toBe(local);
     expect(refused.position).toBe("cc_prompt_index=2; cc_turn_index=2");
     expect(retry.session).not.toBe(local);
-    expect(retry.position).toBeUndefined(); // 原版会是 2、2：新会话 ID 接着原会话的序号
+    expect(retry.position).toBeUndefined(); // 原版为 2、2：新会话 ID 延续原会话的序号
     expect(main("third").length).toBeGreaterThan(0);
     expectPositionOnlyUnderLocal(local, requests);
   }, 180_000);
 
-  test("交互界面里拒答重试：被拒的候选标识不采用，之后的重试成功再换成新的，始终不回头", async () => {
-    // 第一问：本地被拒 → 候选 1 被拒 → 候选 2 通；第二问：用候选 2 发出被拒 → 候选 3 通；第三问用候选 3
+  test("交互界面：被拒的候选标识不采用，之后的重试成功时换成新的标识，不回到出现过的标识", async () => {
+    // 第一问：本地标识被拒 → 候选 1 被拒 → 候选 2 成功；第二问：以候选 2 发出后被拒 → 候选 3 成功；第三问使用候选 3
     const { local, requests, runs } = await ptyIdentityRuns((n) => (n === 1 || n === 2 || n === 4 ? "refuse" : "ok"), [[0.5, "first message"], [1.0, "\r"], [12, "second message"], [13, "\r"], [24, "third message"], [25, "\r"]]);
     expect(runs.length).toBe(4);
     expect(new Set(runs.map((r) => r.session)).size).toBe(4); // 没有任何一段回到之前出现过的标识
     expect(runs[0].session).toBe(local);
-    expect(runs[1].items.length).toBe(1); // 候选 1 被拒，只用过那一次，没被采用
-    expect(runs[2].items.some((x) => x.main && x.asks.includes("second"))).toBe(true); // 第二问用候选 2 发出（被拒）
-    expect(runs[3].items.some((x) => x.main && x.asks.includes("third"))).toBe(true); // 第三问用候选 3
+    expect(runs[1].items.length).toBe(1); // 候选 1 被拒，只使用一次，未被采用
+    expect(runs[2].items.some((x) => x.main && x.asks.includes("second"))).toBe(true); // 第二问以候选 2 发出（被拒）
+    expect(runs[3].items.some((x) => x.main && x.asks.includes("third"))).toBe(true); // 第三问使用候选 3
     for (const x of requests) expect(x.sessionHeader).toBe(x.session);
     expect(new Set(requests.map((x) => x.session + x.device)).size).toBe(4);
     expectPositionOnlyUnderLocal(local, requests);
   }, 200_000);
 
-  test("交互界面里重试 10 轮用尽也没通：不采用任何候选标识，下一问从本地标识开始", async () => {
+  test("交互界面：重试 10 轮用尽仍被拒时，不采用任何候选标识，下一问从本地标识开始", async () => {
     const { local, requests, runs } = await ptyIdentityRuns((n) => (n <= 11 ? "refuse" : "ok"), [[0.5, "first message"], [1.0, "\r"], [14, "second message"], [15, "\r"]]);
     expect(runs.length).toBe(12); // 本地 + 10 个被拒的候选 + 回到本地
     expect(runs[0].session).toBe(local);
     expect(runs.at(-1).session).toBe(local);
     expect(runs.slice(1, -1).some((r) => r.session === local)).toBe(false);
     expect(runs.at(-1).items.some((x) => x.main && x.asks.includes("second"))).toBe(true);
-    expectPositionOnlyUnderLocal(local, requests); // 回到本地会话 ID 后序号也回来，与本地会话一致
+    expectPositionOnlyUnderLocal(local, requests); // 回到本地会话 ID 后重新带序号，与本地会话一致
   }, 200_000);
 
-  // 读记忆目录里的文件一律先问用户：不论权限模式、allow 规则还是 hook。-p 模式没人可答，询问记为 permission_denial，内容不进请求
+  // 读取记忆目录里的文件一律先询问用户，不论权限模式、allow 规则还是 hook。-p 模式下无人回答，询问记为 permission_denial，内容不进入请求
   describe("读取记忆文件需要确认", () => {
     const VARIANTS = {
       "默认模式": { settings: {}, args: [] },
@@ -383,7 +383,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     const bashCat = ({ mem }) => ["Bash", { command: `cat ${path.join(mem, "deploy.md")}`, description: "show" }];
 
     for (const [name, variant] of Object.entries(VARIANTS)) {
-      test(`${name}：Read / Bash 读记忆文件被拦成询问，内容不进请求`, async () => {
+      test(`${name}：Read / Bash 读取记忆文件时改为询问，内容不进入请求`, async () => {
         for (const toolOf of [memRead, bashCat]) {
           const r = await run(variant, toolOf);
           expect(r.leaked).toBe(false);
@@ -392,7 +392,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       }, 60_000);
     }
 
-    test("递归搜索记忆上级目录：allow 规则和 bypass 模式都先询问，内容不进请求", async () => {
+    test("递归搜索记忆目录的上级目录：allow 规则和 bypass 模式下都先询问，内容不进入请求", async () => {
       for (const variant of [VARIANTS["allow 规则"], VARIANTS.bypassPermissions]) {
         for (const toolOf of [
           ({ mem }) => ["Bash", { command: `grep -R SENTINEL ${path.dirname(path.dirname(mem))}` }],
@@ -412,12 +412,12 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       }
     }, 60_000);
 
-    test("写记忆文件（保存记忆）不被拦", async () => {
+    test("写记忆文件（保存记忆）不被拦截", async () => {
       const r = await run(VARIANTS.bypassPermissions, ({ mem }) => ["Write", { file_path: path.join(mem, "new.md"), content: "hello\n" }]);
       expect(r.denials.length).toBe(0);
     }, 60_000);
 
-    // 交互界面：出现 "Do you want to proceed?"，选 No 内容不进请求，选 Yes 才进
+    // 交互界面：出现 "Do you want to proceed?"，选 No 时内容不进入请求，选 Yes 时进入
     test("交互界面：先询问；选 No 不发送内容，选 Yes 才发送", async () => {
       const ask = async (choice) => {
         const h = makeHome();
@@ -456,16 +456,16 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       const r = await runCli([DIST], ["-p", "hi", "--permission-mode", "auto", "--add-dir", "/tmp/claw-addir-marker"], { cwd: h.work, env: cleanEnv(h.home, fake.url, { USER: "alice_dev" }) });
       expect(r.code).toBe(0);
       const sg = fake.requests.map((q) => q.body.safeguards?.[0]).find(Boolean);
-      expect(sg?.type).toBe("dangerous_tool_use"); // 字段仍然发送，服务端分类器照常工作
+      expect(sg?.type).toBe("dangerous_tool_use"); // 字段仍然发送
       const cc = sg.classifier_context, json = JSON.stringify(sg);
       for (const secret of ["alice_dev", "acme-corp", "private-repo", "secret-person", "secret-branch-name", "build.corp.example", "may push to", "Bash(rm:*)", "claw-addir-marker"]) expect(json).not.toContain(secret);
-      // 路径只剩工作目录（主请求的 Environment 里本来就有）；单独的 home 目录和各配置目录都不出现
+      // 路径只剩工作目录（主请求的 Environment 中已包含）；单独的 home 目录和各配置目录都不出现
       const paths = [...json.matchAll(/"(\/[^"]*)"/g)].map((m) => m[1]);
       expect(paths.length).toBeGreaterThan(0);
       for (const p of paths) expect(p === h.work || p === fs.realpathSync(h.work)).toBe(true);
       expect(cc.home_dir).toBeUndefined();
       expect(cc).toMatchObject({ v: 1, permission_mode: "auto", platform: process.platform === "darwin" ? "macos" : "linux", user_identity: null, rules: { allow: [], deny: [], ask: [] }, rule_roots: {} });
-      expect(cc.live_cwd).toBe(h.work); // 分类器判断「命令是否在工作目录内」要用
+      expect(cc.live_cwd).toBe(h.work); // 分类器据此判断命令是否在工作目录内
       expect(cc.git_state.status.clean).toBe(false);
     } finally {
       fake.stop();
@@ -473,7 +473,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
   });
 
-  // 端点没有实现服务端分类器时（假 API 与中转站都是），auto 模式退回本地分类器：另发不带工具的请求，让模型判断这次调用。
+  // 端点没有实现服务端分类器时（假 API 与中转站均如此），auto 模式退回本地分类器：另发不带工具的请求，让模型判断这次调用。
   // classify 让模型执行 command，假 API 以 verdict 作为分类器的回答；仓库、用户名和各项规则都设为可识别的值。
   // 返回退出码、被拒绝的调用、各分类器请求的提示词与消息文本，以及命令执行后 origin 的地址
   const classify = async (command, verdict) => {
@@ -523,7 +523,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       expect(meta).toContainEqual({ repoVisibility: { remote: "redacted", visibility: "unknown" } }); // 当前仓库：名字替换为占位符，可见性保留
       expect(meta).toContainEqual({ repoVisibility: { remote: "other-org/other-repo", visibility: "unknown" } }); // 命令中写明的目的地保留
       const status = meta.find((m) => m.gitStatus !== undefined)?.gitStatus;
-      expect(status).toEqual({ staged: 0, modified: 0, untracked: expect.any(Number) }); // 工作区有改动：只给计数，没有文件清单
+      expect(status).toEqual({ staged: 0, modified: 0, untracked: expect.any(Number) }); // 工作区有改动：只有计数，没有文件清单
       expect(status.untracked).toBeGreaterThan(0);
     }
     expect(denials).toEqual([]); // 分类器放行，命令已执行
@@ -538,11 +538,11 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     expect(origin).toBe("https://github.com/acme-corp/hidden-repo-x1.git"); // 命令没有执行
   });
 
-  // CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC 固定为开：环境、settings.json 的 env 想关掉都不行，登录引导等请求一个都不发
-  test("非必要网络流量始终关闭：不论环境变量和 settings 怎么设，-p 下不向外发任何请求", async () => {
+  // CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC 固定为开启：环境变量与 settings.json 的 env 都无法关闭，登录引导等请求不发出
+  test("非必要网络流量始终关闭：不论环境变量和 settings 如何设置，-p 下不向外部发送任何请求", async () => {
     const h = makeHome();
     const fake = startFakeApi(h.work);
-    // 一个只记录的假 HTTP 代理：任何经 HTTPS_PROXY 的 CONNECT 都记下来（本机的假 API 走 NO_PROXY，不经过它）
+    // 只做记录的假 HTTP 代理：经 HTTPS_PROXY 的 CONNECT 都被记录（本机的假 API 在 NO_PROXY 中，不经过它）
     const connects = [];
     const proxy = Bun.listen({ hostname: "127.0.0.1", port: 0, socket: { data(sock, d) { connects.push(String(d).split("\r\n")[0]); sock.end(); }, open() {}, close() {}, error() {} } });
     try {
@@ -572,7 +572,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       expect(r.code).toBe(0);
       const sent = JSON.stringify(fake.requests.map((q) => q.body));
       expect(sent).not.toContain("SENTINEL_");
-      expect(sent).toContain(path.join(mem, "MEMORY.md")); // 路径照发
+      expect(sent).toContain(path.join(mem, "MEMORY.md")); // 路径仍然发送
       expect(sent).toContain("Memory access policy");
     } finally {
       fake.stop();
@@ -580,10 +580,10 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
   });
 
-  // 与已安装的 claude 共存：update / install 不联网、不改共享配置，交互使用不抢注册 claude-cli:// 处理程序
+  // 与已安装的 claude 共存：update / install 不联网、不改共享配置，交互使用时不改注册 claude-cli:// 处理程序
   describe("与已安装的 claude 共存", () => {
     for (const cmd of ["update", "upgrade", "install"]) {
-      test(`${cmd} 直接退出：不联网、不写 installMethod、不碰 ~/.local`, async () => {
+      test(`${cmd} 直接退出：不联网、不写 installMethod、不创建 ~/.local`, async () => {
         const h = makeHome();
         const hits = [];
         const proxy = Bun.listen({ hostname: "127.0.0.1", port: 0, socket: { data(sock, d) { hits.push(String(d).split("\r\n")[0]); sock.end(); }, open() {}, close() {}, error() {} } });
@@ -604,7 +604,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
 
     test("交互使用并提交第一条消息后，没有注册 claude-cli:// 处理程序", async () => {
-      const NO_SETTINGS = Object.freeze(Object.create(null)); // 不带隔离 HOME 默认的 disableDeepLinkRegistration：要验证的是补丁本身
+      const NO_SETTINGS = Object.freeze(Object.create(null)); // 不带隔离 HOME 默认的 disableDeepLinkRegistration：验证对象是补丁本身
       const h = makeHome({ settings: NO_SETTINGS });
       const fake = startFakeApi(h.work);
       // macOS：<HOME>/Applications/Claude Code URL Handler.app；Linux：<HOME>/.local/share/applications/claude-code-url-handler.desktop
@@ -616,7 +616,7 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
       } finally {
         if (process.platform === "darwin") {
           const lsregister = "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister";
-          spawnSync(lsregister, ["-u", path.join(h.home, "Applications/Claude Code URL Handler.app")]); // 注册过就撤销，不在系统里留下临时目录的条目
+          spawnSync(lsregister, ["-u", path.join(h.home, "Applications/Claude Code URL Handler.app")]); // 若已注册则撤销，不在系统中留下指向临时目录的条目
         }
         fake.stop();
         h.remove();

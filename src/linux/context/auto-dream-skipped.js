@@ -29,7 +29,7 @@ function u9t() {
   return e?.enabled === true || e?.available === true;
 }
 function adt() {
-  return false; // 记忆内容不发送：不运行记忆整理（它会把记忆文件读给模型）
+  return false; // 记忆内容不发送：不运行记忆整理（它会把记忆文件的内容发给模型）
 }
 class Z {
   runner = null;
