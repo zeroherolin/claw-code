@@ -121,7 +121,8 @@ describe("memory-guard", () => {
     process.env.HOME = home; process.env.CLAUDE_CONFIG_DIR = path.join(home, ".claude");
     const host = { autoMemDir: mem, cwd: () => work };
     const hostFns = { autoMemDir: () => mem, cwd: () => work };
-    const cleanup = () => { Object.assign(process.env, saved); fs.rmSync(root, { recursive: true, force: true }); };
+    // 原先没有设置的变量须删除：给 process.env 赋值 undefined 会写入字符串 "undefined"
+    const cleanup = () => { for (const [k, v] of Object.entries(saved)) v === undefined ? delete process.env[k] : (process.env[k] = v); fs.rmSync(root, { recursive: true, force: true }); };
     return { memoryReadGuard, isMemoryPath, containsMemoryPath, commandMentionsMemory, host, hostFns, mem, work, home, cleanup };
   }
   const readTool = { name: "Read", getPath: (i) => i.file_path, isReadOnly: () => true };
