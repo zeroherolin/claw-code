@@ -1,5 +1,6 @@
 // 与官方二进制的对比规则：哪些差异属于运行环境（路径、端口、时间、随机 id、动画相位），比较前先归一化。
-// 归一化之外的任何差异都视为行为不一致。
+// 归一化之外的任何差异都视为行为不一致。分支有意与原版不同的内容另行登记在 intentional.js。
+import { INTENTIONAL } from "./intentional.js";
 
 const UUID = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g;
 
@@ -26,12 +27,13 @@ export function normalizeText(s, home) {
     .replace(/127\.0\.0\.1:\d+/g, "127.0.0.1:<PORT>");
 }
 
-/** API 请求：在文本归一化的基础上，再忽略计费哈希、shell 快照文件名、ISO 时间与 metadata.user_id */
+/** API 请求：在文本归一化的基础上，再忽略计费哈希、shell 快照文件名、ISO 时间与 metadata.user_id，并去掉登记过的有意差异 */
 export function normalizeRequest(req, home) {
-  const s = normalizeText(JSON.stringify(req), home)
+  let s = normalizeText(JSON.stringify(req), home)
     .replace(/\d{4}-\d{2}-\d{2}T[\d:.]+Z?/g, "<TS>")
     .replace(/cch=[0-9a-f]+/g, "cch=<H>")
     .replace(/snapshot-\w+-\d+-\w+\.sh/g, "snapshot.sh");
+  for (const [re, to] of INTENTIONAL) s = s.replace(re, to);
   const d = JSON.parse(s);
   if (d.body?.metadata?.user_id) d.body.metadata.user_id = "<U>";
   return d;
