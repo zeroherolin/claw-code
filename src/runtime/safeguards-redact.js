@@ -1,4 +1,9 @@
-// 脱敏发往服务端分类器的 `safeguards.classifier_context`。这是本项目对原版有意做的改动，见 docs/dev.md#safeguards-脱敏。
+// 脱敏 auto / plan 模式下发给分类器的上下文。这是本项目对原版有意做的改动，见 docs/dev.md#safeguards-脱敏。
+//
+// 分类器有两条路径，本模块分别处理：
+//   服务端分类器：主请求里的 `safeguards.classifier_context`，由 redactClassifierContext 整体脱敏；
+//   本地分类器（端点没有实现服务端分类器时的回退，另发一个请求让模型判断）：提示词里的规则与用户名由生成源码上的
+//     补丁去掉，redactRepoVisibility、redactGitStatus 处理插在待判断命令之前的两种元信息行。
 //
 // 原版在 auto / plan 模式下，每个请求都带一份 classifier_context：权限规则原文、autoMode 槽位的自然语言规则、用户名、
 // git 分支与 remote 的 owner/repo、home 目录等。这里在请求发出前统一抹掉可以识别用户、机器和项目的字段，
@@ -23,6 +28,11 @@
 // 不抹掉的字段：v、permission_mode、platform、live_cwd、trusted_directories.primary、
 //   block_reads_outside_working_directories、restricted、is_remote_mode、classify_all_shell 及其他布尔标志。
 // live_cwd 保留是因为分类器要用它判断命令是否在工作目录之内；主请求体里本来就有这个路径。
+//
+// 本地分类器的元信息行：
+//   repoVisibility  -> remote、branch 只在待判断的命令中原样出现时保留（命令在同一个请求里），否则 remote 替换为占位符、
+//        branch 删除；visibility 保留。remote 为空串表示未解析出仓库，原样保留
+//   gitStatus       -> porcelain 清单（含文件名）替换为由它统计出的计数；clean 标志与计数原样保留
 
 const PLACEHOLDER = "redacted";
 
@@ -78,4 +88,36 @@ export function redactClassifierContext(ctx) {
     );
   }
   return out;
+}
+
+/**
+ * 本地分类器的 repoVisibility 元信息：{ remote, branch?, visibility }。
+ * @param command 待判断的命令；其中原样出现的仓库名、分支名不属于新增信息，保留后分类器才能把该条目与命令对应
+ */
+export function redactRepoVisibility(entry, command) {
+  if (entry === null || typeof entry !== "object") return entry;
+  const shown = (value) => typeof value === "string" && value !== "" && typeof command === "string" && command.includes(value);
+  const { branch, ...out } = entry;
+  if (typeof out.remote === "string" && out.remote !== "" && !shown(out.remote)) out.remote = PLACEHOLDER;
+  if (shown(branch)) out.branch = branch;
+  return out;
+}
+
+/**
+ * 本地分类器的 gitStatus 元信息：{ clean: true }、{ staged, modified, untracked } 或 { porcelain }。
+ * 只有 porcelain 带文件名：替换为计数（统计方式与原版相同）。清单非空但无法统计时返回 { clean: false }，
+ * 避免把有改动的工作区报告为干净。
+ */
+export function redactGitStatus(status) {
+  if (status === null || typeof status !== "object" || typeof status.porcelain !== "string") return status;
+  let staged = 0, modified = 0, untracked = 0;
+  for (const line of status.porcelain.split("\n")) {
+    if (!/^[ MADRCUT?!]{2} /.test(line)) continue;
+    if (line.startsWith("??")) untracked++;
+    else {
+      if (line[0] !== " ") staged++;
+      if (line[1] !== " ") modified++;
+    }
+  }
+  return staged + modified + untracked > 0 ? { staged, modified, untracked } : { clean: false };
 }

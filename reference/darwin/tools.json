@@ -498,7 +498,7 @@
   "strict": true,
   "ruleContentField": "command",
   "path": "core/conversation-engine.js",
-  "line": 112848
+  "line": 112849
  },
  {
   "name": "ClaudeDesign",
@@ -694,7 +694,7 @@
   "strict": true,
   "ruleContentField": "file_path",
   "path": "core/conversation-engine.js",
-  "line": 108477
+  "line": 108478
  },
  {
   "name": "EndConversation",
@@ -1334,7 +1334,7 @@
   "shouldDefer": true,
   "ruleContentField": "notebook_path",
   "path": "core/conversation-engine.js",
-  "line": 108728
+  "line": 108729
  },
  {
   "name": "ObserverReport",
@@ -1687,7 +1687,7 @@
   "strict": true,
   "ruleContentField": "file_path",
   "path": "core/conversation-engine.js",
-  "line": 75447
+  "line": 75448
  },
  {
   "name": "ReadMcpResourceDirTool",

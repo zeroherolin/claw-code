@@ -473,6 +473,71 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
     }
   });
 
+  // 端点没有实现服务端分类器时（假 API 与中转站都是），auto 模式退回本地分类器：另发不带工具的请求，让模型判断这次调用。
+  // classify 让模型执行 command，假 API 以 verdict 作为分类器的回答；仓库、用户名和各项规则都设为可识别的值。
+  // 返回退出码、被拒绝的调用、各分类器请求的提示词与消息文本，以及命令执行后 origin 的地址
+  const classify = async (command, verdict) => {
+    const h = makeHome();
+    const fake = startScriptedApi(() => ({ tool: "Bash", input: { command, description: "repoint" } }), { nonStreamingText: verdict });
+    try {
+      const git = (...a) => spawnSync("git", a, { cwd: h.work, encoding: "utf8", env: { ...process.env, GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_SYSTEM: "/dev/null" } });
+      git("init", "-q", "-b", "feature/secret-branch-name");
+      git("remote", "add", "origin", "https://github.com/acme-corp/hidden-repo-x1.git");
+      fs.writeFileSync(path.join(h.work, "secret-notes.txt"), "x");
+      const settings = { permissions: { deny: ["Bash(rm:*)"] }, autoMode: { environment: ["internal host build.corp.example"], allow: ["may push to acme-corp/hidden-repo-x1"], soft_deny: ["never touch prod-db-7"] } };
+      fs.writeFileSync(path.join(h.home, ".claude/settings.json"), JSON.stringify(settings));
+      const r = await runCli([DIST], ["-p", "repoint the remote", "--permission-mode", "auto", "--output-format", "stream-json", "--verbose"], { cwd: h.work, env: cleanEnv(h.home, fake.url, { USER: "alice_dev" }) });
+      const result = r.output.split("\n").flatMap((l) => { try { return [JSON.parse(l)]; } catch { return []; } }).find((e) => e.type === "result");
+      const texts = (content) => (Array.isArray(content) ? content.map((b) => b.text ?? "") : [String(content ?? "")]);
+      const classifier = fake.nonStreaming
+        .map((q) => ({ system: texts(q.body.system).join("\n"), transcript: q.body.messages.flatMap((m) => texts(m.content)).join("") }))
+        .filter((q) => q.system.includes("security monitor for autonomous AI coding agents"));
+      return { code: r.code, denials: (result?.permission_denials ?? []).map((d) => d.tool_name), classifier, origin: git("remote", "get-url", "origin").stdout.trim() };
+    } finally {
+      fake.stop();
+      h.remove();
+    }
+  };
+  const OTHER_REPO = "https://github.com/other-org/other-repo.git";
+  // 分类器的每个请求（拦截时有两个阶段）里，用户名、规则原文、当前仓库的名字、分支和文件名都不出现
+  const expectClassifierRedacted = (classifier) => {
+    expect(classifier.length).toBeGreaterThan(0); // 本地分类器的请求已发出，后续断言有检查对象
+    for (const { system, transcript } of classifier) {
+      for (const secret of ["alice_dev", "acme-corp", "hidden-repo-x1", "build.corp.example", "may push to", "prod-db-7", "Bash(rm:*)"]) {
+        expect(system).not.toContain(secret);
+        expect(transcript).not.toContain(secret);
+      }
+      expect(system).not.toContain("## Session Context");
+      expect(transcript).not.toMatch(/secret-notes|secret-branch-name/);
+    }
+  };
+
+  test("本地分类器脱敏：提示词不带用户名与规则，元信息行不带当前仓库的名字和文件清单，命令中写明的仓库保留", async () => {
+    const command = `git reset --hard && git remote set-url origin ${OTHER_REPO}`;
+    const { code, denials, classifier, origin } = await classify(command, "<severity>0</severity><block>no</block>");
+    expect(code).toBe(0);
+    expectClassifierRedacted(classifier);
+    for (const { transcript } of classifier) {
+      expect(transcript).toContain(JSON.stringify({ Bash: command })); // 待判断的命令原样保留
+      const meta = [...transcript.matchAll(/^\{"meta":(.*)\}$/gm)].map((m) => JSON.parse(m[1]));
+      expect(meta).toContainEqual({ repoVisibility: { remote: "redacted", visibility: "unknown" } }); // 当前仓库：名字替换为占位符，可见性保留
+      expect(meta).toContainEqual({ repoVisibility: { remote: "other-org/other-repo", visibility: "unknown" } }); // 命令中写明的目的地保留
+      const status = meta.find((m) => m.gitStatus !== undefined)?.gitStatus;
+      expect(status).toEqual({ staged: 0, modified: 0, untracked: expect.any(Number) }); // 工作区有改动：只给计数，没有文件清单
+      expect(status.untracked).toBeGreaterThan(0);
+    }
+    expect(denials).toEqual([]); // 分类器放行，命令已执行
+    expect(origin).toBe(OTHER_REPO);
+  });
+
+  test("本地分类器判定拦截时：调用不执行并记为被拒绝，两个阶段的请求都已脱敏", async () => {
+    const { code, denials, classifier, origin } = await classify(`git remote set-url origin ${OTHER_REPO}`, "<severity>90</severity><block>yes</block><reason>blocked by test</reason>");
+    expect(code).toBe(0);
+    expectClassifierRedacted(classifier);
+    expect(denials).toEqual(["Bash"]);
+    expect(origin).toBe("https://github.com/acme-corp/hidden-repo-x1.git"); // 命令没有执行
+  });
+
   // CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC 固定为开：环境、settings.json 的 env 想关掉都不行，登录引导等请求一个都不发
   test("非必要网络流量始终关闭：不论环境变量和 settings 怎么设，-p 下不向外发任何请求", async () => {
     const h = makeHome();

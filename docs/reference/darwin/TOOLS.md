@@ -18,13 +18,13 @@
 | `Agent` ✦ | true | true |  | delegate work to a subagent | [tools/agent-tool.js:654](../../../src/darwin/tools/agent-tool.js#L654) |
 | `AppifactRepl` | false | false |  | run appifact SDK JavaScript against an artifact | [tools/appifact-repl-tool.js:1004](../../../src/darwin/tools/appifact-repl-tool.js#L1004) |
 | `AskUserQuestion` ✦ | true | true |  | prompt the user with a multiple-choice question | [tools/ask-user-question-tool.js:248](../../../src/darwin/tools/ask-user-question-tool.js#L248) |
-| `Bash` ✦ | <expr> | <expr> |  | execute shell commands | [core/conversation-engine.js:112848](../../../src/darwin/core/conversation-engine.js#L112848) |
+| `Bash` ✦ | <expr> | <expr> |  | execute shell commands | [core/conversation-engine.js:112849](../../../src/darwin/core/conversation-engine.js#L112849) |
 | `ClaudeDesign` ✦ | <fn> | <fn> |  | work with Claude Design (claude.ai/design) projects | [tools/claude-design-tool.js:621](../../../src/darwin/tools/claude-design-tool.js#L621) |
 | `CronCreate` ✦ |  |  | true | schedule a recurring or one-shot prompt | [tools/cron-create-tool.js:181](../../../src/darwin/tools/cron-create-tool.js#L181) |
 | `CronDelete` ✦ |  |  | true | cancel a scheduled cron job | [tools/cron-delete-tool.js:151](../../../src/darwin/tools/cron-delete-tool.js#L151) |
 | `CronList` ✦ | true | true | true | list active cron jobs | [tools/cron-list-tool.js:154](../../../src/darwin/tools/cron-list-tool.js#L154) |
 | `DesignSync` | <expr> | false | true | sync local design system components to a claude.ai/design p… | [tools/design-sync-tool.js:340](../../../src/darwin/tools/design-sync-tool.js#L340) |
-| `Edit` |  |  |  | modify file contents in place | [core/conversation-engine.js:108477](../../../src/darwin/core/conversation-engine.js#L108477) |
+| `Edit` |  |  |  | modify file contents in place | [core/conversation-engine.js:108478](../../../src/darwin/core/conversation-engine.js#L108478) |
 | `EndConversation` | true | false | true | end the conversation — only for sustained user abuse, or wh… | [tools/end-conversation-tool.js:425](../../../src/darwin/tools/end-conversation-tool.js#L425) |
 | `EnterPlanMode` ✦ | true | true | true | switch to plan mode to design an approach before coding | [tools/skill-tool-suffix-match.js:494](../../../src/darwin/tools/skill-tool-suffix-match.js#L494) |
 | `EnterWorktree` ✦ |  |  | true | create an isolated git worktree and switch into it | [tools/worktree-entered-existing.js:2403](../../../src/darwin/tools/worktree-entered-existing.js#L2403) |
@@ -43,7 +43,7 @@
 | `memory_read` | true | true | false | read a document from a memory store | [core/conversation-engine.js:38788](../../../src/darwin/core/conversation-engine.js#L38788) |
 | `memory_write` |  |  | false | save a document to a memory store | [tools/memory-write-tool.js:1102](../../../src/darwin/tools/memory-write-tool.js#L1102) |
 | `Monitor` ✦ |  | true | true | watch, monitor, or keep an eye on a process/log/command or … | [tools/monitor-tool.js:420](../../../src/darwin/tools/monitor-tool.js#L420) |
-| `NotebookEdit` ✦ |  |  | true | edit Jupyter notebook cells (.ipynb) | [core/conversation-engine.js:108728](../../../src/darwin/core/conversation-engine.js#L108728) |
+| `NotebookEdit` ✦ |  |  | true | edit Jupyter notebook cells (.ipynb) | [core/conversation-engine.js:108729](../../../src/darwin/core/conversation-engine.js#L108729) |
 | `ObserverReport` | false |  |  |  | [tools/observer-report-tool.js:65](../../../src/darwin/tools/observer-report-tool.js#L65) |
 | `OfferChromeSetup` ✦ | true | false | true | offer the user Claude in Chrome setup for their own browser | [tools/worktree-entered-existing.js:367](../../../src/darwin/tools/worktree-entered-existing.js#L367) |
 | `Poll` | true | true |  | wait for and receive queued harness events | [tools/poll-tool.js:407](../../../src/darwin/tools/poll-tool.js#L407) |
@@ -53,7 +53,7 @@
 | `ProposeGoal` ✦ | true | false | true | propose a session goal condition for the user to approve wi… | [tools/propose-goal-tool.js:156](../../../src/darwin/tools/propose-goal-tool.js#L156) |
 | `PublishPlugin` | false | false | true | publish or share a plugin or mod with the team or organizat… | [tools/publish-plugin-tool.js:875](../../../src/darwin/tools/publish-plugin-tool.js#L875) |
 | `PushNotification` ✦ | true | true | true | send a notification to the user via terminal and optionally… | [tools/push-notification-tool.js:148](../../../src/darwin/tools/push-notification-tool.js#L148) |
-| `Read` | true | true |  | read files, images, PDFs, notebooks | [core/conversation-engine.js:75447](../../../src/darwin/core/conversation-engine.js#L75447) |
+| `Read` | true | true |  | read files, images, PDFs, notebooks | [core/conversation-engine.js:75448](../../../src/darwin/core/conversation-engine.js#L75448) |
 | `ReadMcpResourceDirTool` | true | true | true | list the children of an MCP directory resource | [tools/tool-result.f5fc.js:141](../../../src/darwin/tools/tool-result.f5fc.js#L141) |
 | `ReadMcpResourceTool` | true | true | true | read a specific MCP resource by URI | [tools/tool-result.f5fc.js:218](../../../src/darwin/tools/tool-result.f5fc.js#L218) |
 | `ReadNotifications` ✦ | true | true |  | read queued external notifications (webhooks, triggers) | [tools/worktree-entered-existing.js:119](../../../src/darwin/tools/worktree-entered-existing.js#L119) |

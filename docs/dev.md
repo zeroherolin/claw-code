@@ -13,7 +13,7 @@
 | 非必要网络流量 | 无条件关闭：登录引导、更新检查、MCP 官方目录、插件市场、远程会话、团队记忆同步等都不发请求，这些功能不可用 | [固定的环境变量](#固定的环境变量) |
 | GPU 信息 | 不收集、不发送 | [GPU 信息](#gpu-信息) |
 | 记忆 | 只发记忆文件的路径，不发正文；模型要读记忆目录里的文件时一律先询问 | [记忆](#记忆) |
-| `safeguards` | 发往服务端分类器的上下文脱敏，字段本身仍发送；退回本地分类器时不脱敏 | [safeguards 脱敏](#safeguards-脱敏) |
+| `safeguards` | 发给分类器的上下文脱敏（服务端分类器的 `safeguards` 字段、本地分类器的请求）：不带用户名、规则原文和仓库信息 | [safeguards 脱敏](#safeguards-脱敏) |
 | 服务端拒答 | 用原模型最多连续重试 10 轮，不换模型；每次重试更换会话 ID、设备 ID 和提示 ID | [拒答后的重试](#拒答后的重试) |
 | 与 `claude` 共存 | 不注册 `claude-cli://` 处理程序；`update`、`upgrade`、`install` 直接退出 | [与已安装的 claude 共存](#与已安装的-claude-共存) |
 
@@ -166,7 +166,23 @@
 
 ## safeguards 脱敏
 
-auto 模式（交互界面不带参数时默认进入）和 plan 模式下，原版每个请求都带一个 `safeguards` 字段（beta 头 `dangerous-tool-use-2026-09-03`），其中的 `classifier_context` 供服务端分类器判断工具调用是否危险。`src/runtime/safeguards-redact.js` 在构造它的函数返回前统一脱敏（`core/conversation-engine.js`「redactClassifierContext(」）：字段仍然发送，形状不变，只抹掉能识别用户、机器和项目的值。
+auto 模式（交互界面不带参数时默认进入）和 plan 模式下，每次工具调用先交给分类器判断是否危险。分类器有两条路径，`dev` 都做了脱敏，实现在 `src/runtime/safeguards-redact.js` 和补丁里：
+
+| 路径 | 何时使用 | 数据在哪里 |
+|---|---|---|
+| 服务端分类器 | 端点实现了它（Anthropic 一方端点） | 主请求的 `safeguards` 字段 |
+| 本地分类器 | 端点没有实现服务端分类器时自动退回（`core/conversation-engine.js`「arbiterWithLocalFallback」）。自定义 `ANTHROPIC_BASE_URL` 的中转站通常如此，界面会提示 "isn't compatible with this update" | 另发的一个不带工具的请求，让模型判断这次调用 |
+
+两条路径上，用户写的 `autoMode` 规则、权限规则和用户名都不发送：服务端分类器收到的是空的规则列表，本地分类器的提示词与没有配置这些规则时逐字相同。代价是分类器只按内置的默认规则判断：
+
+- `autoMode.allow`、`autoMode.environment` 里放行或说明的内容不再生效，相应的调用更可能被拦下来要求确认；
+- `autoMode.soft_deny`、`autoMode.hard_deny` 里自己加的拦截规则不再生效，只剩内置的拦截规则。需要硬性禁止某类调用时，用权限 deny 规则，它由本地的权限检查强制执行，不依赖分类器；
+- 分类器不再帮忙识别"换一个工具绕过权限 deny 规则"的做法；
+- 分类器不知道用户名，认不出以用户名开头的个人分支。
+
+### 服务端分类器
+
+原版每个请求都带一个 `safeguards` 字段（beta 头 `dangerous-tool-use-2026-09-03`），其中的 `classifier_context` 在构造它的函数返回前统一脱敏（`core/conversation-engine.js`「redactClassifierContext(」）：字段仍然发送，形状不变，只抹掉能识别用户、机器和项目的值。
 
 | 字段 | 处理 |
 |---|---|
@@ -183,23 +199,36 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，原
 
 保留的字段：`v`、`permission_mode`、`platform`、`live_cwd`、`trusted_directories.primary`、`block_reads_outside_working_directories` 与其他布尔标志、`git_state.cwd`、`git_state.status.clean`。`live_cwd` 保留是因为分类器要用它判断命令是否在工作目录内，主请求的 `Environment` 里本来也有这个路径。
 
-代价：服务端分类器看不到用户配置的权限规则、`autoMode` 规则、`--add-dir` 目录和仓库信息，判断依据变少。预期分类器对「这条命令在这个环境里是否被允许」更保守，更多调用要手动确认。经中转站实测，带脱敏后 `safeguards` 的请求被正常受理；中转站没有实现服务端分类器，所以分类质量仍没有在一方端点上验证过。
+经中转站实测，带脱敏后 `safeguards` 的请求被正常受理。中转站没有实现服务端分类器，所以脱敏后的分类质量没有在一方端点上验证过。
 
-**脱敏只覆盖服务端分类器，不覆盖本地分类器**。端点没有实现服务端分类器时（自定义 `ANTHROPIC_BASE_URL` 的中转站通常如此，界面会提示 "isn't compatible with this update"），原版自动退回本地分类器（`core/conversation-engine.js`「arbiterWithLocalFallback」）：另发一个不带工具的请求，让模型判断这次调用。这个请求不经过 `redactClassifierContext`，经中转站实测，它的系统提示词里有：
+### 本地分类器
 
-- 用户名（`core/conversation-engine.js`「## Session Context」，取值与 `user_identity` 相同）；
-- `autoMode` 的 `environment`、`allow` 等规则原文；
-- 权限 deny 规则原文。
+本地分类器的请求由三部分组成，`dev` 的处理如下：
 
-消息部分是用户提示原文和待判断的工具调用。只读命令（如 `echo`）不触发分类，也就不发这个请求。
+| 部分 | 原版的内容 | `dev` |
+|---|---|---|
+| 系统提示词：规则模板 | 内置的分类规则，其中的几个槽位填入 `autoMode` 的 `allow`、`soft_deny`、`hard_deny`、`environment` 原文，另有一段列出权限 deny 规则原文 | 槽位不填用户的规则，deny 规则那一段不写（`core/conversation-engine.js`「本地分类器脱敏」）。得到的提示词与原版在没有配置这些规则时逐字相同 |
+| 系统提示词：`## Session Context` | 用户名，取值与 `user_identity` 相同 | 不写这一节 |
+| 消息：命令前的 `repoVisibility` 元信息行 | 当前仓库和推送目的地的 `属主/仓库名`、分支名、可见性。只在 push、`remote set-url`、`gh pr create` 等能把内容发出去的命令前出现 | 仓库名、分支名只在待判断的命令里原样出现时保留，否则仓库名换成 `"redacted"`、分支名去掉；可见性照发（`core/conversation-engine.js`「redactRepoVisibility(」） |
+| 消息：命令前的 `gitStatus` 元信息行 | 工作区是否干净，有改动时是计数；只在 `git reset --hard`、`rm -rf` 等会丢弃改动的命令前出现。特性开关 `gitStatusUploads` 打开时，`git add`、`commit`、`push` 前改为 `git status` 的文件清单 | `clean` 标志与计数原样保留；文件清单换成计数（`core/conversation-engine.js`「redactGitStatus(」）。`gitStatusUploads` 的离线默认值是关，`dev` 不拉取特性开关，文件清单这种形式实际不会出现 |
+| 消息：CLAUDE.md、对话里的用户提问和工具调用、待判断的命令 | 原文 | 不改：这些内容本来就在主请求里发往同一个端点，分类器要靠它们判断 |
 
-没有改动的：
+可见性保留是因为它直接决定判断结果：推送到公开仓库算发布。原版查询可见性要访问 GitHub API；隐私级别不是默认值时这个查询不发出（`context/team-memory-sync.js`「allow_repo_visibility_probe」所在的函数），`dev` 固定关闭了遥测，所以取值总是 `"unknown"`。
+
+只读命令（如 `echo`）不触发分类，也就不发这个请求。分类分两个阶段：第一阶段只要一个严重程度的分数，分数高时再发第二个请求要完整的判断，两个请求用的是同一份提示词和消息。
+
+经中转站实测（分类器由 `claude-sonnet-5` 担任）：脱敏后的请求被正常受理，普通的联网命令被放行，`git reset --hard` 加改 remote 的命令进入第二阶段后被放行。
+
+### 没有改动的
 
 - 主请求里原有的内容，包括 `gitStatus` 块里的当前分支名和主分支名；
-- 本地分类器的请求，见上；
-- 其他权限模式（default、acceptEdits、dontAsk、bypassPermissions）本来就不发 `safeguards`。
+- 其他权限模式（default、acceptEdits、dontAsk、bypassPermissions）本来就不调用分类器，也不发 `safeguards`。
 
-测试：`test/dev/runtime.test.js` 的 `safeguards-redact`（输入的形状取自原版的真实输出）；`test/dev/smoke.test.js` 的「safeguards 脱敏」（真实二进制，把用户名、分支、remote、权限规则、autoMode 规则、`--add-dir` 都设成可识别的值，检查一个都不出现，且路径只剩工作目录）。
+### 测试
+
+- `test/dev/runtime.test.js` 的 `safeguards-redact`：`classifier_context` 的脱敏（输入的形状取自原版的真实输出），两种元信息行的脱敏，以及两个系统的生成源码都接上了这些处理。
+- `test/dev/smoke.test.js` 的「safeguards 脱敏」：真实二进制，把用户名、分支、remote、权限规则、autoMode 规则、`--add-dir` 都设成可识别的值，检查 `safeguards` 里一个都不出现，且路径只剩工作目录。
+- `test/dev/smoke.test.js` 的两个「本地分类器」用例：真实二进制加假 API（没有服务端分类器，走本地回退），假 API 充当分类器。检查分类器的每个请求里都没有用户名、规则原文、当前仓库的名字、分支和文件名，命令里写明的仓库照常保留；分类器放行时命令执行，判定拦截时命令不执行并记为被拒绝的调用。
 
 ## 拒答后的重试
 
@@ -301,7 +330,7 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，原
 | `core/conversation-engine.js` | Bash 命令前导出 `TZ`；续会话时重新格式化每轮时间戳 | 时区 |
 | 同上 | 官方插件市场下载前检查 essential-traffic | 非必要网络流量 |
 | 同上 | `MEMORY.md` 只发路径；关闭相关记忆召回；账号与 cowork 记忆不渲染；权限检查链追加 `memoryReadGuard` | 记忆 |
-| 同上 | `classifier_context` 返回前脱敏 | `safeguards` |
+| 同上 | `classifier_context` 返回前脱敏；本地分类器的提示词不填用户规则、不写用户名，两种元信息行脱敏 | `safeguards` |
 | 同上 | 回退模型一律为空；重试请求用临时身份的提示 ID、新建线程、去掉上一个请求 ID 与问数轮数；把身份传给 metadata 与客户端 | 拒答重试 |
 | `core/query-loop.js` | 重试上限与计数、重试提示、中性的工具结果措辞、生成与采用临时身份 | 拒答重试 |
 | `core/system-prompt-blocks.js` | metadata 的会话 ID、设备 ID 取当前该用的身份 | 拒答重试 |

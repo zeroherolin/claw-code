@@ -9,11 +9,13 @@
  *   "ok"      正常回复；
  *   "notfound"  流式请求返回 404，客户端会改用非流式请求重发（记在 nonStreaming 里）。
  * script 为数字 N 时等价于 N 个 "refuse"；为函数时每次收到请求体，返回该次的步骤。
+ * 非流式请求（本地分类器等）不走脚本，一律回复 options.nonStreamingText。
  * @returns {{ url: string, requests: {headers: object, body: object}[], nonStreaming: {headers: object, body: object}[], stop: () => void }}
  *   requests 为各流式请求的请求头与 JSON 体；nonStreaming 为非流式 /v1/messages 请求（count_tokens 不记）
  */
-export function startScriptedApi(script) {
-  const plan = typeof script === "function" ? script : (() => { const steps = Array.isArray(script) ? script : Array.from({ length: script }, () => "refuse"); return (_body, n) => steps[n - 1] ?? "ok"; })();
+export function startScriptedApi(script, options) {
+  const nonStreamingText = options?.nonStreamingText ?? "OK";
+  const plan =typeof script === "function" ? script : (() => { const steps = Array.isArray(script) ? script : Array.from({ length: script }, () => "refuse"); return (_body, n) => steps[n - 1] ?? "ok"; })();
   const requests = [], nonStreaming = [];
   const usage = { input_tokens: 5, output_tokens: 1, cache_creation_input_tokens: 0, cache_read_input_tokens: 0 };
   const text = (t) => [{ type: "content_block_start", index: 0, content_block: { type: "text", text: "" } }, { type: "content_block_delta", index: 0, delta: { type: "text_delta", text: t } }, { type: "content_block_stop", index: 0 }];
@@ -27,7 +29,7 @@ export function startScriptedApi(script) {
       const body = await req.json().catch(() => ({}));
       if (!body.stream) {
         if (!new URL(req.url).pathname.includes("count_tokens")) nonStreaming.push({ headers: Object.fromEntries(req.headers), body });
-        return Response.json({ id: "m", type: "message", role: "assistant", model: body.model, content: [{ type: "text", text: "OK" }], stop_reason: "end_turn", usage });
+        return Response.json({ id: "m", type: "message", role: "assistant", model: body.model, content: [{ type: "text", text: nonStreamingText }], stop_reason: "end_turn", usage });
       }
       requests.push({ headers: Object.fromEntries(req.headers), body });
       const n = requests.length, step = plan(body, n);

@@ -1,7 +1,7 @@
 // darwin/core/conversation-engine.js — Claude Code 2.1.310（darwin）模块 chunk-31gxg38t.js
 import { __asset_src, __asset_text } from "../../runtime/assets.js";
 import { memoryReadGuard } from "../../runtime/memory-guard.js";
-import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
+import { redactClassifierContext, redactGitStatus, redactRepoVisibility } from "../../runtime/safeguards-redact.js";
 import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
 import { tp } from "../shared/chunk-b5845da6.js";
 import { De, MKo, L_e, HKo, itr, atr, _Vr, MEt, MAe, dtr, ctr } from "../telemetry/chunk-1bb3c64e.js";
@@ -68990,11 +68990,12 @@ ${r.join(`
 
 `)}`;
 }
+// 本地分类器脱敏：提示词不带 autoMode 规则、权限 deny 规则和用户名（Session Context），见 docs/dev.md
 async function ebr(e, n, r = false, s, h, y = false, b = [], w = false, H = "unmarked", q = false, K = false, Q, Se, be = wtt([])) {
   let we = Ile(), ve = n !== void 0 ? n : Hbn(Ytt()), Ce = Ttt(), xe = (ve !== null ? abr(Ce) : Ce).replace("<cross_session_messages_rule>", () => bSr() + wSr() + be + (K ? cBs() : r ? H === "compact" || H === "compact-held" ? dBs(Se, H === "compact-held") : lBs(H === "original", Se) : "")).replace("<permissions_template>", () => {
     let gt = we ? Fbn() : RSr();
     return vtt(p3s(vSr(gt, s), Q));
-  }), Me = q ? void 0 : CI(), We = Gtt(), Ge = (gt = [], At = WSr) => We ? gt.map(At) : [...gt], Je2 = qXs(Ge(QSr(e), w2r)), rt = await JSr(), lt = rt.length > 0 ? `
+  }), Me = void 0, We = Gtt(), Ge = (gt = [], At = WSr) => We ? gt.map(At) : [...gt], Je2 = "", rt = [], lt = rt.length > 0 ? `
 
 ## Session Context
 
@@ -69337,8 +69338,8 @@ async function Ske(e, n, r, s, h, y) {
   let mo = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? FWs(Gn.name, Gn.input, h) : null, _o = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? await ibn(Gn.name, Gn.input, h) : null, ko = mo === null ? null : await mo, an = Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0 && Gv(Fl(r.find(($r) => Rt($r, Gn.name)) ?? Gn)) ? K5(Gn.id) : void 0, go = Ltt(), Jn = y.transcriptCacheTtl === "5m" && go === "1h" ? { type: "ephemeral", ttl: "5m" } : J9({ ttl: go }), En = At.at(-1);
   if (En !== void 0) En.cache_control = Jn;
   let lo = [];
-  if (ko !== null) for (let $r of ko) lo.push(Ptt({ repoVisibility: $r }));
-  if (_o !== null) lo.push(Ptt({ gitStatus: _o }));
+  if (ko !== null) for (let $r of ko) lo.push(Ptt({ repoVisibility: redactRepoVisibility($r, Gn.input.command) }));
+  if (_o !== null) lo.push(Ptt({ gitStatus: redactGitStatus(_o) }));
   if (an !== void 0) lo.push(an);
   if (lo.length > 0) At.push({ type: "text", text: lo.join("") });
   if (lo.length > 0 && Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0) L$e(Gn.id, lo.join(""));

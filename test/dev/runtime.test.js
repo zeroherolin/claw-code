@@ -320,6 +320,43 @@ describe("safeguards-redact", () => {
     expect(() => redact({})).not.toThrow();
     expect(() => redact({ git_state: null, rules: null, auto_mode: null, trusted_directories: null, prior_turn_context: [null, {}] })).not.toThrow();
   });
+
+  // 本地分类器：插在待判断命令之前的两种元信息行
+  test("repoVisibility：仓库名与分支只在命令里原样出现时保留，可见性照发", async () => {
+    const { redactRepoVisibility } = await import("../../src/runtime/safeguards-redact.js");
+    const entry = { remote: "acme-corp/private-repo", branch: "feature/secret", visibility: "private" };
+    expect(redactRepoVisibility(entry, "git push origin HEAD")).toEqual({ remote: "redacted", visibility: "private" });
+    expect(redactRepoVisibility(entry, "git push https://github.com/acme-corp/private-repo.git feature/secret")).toEqual(entry); // 命令中已包含仓库名与分支名
+    expect(redactRepoVisibility(entry, "git push origin feature/secret")).toEqual({ remote: "redacted", branch: "feature/secret", visibility: "private" });
+    expect(redactRepoVisibility({ remote: "", visibility: "unknown" }, "git push")).toEqual({ remote: "", visibility: "unknown" }); // 未解析出仓库的条目原样保留
+    expect(redactRepoVisibility(entry, undefined)).toEqual({ remote: "redacted", visibility: "private" });
+    expect(entry.branch).toBe("feature/secret"); // 不改动输入
+    expect(redactRepoVisibility(null, "x")).toBeNull();
+  });
+
+  test("gitStatus：带文件名的清单换成计数，clean 标志与计数原样保留，有改动的工作区不报告为干净", async () => {
+    const { redactGitStatus } = await import("../../src/runtime/safeguards-redact.js");
+    expect(redactGitStatus({ clean: true })).toEqual({ clean: true });
+    expect(redactGitStatus({ staged: 1, modified: 2, untracked: 0 })).toEqual({ staged: 1, modified: 2, untracked: 0 });
+    const listing = "?? secret-notes.txt\nM  staged.js\n M modified.js\nMM both.js\nR  old.js -> new.js";
+    const out = redactGitStatus({ porcelain: listing });
+    expect(out).toEqual({ staged: 3, modified: 2, untracked: 1 });
+    expect(JSON.stringify(out)).not.toMatch(/secret-notes|staged\.js|new\.js/);
+    expect(redactGitStatus({ porcelain: "… 12 more lines" })).toEqual({ clean: false }); // 无法统计时不报告为干净
+    expect(redactGitStatus(null)).toBeNull();
+  });
+
+  test("各系统的生成源码：本地分类器的提示词不取用户名与规则，元信息行经过脱敏", () => {
+    for (const system of Object.keys(SYSTEMS)) {
+      const code = fs.readFileSync(path.join(ROOT, "src", system, "core/conversation-engine.js"), "utf8");
+      const build = code.slice(code.indexOf("// 本地分类器脱敏"), code.indexOf("\n## Session Context\n"));
+      // 依次是 autoMode 规则、deny 规则块、Session Context 的条目：恒为 void 0、空串、空数组，不再调用取值的函数
+      expect(build).toMatch(/\}\), [\w$]+ = void 0, [\w$]+ = [\w$]+\(\), [\w$]+ = \([^\n]*, [\w$]+ = "", [\w$]+ = \[\], [\w$]+ = [\w$]+\.length > 0 \? `\n$/);
+      expect(code).toMatch(/\(\{ repoVisibility: redactRepoVisibility\([\w$]+, [\w$]+\.input\.command\) \}\)/);
+      expect(code).toContain("({ gitStatus: redactGitStatus(");
+      expect(code).not.toMatch(/\(\{ (repoVisibility|gitStatus): [\w$]+ \}\)/); // 不存在未脱敏的写法
+    }
+  });
 });
 
 describe("upload-identity", () => {

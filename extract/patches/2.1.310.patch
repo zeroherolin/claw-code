@@ -103,14 +103,14 @@ index 72fe144..1775c25 100644
    ar();
    let h = Bp() && !uQ();
 diff --git a/src/darwin/core/conversation-engine.js b/src/darwin/core/conversation-engine.js
-index 7926d09..660cfcc 100644
+index 7926d09..6c0dfcd 100644
 --- a/src/darwin/core/conversation-engine.js
 +++ b/src/darwin/core/conversation-engine.js
 @@ -1,5 +1,8 @@
  // darwin/core/conversation-engine.js — Claude Code 2.1.310（darwin）模块 chunk-31gxg38t.js
  import { __asset_src, __asset_text } from "../../runtime/assets.js";
 +import { memoryReadGuard } from "../../runtime/memory-guard.js";
-+import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
++import { redactClassifierContext, redactGitStatus, redactRepoVisibility } from "../../runtime/safeguards-redact.js";
 +import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
  import { tp } from "../shared/chunk-b5845da6.js";
  import { De, MKo, L_e, HKo, itr, atr, _Vr, MEt, MAe, dtr, ctr } from "../telemetry/chunk-1bb3c64e.js";
@@ -222,7 +222,32 @@ index 7926d09..660cfcc 100644
          if (KI === void 0) Xy("attempt_errored", yl ?? null, null);
          if (Hy = Gl, XI = Tg.fastMode ?? false, U_ = Se.monotonicNow(), Eh = void 0, HW.push(U_), og("query_client_creation_end"), ve) tx("client_creation"), ex("request_build");
          let fh = ELe(Tg);
-@@ -70555,7 +70559,7 @@ async function BT(e, n, r, s) {
+@@ -68986,11 +68990,12 @@ ${r.join(`
+ 
+ `)}`;
+ }
++// 本地分类器脱敏：提示词不带 autoMode 规则、权限 deny 规则和用户名（Session Context），见 docs/dev.md
+ async function ebr(e, n, r = false, s, h, y = false, b = [], w = false, H = "unmarked", q = false, K = false, Q, Se, be = wtt([])) {
+   let we = Ile(), ve = n !== void 0 ? n : Hbn(Ytt()), Ce = Ttt(), xe = (ve !== null ? abr(Ce) : Ce).replace("<cross_session_messages_rule>", () => bSr() + wSr() + be + (K ? cBs() : r ? H === "compact" || H === "compact-held" ? dBs(Se, H === "compact-held") : lBs(H === "original", Se) : "")).replace("<permissions_template>", () => {
+     let gt = we ? Fbn() : RSr();
+     return vtt(p3s(vSr(gt, s), Q));
+-  }), Me = q ? void 0 : CI(), We = Gtt(), Ge = (gt = [], At = WSr) => We ? gt.map(At) : [...gt], Je2 = qXs(Ge(QSr(e), w2r)), rt = await JSr(), lt = rt.length > 0 ? `
++  }), Me = void 0, We = Gtt(), Ge = (gt = [], At = WSr) => We ? gt.map(At) : [...gt], Je2 = "", rt = [], lt = rt.length > 0 ? `
+ 
+ ## Session Context
+ 
+@@ -69333,8 +69338,8 @@ async function Ske(e, n, r, s, h, y) {
+   let mo = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? FWs(Gn.name, Gn.input, h) : null, _o = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? await ibn(Gn.name, Gn.input, h) : null, ko = mo === null ? null : await mo, an = Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0 && Gv(Fl(r.find(($r) => Rt($r, Gn.name)) ?? Gn)) ? K5(Gn.id) : void 0, go = Ltt(), Jn = y.transcriptCacheTtl === "5m" && go === "1h" ? { type: "ephemeral", ttl: "5m" } : J9({ ttl: go }), En = At.at(-1);
+   if (En !== void 0) En.cache_control = Jn;
+   let lo = [];
+-  if (ko !== null) for (let $r of ko) lo.push(Ptt({ repoVisibility: $r }));
+-  if (_o !== null) lo.push(Ptt({ gitStatus: _o }));
++  if (ko !== null) for (let $r of ko) lo.push(Ptt({ repoVisibility: redactRepoVisibility($r, Gn.input.command) }));
++  if (_o !== null) lo.push(Ptt({ gitStatus: redactGitStatus(_o) }));
+   if (an !== void 0) lo.push(an);
+   if (lo.length > 0) At.push({ type: "text", text: lo.join("") });
+   if (lo.length > 0 && Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0) L$e(Gn.id, lo.join(""));
+@@ -70555,7 +70560,7 @@ async function BT(e, n, r, s) {
      }
      if (s?.planModeWriteFloor === true && Zye(r.session, e.name) === void 0 && H.behavior === "passthrough" && YRe(e, n, r)) return Yee(e);
    }
@@ -231,7 +256,7 @@ index 7926d09..660cfcc 100644
    let q = _f(h, e, n, "ask");
    if (q) return H?.behavior === "ask" ? { ...H, matchedAskRule: q } : { behavior: "ask", decisionReason: { type: "rule", rule: q }, message: id(e.name) };
    if (gon(e, s?.hookUpdatedInput) && !(s?.hookAsked === true && !e.requiresUserInteraction?.())) return H?.behavior === "ask" ? H : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -70637,7 +70641,7 @@ async function wwn(e, n, r, s, h = Cv, y) {
+@@ -70637,7 +70642,7 @@ async function wwn(e, n, r, s, h = Cv, y) {
      else if (!Q) K = { behavior: "passthrough", message: id(e.name), checkIncomplete: true };
      if (K.behavior === "passthrough" && YRe(e, n, r)) K = K.checkIncomplete === true ? { ...Yee(e), checkIncomplete: true } : Yee(e);
    }
@@ -240,7 +265,7 @@ index 7926d09..660cfcc 100644
    let Se = _f(b, e, n, "ask");
    if (Se) return K?.behavior === "ask" ? { ...K, matchedAskRule: Se } : { behavior: "ask", decisionReason: { type: "rule", rule: Se }, message: id(e.name) };
    if (e.requiresUserInteraction?.()) return K?.behavior === "ask" ? K : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -73276,7 +73280,7 @@ async function DEn(e, n) {
+@@ -73276,7 +73281,7 @@ async function DEn(e, n) {
      if (q.scrubCredentialEnv) Je2.push(kli({ sandboxMasked: q.sandboxMaskedEnv }));
      let dt = q.shellToolCommand ? rUs() : void 0;
      if (dt !== void 0) Je2.push(dt);
@@ -249,7 +274,7 @@ index 7926d09..660cfcc 100644
      let bt = Je2.join(" && "), gt = i.CLAUDE_CODE_SHELL_PREFIX;
      if (gt) bt = ime(gt, bt);
      return { commandString: bt, cwdFilePath: xe };
-@@ -79032,6 +79036,7 @@ async function m$r(e, n) {
+@@ -79032,6 +79037,7 @@ async function m$r(e, n) {
  var g$r = /* @__PURE__ */ new Set(["extract_memories", "auto_dream", awe, "prompt_suggestion", "compact"]);
  function oFs(e, n, r, s) {
    let h = n.memorySelector;
@@ -257,7 +282,7 @@ index 7926d09..660cfcc 100644
    if (!h || n.agentId || g$r.has(r)) return;
    let y = Bp() && zoe(), b = Ixe?.isAccountRecallOn() === true && !Kvt();
    if (!y && !b) return;
-@@ -97609,6 +97614,7 @@ import { chmod as yhs, mkdir as m1n, readFile as _hs, rename as uut, rm as cut,
+@@ -97609,6 +97615,7 @@ import { chmod as yhs, mkdir as m1n, readFile as _hs, rename as uut, rm as cut,
  import { dirname as h1n, join as fut, resolve as y1n, sep as khs } from "path";
  var _1n = "https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official", k1n = "marketplaces/claude-plugins-official/";
  async function B6n(e, n, r) {
@@ -265,7 +290,7 @@ index 7926d09..660cfcc 100644
    let s = y1n(n), h = y1n(e);
    if (h !== s && !h.startsWith(s + khs)) return t(`fetchOfficialMarketplaceFromGcs: refusing path outside cache dir: ${e}`, { level: "error" }), null;
    await FCn();
-@@ -111924,6 +111930,7 @@ import { randomBytes as JEs } from "crypto";
+@@ -111924,6 +111931,7 @@ import { randomBytes as JEs } from "crypto";
  import { rmSync as ZEs, watch as Jpt } from "fs";
  import { lstat as $Ne, mkdir as eRs, readdir as Zpt, readFile as tRs, unlink as nRs, writeFile as oRs } from "fs/promises";
  import { basename as Qpt, dirname as LQn, isAbsolute as rRs, join as h6, sep as YF } from "path";
@@ -273,7 +298,7 @@ index 7926d09..660cfcc 100644
  var jQn = 5e3, sRs = 64, WQn = 256, iRs = 1e3, aRs = 8, lRs = 2e4, zQn = 3e4, dRs = 200, qQn = 250, FQn = { grace: 30, quiet: 60 }, $Qn = 300, zk = Ee(/* @__PURE__ */ new Map(), () => {
    uRs();
  }), BS = /* @__PURE__ */ new Map(), _W = null, m6 = null, BQn = false;
-@@ -115918,7 +115925,7 @@ ${d$}`, isMeta: true })]);
+@@ -115918,7 +115926,7 @@ ${d$}`, isMeta: true })]);
    let n = oLr().safeParse(e);
    if (!n.success) return [];
    return Vl([Oe({ content: QBs(n.data.available, n.data.available && n.data.abbreviated), isMeta: true })]);
@@ -693,14 +718,14 @@ index 7abd32b..70da82c 100644
    ar();
    let h = jf() && !r7();
 diff --git a/src/linux/core/conversation-engine.js b/src/linux/core/conversation-engine.js
-index 8b67836..c0b692b 100644
+index 8b67836..66644b9 100644
 --- a/src/linux/core/conversation-engine.js
 +++ b/src/linux/core/conversation-engine.js
 @@ -1,5 +1,8 @@
  // linux/core/conversation-engine.js — Claude Code 2.1.310（linux）模块 chunk-j0tbz6ra.js
  import { __asset_src, __asset_text } from "../../runtime/assets.js";
 +import { memoryReadGuard } from "../../runtime/memory-guard.js";
-+import { redactClassifierContext } from "../../runtime/safeguards-redact.js";
++import { redactClassifierContext, redactGitStatus, redactRepoVisibility } from "../../runtime/safeguards-redact.js";
 +import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
  import { tf } from "../shared/chunk-b5845da6.js";
  import { He, oqo, x_e, sqo, jer, Wer, JKr, Avt, CCe, zer, Ker } from "../telemetry/chunk-1bb3c64e.js";
@@ -812,7 +837,32 @@ index 8b67836..c0b692b 100644
          if (zI === void 0) Yy("attempt_errored", Sl ?? null, null);
          if (Fy = Gl, VI = Tg.fastMode ?? false, j_ = Se.monotonicNow(), Eh = void 0, LW.push(j_), og("query_client_creation_end"), Te) QR("client_creation"), JR("request_build");
          let fh = GLe(Tg);
-@@ -70541,7 +70545,7 @@ async function $A(e, n, r, s) {
+@@ -68972,11 +68976,12 @@ ${r.join(`
+ 
+ `)}`;
+ }
++// 本地分类器脱敏：提示词不带 autoMode 规则、权限 deny 规则和用户名（Session Context），见 docs/dev.md
+ async function ibr(e, n, r = false, s, h, y = false, S = [], w = false, D = "unmarked", K = false, V = false, Q, Se, be = Stt([])) {
+   let we = vle(), Te = n !== void 0 ? n : Rbn(Ktt()), Ee = btt(), xe = (Te !== null ? pbr(Ee) : Ee).replace("<cross_session_messages_rule>", () => CSr() + xSr() + be + (V ? TBs() : r ? D === "compact" || D === "compact-held" ? kBs(Se, D === "compact-held") : EBs(D === "original", Se) : "")).replace("<permissions_template>", () => {
+     let mt = we ? wbn() : OSr();
+     return wtt(C4s(PSr(mt, s), Q));
+-  }), Me = K ? void 0 : wI(), je = Gtt(), Ge = (mt = [], Ct = YSr) => je ? mt.map(Ct) : [...mt], Je2 = cXs(Ge(obr(e), eGr)), rt = await rbr(), lt = rt.length > 0 ? `
++  }), Me = void 0, je = Gtt(), Ge = (mt = [], Ct = YSr) => je ? mt.map(Ct) : [...mt], Je2 = "", rt = [], lt = rt.length > 0 ? `
+ 
+ ## Session Context
+ 
+@@ -69319,8 +69324,8 @@ async function pke(e, n, r, s, h, y) {
+   let mo = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? pWs(Gn.name, Gn.input, h) : null, _o = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? await VSn(Gn.name, Gn.input, h) : null, ko = mo === null ? null : await mo, an = Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0 && WE($l(r.find((Fr) => Rt(Fr, Gn.name)) ?? Gn)) ? Z5(Gn.id) : void 0, go = Dtt(), Jn = y.transcriptCacheTtl === "5m" && go === "1h" ? { type: "ephemeral", ttl: "5m" } : B3({ ttl: go }), vn = Ct.at(-1);
+   if (vn !== void 0) vn.cache_control = Jn;
+   let lo = [];
+-  if (ko !== null) for (let Fr of ko) lo.push(xtt({ repoVisibility: Fr }));
+-  if (_o !== null) lo.push(xtt({ gitStatus: _o }));
++  if (ko !== null) for (let Fr of ko) lo.push(xtt({ repoVisibility: redactRepoVisibility(Fr, Gn.input.command) }));
++  if (_o !== null) lo.push(xtt({ gitStatus: redactGitStatus(_o) }));
+   if (an !== void 0) lo.push(an);
+   if (lo.length > 0) Ct.push({ type: "text", text: lo.join("") });
+   if (lo.length > 0 && Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0) A$e(Gn.id, lo.join(""));
+@@ -70541,7 +70546,7 @@ async function $A(e, n, r, s) {
      }
      if (s?.planModeWriteFloor === true && Vye(r.session, e.name) === void 0 && D.behavior === "passthrough" && YRe(e, n, r)) return Yee(e);
    }
@@ -821,7 +871,7 @@ index 8b67836..c0b692b 100644
    let K = bp(h, e, n, "ask");
    if (K) return D?.behavior === "ask" ? { ...D, matchedAskRule: K } : { behavior: "ask", decisionReason: { type: "rule", rule: K }, message: id(e.name) };
    if (eon(e, s?.hookUpdatedInput) && !(s?.hookAsked === true && !e.requiresUserInteraction?.())) return D?.behavior === "ask" ? D : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -70623,7 +70627,7 @@ async function Rwn(e, n, r, s, h = kE, y) {
+@@ -70623,7 +70628,7 @@ async function Rwn(e, n, r, s, h = kE, y) {
      else if (!Q) V = { behavior: "passthrough", message: id(e.name), checkIncomplete: true };
      if (V.behavior === "passthrough" && YRe(e, n, r)) V = V.checkIncomplete === true ? { ...Yee(e), checkIncomplete: true } : Yee(e);
    }
@@ -830,7 +880,7 @@ index 8b67836..c0b692b 100644
    let Se = bp(S, e, n, "ask");
    if (Se) return V?.behavior === "ask" ? { ...V, matchedAskRule: Se } : { behavior: "ask", decisionReason: { type: "rule", rule: Se }, message: id(e.name) };
    if (e.requiresUserInteraction?.()) return V?.behavior === "ask" ? V : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -73262,7 +73266,7 @@ async function xEn(e, n) {
+@@ -73262,7 +73267,7 @@ async function xEn(e, n) {
      if (K.scrubCredentialEnv) Je2.push(Wai({ sandboxMasked: K.sandboxMaskedEnv }));
      let dt = K.shellToolCommand ? _Fs() : void 0;
      if (dt !== void 0) Je2.push(dt);
@@ -839,7 +889,7 @@ index 8b67836..c0b692b 100644
      let St = Je2.join(" && "), mt = i.CLAUDE_CODE_SHELL_PREFIX;
      if (mt) St = ime(mt, St);
      return { commandString: St, cwdFilePath: xe };
-@@ -79018,6 +79022,7 @@ async function tBr(e, n) {
+@@ -79018,6 +79023,7 @@ async function tBr(e, n) {
  var nBr = /* @__PURE__ */ new Set(["extract_memories", "auto_dream", iwe, "prompt_suggestion", "compact"]);
  function bNs(e, n, r, s) {
    let h = n.memorySelector;
@@ -847,7 +897,7 @@ index 8b67836..c0b692b 100644
    if (!h || n.agentId || nBr.has(r)) return;
    let y = jf() && $oe(), S = wxe?.isAccountRecallOn() === true && !UEt();
    if (!y && !S) return;
-@@ -97595,6 +97600,7 @@ import { chmod as hhs, mkdir as O1n, readFile as yhs, rename as dut, rm as uut,
+@@ -97595,6 +97601,7 @@ import { chmod as hhs, mkdir as O1n, readFile as yhs, rename as dut, rm as uut,
  import { dirname as D1n, join as cut, resolve as N1n, sep as _hs } from "path";
  var L1n = "https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official", F1n = "marketplaces/claude-plugins-official/";
  async function SKn(e, n, r) {
@@ -855,7 +905,7 @@ index 8b67836..c0b692b 100644
    let s = N1n(n), h = N1n(e);
    if (h !== s && !h.startsWith(s + _hs)) return t(`fetchOfficialMarketplaceFromGcs: refusing path outside cache dir: ${e}`, { level: "error" }), null;
    await wTn();
-@@ -111910,6 +111916,7 @@ import { randomBytes as QEs } from "crypto";
+@@ -111910,6 +111917,7 @@ import { randomBytes as QEs } from "crypto";
  import { rmSync as JEs, watch as tht } from "fs";
  import { lstat as WNe, mkdir as ZEs, readdir as rht, readFile as eRs, unlink as tRs, writeFile as nRs } from "fs/promises";
  import { basename as Vgt, dirname as iQn, isAbsolute as oRs, join as z6, sep as PF } from "path";
@@ -863,7 +913,7 @@ index 8b67836..c0b692b 100644
  var pQn = 5e3, rRs = 64, gQn = 256, sRs = 1e3, iRs = 8, aRs = 2e4, hQn = 3e4, lRs = 200, yQn = 250, aQn = { grace: 30, quiet: 60 }, lQn = 300, Gk = ve(/* @__PURE__ */ new Map(), () => {
    dRs();
  }), eb = /* @__PURE__ */ new Map(), SW = null, W6 = null, dQn = false;
-@@ -115904,7 +115911,7 @@ ${IF}`, isMeta: true })]);
+@@ -115904,7 +115912,7 @@ ${IF}`, isMeta: true })]);
    let n = XLr().safeParse(e);
    if (!n.success) return [];
    return Kl([Oe({ content: C1s(n.data.available, n.data.available && n.data.abbreviated), isMeta: true })]);

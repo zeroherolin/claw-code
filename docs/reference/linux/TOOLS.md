@@ -18,13 +18,13 @@
 | `Agent` ✦ | true | true |  | delegate work to a subagent | [tools/agent-tool.js:654](../../../src/linux/tools/agent-tool.js#L654) |
 | `AppifactRepl` | false | false |  | run appifact SDK JavaScript against an artifact | [tools/appifact-repl-tool.js:1004](../../../src/linux/tools/appifact-repl-tool.js#L1004) |
 | `AskUserQuestion` ✦ | true | true |  | prompt the user with a multiple-choice question | [tools/ask-user-question-tool.js:248](../../../src/linux/tools/ask-user-question-tool.js#L248) |
-| `Bash` ✦ | <expr> | <expr> |  | execute shell commands | [core/conversation-engine.js:112834](../../../src/linux/core/conversation-engine.js#L112834) |
+| `Bash` ✦ | <expr> | <expr> |  | execute shell commands | [core/conversation-engine.js:112835](../../../src/linux/core/conversation-engine.js#L112835) |
 | `ClaudeDesign` ✦ | <fn> | <fn> |  | work with Claude Design (claude.ai/design) projects | [tools/claude-design-tool.js:618](../../../src/linux/tools/claude-design-tool.js#L618) |
 | `CronCreate` ✦ |  |  | true | schedule a recurring or one-shot prompt | [tools/cron-create-tool.js:180](../../../src/linux/tools/cron-create-tool.js#L180) |
 | `CronDelete` ✦ |  |  | true | cancel a scheduled cron job | [tools/cron-delete-tool.js:151](../../../src/linux/tools/cron-delete-tool.js#L151) |
 | `CronList` ✦ | true | true | true | list active cron jobs | [tools/cron-list-tool.js:154](../../../src/linux/tools/cron-list-tool.js#L154) |
 | `DesignSync` | <expr> | false | true | sync local design system components to a claude.ai/design p… | [tools/design-sync-tool.js:340](../../../src/linux/tools/design-sync-tool.js#L340) |
-| `Edit` |  |  |  | modify file contents in place | [core/conversation-engine.js:108463](../../../src/linux/core/conversation-engine.js#L108463) |
+| `Edit` |  |  |  | modify file contents in place | [core/conversation-engine.js:108464](../../../src/linux/core/conversation-engine.js#L108464) |
 | `EndConversation` | true | false | true | end the conversation — only for sustained user abuse, or wh… | [tools/end-conversation-tool.js:422](../../../src/linux/tools/end-conversation-tool.js#L422) |
 | `EnterPlanMode` ✦ | true | true | true | switch to plan mode to design an approach before coding | [tools/skill-tool-suffix-match.js:494](../../../src/linux/tools/skill-tool-suffix-match.js#L494) |
 | `EnterWorktree` ✦ |  |  | true | create an isolated git worktree and switch into it | [tools/worktree-entered-existing.js:2402](../../../src/linux/tools/worktree-entered-existing.js#L2402) |
@@ -43,7 +43,7 @@
 | `memory_read` | true | true | false | read a document from a memory store | [core/conversation-engine.js:38774](../../../src/linux/core/conversation-engine.js#L38774) |
 | `memory_write` |  |  | false | save a document to a memory store | [tools/memory-write-tool.js:1102](../../../src/linux/tools/memory-write-tool.js#L1102) |
 | `Monitor` ✦ |  | true | true | watch, monitor, or keep an eye on a process/log/command or … | [tools/monitor-tool.js:420](../../../src/linux/tools/monitor-tool.js#L420) |
-| `NotebookEdit` ✦ |  |  | true | edit Jupyter notebook cells (.ipynb) | [core/conversation-engine.js:108714](../../../src/linux/core/conversation-engine.js#L108714) |
+| `NotebookEdit` ✦ |  |  | true | edit Jupyter notebook cells (.ipynb) | [core/conversation-engine.js:108715](../../../src/linux/core/conversation-engine.js#L108715) |
 | `ObserverReport` | false |  |  |  | [tools/observer-report-tool.js:65](../../../src/linux/tools/observer-report-tool.js#L65) |
 | `OfferChromeSetup` ✦ | true | false | true | offer the user Claude in Chrome setup for their own browser | [tools/worktree-entered-existing.js:366](../../../src/linux/tools/worktree-entered-existing.js#L366) |
 | `Poll` | true | true |  | wait for and receive queued harness events | [tools/poll-tool.js:404](../../../src/linux/tools/poll-tool.js#L404) |
@@ -53,7 +53,7 @@
 | `ProposeGoal` ✦ | true | false | true | propose a session goal condition for the user to approve wi… | [tools/propose-goal-tool.js:156](../../../src/linux/tools/propose-goal-tool.js#L156) |
 | `PublishPlugin` | false | false | true | publish or share a plugin or mod with the team or organizat… | [tools/publish-plugin-tool.js:875](../../../src/linux/tools/publish-plugin-tool.js#L875) |
 | `PushNotification` ✦ | true | true | true | send a notification to the user via terminal and optionally… | [tools/push-notification-tool.js:148](../../../src/linux/tools/push-notification-tool.js#L148) |
-| `Read` | true | true |  | read files, images, PDFs, notebooks | [core/conversation-engine.js:75433](../../../src/linux/core/conversation-engine.js#L75433) |
+| `Read` | true | true |  | read files, images, PDFs, notebooks | [core/conversation-engine.js:75434](../../../src/linux/core/conversation-engine.js#L75434) |
 | `ReadMcpResourceDirTool` | true | true | true | list the children of an MCP directory resource | [tools/tool-result.f5fc.js:141](../../../src/linux/tools/tool-result.f5fc.js#L141) |
 | `ReadMcpResourceTool` | true | true | true | read a specific MCP resource by URI | [tools/tool-result.f5fc.js:218](../../../src/linux/tools/tool-result.f5fc.js#L218) |
 | `ReadNotifications` ✦ | true | true |  | read queued external notifications (webhooks, triggers) | [tools/worktree-entered-existing.js:118](../../../src/linux/tools/worktree-entered-existing.js#L118) |
