@@ -8,9 +8,11 @@
 //   claude-code-<系统>-<架构>/     各平台的原生可执行程序，平台见 src/runtime/platforms.js
 //
 // 流水线：读取模块图 → 资源 → 格式化与架构还原 → 分析 → 跨系统对齐与命名 → 写出源码与资源 → 参考资料 → LICENSE。
-// 读取与分析全部完成后才开始写入项目目录，中途出错不会留下新旧混杂的结果。
+// 读取与分析全部完成、源码在临时目录里生成完毕（有版本补丁时已校验并应用）之后，才开始写入项目目录，
+// 中途出错不会留下新旧混杂的结果。
 // src/main.js 与 src/runtime/ 为手写代码，不会被覆盖。
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { parseArgs } from "node:util";
 import { readBunModules, readVersion, formatModule, HEADER_RE, readJson, writeJson } from "./lib.js";
@@ -18,7 +20,8 @@ import { scanAssetRefs, writeAssets } from "./assets.js";
 import { unfoldArch } from "./unfold.js";
 import { analyzeStrings, analyzeTools, analyzeGates, analyzeCli } from "./analyze.js";
 import { alignModules } from "./align.js";
-import { planLayout, clearGenerated, writeSources, lineOffset } from "./assemble.js";
+import { planLayout, clearGenerated, writeSources } from "./assemble.js";
+import { applySourcePatch, patchLineShift, sourcePatchForVersion } from "./patches.js";
 import { writeReference } from "./reference.js";
 import { writeLicense } from "./license.js";
 import { SYSTEMS } from "../src/runtime/platforms.js";
@@ -48,6 +51,7 @@ const [version] = versions;
 const layoutFile = path.join(HERE, "layout", `${version}.json`);
 if (!fs.existsSync(layoutFile)) throw new Error(`缺少 ${path.relative(ROOT, layoutFile)}：新版本需要先编写归档与命名规则（见 extract/README.md）`);
 const layout = readJson(layoutFile);
+const sourcePatch = sourcePatchForVersion(version);
 step(`Claude Code ${version}：${platforms.map((p) => p.name).join("、")}`);
 
 // 1. 模块图
@@ -113,16 +117,28 @@ for (const [system, a] of Object.entries(analysis)) {
 }
 const plan = planLayout(groups, js, owners, layout.modules);
 
-// 6. 写出源码与资源（从这里开始写入项目目录）
-const srcDir = path.join(ROOT, "src");
-clearGenerated(srcDir);
-const legal = new Map(), stat = { module: 0, asset: 0 };
+// 6. 写出源码与资源。源码先生成到项目外的临时目录（git apply 须在仓库之外运行），有版本补丁时在那里校验并应用；
+//    全部成功后才清空旧源码、替换资源（从这里开始写入项目目录）
+const staged = fs.mkdtempSync(path.join(os.tmpdir(), "claw-extract-"));
+process.on("exit", () => fs.rmSync(staged, { recursive: true, force: true }));
+const stagedSrc = path.join(staged, "src");
+const legal = new Map(), stat = { module: 0, asset: 0 }, offsets = {};
 for (const [system, mods] of Object.entries(js)) {
   const loaderOf = Object.fromEntries(base[system].modules.map((m) => [m.name, m.loader]));
-  const r = writeSources(mods, plan[system], { system, version, srcDir, loaderOf, assets: bySystem[system] });
+  const r = writeSources(mods, plan[system], { system, version, srcDir: stagedSrc, loaderOf, assets: bySystem[system] });
   for (const [text, files] of r.legal) for (const f of files) (legal.get(text) ?? legal.set(text, new Set()).get(text)).add(f);
   stat.module += r.stat.module, stat.asset += r.stat.text + r.stat.file + r.stat.napi;
+  offsets[system] = r.offsets;
 }
+let shiftLine = (_file, line) => line; // 补丁造成的行号变化，参考资料中的行号按它换算
+if (sourcePatch) {
+  applySourcePatch(staged, sourcePatch);
+  shiftLine = patchLineShift(sourcePatch);
+  step(`版本补丁：${path.basename(sourcePatch)} 校验并应用成功`);
+}
+const srcDir = path.join(ROOT, "src");
+clearGenerated(srcDir);
+for (const system of Object.keys(SYSTEMS)) fs.cpSync(path.join(stagedSrc, system), path.join(srcDir, system), { recursive: true });
 const pathOf = (system, chunk) => plan[system][chunk];
 writeJson(path.join(tmpAssets, "INDEX.json"), assets.map(({ chunks, ...a }) => ({
   ...a, referenced_by: Object.fromEntries(Object.entries(chunks).map(([s, cs]) => [s, cs.map((c) => pathOf(s, c)).sort()])),
@@ -137,12 +153,10 @@ const refRoot = path.join(ROOT, "reference"), docRoot = path.join(ROOT, "docs/re
 fs.rmSync(refRoot, { recursive: true, force: true });
 fs.rmSync(docRoot, { recursive: true, force: true });
 for (const [system, a] of Object.entries(analysis)) {
-  const sysSrc = path.join(srcDir, system), offsets = new Map();
+  const sysSrc = path.join(srcDir, system);
   const where = (chunk, line) => {
     const p = plan[system][chunk] ?? chunk;
-    if (!line) return { path: p };
-    if (!offsets.has(p)) offsets.set(p, lineOffset(path.join(sysSrc, p)));
-    return { path: p, line: line + offsets.get(p) };
+    return line ? { path: p, line: shiftLine(`src/${system}/${p}`, line + offsets[system].get(p)) } : { path: p };
   };
   writeReference(a, where, {
     system, refDir: path.join(refRoot, system), docDir: path.join(docRoot, system), srcDir: sysSrc, assetsDir: path.join(ROOT, "assets"),

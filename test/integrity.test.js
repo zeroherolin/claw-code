@@ -77,6 +77,19 @@ describe("源码", () => {
   });
 });
 
+describe("参考资料", () => {
+  // 行号在提取时由原版模块中的位置换算而来（说明头、import 行、版本补丁都会使行号移动），这里确认换算后仍指向工具定义
+  test.each(Object.keys(SYSTEMS))("%s：tools.json 中每个工具的行号指向它的定义", (system) => {
+    const tools = JSON.parse(fs.readFileSync(path.join(ROOT, "reference", system, "tools.json"), "utf8"));
+    const bad = tools.filter((t) => {
+      const line = trees[system].get(t.path)?.split("\n")[t.line - 1] ?? "";
+      return !t.keys.some((k) => line.includes(`${k}:`) || line.includes(`${k}(`)); // 定义的首行至少写着它的一个属性
+    }).map((t) => `${t.name} → ${t.path}:${t.line}`);
+    expect(tools.length).toBeGreaterThan(0);
+    expect(bad).toEqual([]);
+  });
+});
+
 describe("资源", () => {
   const index = JSON.parse(fs.readFileSync(path.join(ASSETS, "INDEX.json"), "utf8"));
 

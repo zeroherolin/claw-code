@@ -52,7 +52,7 @@ npm run build         # 为当前平台编译出 dist/claude（约 10 秒）
 | `test/` | 单元、完整性、冒烟测试；`parity/` 为与原版的对比测试 | 手写 |
 | `extract/` | 维护者工具：从官方发布内容重新生成上表中"生成"的部分以及 `LICENSE` | 手写 |
 
-"生成"的内容由 `npm run extract` 产出，不要手改。
+"生成"的内容由 `npm run extract` 产出，不要手改；有意改动生成源码的分支用版本补丁保存改动，见 [extract/README.md](extract/README.md#版本补丁)。
 
 - **文件命名**：`<语义名>.js`，例如 `tools/agent-tool.js`；名字重复的加上短哈希，如 `ui/aria-hidden.12aa.js`；约 720 个模块找不到可靠的名字，命名为 `chunk-<哈希>.js`。两个系统中对应的模块使用同一路径，只属于某个系统的模块只出现在该系统的目录中。
 - **源码只改了位置和排版**：用 esbuild 等价格式化；模块引用改为相对路径；资源引用改为 `__asset_*()`；Linux 版另把写死的架构名改回 `process.arch`。标识符仍是原版混淆后的名字，各系统不同。
