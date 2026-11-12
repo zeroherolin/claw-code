@@ -442,3 +442,5 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，每
 | `fs/deep-link-register-failed.js`、`fs/auto-updater-forced-downgrade.js`、`fs/setup-token-command.js` | 不注册处理程序；`update`、`upgrade`、`install` 直接退出 | 共存 |
 
 改动生成源码后须重新生成补丁，做法与检查见 [extract/README.md](../extract/README.md#版本补丁)。
+
+生成源码中的名字是原版混淆后的名字，各系统不同：同一处改动在每个系统的源码里引用的名字各不相同。冒烟测试只运行当前系统的构建产物，其他系统的源码里引用了不存在的名字时，要到该系统上运行才报错（模块顶层的引用使模块加载失败）。`test/dev/patch-identifiers.test.js` 对每个系统的源码做静态检查：补丁新增的行里引用的名字，须在所在模块中有定义或导入。

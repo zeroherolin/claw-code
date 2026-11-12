@@ -1928,7 +1928,7 @@ async function Yt(e, n, o, r) {
 // 后台会话随退出结束：向运行时层登记结束会话所需的操作。本模块由会派发后台会话的进程加载。
 // leases 为连着守护进程的前台程序，除本进程外还有时不请它让出
 registerSessionHost({
-  jobsRoot: jD,
+  jobsRoot: NL,
   stop: (id) => yPe(id, void 0, void 0, void 0),
   remove: (id) => Hee(id, { internal: true }, void 0),
   list: () => dx(void 0, void 0),
