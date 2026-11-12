@@ -1,4 +1,5 @@
 // linux/git/bg-respawn-no-transcript.js — Claude Code 2.1.310（linux）模块 chunk-k4cpfn3d.js
+import { disown, isExitDetach, markOwned, reapOrphanedBackgroundSessions, registerSessionHost } from "../../runtime/session-bound-agents.js";
 import { Ne } from "../fs/async-hooks.93b1.js";
 import { b, c, ce, Vr, Ku, $b } from "../agents/third-party.js";
 import { R, d, E, Er, tw, Lit, Nit, ycr, wg, yh, _S, G } from "../telemetry/anthropic-workspace-id.js";
@@ -438,7 +439,7 @@ async function Dee(e, n, o = "shell", r, s, l, p, w) {
   let A = r === void 0 ? void 0 : y.cwd, v = n ?? Pt(), u = p ?? v.slice(0, 8), T = _o(u);
   return rxt(u, (async () => {
     try {
-      return await AUe(u, w), await Tn(e, o, A, s, l, { sessionId: v, short: u, jobDir: T, freshDir: n === void 0 }, y.verdict === "session", w);
+      return await AUe(u, w), p === void 0 && markOwned(T), await Tn(e, o, A, s, l, { sessionId: v, short: u, jobDir: T, freshDir: n === void 0 }, y.verdict === "session", w); // 后台会话随退出结束：新派发的会话在派发之前写入归属；重新启动已有任务（给出任务 id）时不改变归属
     } catch (x) {
       if (o !== "fleet" && o !== "spare") if (w) await Mt(w, u);
       else await dt(T, { recursive: true, force: true }).catch(() => {
@@ -598,6 +599,7 @@ async function wEi(e, n) {
 `);
     await Be(fe(), n);
     let H = await Dee([], void 0, "shell", void 0, { intent: x, exec: x, ...C && { name: C, nameSource: "user" } }, void 0, void 0, n);
+    if (H.short) disown(_o(H.short)); // 命令行 --bg：用户明确要求在后台运行，不记归属
     if (!H.ok) {
       if (H.reason === "cwd_gone") await da("cli_bg_dispatch_exec", "cwd_gone");
       else await zt("cli_bg_dispatch_exec", H.reason ?? "spawn_failed");
@@ -616,6 +618,7 @@ async function wEi(e, n) {
   }
   await Be(fe(), n);
   let u = await Dee(y, v.kind === "continue" ? v.sessionId : void 0, "shell", void 0, void 0, void 0, void 0, n);
+  if (u.short) disown(_o(u.short)); // 命令行 --bg：用户明确要求在后台运行，不记归属
   if (!u.ok) {
     await (u.reason === "gate_blocked" || u.reason === "cwd_gone" ? da : zt)("cli_bg_dispatch", u.reason ?? "spawn_failed", ...p3t(u.gateCause)), process.stderr.write(`${u.error}
 `), process.exitCode = 1;
@@ -1050,7 +1053,7 @@ A name opens only a running session. Use the id: \`claude attach ${l}\`
   return Oo(u.outcome === "error" ? 1 : 0);
 }
 function zn(e, n, o) {
-  return e.outcome === "detached" && e.viaApc === true && (e.msg === void 0 || !LFt.test(e.msg)) && n === true && o === true;
+  return e.outcome === "detached" && e.viaApc === true && (e.msg === void 0 || !LFt.test(e.msg)) && !isExitDetach(e.msg) && n === true && o === true; // 会话里请求退出时，claude attach 分离后不转入 agents 视图
 }
 async function kEi(e, n) {
   if (Ft(), e === "--help" || e === "-h") {
@@ -1922,6 +1925,21 @@ async function Yt(e, n, o, r) {
   let s = await e.digest(n, { algorithm: "sha256", maxBytes: o.length });
   return s.ok && s.value.digest === r;
 }
+// 后台会话随退出结束：向运行时层登记结束会话所需的操作。本模块由会派发后台会话的进程加载。
+// leases 为连着守护进程的前台程序，除本进程外还有时不请它让出
+registerSessionHost({
+  jobsRoot: jD,
+  stop: (id) => yPe(id, void 0, void 0, void 0),
+  remove: (id) => Hee(id, { internal: true }, void 0),
+  list: () => dx(void 0, void 0),
+  settled: Wa,
+  otherClients: async () => {
+    let r = await bh({ proto: Oc, op: "leases" });
+    return r.ok && Array.isArray(r.clients) ? r.clients.filter((c) => c.pid !== process.pid).length : null;
+  },
+  yieldDaemon: () => bh({ proto: Oc, op: "yield" })
+});
+reapOrphanedBackgroundSessions(); // 回收归属进程已不存在的后台会话；不等待完成
 export {
   AEi,
   Aeo,

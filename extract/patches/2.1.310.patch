@@ -103,19 +103,28 @@ index 72fe144..1775c25 100644
    ar();
    let h = Bp() && !uQ();
 diff --git a/src/darwin/core/conversation-engine.js b/src/darwin/core/conversation-engine.js
-index 7926d09..6c0dfcd 100644
+index 7926d09..e165c89 100644
 --- a/src/darwin/core/conversation-engine.js
 +++ b/src/darwin/core/conversation-engine.js
-@@ -1,5 +1,8 @@
+@@ -1,5 +1,9 @@
  // darwin/core/conversation-engine.js — Claude Code 2.1.310（darwin）模块 chunk-31gxg38t.js
  import { __asset_src, __asset_text } from "../../runtime/assets.js";
 +import { memoryReadGuard } from "../../runtime/memory-guard.js";
 +import { redactClassifierContext, redactGitStatus, redactRepoVisibility } from "../../runtime/safeguards-redact.js";
 +import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
++import { endOwnedBackgroundSessions } from "../../runtime/session-bound-agents.js";
  import { tp } from "../shared/chunk-b5845da6.js";
  import { De, MKo, L_e, HKo, itr, atr, _Vr, MEt, MAe, dtr, ctr } from "../telemetry/chunk-1bb3c64e.js";
  import { S, c, ce, Kr, ZK, Vu, Ka, $S, Dn, Jw, U7r } from "../agents/third-party.js";
-@@ -34899,8 +34902,7 @@ function cFs(e, n, r) {
+@@ -6897,6 +6901,7 @@ claude --cloud ${n}
+       b = y;
+     }
+     this.armShutdownFailsafe(Math.max(5e3, b + 5e3), e), e0e(), this.printResumeHint();
++    this.armShutdownFailsafe(Math.max(5e3, b + 5e3) + 9e3, e), await endOwnedBackgroundSessions(), this.armShutdownFailsafe(Math.max(5e3, b + 5e3), e); // 后台会话随退出结束：终端已恢复、退出时限的计时器已启动之后结束归属于本进程的后台会话；其间把时限放宽到结束会话的时限之上，完成后恢复
+     let w;
+     try {
+       let q = (async () => {
+@@ -34899,8 +34904,7 @@ function cFs(e, n, r) {
    return pYe(e, n, r, n).includePaths;
  }
  function oKo(e) {
@@ -125,7 +134,7 @@ index 7926d09..6c0dfcd 100644
  }
  function sKo() {
    return process.env.CLAUDE_COWORK_MEMORY_INDEX_CONTENT;
-@@ -35347,7 +35349,7 @@ async function xKo(e, n, r, s, h, y) {
+@@ -35347,7 +35351,7 @@ async function xKo(e, n, r, s, h, y) {
      await bH().warmCanonicalWcRoot();
      let ro = uQ(), Do = sKo();
      if (!ro && Do !== "") {
@@ -134,7 +143,7 @@ index 7926d09..6c0dfcd 100644
        if (Oo === null && Do === void 0 && !s && !zoe() && !i.CLAUDE_CODE_REMOTE && Ho && await YYt(e.host, vo)) Oo = await Rr(N4t(ho));
        if (Oo) {
          let kr = ru(Oo.path);
-@@ -59436,6 +59438,7 @@ function Kpn(e) {
+@@ -59436,6 +59440,7 @@ function Kpn(e) {
  }
  var vNs = Object.freeze({ visibleModel: void 0, serverLane: void 0, shouldLogSuppression: false });
  function mMr(e) {
@@ -142,7 +151,7 @@ index 7926d09..6c0dfcd 100644
    let n = q2(), r = p5s({ requestDialog: e.requestDialog, isMainThread: e.isMainThread, consumerLacksDialogCapability: e.consumerLacksDialogCapability }), s = e.inCascadeEpisode ? e.cascadeNext : D1o(e.currentModel), h = !e.alreadyUsed && !e.declined && n && !r ? s : void 0, y = h !== void 0 && !e.inCascadeEpisode && !e.threadedRequest && !e.preferenceQuestionPending && X4s() && !Vf(e.sticky, Bj), b = y && qpn({ primaryModel: e.currentModel, sticky: e.sticky, serverDefaultFallbacksEnabled: e.serverDefaultFallbacksEnabled, selfTargetDefaultFallbacksEnabled: e.selfTargetDefaultFallbacksEnabled }) ? "default" : "explicit", w = y && (b === "default" || !kSt(e.currentModel, h)) ? { forModel: e.currentModel, model: h, mode: b } : void 0;
    return { visibleModel: h, serverLane: w, shouldLogSuppression: !e.suppressionAlreadyLogged && n && r && s !== void 0 };
  }
-@@ -61680,7 +61683,7 @@ function bhn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
+@@ -61680,7 +61685,7 @@ function bhn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
      a("tengu_auto_mode_context_withheld", { reason: S("field_over_ceiling"), bytes: h });
      return;
    }
@@ -151,7 +160,7 @@ index 7926d09..6c0dfcd 100644
  }
  function zgr(e, n, r, s, h, y) {
    let b = (ve, Ce, xe, Me, We, Ge) => {
-@@ -62877,7 +62880,7 @@ function Yhr(e, n) {
+@@ -62877,7 +62882,7 @@ function Yhr(e, n) {
    let r = n.effort === void 0 ? void 0 : Array(e.length), s = n.now === void 0 ? void 0 : Array(e.length), { effort: h, now: y } = n;
    for (let b = e.length - 1; b >= 0; b--) {
      let w = e[b];
@@ -160,7 +169,7 @@ index 7926d09..6c0dfcd 100644
      if (r !== void 0) r[b] = h;
      if (s !== void 0) s[b] = y;
    }
-@@ -64996,7 +64999,7 @@ function U_r(e) {
+@@ -64996,7 +65001,7 @@ function U_r(e) {
    }
  }
  async function* j_r(e, n, r, s, h, y) {
@@ -169,7 +178,7 @@ index 7926d09..6c0dfcd 100644
      let we = w.now(), ve = Lm(), Ce = r(be);
      s(Se, we, Ce.max_tokens);
      let xe = bkr(Ce, ekn);
-@@ -65453,7 +65456,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -65453,7 +65458,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
      a("tengu_off_switch_query", { tier: S("per_model_block") }), yield Xs({ content: Ce, error: "rate_limit" });
      return;
    }
@@ -178,7 +187,7 @@ index 7926d09..6c0dfcd 100644
    if (We && Qs()) T5s(We);
    let Ge = z_r(e), Je2 = q_r(e), rt = PHr(e), lt = KJe(e), pt = Te() === "bedrock" && Q.model.includes("application-inference-profile") ? await fLe(Fn(Q.model)) ?? Q.model : Q.model;
    if (wRe(Q.model, Q.querySource), MEe()) await ehn(Q.model, Q.credentials, Q.storageV5);
-@@ -65786,7 +65789,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -65786,7 +65791,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
        l(N(Qn));
      }
    };
@@ -187,7 +196,7 @@ index 7926d09..6c0dfcd 100644
    let T6 = Q.enablePromptCaching ?? Ule(Jt), TI = Q.forkPointUuid !== void 0 && Up(Q.agentContext), RA = Mve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || TI ? Jt : void 0 }), KR = RA.ttl === "1h" ? "1h" : void 0, NE = pkr(RA.ttl) === "1h" ? "1h" : void 0, Mie = NE !== KR;
    if (ii) {
      if (Cns(KR === "1h" ? eA : uj, Q.model, RA.reason === "live_5m_cache"), Mie) mkr();
-@@ -65990,6 +65993,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -65990,6 +65995,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
        if (oRe(Qn, Q.agentId)) {
          let Ma = q_n(e, Ys);
          if (eh = N_n({ engine: xi, previousMessageId: ir, anchorRewritten: Ma !== null && W_n(Ma, ir), messages: Ys, agentId: Q.agentId, model: Q.model, modelHeldStateless: TA, relayHeldStateless: L_, classifierHeldStateless: w6, creditRetryStateless: Pie, dropHeldStateless: eLe, toolResultClearingHeldStateless: BE !== void 0, clock: Se }), Ma !== null) K_n(Ma, { sourceCategory: Qn, messageCount: Ys.length, anchorMessageId: ir });
@@ -195,7 +204,7 @@ index 7926d09..6c0dfcd 100644
        }
      }
    }
-@@ -66138,7 +66142,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -66138,7 +66144,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
      Rf = j9t(Rf, dt);
      let Jh = eh !== null ? eh.shapeInheritedFields(uS, { system: VR, tools: Rf }) : { system: VR, tools: Rf };
      pw = VR, v$ = Rf, $W = Jh.system !== VR, BW = uS !== null;
@@ -204,7 +213,7 @@ index 7926d09..6c0dfcd 100644
      LW = BE !== void 0 && Yc.context_management === qE, zI = rP && Yc.messages.some((Aa) => Aa.clear_at !== void 0);
      let Xc = D_r(Yc.thinking, Q.querySource, !hyt);
      if (Xc !== Yc.thinking) hyt = true, Yc.thinking = Xc;
-@@ -66707,7 +66711,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -66707,7 +66713,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
      yield* V_t.splice(0);
    }
    async function* X_t(Qn, ir) {
@@ -213,7 +222,7 @@ index 7926d09..6c0dfcd 100644
        let Qh = T$(dc);
        if (Qh !== void 0) return Qh;
        let bw = await Lyt(dc);
-@@ -66813,7 +66817,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
+@@ -66813,7 +66819,7 @@ async function* lSn(e, n, r, s, h, { modelFacts: y, ...b }) {
          }, VS);
        };
        if (Eh = void 0, og("query_client_creation_start"), ve) tx("request_build"), ex("client_creation");
@@ -222,7 +231,7 @@ index 7926d09..6c0dfcd 100644
          if (KI === void 0) Xy("attempt_errored", yl ?? null, null);
          if (Hy = Gl, XI = Tg.fastMode ?? false, U_ = Se.monotonicNow(), Eh = void 0, HW.push(U_), og("query_client_creation_end"), ve) tx("client_creation"), ex("request_build");
          let fh = ELe(Tg);
-@@ -68986,11 +68990,12 @@ ${r.join(`
+@@ -68986,11 +68992,12 @@ ${r.join(`
  
  `)}`;
  }
@@ -236,7 +245,7 @@ index 7926d09..6c0dfcd 100644
  
  ## Session Context
  
-@@ -69333,8 +69338,8 @@ async function Ske(e, n, r, s, h, y) {
+@@ -69333,8 +69340,8 @@ async function Ske(e, n, r, s, h, y) {
    let mo = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? FWs(Gn.name, Gn.input, h) : null, _o = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? await ibn(Gn.name, Gn.input, h) : null, ko = mo === null ? null : await mo, an = Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0 && Gv(Fl(r.find(($r) => Rt($r, Gn.name)) ?? Gn)) ? K5(Gn.id) : void 0, go = Ltt(), Jn = y.transcriptCacheTtl === "5m" && go === "1h" ? { type: "ephemeral", ttl: "5m" } : J9({ ttl: go }), En = At.at(-1);
    if (En !== void 0) En.cache_control = Jn;
    let lo = [];
@@ -247,7 +256,7 @@ index 7926d09..6c0dfcd 100644
    if (an !== void 0) lo.push(an);
    if (lo.length > 0) At.push({ type: "text", text: lo.join("") });
    if (lo.length > 0 && Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0) L$e(Gn.id, lo.join(""));
-@@ -70555,7 +70560,7 @@ async function BT(e, n, r, s) {
+@@ -70555,7 +70562,7 @@ async function BT(e, n, r, s) {
      }
      if (s?.planModeWriteFloor === true && Zye(r.session, e.name) === void 0 && H.behavior === "passthrough" && YRe(e, n, r)) return Yee(e);
    }
@@ -256,7 +265,7 @@ index 7926d09..6c0dfcd 100644
    let q = _f(h, e, n, "ask");
    if (q) return H?.behavior === "ask" ? { ...H, matchedAskRule: q } : { behavior: "ask", decisionReason: { type: "rule", rule: q }, message: id(e.name) };
    if (gon(e, s?.hookUpdatedInput) && !(s?.hookAsked === true && !e.requiresUserInteraction?.())) return H?.behavior === "ask" ? H : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -70637,7 +70642,7 @@ async function wwn(e, n, r, s, h = Cv, y) {
+@@ -70637,7 +70644,7 @@ async function wwn(e, n, r, s, h = Cv, y) {
      else if (!Q) K = { behavior: "passthrough", message: id(e.name), checkIncomplete: true };
      if (K.behavior === "passthrough" && YRe(e, n, r)) K = K.checkIncomplete === true ? { ...Yee(e), checkIncomplete: true } : Yee(e);
    }
@@ -265,7 +274,7 @@ index 7926d09..6c0dfcd 100644
    let Se = _f(b, e, n, "ask");
    if (Se) return K?.behavior === "ask" ? { ...K, matchedAskRule: Se } : { behavior: "ask", decisionReason: { type: "rule", rule: Se }, message: id(e.name) };
    if (e.requiresUserInteraction?.()) return K?.behavior === "ask" ? K : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -73276,7 +73281,7 @@ async function DEn(e, n) {
+@@ -73276,7 +73283,7 @@ async function DEn(e, n) {
      if (q.scrubCredentialEnv) Je2.push(kli({ sandboxMasked: q.sandboxMaskedEnv }));
      let dt = q.shellToolCommand ? rUs() : void 0;
      if (dt !== void 0) Je2.push(dt);
@@ -274,7 +283,7 @@ index 7926d09..6c0dfcd 100644
      let bt = Je2.join(" && "), gt = i.CLAUDE_CODE_SHELL_PREFIX;
      if (gt) bt = ime(gt, bt);
      return { commandString: bt, cwdFilePath: xe };
-@@ -79032,6 +79037,7 @@ async function m$r(e, n) {
+@@ -79032,6 +79039,7 @@ async function m$r(e, n) {
  var g$r = /* @__PURE__ */ new Set(["extract_memories", "auto_dream", awe, "prompt_suggestion", "compact"]);
  function oFs(e, n, r, s) {
    let h = n.memorySelector;
@@ -282,7 +291,7 @@ index 7926d09..6c0dfcd 100644
    if (!h || n.agentId || g$r.has(r)) return;
    let y = Bp() && zoe(), b = Ixe?.isAccountRecallOn() === true && !Kvt();
    if (!y && !b) return;
-@@ -97609,6 +97615,7 @@ import { chmod as yhs, mkdir as m1n, readFile as _hs, rename as uut, rm as cut,
+@@ -97609,6 +97617,7 @@ import { chmod as yhs, mkdir as m1n, readFile as _hs, rename as uut, rm as cut,
  import { dirname as h1n, join as fut, resolve as y1n, sep as khs } from "path";
  var _1n = "https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official", k1n = "marketplaces/claude-plugins-official/";
  async function B6n(e, n, r) {
@@ -290,7 +299,7 @@ index 7926d09..6c0dfcd 100644
    let s = y1n(n), h = y1n(e);
    if (h !== s && !h.startsWith(s + khs)) return t(`fetchOfficialMarketplaceFromGcs: refusing path outside cache dir: ${e}`, { level: "error" }), null;
    await FCn();
-@@ -111924,6 +111931,7 @@ import { randomBytes as JEs } from "crypto";
+@@ -111924,6 +111933,7 @@ import { randomBytes as JEs } from "crypto";
  import { rmSync as ZEs, watch as Jpt } from "fs";
  import { lstat as $Ne, mkdir as eRs, readdir as Zpt, readFile as tRs, unlink as nRs, writeFile as oRs } from "fs/promises";
  import { basename as Qpt, dirname as LQn, isAbsolute as rRs, join as h6, sep as YF } from "path";
@@ -298,7 +307,7 @@ index 7926d09..6c0dfcd 100644
  var jQn = 5e3, sRs = 64, WQn = 256, iRs = 1e3, aRs = 8, lRs = 2e4, zQn = 3e4, dRs = 200, qQn = 250, FQn = { grace: 30, quiet: 60 }, $Qn = 300, zk = Ee(/* @__PURE__ */ new Map(), () => {
    uRs();
  }), BS = /* @__PURE__ */ new Map(), _W = null, m6 = null, BQn = false;
-@@ -115918,7 +115926,7 @@ ${d$}`, isMeta: true })]);
+@@ -115918,7 +115928,7 @@ ${d$}`, isMeta: true })]);
    let n = oLr().safeParse(e);
    if (!n.success) return [];
    return Vl([Oe({ content: QBs(n.data.available, n.data.available && n.data.abbreviated), isMeta: true })]);
@@ -471,6 +480,72 @@ index e346381..4610228 100644
    if (i.DISABLE_UPDATES) process.stdout.write(`Updates are disabled by your administrator. Contact your IT team to get the latest version.
  `), process.exit(0);
    let { awaitPolicyLimitsColdStart: f } = await import("../cli/admit-prefetched-policy-limits.js");
+diff --git a/src/darwin/git/bg-respawn-no-transcript.js b/src/darwin/git/bg-respawn-no-transcript.js
+index cb27192..69a4bc8 100644
+--- a/src/darwin/git/bg-respawn-no-transcript.js
++++ b/src/darwin/git/bg-respawn-no-transcript.js
+@@ -1,4 +1,5 @@
+ // darwin/git/bg-respawn-no-transcript.js — Claude Code 2.1.310（darwin）模块 chunk-4w32g2w9.js
++import { disown, isExitDetach, markOwned, reapOrphanedBackgroundSessions, registerSessionHost } from "../../runtime/session-bound-agents.js";
+ import { Ne } from "../fs/async-hooks.93b1.js";
+ import { S, c, ce, Kr, Vu, $S } from "../agents/third-party.js";
+ import { R, d, v, vr, rw, Wit, Git, Mcr, wg, yh, bb, G } from "../telemetry/anthropic-workspace-id.js";
+@@ -438,7 +439,7 @@ async function jee(e, n, o = "shell", r, s, l, f, w) {
+   let A = r === void 0 ? void 0 : b.cwd, E = n ?? Pt(), u = f ?? E.slice(0, 8), T = _o(u);
+   return pxt(u, (async () => {
+     try {
+-      return await HUe(u, w), await Rn(e, o, A, s, l, { sessionId: E, short: u, jobDir: T, freshDir: n === void 0 }, b.verdict === "session", w);
++      return await HUe(u, w), f === void 0 && markOwned(T), await Rn(e, o, A, s, l, { sessionId: E, short: u, jobDir: T, freshDir: n === void 0 }, b.verdict === "session", w); // 后台会话随退出结束：新派发的会话在派发之前写入归属；重新启动已有任务（给出任务 id）时不改变归属
+     } catch (x) {
+       if (o !== "fleet" && o !== "spare") if (w) await Mt(w, u);
+       else await dt(T, { recursive: true, force: true }).catch(() => {
+@@ -598,6 +599,7 @@ async function dki(e, n) {
+ `);
+     await Be(pe(), n);
+     let H = await jee([], void 0, "shell", void 0, { intent: x, exec: x, ...C && { name: C, nameSource: "user" } }, void 0, void 0, n);
++    if (H.short) disown(_o(H.short)); // 命令行 --bg：用户明确要求在后台运行，不记归属
+     if (!H.ok) {
+       if (H.reason === "cwd_gone") await da("cli_bg_dispatch_exec", "cwd_gone");
+       else await zt("cli_bg_dispatch_exec", H.reason ?? "spawn_failed");
+@@ -616,6 +618,7 @@ async function dki(e, n) {
+   }
+   await Be(pe(), n);
+   let u = await jee(b, E.kind === "continue" ? E.sessionId : void 0, "shell", void 0, void 0, void 0, void 0, n);
++  if (u.short) disown(_o(u.short)); // 命令行 --bg：用户明确要求在后台运行，不记归属
+   if (!u.ok) {
+     await (u.reason === "gate_blocked" || u.reason === "cwd_gone" ? da : zt)("cli_bg_dispatch", u.reason ?? "spawn_failed", ...T9t(u.gateCause)), process.stderr.write(`${u.error}
+ `), process.exitCode = 1;
+@@ -1050,7 +1053,7 @@ A name opens only a running session. Use the id: \`claude attach ${l}\`
+   return Oo(u.outcome === "error" ? 1 : 0);
+ }
+ function zn(e, n, o) {
+-  return e.outcome === "detached" && e.viaApc === true && (e.msg === void 0 || !GUt.test(e.msg)) && n === true && o === true;
++  return e.outcome === "detached" && e.viaApc === true && (e.msg === void 0 || !GUt.test(e.msg)) && !isExitDetach(e.msg) && n === true && o === true; // 会话里请求退出时，claude attach 分离后不转入 agents 视图
+ }
+ async function pki(e, n) {
+   if (Ft(), e === "--help" || e === "-h") {
+@@ -1922,6 +1925,21 @@ async function Yt(e, n, o, r) {
+   let s = await e.digest(n, { algorithm: "sha256", maxBytes: o.length });
+   return s.ok && s.value.digest === r;
+ }
++// 后台会话随退出结束：向运行时层登记结束会话所需的操作。本模块由会派发后台会话的进程加载。
++// leases 为连着守护进程的前台程序，除本进程外还有时不请它让出
++registerSessionHost({
++  jobsRoot: jD,
++  stop: (id) => vPe(id, void 0, void 0, void 0),
++  remove: (id) => Wee(id, { internal: true }, void 0),
++  list: () => px(void 0, void 0),
++  settled: Ga,
++  otherClients: async () => {
++    let r = await Sh({ proto: Oc, op: "leases" });
++    return r.ok && Array.isArray(r.clients) ? r.clients.filter((c) => c.pid !== process.pid).length : null;
++  },
++  yieldDaemon: () => Sh({ proto: Oc, op: "yield" })
++});
++reapOrphanedBackgroundSessions(); // 回收归属进程已不存在的后台会话；不等待完成
+ export {
+   A9t,
+   C9t,
 diff --git a/src/darwin/mcp/apply-capability-serve-time-miss.848f.js b/src/darwin/mcp/apply-capability-serve-time-miss.848f.js
 index cfa8130..e0f43db 100644
 --- a/src/darwin/mcp/apply-capability-serve-time-miss.848f.js
@@ -573,6 +648,57 @@ index 1006de3..b72b818 100644
  function gK(e) {
    return d(e).some((o) => Not[o]?.bypassImmune === true);
  }
+diff --git a/src/darwin/telemetry/bg-attach-outcome.js b/src/darwin/telemetry/bg-attach-outcome.js
+index 30882c9..0c973c5 100644
+--- a/src/darwin/telemetry/bg-attach-outcome.js
++++ b/src/darwin/telemetry/bg-attach-outcome.js
+@@ -1,5 +1,6 @@
+ // darwin/telemetry/bg-attach-outcome.js — Claude Code 2.1.310（darwin）模块 chunk-zk9ft36n.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { isExitDetach } from "../../runtime/session-bound-agents.js";
+ import { S, c, ce } from "../agents/third-party.js";
+ import { d, v, rw, G } from "./anthropic-workspace-id.js";
+ import { ke } from "../context/not-admin-owned.js";
+@@ -1045,7 +1046,7 @@ async function xr(e, n, o) {
+     return m("job_attach", "job_attach_failed"), { kind: "error", msg: U };
+   }
+   if (t("[PERF:bg-attach-end]"), g("job_attach"), w.msg && KJe.test(w.msg)) return { kind: "detached", msg: w.msg.replace(KJe, "") };
+-  return w.beforeFirstFrame ? { kind: "detached", beforeFirstFrame: true } : { kind: "detached" };
++  return w.beforeFirstFrame ? { kind: "detached", beforeFirstFrame: true } : { kind: "detached", ...isExitDetach(w.msg) && { exit: true } }; // 会话里请求退出整个程序
+ }
+ var Nr = "Background sessions still running will stop in about a minute. Run 'claude agents' to keep them.";
+ async function Ot(e, n, o) {
+diff --git a/src/darwin/ui/bg-agent-action.js b/src/darwin/ui/bg-agent-action.js
+index 3a62465..05ac631 100644
+--- a/src/darwin/ui/bg-agent-action.js
++++ b/src/darwin/ui/bg-agent-action.js
+@@ -5096,6 +5096,7 @@ async function UZr(h, E) {
+       }
+       if (G1(ot.gestureId, E?.storageV5).catch(() => {
+       }), Tn()) return up();
++      if (Xe.kind === "detached" && Xe.exit) return gt(), void (Ne && process.stdout.write(lae() + $e)); // 会话里的退出操作：结束 agents 视图，程序随之退出。此时仍在备用屏幕中，先写出原本留给退出回调的序列
+       if (mo) qe = mo.attachEndingOf(Xe, !wt);
+       if (Xe.kind === "error" && !Xe.ended) {
+         if (Xe.notResponding) if (xv(Ae.job.state)) Tt.setError(Tp);
+diff --git a/src/darwin/ui/exit-nudge.js b/src/darwin/ui/exit-nudge.js
+index 2892f2f..0abc49b 100644
+--- a/src/darwin/ui/exit-nudge.js
++++ b/src/darwin/ui/exit-nudge.js
+@@ -1,4 +1,5 @@
+ // darwin/ui/exit-nudge.js — Claude Code 2.1.310（darwin）模块 chunk-zp6egcs9.js
++import { EXIT_DETACH_MESSAGE } from "../../runtime/session-bound-agents.js";
+ import "../shared/chunk-3b9c376b.js";
+ import "../fs/async-hooks.93b1.js";
+ import { V } from "../context/not-admin-owned.js";
+@@ -644,7 +645,7 @@ function T() {
+ async function Pe(a, s) {
+   if (Ut()) {
+     if (Die() !== void 0) return Yeo(a, s);
+-    return a(), Hie(), null;
++    return a(), Hie({ message: EXIT_DETACH_MESSAGE }), null; // 后台会话里的 /exit：请接入方退出整个程序
+   }
+   let g = _l() !== null, o = fws(s.taskRegistry?.all(), s.options?.mcpClients), t = g || o.length > 0 ? (m) => e(r5t, { showWorktree: g, backgroundItems: o, messages: s.messages, isMidTurn: s.isMidTurn, getMessages: s.getMessages, getIsResponseStreaming: s.getIsResponseStreaming, onDone: a, onCancel: () => a(), onBeforeExit: m }) : null;
+   if (bq()) {
 diff --git a/src/darwin/ui/preflight-check-failed.js b/src/darwin/ui/preflight-check-failed.js
 index d1eab3d..8d220e9 100644
 --- a/src/darwin/ui/preflight-check-failed.js
@@ -587,10 +713,34 @@ index d1eab3d..8d220e9 100644
      let v = e(uur, { customApiKeyTruncated: J, onDone: fe });
      k.push({ id: "api-key", component: x ? e(Egr, { children: v }) : v });
 diff --git a/src/darwin/ui/repl-screen.js b/src/darwin/ui/repl-screen.js
-index 0575d1d..5143ec7 100644
+index 0575d1d..e9622e5 100644
 --- a/src/darwin/ui/repl-screen.js
 +++ b/src/darwin/ui/repl-screen.js
-@@ -41738,7 +41738,7 @@ async function vvt(h) {
+@@ -1,5 +1,6 @@
+ // darwin/ui/repl-screen.js — Claude Code 2.1.310（darwin）模块 chunk-zq77a89q.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { EXIT_DETACH_MESSAGE, disown } from "../../runtime/session-bound-agents.js";
+ import { Yw, Br, F1, Sg, Vt } from "../shared/chunk-3b9c376b.js";
+ import { Ne, He } from "../fs/async-hooks.93b1.js";
+ import { wn, wAt, Ddr, EAt, vAt, Ldr, CAt, Fdr, TAt, $dr, Bxe, F, TA, L, Ei, Udr, bo, nt, U, V, tt, g$e, _b, Cu, ke, ao, NI, kit, cns, u$, vee, Gh, BK, kee, P5, cy, Wxe, PX, xAt, b$e, IX, Yp, Cit, P3e, w$e, PAt, Fc, aN, Rf, WK, I3e, Fbe, Bns, D1, dm, G3t, Rit, no, ye, Tu, YH, Nrs, fv, pP, $I, JCn, Ube, QCn, Lz, Wr, tTn, ecr, C$e, ffe, k_, xee, Om, MX, yTn, JH, N1, r4t, O5, Zbe, f$, e7r, t7r, FAt, VM, ATn, Pn, fss, Dee, J_, ps, KK, Vc, G3e, ris } from "../context/not-admin-owned.js";
+@@ -1309,6 +1310,7 @@ async function yRt(h, x, D, H, J, Z, be, Ae, De, We) {
+     return { ok: false, error: bn.error, queued: ln, reason: bn.reason, alive: bn.alive };
+   }
+   if (a("tengu_background", { via_flag: false, via: c(Ae) }), Ae === "left_arrow") g("repl_background_fork");
++  if (Ae === "command") disown(_o(bn.short)); // /background 与退出对话框：用户明确转入后台，不记归属，程序退出后继续运行
+   let wo = bn.sessionId ?? qo;
+   if (!We?.keepParent && No !== null && wo !== void 0) await UOe(No, Fo, wo, We?.storageV5);
+   if (io && !We?.keepParent) {
+@@ -38375,7 +38377,7 @@ class QZ {
+       return;
+     }
+     if (Ut()) {
+-      Hie({ message: Die({ kind: "quit" }) });
++      Hie({ message: EXIT_DETACH_MESSAGE }); // 后台会话里的退出：请接入方退出整个程序，而不是回到 agents 视图
+       return;
+     }
+     let x = _l() !== null, { tasks: D, mcp: H } = this.#n.getState(), J = pws(D, { mcpClients: H.clients });
+@@ -41738,7 +41740,7 @@ async function vvt(h) {
  var Cvt = { id: "official-marketplace-check", deps: (h) => [h.store, h.storageV5], setup() {
    let h = false;
    return ({ store: x, storageV5: D }) => {
@@ -744,19 +894,28 @@ index 7abd32b..70da82c 100644
    ar();
    let h = jf() && !r7();
 diff --git a/src/linux/core/conversation-engine.js b/src/linux/core/conversation-engine.js
-index 8b67836..66644b9 100644
+index 8b67836..524d516 100644
 --- a/src/linux/core/conversation-engine.js
 +++ b/src/linux/core/conversation-engine.js
-@@ -1,5 +1,8 @@
+@@ -1,5 +1,9 @@
  // linux/core/conversation-engine.js — Claude Code 2.1.310（linux）模块 chunk-j0tbz6ra.js
  import { __asset_src, __asset_text } from "../../runtime/assets.js";
 +import { memoryReadGuard } from "../../runtime/memory-guard.js";
 +import { redactClassifierContext, redactGitStatus, redactRepoVisibility } from "../../runtime/safeguards-redact.js";
 +import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
++import { endOwnedBackgroundSessions } from "../../runtime/session-bound-agents.js";
  import { tf } from "../shared/chunk-b5845da6.js";
  import { He, oqo, x_e, sqo, jer, Wer, JKr, Avt, CCe, zer, Ker } from "../telemetry/chunk-1bb3c64e.js";
  import { b, c, ce, Vr, Wq, Ku, Ka, $b, Hn, Xw, gJr } from "../agents/third-party.js";
-@@ -34897,8 +34900,7 @@ function TNs(e, n, r) {
+@@ -6895,6 +6899,7 @@ claude --cloud ${n}
+       S = y;
+     }
+     this.armShutdownFailsafe(Math.max(5e3, S + 5e3), e), qMe(), this.printResumeHint();
++    this.armShutdownFailsafe(Math.max(5e3, S + 5e3) + 9e3, e), await endOwnedBackgroundSessions(), this.armShutdownFailsafe(Math.max(5e3, S + 5e3), e); // 后台会话随退出结束：终端已恢复、退出时限的计时器已启动之后结束归属于本进程的后台会话；其间把时限放宽到结束会话的时限之上，完成后恢复
+     let w;
+     try {
+       let K = (async () => {
+@@ -34897,8 +34902,7 @@ function TNs(e, n, r) {
    return yYe(e, n, r, n).includePaths;
  }
  function SKo(e) {
@@ -766,7 +925,7 @@ index 8b67836..66644b9 100644
  }
  function bKo() {
    return process.env.CLAUDE_COWORK_MEMORY_INDEX_CONTENT;
-@@ -35345,7 +35347,7 @@ async function OKo(e, n, r, s, h, y) {
+@@ -35345,7 +35349,7 @@ async function OKo(e, n, r, s, h, y) {
      await hH().warmCanonicalWcRoot();
      let ro = r7(), Do = bKo();
      if (!ro && Do !== "") {
@@ -775,7 +934,7 @@ index 8b67836..66644b9 100644
        if (Oo === null && Do === void 0 && !s && !$oe() && !i.CLAUDE_CODE_REMOTE && Ho && await T4t(e.host, To)) Oo = await Tr(p6t(ho));
        if (Oo) {
          let kr = nu(Oo.path);
-@@ -59422,6 +59424,7 @@ function nmn(e) {
+@@ -59422,6 +59426,7 @@ function nmn(e) {
  }
  var $0s = Object.freeze({ visibleModel: void 0, serverLane: void 0, shouldLogSuppression: false });
  function qOr(e) {
@@ -783,7 +942,7 @@ index 8b67836..66644b9 100644
    let n = $G(), r = g5s({ requestDialog: e.requestDialog, isMainThread: e.isMainThread, consumerLacksDialogCapability: e.consumerLacksDialogCapability }), s = e.inCascadeEpisode ? e.cascadeNext : XUo(e.currentModel), h = !e.alreadyUsed && !e.declined && n && !r ? s : void 0, y = h !== void 0 && !e.inCascadeEpisode && !e.threadedRequest && !e.preferenceQuestionPending && ZYs() && !Kp(e.sticky, Dj), S = y && tmn({ primaryModel: e.currentModel, sticky: e.sticky, serverDefaultFallbacksEnabled: e.serverDefaultFallbacksEnabled, selfTargetDefaultFallbacksEnabled: e.selfTargetDefaultFallbacksEnabled }) ? "default" : "explicit", w = y && (S === "default" || !mbt(e.currentModel, h)) ? { forModel: e.currentModel, model: h, mode: S } : void 0;
    return { visibleModel: h, serverLane: w, shouldLogSuppression: !e.suppressionAlreadyLogged && n && r && s !== void 0 };
  }
-@@ -61666,7 +61669,7 @@ function khn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
+@@ -61666,7 +61671,7 @@ function khn({ autoModeServerContext: e, priorTurnContext: n, systemReminders: r
      a("tengu_auto_mode_context_withheld", { reason: b("field_over_ceiling"), bytes: h });
      return;
    }
@@ -792,7 +951,7 @@ index 8b67836..66644b9 100644
  }
  function Qgr(e, n, r, s, h, y) {
    let S = (Te, Ee, xe, Me, je, Ge) => {
-@@ -62863,7 +62866,7 @@ function tyr(e, n) {
+@@ -62863,7 +62868,7 @@ function tyr(e, n) {
    let r = n.effort === void 0 ? void 0 : Array(e.length), s = n.now === void 0 ? void 0 : Array(e.length), { effort: h, now: y } = n;
    for (let S = e.length - 1; S >= 0; S--) {
      let w = e[S];
@@ -801,7 +960,7 @@ index 8b67836..66644b9 100644
      if (r !== void 0) r[S] = h;
      if (s !== void 0) s[S] = y;
    }
-@@ -64982,7 +64985,7 @@ function K_r(e) {
+@@ -64982,7 +64987,7 @@ function K_r(e) {
    }
  }
  async function* V_r(e, n, r, s, h, y) {
@@ -810,7 +969,7 @@ index 8b67836..66644b9 100644
      let we = w.now(), Te = Lm(), Ee = r(be);
      s(Se, we, Ee.max_tokens);
      let xe = Ckr(Ee, $En);
-@@ -65439,7 +65442,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -65439,7 +65444,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
      a("tengu_off_switch_query", { tier: b("per_model_block") }), yield Xs({ content: Ee, error: "rate_limit" });
      return;
    }
@@ -819,7 +978,7 @@ index 8b67836..66644b9 100644
    if (je && Qs()) x5s(je);
    let Ge = Q_r(e), Je2 = J_r(e), rt = cHr(e), lt = KJe(e), ft = Ae() === "bedrock" && Q.model.includes("application-inference-profile") ? await a0e($n(Q.model)) ?? Q.model : Q.model;
    if (TRe(Q.model, Q.querySource), pEe()) await ehn(Q.model, Q.credentials, Q.storageV5);
-@@ -65772,7 +65775,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -65772,7 +65777,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
        l(N(Qn));
      }
    };
@@ -828,7 +987,7 @@ index 8b67836..66644b9 100644
    let J6 = Q.enablePromptCaching ?? Ile(Jt), RI = Q.forkPointUuid !== void 0 && Bf(Q.agentContext), AA = Cve(Q.querySource, { agentCacheTtlOverride: Q.agentCacheTtlOverride, mainThreadModel: ii || RI ? Jt : void 0 }), BR = AA.ttl === "1h" ? "1h" : void 0, dE = kkr(AA.ttl) === "1h" ? "1h" : void 0, Pie = dE !== BR;
    if (ii) {
      if (Gts(BR === "1h" ? JA : oj, Q.model, AA.reason === "live_5m_cache"), Pie) Skr();
-@@ -65976,6 +65979,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -65976,6 +65981,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
        if (sRe(Qn, Q.agentId)) {
          let Da = W_n(e, Ys);
          if (eh = N_n({ engine: xi, previousMessageId: sr, anchorRewritten: Da !== null && U_n(Da, sr), messages: Ys, agentId: Q.agentId, model: Q.model, modelHeldStateless: CA, relayHeldStateless: H_, classifierHeldStateless: Q6, creditRetryStateless: Aie, dropHeldStateless: SLe, toolResultClearingHeldStateless: yE !== void 0, clock: Se }), Da !== null) G_n(Da, { sourceCategory: Qn, messageCount: Ys.length, anchorMessageId: sr });
@@ -836,7 +995,7 @@ index 8b67836..66644b9 100644
        }
      }
    }
-@@ -66124,7 +66128,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -66124,7 +66130,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
      Pf = B9t(Pf, dt);
      let Jh = eh !== null ? eh.shapeInheritedFields(kS, { system: HR, tools: Pf }) : { system: HR, tools: Pf };
      fw = HR, h$ = Pf, DW = Jh.system !== HR, NW = kS !== null;
@@ -845,7 +1004,7 @@ index 8b67836..66644b9 100644
      OW = yE !== void 0 && Vc.context_management === wE, WI = lP && Vc.messages.some((Oa) => Oa.clear_at !== void 0);
      let Yc = H_r(Vc.thinking, Q.querySource, !yyt);
      if (Yc !== Vc.thinking) yyt = true, Vc.thinking = Yc;
-@@ -66693,7 +66697,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -66693,7 +66699,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
      yield* V_t.splice(0);
    }
    async function* Q_t(Qn, sr) {
@@ -854,7 +1013,7 @@ index 8b67836..66644b9 100644
        let Qh = p$(dc);
        if (Qh !== void 0) return Qh;
        let bw = await jyt(dc);
-@@ -66799,7 +66803,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
+@@ -66799,7 +66805,7 @@ async function* rSn(e, n, r, s, h, { modelFacts: y, ...S }) {
          }, ub);
        };
        if (Eh = void 0, og("query_client_creation_start"), Te) QR("request_build"), JR("client_creation");
@@ -863,7 +1022,7 @@ index 8b67836..66644b9 100644
          if (zI === void 0) Yy("attempt_errored", Sl ?? null, null);
          if (Fy = Gl, VI = Tg.fastMode ?? false, j_ = Se.monotonicNow(), Eh = void 0, LW.push(j_), og("query_client_creation_end"), Te) QR("client_creation"), JR("request_build");
          let fh = GLe(Tg);
-@@ -68972,11 +68976,12 @@ ${r.join(`
+@@ -68972,11 +68978,12 @@ ${r.join(`
  
  `)}`;
  }
@@ -877,7 +1036,7 @@ index 8b67836..66644b9 100644
  
  ## Session Context
  
-@@ -69319,8 +69324,8 @@ async function pke(e, n, r, s, h, y) {
+@@ -69319,8 +69326,8 @@ async function pke(e, n, r, s, h, y) {
    let mo = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? pWs(Gn.name, Gn.input, h) : null, _o = y.onlyBuiltInContext !== true && Gn !== void 0 && Gn.type === "tool_use" ? await VSn(Gn.name, Gn.input, h) : null, ko = mo === null ? null : await mo, an = Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0 && WE($l(r.find((Fr) => Rt(Fr, Gn.name)) ?? Gn)) ? Z5(Gn.id) : void 0, go = Dtt(), Jn = y.transcriptCacheTtl === "5m" && go === "1h" ? { type: "ephemeral", ttl: "5m" } : B3({ ttl: go }), vn = Ct.at(-1);
    if (vn !== void 0) vn.cache_control = Jn;
    let lo = [];
@@ -888,7 +1047,7 @@ index 8b67836..66644b9 100644
    if (an !== void 0) lo.push(an);
    if (lo.length > 0) Ct.push({ type: "text", text: lo.join("") });
    if (lo.length > 0 && Gn !== void 0 && Gn.type === "tool_use" && Gn.id !== void 0) A$e(Gn.id, lo.join(""));
-@@ -70541,7 +70546,7 @@ async function $A(e, n, r, s) {
+@@ -70541,7 +70548,7 @@ async function $A(e, n, r, s) {
      }
      if (s?.planModeWriteFloor === true && Vye(r.session, e.name) === void 0 && D.behavior === "passthrough" && YRe(e, n, r)) return Yee(e);
    }
@@ -897,7 +1056,7 @@ index 8b67836..66644b9 100644
    let K = bp(h, e, n, "ask");
    if (K) return D?.behavior === "ask" ? { ...D, matchedAskRule: K } : { behavior: "ask", decisionReason: { type: "rule", rule: K }, message: id(e.name) };
    if (eon(e, s?.hookUpdatedInput) && !(s?.hookAsked === true && !e.requiresUserInteraction?.())) return D?.behavior === "ask" ? D : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -70623,7 +70628,7 @@ async function Rwn(e, n, r, s, h = kE, y) {
+@@ -70623,7 +70630,7 @@ async function Rwn(e, n, r, s, h = kE, y) {
      else if (!Q) V = { behavior: "passthrough", message: id(e.name), checkIncomplete: true };
      if (V.behavior === "passthrough" && YRe(e, n, r)) V = V.checkIncomplete === true ? { ...Yee(e), checkIncomplete: true } : Yee(e);
    }
@@ -906,7 +1065,7 @@ index 8b67836..66644b9 100644
    let Se = bp(S, e, n, "ask");
    if (Se) return V?.behavior === "ask" ? { ...V, matchedAskRule: Se } : { behavior: "ask", decisionReason: { type: "rule", rule: Se }, message: id(e.name) };
    if (e.requiresUserInteraction?.()) return V?.behavior === "ask" ? V : { behavior: "ask", message: id(e.name), decisionReason: { type: "other", reason: "requiresUserInteraction" } };
-@@ -73262,7 +73267,7 @@ async function xEn(e, n) {
+@@ -73262,7 +73269,7 @@ async function xEn(e, n) {
      if (K.scrubCredentialEnv) Je2.push(Wai({ sandboxMasked: K.sandboxMaskedEnv }));
      let dt = K.shellToolCommand ? _Fs() : void 0;
      if (dt !== void 0) Je2.push(dt);
@@ -915,7 +1074,7 @@ index 8b67836..66644b9 100644
      let St = Je2.join(" && "), mt = i.CLAUDE_CODE_SHELL_PREFIX;
      if (mt) St = ime(mt, St);
      return { commandString: St, cwdFilePath: xe };
-@@ -79018,6 +79023,7 @@ async function tBr(e, n) {
+@@ -79018,6 +79025,7 @@ async function tBr(e, n) {
  var nBr = /* @__PURE__ */ new Set(["extract_memories", "auto_dream", iwe, "prompt_suggestion", "compact"]);
  function bNs(e, n, r, s) {
    let h = n.memorySelector;
@@ -923,7 +1082,7 @@ index 8b67836..66644b9 100644
    if (!h || n.agentId || nBr.has(r)) return;
    let y = jf() && $oe(), S = wxe?.isAccountRecallOn() === true && !UEt();
    if (!y && !S) return;
-@@ -97595,6 +97601,7 @@ import { chmod as hhs, mkdir as O1n, readFile as yhs, rename as dut, rm as uut,
+@@ -97595,6 +97603,7 @@ import { chmod as hhs, mkdir as O1n, readFile as yhs, rename as dut, rm as uut,
  import { dirname as D1n, join as cut, resolve as N1n, sep as _hs } from "path";
  var L1n = "https://downloads.claude.ai/claude-code-releases/plugins/claude-plugins-official", F1n = "marketplaces/claude-plugins-official/";
  async function SKn(e, n, r) {
@@ -931,7 +1090,7 @@ index 8b67836..66644b9 100644
    let s = N1n(n), h = N1n(e);
    if (h !== s && !h.startsWith(s + _hs)) return t(`fetchOfficialMarketplaceFromGcs: refusing path outside cache dir: ${e}`, { level: "error" }), null;
    await wTn();
-@@ -111910,6 +111917,7 @@ import { randomBytes as QEs } from "crypto";
+@@ -111910,6 +111919,7 @@ import { randomBytes as QEs } from "crypto";
  import { rmSync as JEs, watch as tht } from "fs";
  import { lstat as WNe, mkdir as ZEs, readdir as rht, readFile as eRs, unlink as tRs, writeFile as nRs } from "fs/promises";
  import { basename as Vgt, dirname as iQn, isAbsolute as oRs, join as z6, sep as PF } from "path";
@@ -939,7 +1098,7 @@ index 8b67836..66644b9 100644
  var pQn = 5e3, rRs = 64, gQn = 256, sRs = 1e3, iRs = 8, aRs = 2e4, hQn = 3e4, lRs = 200, yQn = 250, aQn = { grace: 30, quiet: 60 }, lQn = 300, Gk = ve(/* @__PURE__ */ new Map(), () => {
    dRs();
  }), eb = /* @__PURE__ */ new Map(), SW = null, W6 = null, dQn = false;
-@@ -115904,7 +115912,7 @@ ${IF}`, isMeta: true })]);
+@@ -115904,7 +115914,7 @@ ${IF}`, isMeta: true })]);
    let n = XLr().safeParse(e);
    if (!n.success) return [];
    return Kl([Oe({ content: C1s(n.data.available, n.data.available && n.data.abbreviated), isMeta: true })]);
@@ -1112,6 +1271,72 @@ index a61d0d7..6d7da22 100644
    if (i.DISABLE_UPDATES) process.stdout.write(`Updates are disabled by your administrator. Contact your IT team to get the latest version.
  `), process.exit(0);
    let { awaitPolicyLimitsColdStart: f } = await import("../cli/admit-prefetched-policy-limits.js");
+diff --git a/src/linux/git/bg-respawn-no-transcript.js b/src/linux/git/bg-respawn-no-transcript.js
+index 75f2a9a..edd82d9 100644
+--- a/src/linux/git/bg-respawn-no-transcript.js
++++ b/src/linux/git/bg-respawn-no-transcript.js
+@@ -1,4 +1,5 @@
+ // linux/git/bg-respawn-no-transcript.js — Claude Code 2.1.310（linux）模块 chunk-k4cpfn3d.js
++import { disown, isExitDetach, markOwned, reapOrphanedBackgroundSessions, registerSessionHost } from "../../runtime/session-bound-agents.js";
+ import { Ne } from "../fs/async-hooks.93b1.js";
+ import { b, c, ce, Vr, Ku, $b } from "../agents/third-party.js";
+ import { R, d, E, Er, tw, Lit, Nit, ycr, wg, yh, _S, G } from "../telemetry/anthropic-workspace-id.js";
+@@ -438,7 +439,7 @@ async function Dee(e, n, o = "shell", r, s, l, p, w) {
+   let A = r === void 0 ? void 0 : y.cwd, v = n ?? Pt(), u = p ?? v.slice(0, 8), T = _o(u);
+   return rxt(u, (async () => {
+     try {
+-      return await AUe(u, w), await Tn(e, o, A, s, l, { sessionId: v, short: u, jobDir: T, freshDir: n === void 0 }, y.verdict === "session", w);
++      return await AUe(u, w), p === void 0 && markOwned(T), await Tn(e, o, A, s, l, { sessionId: v, short: u, jobDir: T, freshDir: n === void 0 }, y.verdict === "session", w); // 后台会话随退出结束：新派发的会话在派发之前写入归属；重新启动已有任务（给出任务 id）时不改变归属
+     } catch (x) {
+       if (o !== "fleet" && o !== "spare") if (w) await Mt(w, u);
+       else await dt(T, { recursive: true, force: true }).catch(() => {
+@@ -598,6 +599,7 @@ async function wEi(e, n) {
+ `);
+     await Be(fe(), n);
+     let H = await Dee([], void 0, "shell", void 0, { intent: x, exec: x, ...C && { name: C, nameSource: "user" } }, void 0, void 0, n);
++    if (H.short) disown(_o(H.short)); // 命令行 --bg：用户明确要求在后台运行，不记归属
+     if (!H.ok) {
+       if (H.reason === "cwd_gone") await da("cli_bg_dispatch_exec", "cwd_gone");
+       else await zt("cli_bg_dispatch_exec", H.reason ?? "spawn_failed");
+@@ -616,6 +618,7 @@ async function wEi(e, n) {
+   }
+   await Be(fe(), n);
+   let u = await Dee(y, v.kind === "continue" ? v.sessionId : void 0, "shell", void 0, void 0, void 0, void 0, n);
++  if (u.short) disown(_o(u.short)); // 命令行 --bg：用户明确要求在后台运行，不记归属
+   if (!u.ok) {
+     await (u.reason === "gate_blocked" || u.reason === "cwd_gone" ? da : zt)("cli_bg_dispatch", u.reason ?? "spawn_failed", ...p3t(u.gateCause)), process.stderr.write(`${u.error}
+ `), process.exitCode = 1;
+@@ -1050,7 +1053,7 @@ A name opens only a running session. Use the id: \`claude attach ${l}\`
+   return Oo(u.outcome === "error" ? 1 : 0);
+ }
+ function zn(e, n, o) {
+-  return e.outcome === "detached" && e.viaApc === true && (e.msg === void 0 || !LFt.test(e.msg)) && n === true && o === true;
++  return e.outcome === "detached" && e.viaApc === true && (e.msg === void 0 || !LFt.test(e.msg)) && !isExitDetach(e.msg) && n === true && o === true; // 会话里请求退出时，claude attach 分离后不转入 agents 视图
+ }
+ async function kEi(e, n) {
+   if (Ft(), e === "--help" || e === "-h") {
+@@ -1922,6 +1925,21 @@ async function Yt(e, n, o, r) {
+   let s = await e.digest(n, { algorithm: "sha256", maxBytes: o.length });
+   return s.ok && s.value.digest === r;
+ }
++// 后台会话随退出结束：向运行时层登记结束会话所需的操作。本模块由会派发后台会话的进程加载。
++// leases 为连着守护进程的前台程序，除本进程外还有时不请它让出
++registerSessionHost({
++  jobsRoot: jD,
++  stop: (id) => yPe(id, void 0, void 0, void 0),
++  remove: (id) => Hee(id, { internal: true }, void 0),
++  list: () => dx(void 0, void 0),
++  settled: Wa,
++  otherClients: async () => {
++    let r = await bh({ proto: Oc, op: "leases" });
++    return r.ok && Array.isArray(r.clients) ? r.clients.filter((c) => c.pid !== process.pid).length : null;
++  },
++  yieldDaemon: () => bh({ proto: Oc, op: "yield" })
++});
++reapOrphanedBackgroundSessions(); // 回收归属进程已不存在的后台会话；不等待完成
+ export {
+   AEi,
+   Aeo,
 diff --git a/src/linux/mcp/apply-capability-serve-time-miss.848f.js b/src/linux/mcp/apply-capability-serve-time-miss.848f.js
 index 1fa5403..d05be84 100644
 --- a/src/linux/mcp/apply-capability-serve-time-miss.848f.js
@@ -1214,6 +1439,57 @@ index 1e20e9d..b276c79 100644
  function sq(e) {
    return d(e).some((o) => Pot[o]?.bypassImmune === true);
  }
+diff --git a/src/linux/telemetry/bg-attach-outcome.js b/src/linux/telemetry/bg-attach-outcome.js
+index 1de9658..2b8c06a 100644
+--- a/src/linux/telemetry/bg-attach-outcome.js
++++ b/src/linux/telemetry/bg-attach-outcome.js
+@@ -1,5 +1,6 @@
+ // linux/telemetry/bg-attach-outcome.js — Claude Code 2.1.310（linux）模块 chunk-t2adf9g4.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { isExitDetach } from "../../runtime/session-bound-agents.js";
+ import { b, c, ce } from "../agents/third-party.js";
+ import { d, E, tw, G } from "./anthropic-workspace-id.js";
+ import { ke } from "../context/not-admin-owned.js";
+@@ -1045,7 +1046,7 @@ async function xr(e, n, o) {
+     return m("job_attach", "job_attach_failed"), { kind: "error", msg: U };
+   }
+   if (t("[PERF:bg-attach-end]"), g("job_attach"), k.msg && rQe.test(k.msg)) return { kind: "detached", msg: k.msg.replace(rQe, "") };
+-  return k.beforeFirstFrame ? { kind: "detached", beforeFirstFrame: true } : { kind: "detached" };
++  return k.beforeFirstFrame ? { kind: "detached", beforeFirstFrame: true } : { kind: "detached", ...isExitDetach(k.msg) && { exit: true } }; // 会话里请求退出整个程序
+ }
+ var Nr = "Background sessions still running will stop in about a minute. Run 'claude agents' to keep them.";
+ async function Ot(e, n, o) {
+diff --git a/src/linux/ui/bg-agent-action.js b/src/linux/ui/bg-agent-action.js
+index 6e3cc8b..ffae0f5 100644
+--- a/src/linux/ui/bg-agent-action.js
++++ b/src/linux/ui/bg-agent-action.js
+@@ -5096,6 +5096,7 @@ async function LZr(h, E) {
+       }
+       if (FB(ot.gestureId, E?.storageV5).catch(() => {
+       }), An()) return ff();
++      if (Xe.kind === "detached" && Xe.exit) return mt(), void (Ve && process.stdout.write(eae() + $e)); // 会话里的退出操作：结束 agents 视图，程序随之退出。此时仍在备用屏幕中，先写出原本留给退出回调的序列
+       if (mo) qe = mo.attachEndingOf(Xe, !St);
+       if (Xe.kind === "error" && !Xe.ended) {
+         if (Xe.notResponding) if (RE(Pe.job.state)) Tt.setError(Tp);
+diff --git a/src/linux/ui/exit-nudge.js b/src/linux/ui/exit-nudge.js
+index 12ae63a..20aa89c 100644
+--- a/src/linux/ui/exit-nudge.js
++++ b/src/linux/ui/exit-nudge.js
+@@ -1,4 +1,5 @@
+ // linux/ui/exit-nudge.js — Claude Code 2.1.310（linux）模块 chunk-4p9zmcjk.js
++import { EXIT_DETACH_MESSAGE } from "../../runtime/session-bound-agents.js";
+ import "../shared/chunk-3b9c376b.js";
+ import "../fs/async-hooks.93b1.js";
+ import { q } from "../context/not-admin-owned.js";
+@@ -641,7 +642,7 @@ function G() {
+ async function Pe(a, s) {
+   if (Ut()) {
+     if (Cie() !== void 0) return keo(a, s);
+-    return a(), Aie(), null;
++    return a(), Aie({ message: EXIT_DETACH_MESSAGE }), null; // 后台会话里的 /exit：请接入方退出整个程序
+   }
+   let g = yl() !== null, o = $Ss(s.taskRegistry?.all(), s.options?.mcpClients), t = g || o.length > 0 ? (m) => e(K5t, { showWorktree: g, backgroundItems: o, messages: s.messages, isMidTurn: s.isMidTurn, getMessages: s.getMessages, getIsResponseStreaming: s.getIsResponseStreaming, onDone: a, onCancel: () => a(), onBeforeExit: m }) : null;
+   if (c4()) {
 diff --git a/src/linux/ui/preflight-check-failed.js b/src/linux/ui/preflight-check-failed.js
 index d2a8bc6..e504b4d 100644
 --- a/src/linux/ui/preflight-check-failed.js
@@ -1228,10 +1504,34 @@ index d2a8bc6..e504b4d 100644
      let T = e(Ycr, { customApiKeyTruncated: J, onDone: fe });
      R.push({ id: "api-key", component: x ? e(jmr, { children: T }) : T });
 diff --git a/src/linux/ui/repl-screen.js b/src/linux/ui/repl-screen.js
-index 0e74e07..1d96d04 100644
+index 0e74e07..ff38bd6 100644
 --- a/src/linux/ui/repl-screen.js
 +++ b/src/linux/ui/repl-screen.js
-@@ -41753,7 +41753,7 @@ async function _vt(h) {
+@@ -1,5 +1,6 @@
+ // linux/ui/repl-screen.js — Claude Code 2.1.310（linux）模块 chunk-mdxeekqd.js
+ import { __asset_src } from "../../runtime/assets.js";
++import { EXIT_DETACH_MESSAGE, disown } from "../../runtime/session-bound-agents.js";
+ import { qw, Br, MB, bg, Kt } from "../shared/chunk-3b9c376b.js";
+ import { Ne, De } from "../fs/async-hooks.93b1.js";
+ import { wn, uCt, bdr, fCt, pCt, Sdr, gCt, vdr, hCt, Edr, Hxe, F, EC, L, vi, kdr, So, nt, U, q, tt, iFe, hS, Eu, ke, ao, MI, yit, xts, aF, gee, Gh, Iq, hee, S6, ly, Nxe, vX, bCt, uFe, EX, Jf, _it, vYe, fFe, SCt, $c, rN, Rp, Mq, EYe, ISe, ins, PB, dm, PYt, wit, no, ye, ku, KH, nrs, fE, dP, HI, DTn, MSe, HTn, C2, Wr, $Tn, $dr, hFe, ipe, E_, wee, Om, TX, eAn, qH, OB, WYt, v6, KSe, dF, xXr, PXr, RCt, BM, cAn, Pn, Oos, Cee, X_, ps, Nq, zc, LYe, vss } from "../context/not-admin-owned.js";
+@@ -1306,6 +1307,7 @@ async function lRt(h, x, D, H, J, Z, Se, Ce, Fe, He) {
+     return { ok: false, error: bn.error, queued: ln, reason: bn.reason, alive: bn.alive };
+   }
+   if (a("tengu_background", { via_flag: false, via: c(Ce) }), Ce === "left_arrow") g("repl_background_fork");
++  if (Ce === "command") disown(_o(bn.short)); // /background 与退出对话框：用户明确转入后台，不记归属，程序退出后继续运行
+   let wo = bn.sessionId ?? Go;
+   if (!He?.keepParent && No !== null && wo !== void 0) await GOe(No, jo, wo, He?.storageV5);
+   if (io && !He?.keepParent) {
+@@ -38390,7 +38392,7 @@ class JZ {
+       return;
+     }
+     if (Ut()) {
+-      Aie({ message: Cie({ kind: "quit" }) });
++      Aie({ message: EXIT_DETACH_MESSAGE }); // 后台会话里的退出：请接入方退出整个程序，而不是回到 agents 视图
+       return;
+     }
+     let x = yl() !== null, { tasks: D, mcp: H } = this.#n.getState(), J = NSs(D, { mcpClients: H.clients });
+@@ -41753,7 +41755,7 @@ async function _vt(h) {
  var Tvt = { id: "official-marketplace-check", deps: (h) => [h.store, h.storageV5], setup() {
    let h = false;
    return ({ store: x, storageV5: D }) => {

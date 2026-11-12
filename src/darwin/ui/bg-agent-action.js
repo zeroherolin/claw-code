@@ -5096,6 +5096,7 @@ async function UZr(h, E) {
       }
       if (G1(ot.gestureId, E?.storageV5).catch(() => {
       }), Tn()) return up();
+      if (Xe.kind === "detached" && Xe.exit) return gt(), void (Ne && process.stdout.write(lae() + $e)); // 会话里的退出操作：结束 agents 视图，程序随之退出。此时仍在备用屏幕中，先写出原本留给退出回调的序列
       if (mo) qe = mo.attachEndingOf(Xe, !wt);
       if (Xe.kind === "error" && !Xe.ended) {
         if (Xe.notResponding) if (xv(Ae.job.state)) Tt.setError(Tp);

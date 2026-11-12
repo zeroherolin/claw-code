@@ -12,7 +12,7 @@ Claude Code **2.1.310** 的可读、可运行重组版本，运行在公开版 B
 
 本仓库有两个长期分支：`main` 的行为与原版一致；`dev` 在 `main` 的基础上有意改动了与隐私有关的行为（固定时区、关闭遥测与非必要网络流量、记忆只发路径、拒答后的重试等），说明见该分支的 `docs/dev.md`。
 
-**这是 `dev` 分支。** 上文的“行为与原版一致”只对未改动的部分成立；八处改动的内容、代价和测试见 [docs/dev.md](docs/dev.md)。
+**这是 `dev` 分支。** 上文的“行为与原版一致”只对未改动的部分成立；九处改动的内容、代价和测试见 [docs/dev.md](docs/dev.md)。
 
 版权与许可见 [LICENSE](LICENSE)。
 
@@ -86,7 +86,7 @@ npm run test:parity    # 与当前平台的官方可执行程序逐项对比（�
 - 全部测试都在隔离的 HOME 下运行，使用假 API key，模型请求只发往 127.0.0.1 上的假 API。隔离环境关闭了遥测、非必要网络流量和官方插件市场的自动安装（`test/harness.js` 的 `cleanEnv`）。对比测试的首次引导场景（`onboarding`）是例外：原版在引导开始时检查连通性，访问 `api.anthropic.com` 与 `platform.claude.com`（`ui/preflight-check-failed.js`「/v1/oauth/hello」），请求不带凭据，原版没有关闭这项检查的开关。
 - CI（`.github/workflows/test.yml`）：每次 push 和 PR 在每个支持的平台上分别构建，运行 `npm test`，并与该平台的官方可执行程序做对比测试。
 
-`dev` 分支的 `npm test` 另外运行 `test/dev/` 下的用例，共约 4.5 分钟，主要用于 `test/dev/smoke.test.js`；只运行其中的单元测试：`npm test -- test/dev/runtime.test.js`。
+`dev` 分支的 `npm test` 另外运行 `test/dev/` 下的用例，共约 7.5 分钟，主要用于 `test/dev/smoke.test.js`；只运行其中的单元测试：`npm test -- test/dev/runtime.test.js`。
 
 ## 行为一致性
 

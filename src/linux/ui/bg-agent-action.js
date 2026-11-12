@@ -5096,6 +5096,7 @@ async function LZr(h, E) {
       }
       if (FB(ot.gestureId, E?.storageV5).catch(() => {
       }), An()) return ff();
+      if (Xe.kind === "detached" && Xe.exit) return mt(), void (Ve && process.stdout.write(eae() + $e)); // 会话里的退出操作：结束 agents 视图，程序随之退出。此时仍在备用屏幕中，先写出原本留给退出回调的序列
       if (mo) qe = mo.attachEndingOf(Xe, !St);
       if (Xe.kind === "error" && !Xe.ended) {
         if (Xe.notResponding) if (RE(Pe.job.state)) Tt.setError(Tp);

@@ -186,7 +186,7 @@
 
 `src/runtime/` 为本项目手写：assets、bun-ant、cell-segmenter、set-dumpable、embedded-tools、platforms。
 
-`dev` 分支另有 pinned-env、pinned-env-worker（固定环境变量）、memory-guard（读取记忆文件需要确认）、safeguards-redact（safeguards 脱敏）、upload-identity（拒答重试的临时上传身份），都在 [dev.md](dev.md) 中说明。
+`dev` 分支另有 pinned-env、pinned-env-worker（固定环境变量）、memory-guard（读取记忆文件需要确认）、safeguards-redact（safeguards 脱敏）、upload-identity（拒答重试的临时上传身份）、session-bound-agents（后台会话随退出结束），都在 [dev.md](dev.md) 中说明。
 
 模块数随重新生成可能略有变化。
 

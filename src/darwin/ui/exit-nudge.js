@@ -1,4 +1,5 @@
 // darwin/ui/exit-nudge.js — Claude Code 2.1.310（darwin）模块 chunk-zp6egcs9.js
+import { EXIT_DETACH_MESSAGE } from "../../runtime/session-bound-agents.js";
 import "../shared/chunk-3b9c376b.js";
 import "../fs/async-hooks.93b1.js";
 import { V } from "../context/not-admin-owned.js";
@@ -644,7 +645,7 @@ function T() {
 async function Pe(a, s) {
   if (Ut()) {
     if (Die() !== void 0) return Yeo(a, s);
-    return a(), Hie(), null;
+    return a(), Hie({ message: EXIT_DETACH_MESSAGE }), null; // 后台会话里的 /exit：请接入方退出整个程序
   }
   let g = _l() !== null, o = fws(s.taskRegistry?.all(), s.options?.mcpClients), t = g || o.length > 0 ? (m) => e(r5t, { showWorktree: g, backgroundItems: o, messages: s.messages, isMidTurn: s.isMidTurn, getMessages: s.getMessages, getIsResponseStreaming: s.getIsResponseStreaming, onDone: a, onCancel: () => a(), onBeforeExit: m }) : null;
   if (bq()) {

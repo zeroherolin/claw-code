@@ -1,5 +1,6 @@
 // linux/telemetry/bg-attach-outcome.js — Claude Code 2.1.310（linux）模块 chunk-t2adf9g4.js
 import { __asset_src } from "../../runtime/assets.js";
+import { isExitDetach } from "../../runtime/session-bound-agents.js";
 import { b, c, ce } from "../agents/third-party.js";
 import { d, E, tw, G } from "./anthropic-workspace-id.js";
 import { ke } from "../context/not-admin-owned.js";
@@ -1045,7 +1046,7 @@ async function xr(e, n, o) {
     return m("job_attach", "job_attach_failed"), { kind: "error", msg: U };
   }
   if (t("[PERF:bg-attach-end]"), g("job_attach"), k.msg && rQe.test(k.msg)) return { kind: "detached", msg: k.msg.replace(rQe, "") };
-  return k.beforeFirstFrame ? { kind: "detached", beforeFirstFrame: true } : { kind: "detached" };
+  return k.beforeFirstFrame ? { kind: "detached", beforeFirstFrame: true } : { kind: "detached", ...isExitDetach(k.msg) && { exit: true } }; // 会话里请求退出整个程序
 }
 var Nr = "Background sessions still running will stop in about a minute. Run 'claude agents' to keep them.";
 async function Ot(e, n, o) {

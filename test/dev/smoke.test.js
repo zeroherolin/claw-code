@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { ROOT, DIST, makeHome, cleanEnv, startFakeApi, runCli, runInPty, renderScreen, trapExternalAccess } from "../harness.js";
 import { startScriptedApi } from "./scripted-api.js";
+import { backgroundProcesses, driveSession, jobIds, killBackgroundProcesses, longCommand, longCommandPids, remainingBackgroundProcesses } from "./agents-session.js";
 
 let home, api;
 const DEV = [process.execPath, path.join(ROOT, "src/main.js")];
@@ -657,5 +658,205 @@ describe.skipIf(!fs.existsSync(DIST))("构建产物 dist/claude", () => {
         h.remove();
       }
     }, 60_000);
+  });
+
+  // 后台会话随退出结束（docs/dev.md#后台会话随退出结束）。真实二进制加假 API，在伪终端中操作：
+  // 按 ← 把当前会话转入后台并进入 agents 视图，再从会话内或视图中退出，检查程序退出后没有后台进程、任务与后台命令，
+  // 且会话可在更换凭据后作为普通会话接续；没有归属的会话（用户明确转入后台的）不受影响。
+  describe("后台会话随退出结束", () => {
+    const ENTER = "\r", LEFT = "\x1b[D", DOWN = "\x1b[B", CTRL_C = "\x03";
+    const IN_AGENTS = /describe a task for a new session/, IN_SESSION = /← for agents/;
+    // 提交一条消息，回复出现后按 ←。输入框清空后 2 秒内的第一下 ← 只显示确认提示，因此先停顿
+    const TO_AGENTS = [
+      { wait: /auto mode on/, pause: 800, send: `first message${ENTER}` },
+      { wait: /FINAL_ANSWER/, pause: 2500, send: LEFT },
+    ];
+    const QUIT = [{ pause: 2000, send: CTRL_C }, { pause: 400, send: CTRL_C }];
+    const transcripts = (home) => {
+      const projects = path.join(home, ".claude/projects");
+      return fs.readdirSync(projects).flatMap((d) => fs.readdirSync(path.join(projects, d)).filter((f) => f.endsWith(".jsonl")).map((f) => fs.readFileSync(path.join(projects, d, f), "utf8")));
+    };
+    // 假 API 的脚本：第一个带工具的请求让模型在后台运行一条长时间的命令，其余请求正常回复
+    const longShell = (home) => {
+      let withTools = 0;
+      const call = { tool: "Bash", input: { command: longCommand(home), run_in_background: true, description: "long task" } };
+      return (body) => (body.tools?.length > 0 && ++withTools === 1 ? call : "ok");
+    };
+    const daemons = (home) => backgroundProcesses(home).filter((p) => p.command.includes("daemon run")).map((p) => p.pid).sort();
+    // 在隔离 HOME 中按 steps 操作，程序结束后把结果交给 after；最后结束该 HOME 的后台进程与长时间命令。
+    // prepare 在启动之前运行，返回启动参数（没有时不带参数启动）；plan 由 HOME 得出假 API 的脚本
+    const session = (steps, after, prepare, plan = () => 0) => {
+      const h = makeHome(), fake = startScriptedApi(plan(h.home));
+      const { ANTHROPIC_API_KEY: _apiKey, ...base } = cleanEnv(h.home, fake.url);
+      const env = { ...base, ANTHROPIC_AUTH_TOKEN: "token-before" };
+      const body = async () => after(await driveSession([DIST, ...((await prepare?.({ h, env })) ?? [])], { cwd: h.work, env, steps }), { h, fake, env });
+      return body().finally(async () => (await killBackgroundProcesses(h.home), fake.stop(), h.remove()));
+    };
+    const expectNothingLeft = async (run, home) => {
+      expect(run.stuck).toBeUndefined();
+      expect(run.exitCode).toBe(0); // 程序自行退出；仍停在 agents 视图时为 null
+      expect(await remainingBackgroundProcesses(home)).toEqual([]);
+      expect(jobIds(home)).toEqual([]);
+    };
+
+    const EXIT_IN_SESSION = [
+      ...TO_AGENTS,
+      { wait: IN_AGENTS, pause: 1500, send: ENTER },
+      { wait: IN_SESSION, pause: 1500, send: `second message${ENTER}` },
+      { wait: /second message[\s\S]*FINAL_ANSWER/ },
+      ...QUIT,
+    ];
+    test("在转入后台的会话里按两次 Ctrl+C：程序直接退出，不回到 agents 视图；更换凭据后可作为普通会话接续", () => session(EXIT_IN_SESSION, async (run, { h, fake, env }) => {
+      await expectNothingLeft(run, h.home);
+      const before = fake.requests.length;
+      expect(new Set(fake.requests.map((q) => q.headers.authorization))).toEqual(new Set(["Bearer token-before"]));
+      const r = await runCli([DIST], ["-p", "--continue", "third message"], { cwd: h.work, env: { ...env, ANTHROPIC_AUTH_TOKEN: "token-after" } });
+      expect(r.code).toBe(0);
+      const added = fake.requests.slice(before);
+      expect(added.length).toBeGreaterThan(0);
+      expect(new Set(added.map((q) => q.headers.authorization))).toEqual(new Set(["Bearer token-after"]));
+      const history = JSON.stringify(added.at(-1).body.messages); // 第二问是在后台会话里提出的，接续时同样在历史中
+      for (const text of ["first message", "second message", "third message"]) expect(history).toContain(text);
+    }), 150_000);
+
+    const EXIT_IN_AGENTS = [
+      ...TO_AGENTS,
+      { wait: IN_AGENTS, pause: 1500, send: "second task" },
+      { pause: 800, send: ENTER },
+      { wait: /FINAL_ANSWER[\s\S]*FINAL_ANSWER/ },
+      ...QUIT,
+    ];
+    test("从 agents 视图退出：转入后台的会话与视图中新建的会话都结束，会话记录保留", () => session(EXIT_IN_AGENTS, async (run, { h, fake }) => {
+      await expectNothingLeft(run, h.home);
+      expect(fake.requests.some((q) => JSON.stringify(q.body.messages).includes("second task"))).toBe(true); // 新建的会话确实运行过
+      const saved = transcripts(h.home);
+      for (const text of ["first message", "second task"]) expect(saved.some((t) => t.includes(text))).toBe(true);
+    }), 150_000);
+
+    const LEFT_THEN_EXIT_COMMAND = [
+      ...TO_AGENTS,
+      { wait: IN_AGENTS, pause: 1500, send: ENTER },
+      { wait: IN_SESSION, pause: 2500, send: LEFT },
+      { pause: 1200, send: LEFT },
+      { wait: IN_AGENTS, pause: 1500, send: ENTER },
+      { wait: IN_SESSION, pause: 1500, send: `/exit${ENTER}` },
+    ];
+    test("会话里按 ← 仍回到 agents 视图；会话里的 /exit 同样退出整个程序", () => session(LEFT_THEN_EXIT_COMMAND, async (run, { h }) => {
+      expect(run.screens[4]).toMatch(IN_AGENTS); // 第五步发送按键之前：已经从会话回到 agents 视图
+      await expectNothingLeft(run, h.home);
+    }), 150_000);
+
+    const BACKGROUND_COMMAND = [
+      { wait: /auto mode on/, pause: 800, send: `first message${ENTER}` },
+      { wait: /FINAL_ANSWER/, pause: 2500, send: "/background" },
+      { pause: 1200, send: ENTER },
+    ];
+    test("用户明确要求在后台运行的会话不受影响：/background 与命令行 --bg 派发的任务在程序退出后仍在", () => session(BACKGROUND_COMMAND, async (run, { h, env }) => {
+      expect(run.stuck).toBeUndefined();
+      expect(run.exitCode).toBe(0);
+      expect(run.screens.at(-1)).toContain("backgrounded");
+      expect(jobIds(h.home).length).toBe(1);
+      const r = await runCli([DIST], ["--bg", "task from the command line"], { cwd: h.work, env });
+      expect(r.code).toBe(0);
+      await Bun.sleep(3000); // 派发进程退出之后任务仍在
+      expect(jobIds(h.home).length).toBe(2);
+      expect(backgroundProcesses(h.home).length).toBeGreaterThan(0);
+    }), 150_000);
+
+    const KEEP_WITH_SHELL = [
+      { wait: /auto mode on/, pause: 800, send: `run the long task${ENTER}` },
+      { wait: /FINAL_ANSWER/, pause: 2500, send: CTRL_C },
+      { pause: 400, send: CTRL_C },
+      { wait: /Move to background and exit/, pause: 500, send: DOWN },
+      { pause: 500, send: ENTER },
+    ];
+    test("普通会话里后台命令未结束时退出并选择 Move to background and exit：会话连同命令保留，可再次接入；另一个会话进入 agents 视图再退出不影响它", () => session(KEEP_WITH_SHELL, async (run, { h, env }) => {
+      expect(run.stuck).toBeUndefined();
+      expect(run.exitCode).toBe(0);
+      expect(run.screens.at(-1)).toContain("backgrounded");
+      await Bun.sleep(2500);
+      const kept = jobIds(h.home), shell = longCommandPids(h.home), daemon = daemons(h.home);
+      expect(kept.length).toBe(1);
+      expect(shell.length).toBe(1);
+      expect(daemon.length).toBe(1);
+      // 另一个会话转入后台后从 agents 视图退出：它派发的会话结束；保留的会话仍在运行，守护进程不让出
+      const other = await driveSession([DIST], { cwd: h.work, env, steps: [...TO_AGENTS, { wait: IN_AGENTS }, ...QUIT] });
+      expect(other.stuck).toBeUndefined();
+      expect(other.exitCode).toBe(0);
+      await Bun.sleep(7000); // 长于伪终端宿主进程的存活时间与守护进程的空闲时限
+      expect(jobIds(h.home)).toEqual(kept);
+      expect(longCommandPids(h.home)).toEqual(shell);
+      expect(daemons(h.home)).toEqual(daemon);
+      // 再次接入保留的会话：后台命令仍列在界面中；从中退出后会话与命令仍在
+      const again = await driveSession([DIST, "attach", kept[0]], { cwd: h.work, env, steps: [{ wait: /1 shell/ }, ...QUIT] });
+      expect(again.stuck).toBeUndefined();
+      expect(again.exitCode).toBe(0);
+      expect(jobIds(h.home)).toEqual(kept);
+      expect(longCommandPids(h.home)).toEqual(shell);
+    }, () => ["--allowedTools", "Bash"], longShell), 240_000);
+
+    // 终端模式：程序退出时写出的转义序列应把它开启的模式全部关闭。统计输出中各 DEC 私有模式最后一次设置的状态
+    const modesLeftOn = (output) => {
+      const state = new Map();
+      for (const [, list, action] of output.matchAll(/\x1b\[\?([0-9;]+)([hl])/g)) for (const mode of list.split(";")) state.set(mode, action === "h");
+      return [...state].filter(([, on]) => on).map(([mode]) => mode).sort();
+    };
+    const EXIT_IN_SESSION_WITH_SHELL = [
+      { wait: /auto mode on/, pause: 800, send: `run the long task${ENTER}` },
+      { wait: /FINAL_ANSWER/, pause: 2500, send: LEFT },
+      { wait: IN_AGENTS, pause: 1500, send: ENTER },
+      { wait: /1 shell/ },
+      ...QUIT,
+    ];
+    test("带未结束后台命令的会话转入后台后在其中退出：命令进程一并结束；终端离开备用屏幕", () => session(EXIT_IN_SESSION_WITH_SHELL, async (run, { h }) => {
+      await expectNothingLeft(run, h.home);
+      expect(longCommandPids(h.home)).toEqual([]);
+      expect(modesLeftOn(run.output)).toEqual(["25"]); // 只有光标显示（?25h）保持开启；备用屏幕（?1049）已关闭
+    }, () => ["--allowedTools", "Bash"], longShell), 150_000);
+
+    test("交互进程被强制终止时遗留的后台会话在下一次启动时回收；没有归属的会话不受影响", () => session([{ wait: /auto mode on/, pause: 6000 }, ...QUIT], async (run, { h }) => {
+      expect(run.stuck).toBeUndefined();
+      expect(run.exitCode).toBe(0);
+      expect(await remainingBackgroundProcesses(h.home, 1)).not.toEqual([]); // 没有归属的会话仍在运行，守护进程不让出
+      expect(jobIds(h.home)).toEqual(h.kept);
+    }, async ({ h, env }) => {
+      // 一个没有归属的会话（命令行 --bg），再加一个被强制终止的交互进程留下的会话
+      expect((await runCli([DIST], ["--bg", "kept task"], { cwd: h.work, env })).code).toBe(0);
+      await Bun.sleep(3500);
+      h.kept = jobIds(h.home);
+      const crashed = await driveSession([DIST], { cwd: h.work, env, steps: [...TO_AGENTS, { wait: IN_AGENTS, pause: 2500 }], exitWait: 0 });
+      expect(crashed.exitCode).toBeNull(); // 被 SIGKILL 结束，没有执行退出流程
+      await Bun.sleep(6500); // 长于守护进程的空闲时限：遗留的会话不会自行消失
+      expect(jobIds(h.home).length).toBeGreaterThan(h.kept.length);
+    }), 240_000);
+
+    const REOPEN_STOPPED = [{ wait: IN_AGENTS, pause: 2000, send: ENTER }, { wait: IN_SESSION }, ...QUIT];
+    test("从 agents 视图重新打开一个没有归属的已停止会话，再在其中退出：该会话保留", () => session(REOPEN_STOPPED, async (run, { h }) => {
+      expect(run.stuck).toBeUndefined();
+      expect(run.exitCode).toBe(0);
+      await Bun.sleep(7000);
+      expect(jobIds(h.home)).toEqual(h.kept);
+      expect(backgroundProcesses(h.home).length).toBeGreaterThan(0);
+    }, async ({ h, env }) => {
+      expect((await runCli([DIST], ["--bg", "kept task"], { cwd: h.work, env })).code).toBe(0);
+      await Bun.sleep(3500);
+      h.kept = jobIds(h.home);
+      expect((await runCli([DIST], ["stop", h.kept[0]], { cwd: h.work, env })).code).toBe(0);
+      await Bun.sleep(1500);
+      return ["agents"];
+    }), 240_000);
+
+    const dispatchThenAttach = async ({ h, env }) => {
+      expect((await runCli([DIST], ["--bg", "task from the command line"], { cwd: h.work, env })).code).toBe(0);
+      await Bun.sleep(4000);
+      return ["attach", jobIds(h.home)[0]];
+    };
+    test("用 attach 接入的会话里按两次 Ctrl+C：attach 结束，不转入 agents 视图；会话不是它派发的，仍然保留", () => session([{ wait: IN_SESSION }, ...QUIT], async (run, { h }) => {
+      expect(run.stuck).toBeUndefined();
+      expect(run.exitCode).toBe(0);
+      expect(run.screens.at(-1)).toContain("Detached: exit was requested in the session. A session started with --bg or /background keeps running.");
+      expect(run.screens.at(-1)).not.toMatch(IN_AGENTS);
+      expect(jobIds(h.home).length).toBe(1);
+    }, dispatchThenAttach), 150_000);
   });
 });

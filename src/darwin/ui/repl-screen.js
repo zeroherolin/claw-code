@@ -1,5 +1,6 @@
 // darwin/ui/repl-screen.js — Claude Code 2.1.310（darwin）模块 chunk-zq77a89q.js
 import { __asset_src } from "../../runtime/assets.js";
+import { EXIT_DETACH_MESSAGE, disown } from "../../runtime/session-bound-agents.js";
 import { Yw, Br, F1, Sg, Vt } from "../shared/chunk-3b9c376b.js";
 import { Ne, He } from "../fs/async-hooks.93b1.js";
 import { wn, wAt, Ddr, EAt, vAt, Ldr, CAt, Fdr, TAt, $dr, Bxe, F, TA, L, Ei, Udr, bo, nt, U, V, tt, g$e, _b, Cu, ke, ao, NI, kit, cns, u$, vee, Gh, BK, kee, P5, cy, Wxe, PX, xAt, b$e, IX, Yp, Cit, P3e, w$e, PAt, Fc, aN, Rf, WK, I3e, Fbe, Bns, D1, dm, G3t, Rit, no, ye, Tu, YH, Nrs, fv, pP, $I, JCn, Ube, QCn, Lz, Wr, tTn, ecr, C$e, ffe, k_, xee, Om, MX, yTn, JH, N1, r4t, O5, Zbe, f$, e7r, t7r, FAt, VM, ATn, Pn, fss, Dee, J_, ps, KK, Vc, G3e, ris } from "../context/not-admin-owned.js";
@@ -1309,6 +1310,7 @@ async function yRt(h, x, D, H, J, Z, be, Ae, De, We) {
     return { ok: false, error: bn.error, queued: ln, reason: bn.reason, alive: bn.alive };
   }
   if (a("tengu_background", { via_flag: false, via: c(Ae) }), Ae === "left_arrow") g("repl_background_fork");
+  if (Ae === "command") disown(_o(bn.short)); // /background 与退出对话框：用户明确转入后台，不记归属，程序退出后继续运行
   let wo = bn.sessionId ?? qo;
   if (!We?.keepParent && No !== null && wo !== void 0) await UOe(No, Fo, wo, We?.storageV5);
   if (io && !We?.keepParent) {
@@ -38375,7 +38377,7 @@ class QZ {
       return;
     }
     if (Ut()) {
-      Hie({ message: Die({ kind: "quit" }) });
+      Hie({ message: EXIT_DETACH_MESSAGE }); // 后台会话里的退出：请接入方退出整个程序，而不是回到 agents 视图
       return;
     }
     let x = _l() !== null, { tasks: D, mcp: H } = this.#n.getState(), J = pws(D, { mcpClients: H.clients });

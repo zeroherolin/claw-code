@@ -1,5 +1,6 @@
 // darwin/telemetry/bg-attach-outcome.js — Claude Code 2.1.310（darwin）模块 chunk-zk9ft36n.js
 import { __asset_src } from "../../runtime/assets.js";
+import { isExitDetach } from "../../runtime/session-bound-agents.js";
 import { S, c, ce } from "../agents/third-party.js";
 import { d, v, rw, G } from "./anthropic-workspace-id.js";
 import { ke } from "../context/not-admin-owned.js";
@@ -1045,7 +1046,7 @@ async function xr(e, n, o) {
     return m("job_attach", "job_attach_failed"), { kind: "error", msg: U };
   }
   if (t("[PERF:bg-attach-end]"), g("job_attach"), w.msg && KJe.test(w.msg)) return { kind: "detached", msg: w.msg.replace(KJe, "") };
-  return w.beforeFirstFrame ? { kind: "detached", beforeFirstFrame: true } : { kind: "detached" };
+  return w.beforeFirstFrame ? { kind: "detached", beforeFirstFrame: true } : { kind: "detached", ...isExitDetach(w.msg) && { exit: true } }; // 会话里请求退出整个程序
 }
 var Nr = "Background sessions still running will stop in about a minute. Run 'claude agents' to keep them.";
 async function Ot(e, n, o) {

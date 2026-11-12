@@ -3,6 +3,7 @@ import { __asset_src, __asset_text } from "../../runtime/assets.js";
 import { memoryReadGuard } from "../../runtime/memory-guard.js";
 import { redactClassifierContext, redactGitStatus, redactRepoVisibility } from "../../runtime/safeguards-redact.js";
 import { promptIdFor, turnPositionFor } from "../../runtime/upload-identity.js";
+import { endOwnedBackgroundSessions } from "../../runtime/session-bound-agents.js";
 import { tf } from "../shared/chunk-b5845da6.js";
 import { He, oqo, x_e, sqo, jer, Wer, JKr, Avt, CCe, zer, Ker } from "../telemetry/chunk-1bb3c64e.js";
 import { b, c, ce, Vr, Wq, Ku, Ka, $b, Hn, Xw, gJr } from "../agents/third-party.js";
@@ -6898,6 +6899,7 @@ claude --cloud ${n}
       S = y;
     }
     this.armShutdownFailsafe(Math.max(5e3, S + 5e3), e), qMe(), this.printResumeHint();
+    this.armShutdownFailsafe(Math.max(5e3, S + 5e3) + 9e3, e), await endOwnedBackgroundSessions(), this.armShutdownFailsafe(Math.max(5e3, S + 5e3), e); // 后台会话随退出结束：终端已恢复、退出时限的计时器已启动之后结束归属于本进程的后台会话；其间把时限放宽到结束会话的时限之上，完成后恢复
     let w;
     try {
       let K = (async () => {

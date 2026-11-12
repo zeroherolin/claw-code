@@ -1,4 +1,4 @@
-// dev 分支的运行时模块：固定的环境变量、记忆读取确认、safeguards 脱敏、拒答重试的临时上传身份（见 docs/dev.md）。
+// dev 分支的运行时模块：固定的环境变量、记忆读取确认、safeguards 脱敏、拒答重试的临时上传身份、后台会话随退出结束（见 docs/dev.md）。
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "child_process";
 import fs from "fs";
@@ -6,6 +6,7 @@ import os from "os";
 import path from "path";
 import { adoptUploadIdentity, isDeliveredResponse, mcpClientSessionId, newUploadIdentity, promptIdFor, turnPositionFor, uploadIdentityFor } from "../../src/runtime/upload-identity.js";
 import { SYSTEMS } from "../../src/runtime/platforms.js";
+import { EXIT_DETACH_MESSAGE, disown, endOwnedBackgroundSessions, isExitDetach, killLeftoverShells, markOwned, ownedBackgroundSessions, ownerAlive, processStart, readOwner, reapOrphanedBackgroundSessions, sessionOwner } from "../../src/runtime/session-bound-agents.js";
 
 const ROOT = path.resolve(import.meta.dir, "../..");
 const RUNTIME = path.join(ROOT, "src/runtime");
@@ -544,5 +545,191 @@ describe("upload-identity", () => {
     expect(isDeliveredResponse(msg({}, null))).toBe(false);
     expect(isDeliveredResponse({ type: "user" })).toBe(false);
     expect(isDeliveredResponse(undefined)).toBe(false);
+  });
+});
+
+describe("session-bound-agents", () => {
+  const HOST = os.hostname();
+  const withJobs = async (fn) => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), "claw-owner-"));
+    try {
+      return await fn(root, (id) => path.join(root, id));
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  };
+  const writeOwner = (dir, owner) => {
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "owner.json"), typeof owner === "string" ? owner : JSON.stringify(owner));
+  };
+  const GONE = { pid: 999_999, start: "Thu Jan  1 00:00:00 1970", host: HOST }; // 本机上不存在的进程
+  // host 记录被调用的操作；rest 为其余任务是否已结束，others 为其他前台程序数
+  const makeHost = (root, calls, options) => {
+    const { rest = [], others = 0, failStop, listFails } = options ?? { rest: [] };
+    const stop = async (id) => {
+      calls.push(`stop:${id}`);
+      if (failStop === id) throw new Error("kill unconfirmed");
+    };
+    const list = async () => {
+      calls.push("list");
+      if (listFails) throw new Error("roster unreadable");
+      return rest.map((settled) => ({ state: { settled } }));
+    };
+    const remove = async (id) => void calls.push(`remove:${id}`);
+    const yieldDaemon = async () => void calls.push("yield");
+    // handoffWaitMs 为 0：这些任务没有 worker，不会有交接清单，不等待它
+    return { jobsRoot: () => root, stop, remove, list, settled: (state) => state.settled, otherClients: async () => others, yieldDaemon, handoffWaitMs: 0 };
+  };
+
+  test("归属为本进程的 pid、启动时间与主机名；启动时间与 pid 一起标识进程", () => {
+    const owner = sessionOwner();
+    expect(owner).toEqual({ pid: process.pid, start: processStart(process.pid), host: HOST });
+    expect(owner.start).toMatch(/\d{4}$/); // ps 的 lstart，以年份结尾
+    expect(ownerAlive(owner)).toBe(true);
+    expect(processStart(GONE.pid)).toBeUndefined();
+    expect(ownerAlive(GONE)).toBe(false);
+    expect(ownerAlive({ ...owner, start: GONE.start })).toBe(false); // pid 相同而启动时间不同：不是同一个进程
+    expect(ownerAlive({ ...GONE, host: "another-host" })).toBe(true); // 其他主机上的进程无法判断，视为仍在运行
+  });
+
+  test("写入、读取与取消归属；归属文件缺失或内容无效时为没有归属", () => withJobs((root, dir) => {
+    markOwned(dir("aaaaaaaa")); // 任务目录不存在时一并创建
+    expect(readOwner(dir("aaaaaaaa"))).toEqual(sessionOwner());
+    markOwned(dir("bbbbbbbb"));
+    disown(dir("bbbbbbbb"));
+    disown(dir("cccccccc")); // 目录不存在时不报错
+    expect(readOwner(dir("bbbbbbbb"))).toBeNull();
+    for (const [id, bad] of [["dddddddd", "not json"], ["eeeeeeee", { pid: 0, start: "x", host: HOST }], ["ffffffff", { pid: 5, host: HOST }], ["01234567", { pid: 5, start: "x" }]]) {
+      writeOwner(dir(id), bad);
+      expect(readOwner(dir(id))).toBeNull();
+    }
+    writeOwner(dir("not-a-job"), sessionOwner()); // 名字不是任务 id 的目录不计
+    expect(ownedBackgroundSessions(root)).toEqual(["aaaaaaaa"]);
+    expect(ownedBackgroundSessions(path.join(root, "missing"))).toEqual([]);
+  }));
+
+  test("退出时只结束归属于本进程的任务：先结束 worker，再删除；没有其他会话和前台程序时请守护进程让出", () => withJobs(async (root, dir) => {
+    for (const rest of [[true, true], []]) {
+      markOwned(dir("aaaaaaaa"));
+      markOwned(dir("bbbbbbbb"));
+      writeOwner(dir("cccccccc"), GONE); // 其他进程的任务
+      fs.mkdirSync(dir("dddddddd"), { recursive: true }); // 没有归属的任务
+      const calls = [];
+      await endOwnedBackgroundSessions(makeHost(root, calls, { rest }));
+      expect(calls.slice(0, 4).sort()).toEqual(["remove:aaaaaaaa", "remove:bbbbbbbb", "stop:aaaaaaaa", "stop:bbbbbbbb"]);
+      for (const id of ["aaaaaaaa", "bbbbbbbb"]) expect(calls.indexOf(`stop:${id}`)).toBeLessThan(calls.indexOf(`remove:${id}`));
+      expect(calls.slice(4)).toEqual(["list", "yield"]);
+    }
+  }));
+
+  test("没有归属于本进程的任务时不调用任何操作", () => withJobs(async (root, dir) => {
+    writeOwner(dir("cccccccc"), GONE);
+    const calls = [];
+    await endOwnedBackgroundSessions(makeHost(root, calls));
+    await endOwnedBackgroundSessions(undefined); // 派发模块未加载（没有登记 host）时同样不做任何事
+    expect(calls).toEqual([]);
+  }));
+
+  test("其余任务仍在运行、还有其他前台程序、或这两项取不到时，不请守护进程让出", () => withJobs(async (root, dir) => {
+    for (const options of [{ rest: [true, false] }, { others: 1 }, { others: null }, { listFails: true }]) {
+      markOwned(dir("aaaaaaaa"));
+      const calls = [];
+      await endOwnedBackgroundSessions(makeHost(root, calls, options));
+      expect(calls).toEqual(["stop:aaaaaaaa", "remove:aaaaaaaa", "list"]);
+    }
+  }));
+
+  test("结束 worker 失败时仍然删除该任务，也不影响其余任务", () => withJobs(async (root, dir) => {
+    markOwned(dir("aaaaaaaa"));
+    markOwned(dir("bbbbbbbb"));
+    const calls = [];
+    await endOwnedBackgroundSessions(makeHost(root, calls, { failStop: "aaaaaaaa" }));
+    expect(calls.filter((c) => c.startsWith("remove:")).sort()).toEqual(["remove:aaaaaaaa", "remove:bbbbbbbb"]);
+    expect(calls.at(-1)).toBe("yield");
+  }));
+
+  test("操作迟迟不返回时超过时限不再等待；任务列表的内容不合预期时不向调用方抛错", () => withJobs(async (root, dir) => {
+    markOwned(dir("aaaaaaaa"));
+    const stuck = makeHost(root, []);
+    stuck.stop = () => new Promise(() => undefined);
+    const t0 = performance.now();
+    await endOwnedBackgroundSessions(stuck, 50);
+    expect(performance.now() - t0).toBeLessThan(2000);
+    const calls = [], odd = makeHost(root, calls);
+    odd.list = async () => [null];
+    await endOwnedBackgroundSessions(odd);
+    expect(calls).toEqual(["stop:aaaaaaaa", "remove:aaaaaaaa"]);
+  }));
+
+  test("启动时回收：只处理归属进程在本机已不存在的任务", () => withJobs(async (root, dir) => {
+    markOwned(dir("aaaaaaaa")); // 归属于本进程：仍在运行
+    writeOwner(dir("bbbbbbbb"), GONE);
+    writeOwner(dir("cccccccc"), { ...GONE, host: "another-host" });
+    fs.mkdirSync(dir("dddddddd"), { recursive: true });
+    const calls = [];
+    await reapOrphanedBackgroundSessions(makeHost(root, calls, { rest: [false] }));
+    expect(calls).toEqual(["stop:bbbbbbbb", "remove:bbbbbbbb", "list"]);
+  }));
+
+  test("会话遗留的后台命令：按交接清单结束仍在运行的进程，清单稍后才写出时等待它", () => withJobs(async (root, dir) => {
+    const job = dir("aaaaaaaa");
+    fs.mkdirSync(job, { recursive: true });
+    const shell = Bun.spawn(["sleep", "600"], { stdio: ["ignore", "ignore", "ignore"] });
+    try {
+      const handoff = { shells: [{ pid: shell.pid }, { pid: GONE.pid }, { pid: 1 }, { pid: "x" }] };
+      setTimeout(() => fs.writeFileSync(path.join(job, "adopt.json"), JSON.stringify(handoff)), 200);
+      await killLeftoverShells(job, 3000);
+      const outcome = await Promise.race([shell.exited, new Promise((resolve) => setTimeout(() => resolve("still running"), 3000))]);
+      expect(outcome).not.toBe("still running");
+    } finally {
+      shell.kill("SIGKILL");
+    }
+    const t0 = performance.now();
+    await killLeftoverShells(dir("bbbbbbbb"), 3000); // 任务目录不存在：不等待
+    fs.mkdirSync(dir("cccccccc"));
+    await killLeftoverShells(dir("cccccccc"), 100); // 没有清单：等到时限为止
+    expect(performance.now() - t0).toBeLessThan(2000);
+  }));
+
+  test("worker 进程沿用自己那个任务的归属；它退出时不结束任何会话，启动时也不回收", () => withJobs((root, dir) => {
+    writeOwner(dir("aaaaaaaa"), GONE);
+    fs.mkdirSync(dir("bbbbbbbb"), { recursive: true }); // 没有归属的任务（用户明确转入后台的会话）
+    const forked = dir("cccccccc");
+    const script = `
+import { endOwnedBackgroundSessions, markOwned, readOwner, reapOrphanedBackgroundSessions, sessionOwner } from ${JSON.stringify(path.join(RUNTIME, "session-bound-agents.js"))};
+const calls = [];
+const noop = async () => undefined;
+const host = { jobsRoot: () => ${JSON.stringify(root)}, stop: async (id) => void calls.push(id), remove: noop, list: async () => [], settled: () => true, otherClients: async () => 0, yieldDaemon: noop };
+markOwned(${JSON.stringify(forked)});
+await endOwnedBackgroundSessions(host);
+await reapOrphanedBackgroundSessions(host);
+console.log(JSON.stringify({ owner: sessionOwner(), forked: readOwner(${JSON.stringify(forked)}), calls }));`;
+    const run = (jobDir) => JSON.parse(spawnSync(process.execPath, ["-e", script], { env: { ...process.env, CLAUDE_JOB_DIR: jobDir }, encoding: "utf8" }).stdout);
+    expect(run(dir("aaaaaaaa"))).toEqual({ owner: GONE, forked: GONE, calls: [] }); // 它派发的会话记同一个归属
+    fs.rmSync(forked, { recursive: true, force: true });
+    expect(run(dir("bbbbbbbb"))).toEqual({ owner: null, forked: null, calls: [] }); // 没有归属的会话派发的会话同样没有归属
+  }));
+
+  test("表示退出的分离消息只含 ASCII 字符；其他消息不视为退出", () => {
+    expect(EXIT_DETACH_MESSAGE).toMatch(/^[\x20-\x7e]+$/);
+    expect(isExitDetach(EXIT_DETACH_MESSAGE)).toBe(true);
+    for (const msg of [undefined, "", "Detached — 2 tasks still running.", `EKICKED: ${EXIT_DETACH_MESSAGE}`]) expect(isExitDetach(msg)).toBe(false);
+  });
+
+  // 冒烟测试只在当前系统的构建产物上运行；此处检查各系统的生成源码都已接入
+  test("各系统的生成源码：派发前写入归属、退出时结束、启动时回收、后台会话里的退出操作发出退出消息、接入方据此退出", () => {
+    const expected = {
+      "git/bg-respawn-no-transcript.js": ["=== void 0 && markOwned(T), await ", "disown(_o(H.short));", "disown(_o(u.short));", "&& !isExitDetach(e.msg) &&", "registerSessionHost({", "\nreapOrphanedBackgroundSessions();"],
+      "core/conversation-engine.js": [", await endOwnedBackgroundSessions(), this.armShutdownFailsafe("],
+      "ui/repl-screen.js": ["({ message: EXIT_DETACH_MESSAGE });", '=== "command") disown(_o('],
+      "ui/exit-nudge.js": ["({ message: EXIT_DETACH_MESSAGE }), null;"],
+      "telemetry/bg-attach-outcome.js": ["...isExitDetach("],
+      "ui/bg-agent-action.js": [".exit) return "],
+    };
+    const missing = Object.keys(SYSTEMS).flatMap((system) => Object.entries(expected).flatMap(([file, needles]) => {
+      const code = fs.readFileSync(path.join(ROOT, "src", system, file), "utf8");
+      return needles.filter((needle) => !code.includes(needle)).map((needle) => `src/${system}/${file}: ${needle}`);
+    }));
+    expect(missing).toEqual([]);
   });
 });

@@ -1,5 +1,6 @@
 // linux/ui/repl-screen.js — Claude Code 2.1.310（linux）模块 chunk-mdxeekqd.js
 import { __asset_src } from "../../runtime/assets.js";
+import { EXIT_DETACH_MESSAGE, disown } from "../../runtime/session-bound-agents.js";
 import { qw, Br, MB, bg, Kt } from "../shared/chunk-3b9c376b.js";
 import { Ne, De } from "../fs/async-hooks.93b1.js";
 import { wn, uCt, bdr, fCt, pCt, Sdr, gCt, vdr, hCt, Edr, Hxe, F, EC, L, vi, kdr, So, nt, U, q, tt, iFe, hS, Eu, ke, ao, MI, yit, xts, aF, gee, Gh, Iq, hee, S6, ly, Nxe, vX, bCt, uFe, EX, Jf, _it, vYe, fFe, SCt, $c, rN, Rp, Mq, EYe, ISe, ins, PB, dm, PYt, wit, no, ye, ku, KH, nrs, fE, dP, HI, DTn, MSe, HTn, C2, Wr, $Tn, $dr, hFe, ipe, E_, wee, Om, TX, eAn, qH, OB, WYt, v6, KSe, dF, xXr, PXr, RCt, BM, cAn, Pn, Oos, Cee, X_, ps, Nq, zc, LYe, vss } from "../context/not-admin-owned.js";
@@ -1306,6 +1307,7 @@ async function lRt(h, x, D, H, J, Z, Se, Ce, Fe, He) {
     return { ok: false, error: bn.error, queued: ln, reason: bn.reason, alive: bn.alive };
   }
   if (a("tengu_background", { via_flag: false, via: c(Ce) }), Ce === "left_arrow") g("repl_background_fork");
+  if (Ce === "command") disown(_o(bn.short)); // /background 与退出对话框：用户明确转入后台，不记归属，程序退出后继续运行
   let wo = bn.sessionId ?? Go;
   if (!He?.keepParent && No !== null && wo !== void 0) await GOe(No, jo, wo, He?.storageV5);
   if (io && !He?.keepParent) {
@@ -38390,7 +38392,7 @@ class JZ {
       return;
     }
     if (Ut()) {
-      Aie({ message: Cie({ kind: "quit" }) });
+      Aie({ message: EXIT_DETACH_MESSAGE }); // 后台会话里的退出：请接入方退出整个程序，而不是回到 agents 视图
       return;
     }
     let x = yl() !== null, { tasks: D, mcp: H } = this.#n.getState(), J = NSs(D, { mcpClients: H.clients });

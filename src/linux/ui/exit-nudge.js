@@ -1,4 +1,5 @@
 // linux/ui/exit-nudge.js — Claude Code 2.1.310（linux）模块 chunk-4p9zmcjk.js
+import { EXIT_DETACH_MESSAGE } from "../../runtime/session-bound-agents.js";
 import "../shared/chunk-3b9c376b.js";
 import "../fs/async-hooks.93b1.js";
 import { q } from "../context/not-admin-owned.js";
@@ -641,7 +642,7 @@ function G() {
 async function Pe(a, s) {
   if (Ut()) {
     if (Cie() !== void 0) return keo(a, s);
-    return a(), Aie(), null;
+    return a(), Aie({ message: EXIT_DETACH_MESSAGE }), null; // 后台会话里的 /exit：请接入方退出整个程序
   }
   let g = yl() !== null, o = $Ss(s.taskRegistry?.all(), s.options?.mcpClients), t = g || o.length > 0 ? (m) => e(K5t, { showWorktree: g, backgroundItems: o, messages: s.messages, isMidTurn: s.isMidTurn, getMessages: s.getMessages, getIsResponseStreaming: s.getIsResponseStreaming, onDone: a, onCancel: () => a(), onBeforeExit: m }) : null;
   if (c4()) {

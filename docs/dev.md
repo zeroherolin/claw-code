@@ -1,6 +1,6 @@
 # dev 分支：有意改动的行为
 
-`dev` 由 `main` 加上本文列出的改动构成：提取流水线、构建、运行时层的其余部分、共用的文档和测试都与 `main` 相同，通用的修复先提交到 `main`，再合并到 `dev`。`main` 的行为与原版一致，`dev` 在以下八处有意不同。
+`dev` 由 `main` 加上本文列出的改动构成：提取流水线、构建、运行时层的其余部分、共用的文档和测试都与 `main` 相同，通用的修复先提交到 `main`，再合并到 `dev`。`main` 的行为与原版一致，`dev` 在以下九处有意不同。
 
 模块路径对每个系统都成立，位置用"路径「特征字符串」"标注，写法同 [architecture.md](architecture.md)。
 
@@ -15,6 +15,7 @@
 | 记忆 | 只发送记忆文件的路径，不发送正文；模型读取记忆目录中的文件前一律先询问用户 | [记忆](#记忆) |
 | `safeguards` | 发给分类器的上下文脱敏（服务端分类器的 `safeguards` 字段、本地分类器的请求）：不带用户名、规则原文和仓库信息 | [safeguards 脱敏](#safeguards-脱敏) |
 | 服务端拒答 | 使用原模型最多连续重试 10 轮，不换模型；每次重试更换会话 ID、设备 ID 和提示 ID | [拒答后的重试](#拒答后的重试) |
+| 后台会话 | 交互界面中转入后台或新建的会话随程序退出而结束，不留下后台进程、任务与后台命令；在这类会话里退出即退出整个程序 | [后台会话随退出结束](#后台会话随退出结束) |
 | 与 `claude` 共存 | 不注册 `claude-cli://` 处理程序；`update`、`upgrade`、`install` 直接退出 | [与已安装的 claude 共存](#与已安装的-claude-共存) |
 
 改动分布在下列位置：
@@ -22,7 +23,7 @@
 | 位置 | 内容 |
 |---|---|
 | `src/main.js` | 入口最先调用 `pinEnvironment()` |
-| `src/runtime/` | `pinned-env.js`、`pinned-env-worker.js`（固定环境变量），`memory-guard.js`（读取记忆需要确认），`safeguards-redact.js`（脱敏），`upload-identity.js`（拒答重试的临时上传身份） |
+| `src/runtime/` | `pinned-env.js`、`pinned-env-worker.js`（固定环境变量），`memory-guard.js`（读取记忆需要确认），`safeguards-redact.js`（脱敏），`upload-identity.js`（拒答重试的临时上传身份），`session-bound-agents.js`（后台会话随退出结束） |
 | `extract/patches/2.1.310.patch` | 各系统生成源码上的改动，见[生成源码上的改动](#生成源码上的改动)；补丁机制见 [extract/README.md](../extract/README.md#版本补丁) |
 | `test/dev/`、`test/parity/intentional.js` | 上述改动的测试，以及对比测试中登记的有意差异 |
 
@@ -40,7 +41,7 @@
   - 系统提示词中追加的 `# Memory access policy` 段落。按原文逐字匹配；补丁中的措辞改动而登记未同步时，对比报告不一致。
   - 「Today's date」的取值。本机时区与美国太平洋时间不在同一天时，日期不同。
 - 首次引导场景（`onboarding`）中，原版先检查连通性，`dev` 不检查。截屏时二者都已进入主题选择，屏幕相同；连通性检查失败时（如没有网络），原版停在报错页，这一项不一致。
-- 其余改动（拒答重试、记忆读取确认、脱敏、共存、官方插件市场的自动安装）在对比用例的场景中不触发，由 `test/dev/` 单独验证。
+- 其余改动（拒答重试、记忆读取确认、脱敏、后台会话、共存、官方插件市场的自动安装）在对比用例的场景中不触发，由 `test/dev/` 单独验证。
 
 ## 固定的环境变量
 
@@ -323,6 +324,81 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，每
   - 交互界面（伪终端）中的采用与沿用、被拒的候选身份不采用、10 轮用尽后回到本地标识、第二问被拒时不带延续原会话的问数与轮数、不显示换模型的选择框。
 - claude.ai 连接器代理需要 claude.ai 登录和官方代理地址，冒烟测试无法覆盖；单元测试检查各系统的生成源码都使用 `mcpClientSessionId`。
 
+## 后台会话随退出结束
+
+原版的后台会话由后台守护进程运行，不随前台程序退出：
+
+- 交互界面中输入框为空时按 ←，当前会话转给守护进程名下的 worker 进程，前台改为显示 agents 视图（`ui/repl-screen.js`「Press ← again to open agents」）。agents 视图中新建的会话、`/fork` 分出的会话同样由守护进程运行。
+- 前台程序退出后，守护进程、worker 与备用进程继续运行。再次启动时，这些会话仍列在 agents 视图中；`--continue` 不接续最近的会话，只提示它正在后台运行、需经 `claude agents` 接入（"Your most recent conversation is running in the background"）。
+- worker 的凭据取自守护进程的环境，不取派发它的前台进程的环境：守护进程以某个 `ANTHROPIC_AUTH_TOKEN` 启动后，前台换用另一个值派发的会话，请求中仍是守护进程启动时的值（原版 2.1.310 与本项目实测相同）。因此退出、修改环境变量、再启动之后，已转入后台的会话和经同一个守护进程新派发的会话都使用原来的值。
+- 在接入的后台会话里按两次 Ctrl+C 或执行 `/exit`，只从会话分离并回到 agents 视图，再按两次 Ctrl+C 才退出程序。
+
+`dev` 中，交互界面派发的后台会话随程序退出而结束；交互进程未执行退出流程就结束时，遗留的会话在下一次启动时回收：
+
+| 操作 | 原版 | `dev` |
+|---|---|---|
+| 退出程序：在 agents 视图中按两次 Ctrl+C，或进程收到 SIGHUP、SIGTERM | 后台会话与守护进程继续运行 | 归属于本进程的后台会话结束，其遗留的后台命令一并结束，任务状态删除；没有其他后台会话与前台程序时守护进程随之结束 |
+| 在接入的后台会话里按两次 Ctrl+C、两次 Ctrl+D，或执行 `/exit` | 回到 agents 视图 | 退出程序，并按上一行处理 |
+| 在接入的后台会话里按 ← | 回到 agents 视图 | 不变 |
+| 再次启动 | 原来的后台会话仍在运行，需经 agents 视图接入 | 没有遗留的后台会话；`--continue` 把保留的会话记录作为普通会话接续，使用启动时的环境 |
+
+会话记录（`projects/` 下的 `.jsonl`）不属于任务状态，退出时保留：转入后台之后在会话里进行的对话同样可以接续。
+
+### 归属与结束
+
+`src/runtime/session-bound-agents.js` 把后台会话的归属写入它的任务目录，交互进程退出时结束归属于它的会话。
+
+**归属**：任务目录中的 `owner.json`，内容为派发该会话的交互进程的 pid、启动时间与主机名。pid 会被系统重复使用，与启动时间一起才标识一个进程。
+
+- **写入**：新派发的会话在派发之前写入（`git/bg-respawn-no-transcript.js`「markOwned(T)」）。写在派发之前，派发尚未完成时交互进程退出，退出流程仍能找到它。重新启动已有任务的 worker（从 agents 视图打开已停止的会话、`respawn`）不写入，该任务原有的归属或没有归属的状态保持不变。
+- **没有归属的会话**：命令行的 `--bg`、`/background` 与退出对话框中的 "Move to background and exit" 派发后删除归属（`git/bg-respawn-no-transcript.js`「disown(_o(u.short))」、`ui/repl-screen.js`「disown(_o(」）。这几种是用户明确要求转入后台后离开，会话在程序退出后继续运行，与原版相同：普通会话里后台命令尚未结束时退出并选择 "Move to background and exit"，会话连同该命令保留，之后可经 `attach` 或 agents 视图接入。
+- **后台会话派发的会话**：后台会话的 worker 派发会话时（在其中执行 `/fork`），沿用它自己那个任务的归属。worker 的环境来自守护进程而不是派发它的交互进程，归属因此从任务目录读取（环境变量 `CLAUDE_JOB_DIR`）。没有归属的会话分出的会话同样没有归属。
+
+归属写在磁盘上而不在进程内存中：在后台会话里分出的会话、派发尚未完成的会话、交互进程未执行退出流程时遗留的会话，都能按它找到。
+
+**退出时结束**：在退出流程中、终端已恢复且退出时限的计时器已启动之后执行（`core/conversation-engine.js`「await endOwnedBackgroundSessions()」），最多等待 8 秒，其间退出时限相应放宽。worker 进程自身退出时不执行：它名下的会话归属于交互进程。对每个归属于本进程的任务：
+
+1. 请守护进程结束 worker，等待确认；
+2. 结束会话遗留的后台命令。worker 被结束时把仍在运行的后台命令写入任务目录的交接清单（`workflows/adopt-exit-handoff.js`「exit handoff」），留给该会话下一次启动的 worker 接管；会话随即被删除，不会再有 worker 接管。原版的删除在 worker 写出清单之前检查它，命令因此遗留（`claude rm` 实测如此）。这里等待清单最多 0.4 秒（实测 worker 结束后约 0.13 秒写出），再结束其中登记的进程；
+3. 调用原版删除任务的函数，效果与 `claude rm <id>` 相同：删除任务状态目录。
+
+之后守护进程名下没有其他仍在运行的会话、也没有其他前台程序连着它时，向它发出原版的 `yield` 请求：临时启动的守护进程立即结束（`tasks/daemon-main.js`「yielding to a foreground/service daemon」），注册为系统服务的守护进程不响应。下次需要时，守护进程以当时的环境重新启动。不发出 `yield` 时，临时守护进程在最后一个会话结束、最后一个前台程序断开 5 秒后自行结束（`tasks/daemon-main.js`「with no clients — exiting」），这是原版的行为。
+
+**启动时回收**：派发模块加载时，回收归属进程在本机已不存在的会话（`git/bg-respawn-no-transcript.js`「reapOrphanedBackgroundSessions();」），做法与退出时相同，不等待完成。交互进程被强制终止或崩溃、或退出流程未在时限内完成时会留下这样的会话。归属的主机名与本机不同时不回收：配置目录由多台机器或容器共用时，其他机器上的进程无法在本机判断是否存活。
+
+实测：从发出退出按键到进程退出约 0.5 至 0.7 秒；程序退出后，worker 的伪终端宿主进程至多再存活约 6 秒。
+
+### 在后台会话里退出
+
+接入后台会话时，界面由 worker 进程绘制，前台进程只转发终端数据。原版中 worker 收到退出操作后向接入方发出分离请求，接入方回到 agents 视图。`dev` 的改动：
+
+- worker 的退出操作在分离请求中带上一条固定的消息（`ui/repl-screen.js`「请接入方退出整个程序，而不是回到 agents 视图」、`ui/exit-nudge.js`「后台会话里的 /exit：请接入方退出整个程序」）；按 ← 发出的分离请求不带这条消息。
+- 接入方收到这条消息时，在接入结果上标记 `exit`（`telemetry/bg-attach-outcome.js`「isExitDetach(」），agents 视图据此结束（`ui/bg-agent-action.js`「会话里的退出操作：结束 agents 视图，程序随之退出」），程序进入退出流程。此时终端仍在接入时进入的备用屏幕中，结束前写出离开备用屏幕的序列；各退出路径结束时的终端模式与原版一致（实测）。
+- 接入方是命令行的 `claude attach <id>` 时，原版在分离后转入 agents 视图；`dev` 中 attach 显示这条消息后结束（`git/bg-respawn-no-transcript.js`「claude attach 分离后不转入 agents 视图」）。会话不是 attach 进程派发的，继续运行；消息中写明这一点。
+
+这条消息与原版的分离请求一样，经 worker 输出中的带内转义序列传给接入方。会话内容中的控制字符在界面渲染时去除；伪造该序列的情形未专门验证。
+
+### 未覆盖的情形
+
+- **强制终止到下一次启动之间**：交互进程被 SIGKILL 结束或崩溃时不执行退出流程，它的后台会话与守护进程继续运行，到下一次启动时才回收。
+- **守护进程仍在运行时派发的会话**：守护进程名下还有其他后台会话（没有归属的，或其他窗口中的）、或还有其他前台程序连着它时，守护进程不结束，此后转入后台的会话沿用它启动时的凭据。
+- **守护进程由已安装的 `claude` 启动**：守护进程按配置目录区分（`fs/attach-journal.js`「cc-daemon-」），与已安装的 `claude` 共用配置目录时也共用守护进程。后台会话在守护进程预先启动的备用进程中运行，使用守护进程所属的可执行文件：守护进程由原版启动时，本项目转入后台的会话运行的是原版程序，本文的各项改动在这些会话里不生效，在其中退出时回到 agents 视图，在其中分出的会话没有归属；前台进程退出时的结束与删除仍然执行。以上在二者版本相同时实测，版本不同时守护进程的交接未实测。
+- **重新启动自身**：agents 视图切换到较新的版本等情形下，程序以替换进程映像的方式重新启动，pid 与启动时间不变，归属仍然成立；无法替换进程映像时改为启动子进程，父进程随子进程结束而直接退出，它的会话到下一次启动时回收（依据源码，未实测）。
+- **带 worktree 的会话**：worktree 中有未提交或未推送的内容时，原版的删除保留任务状态与 worktree，worker 进程已结束（依据源码，未实测）。
+- **后台命令以外的遗留工作**：交接清单中的 workflow、子代理等条目不处理；它们随 worker 进程结束。
+- **普通会话的退出确认**：没有转入后台的会话里有后台任务（后台命令、子代理等）时，原版的退出确认对话框不变。
+- **界面文案**：以下原版文案未改动，与 `dev` 的行为不一致：agents 视图中的 "they keep running even if you close the terminal"、退出提示中的 "will keep running"、后台会话里第一次 Ctrl+C 的 "Press Ctrl-C again to detach (session keeps running)"、退出时的 "Your conversation was backgrounded"。
+
+测试：
+
+- `test/dev/runtime.test.js` 的 `session-bound-agents`：归属的写入、读取与取消，退出时结束的范围与顺序，让出的条件，时限，启动时回收的范围，按交接清单结束后台命令，worker 进程沿用任务的归属，以及各系统的生成源码都已接入。
+- `test/dev/smoke.test.js` 的「后台会话随退出结束」，真实二进制加假 API，在伪终端中操作（`test/dev/agents-session.js`）：
+  - 在后台会话里退出、从 agents 视图退出、会话里按 ← 与执行 `/exit`：程序退出后没有后台进程与任务，更换凭据后接续的请求使用新凭据并带有完整历史；
+  - 带未结束后台命令的会话转入后台后退出：命令进程一并结束，终端离开备用屏幕；
+  - 交互进程被强制终止后，遗留的会话在下一次启动时回收；
+  - 没有归属的会话不受影响：`/background` 与 `--bg` 派发的任务保留；退出对话框中选择 "Move to background and exit" 时会话连同后台命令保留，另一个会话进入 agents 视图再退出不影响它；从 agents 视图重新打开已停止的会话再退出，该会话保留；
+  - 用 `attach` 接入的会话里退出时 attach 结束、会话保留。
+
 ## 与已安装的 claude 共存
 
 共用的配置、会话与凭据，以及原版的两处影响，见 [runtime.md](runtime.md#安装与共存)。`dev` 用补丁关闭了这两处行为，不需要另行设置：
@@ -334,6 +410,8 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，每
 | `fs/setup-token-command.js`「claw-code does not install itself」 | `install` 提示后直接退出 |
 
 升级 `claw-code` 的方式是更新项目后重新执行 `npm run install-cli`。
+
+后台守护进程按配置目录区分，同样与已安装的 `claude` 共用，影响见[未覆盖的情形](#未覆盖的情形)。
 
 测试：`test/dev/smoke.test.js` 的「与已安装的 claude 共存」（三个子命令不联网、不写 `installMethod`、不创建 `~/.local`；交互使用后不注册处理程序）。
 
@@ -348,6 +426,7 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，每
 | 同上 | `MEMORY.md` 只发送路径；关闭相关记忆召回；账号与 cowork 记忆不渲染；权限检查链追加 `memoryReadGuard` | 记忆 |
 | 同上 | `classifier_context` 返回前脱敏；本地分类器的提示词不填入用户规则、不写用户名，两种元信息行脱敏 | `safeguards` |
 | 同上 | 回退模型一律为空；重试请求使用临时身份的提示 ID、新建线程、不带上一个请求 ID 与问数轮数；把身份传给 metadata 与客户端 | 拒答重试 |
+| 同上 | 退出流程中结束归属于本进程的后台会话，其间放宽退出时限 | 后台会话 |
 | `core/query-loop.js` | 重试上限与计数、重试提示、中性的工具结果措辞、生成与采用临时身份 | 拒答重试 |
 | `core/system-prompt-blocks.js` | metadata 的会话 ID、设备 ID 取当前应使用的身份 | 拒答重试 |
 | `api/anthropic-client.js` | 默认会话请求头取当前应使用的身份；不设置静默回退模型 | 拒答重试 |
@@ -357,6 +436,9 @@ auto 模式（交互界面不带参数时默认进入）和 plan 模式下，每
 | `permissions/classifier-transcript-too-long.js` | 断路器表新增 `memoryRead` | 记忆 |
 | `mcp/bridge-host-profile-collect.js`、`vendor/google-auth/xcode-project.js` | 去掉 GPU 与 CUDA 探测 | GPU 信息 |
 | `ui/repl-screen.js`、`ui/preflight-check-failed.js` | 不自动安装官方插件市场；首次引导不检查连通性 | 非必要网络流量 |
+| `git/bg-respawn-no-transcript.js` | 新派发的会话在派发之前写入归属，命令行 `--bg` 派发后删除归属；登记结束会话所需的操作，加载时回收遗留的会话；会话里请求退出时，`attach` 分离后不转入 agents 视图 | 后台会话 |
+| `ui/repl-screen.js`、`ui/exit-nudge.js` | 后台会话里的退出操作发出表示退出程序的分离消息；`/background` 与退出对话框派发的会话删除归属 | 后台会话 |
+| `telemetry/bg-attach-outcome.js`、`ui/bg-agent-action.js` | 接入方识别该消息，agents 视图离开备用屏幕后结束 | 后台会话 |
 | `fs/deep-link-register-failed.js`、`fs/auto-updater-forced-downgrade.js`、`fs/setup-token-command.js` | 不注册处理程序；`update`、`upgrade`、`install` 直接退出 | 共存 |
 
 改动生成源码后须重新生成补丁，做法与检查见 [extract/README.md](../extract/README.md#版本补丁)。

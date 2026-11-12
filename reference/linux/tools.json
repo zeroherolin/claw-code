@@ -342,7 +342,7 @@
   },
   "maxResultSizeChars": 0,
   "path": "ui/repl-screen.js",
-  "line": 5318
+  "line": 5320
  },
  {
   "name": "Agent",
@@ -498,7 +498,7 @@
   "strict": true,
   "ruleContentField": "command",
   "path": "core/conversation-engine.js",
-  "line": 112835
+  "line": 112837
  },
  {
   "name": "ClaudeDesign",
@@ -694,7 +694,7 @@
   "strict": true,
   "ruleContentField": "file_path",
   "path": "core/conversation-engine.js",
-  "line": 108464
+  "line": 108466
  },
  {
   "name": "EndConversation",
@@ -956,7 +956,7 @@
   "maxResultSizeChars": 100000,
   "ruleContentField": "path",
   "path": "core/conversation-engine.js",
-  "line": 38370
+  "line": 38372
  },
  {
   "name": "Grep",
@@ -998,7 +998,7 @@
   "strict": true,
   "ruleContentField": "path",
   "path": "core/conversation-engine.js",
-  "line": 38459
+  "line": 38461
  },
  {
   "name": "ListAgents",
@@ -1234,7 +1234,7 @@
   "maxResultSizeChars": "<expr>",
   "shouldDefer": false,
   "path": "core/conversation-engine.js",
-  "line": 38774
+  "line": 38776
  },
  {
   "name": "memory_write",
@@ -1334,7 +1334,7 @@
   "shouldDefer": true,
   "ruleContentField": "notebook_path",
   "path": "core/conversation-engine.js",
-  "line": 108715
+  "line": 108717
  },
  {
   "name": "ObserverReport",
@@ -1687,7 +1687,7 @@
   "strict": true,
   "ruleContentField": "file_path",
   "path": "core/conversation-engine.js",
-  "line": 75434
+  "line": 75436
  },
  {
   "name": "ReadMcpResourceDirTool",
@@ -2873,7 +2873,7 @@
   "backgrounding": "never",
   "maxResultSizeChars": 100000,
   "path": "core/conversation-engine.js",
-  "line": 42857
+  "line": 42859
  },
  {
   "name": "WaitForMcpServers",
@@ -2901,7 +2901,7 @@
   "backgrounding": "never",
   "maxResultSizeChars": 10000,
   "path": "core/conversation-engine.js",
-  "line": 61355
+  "line": 61357
  },
  {
   "name": "WebFetch",
@@ -2941,7 +2941,7 @@
   "ruleContentField": "url",
   "skipAggregateToolResultBudget": true,
   "path": "core/conversation-engine.js",
-  "line": 58542
+  "line": 58544
  },
  {
   "name": "WebSearch",
@@ -3054,6 +3054,6 @@
   "strict": true,
   "ruleContentField": "file_path",
   "path": "core/conversation-engine.js",
-  "line": 37716
+  "line": 37718
  }
 ]
