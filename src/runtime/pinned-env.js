@@ -29,7 +29,7 @@ export const PINNED = {
 
 const isPinned = (k) => typeof k === "string" && Object.hasOwn(PINNED, k);
 
-/** 进程（或 Worker）启动时的环境，已套用固定的环境变量（TZ 除外，TZ 在 childEnv / workerOptions 里套用）；不传 env 的子进程和 Worker 以它为基础 */
+/** 进程（或 Worker）启动时的环境，已套用全部固定值（含 TZ）；不传 env 的子进程和 Worker 以它为基础。childEnv、workerOptions 对调用方给出的 env 另行套用 TZ，childEnv 并为 ps 保留 UTC 的例外 */
 let startupEnv = {};
 
 /** 在环境对象上套用全部固定值（原地修改并返回） */
